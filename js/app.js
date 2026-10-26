@@ -1,7 +1,7 @@
 import { Store } from "./store.js";
-import { schedule, previewLabel, endOfDay, dateKey, MIN } from "./srs.js";
+import { schedule, endOfDay, dateKey } from "./srs.js";
 
-const APP_VERSION = "1.0.0";
+const APP_VERSION = "1.1.0";
 const NEW_PER_DECK_SESSION = 20;
 
 const $ = (sel) => document.querySelector(sel);
@@ -290,7 +290,11 @@ function renderWords() {
     .join("");
 }
 
-// ---------- Sesiones ----------
+// ---------- Práctica (estilo Chessbook) ----------
+// Las palabras nuevas se muestran primero con su respuesta; después se
+// preguntan con 4 opciones. Si fallas, la palabra pierde su progreso y
+// vuelve a la fila del día hasta que la contestes bien.
+
 function buildQueue(decks, newLimit) {
   const now = Date.now();
   const eod = endOfDay(now);
@@ -299,8 +303,8 @@ function buildQueue(decks, newLimit) {
   for (const d of decks) {
     for (const it of itemsFor(d)) {
       const st = store.card(it.key);
-      if (!st) fresh.push(it);
-      else if (st.due <= eod) reviews.push({ ...it, due: st.due });
+      if (!st) fresh.push({ ...it, phase: "learn" });
+      else if (st.due <= eod) reviews.push({ ...it, phase: "quiz", due: st.due });
     }
   }
   reviews.sort((a, b) => a.due - b.due);
@@ -312,14 +316,14 @@ function buildQueue(decks, newLimit) {
     if ((i + 1) % 3 === 0 && n < news.length) queue.push(news[n++]);
   });
   while (n < news.length) queue.push(news[n++]);
-  return queue;
+  return queue.map((it) => ({ ...it, failed: false, hint: 0 }));
 }
 
 function startToday() {
   const today = dateKey(Date.now());
   const newLeft = Math.max(0, store.settings.newPerDay - store.newToday(today));
   const queue = buildQueue(state.decks.filter(deckEnabled), newLeft);
-  startSession(queue, "Sesión de hoy", false);
+  startSession(queue, "Práctica", false);
 }
 
 function startDeck() {
@@ -331,8 +335,8 @@ function startCram() {
   const d = state.currentDeck;
   let items = itemsFor(d).filter((it) => store.card(it.key));
   if (!items.length) items = itemsFor(d);
-  items = items.sort(() => Math.random() - 0.5).slice(0, 40);
-  startSession(items, `${d.title} · repaso rápido`, true);
+  items = shuffle(items).slice(0, 40).map((it) => ({ ...it, phase: "quiz", failed: false, hint: 0 }));
+  startSession(items, "Repaso rápido", true);
 }
 
 function startSession(queue, title, cram) {
@@ -344,14 +348,26 @@ function startSession(queue, title, cram) {
     queue,
     title,
     cram,
-    done: 0,
-    total: queue.length,
-    tally: { 1: 0, 2: 0, 3: 0, 4: 0 },
-    flipped: false,
+    ok: 0,
+    bad: 0,
+    resolved: 0,
+    answered: false,
+    requeue: false,
+    timer: null,
     returnTo: state.view === "deck" ? "deck" : "home"
   };
+  $("#study-title").textContent = title;
   show("study");
-  renderCard();
+  renderItem();
+}
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 }
 
 function speak(text) {
@@ -375,100 +391,237 @@ function ruBlock(text) {
 }
 
 function extras(card) {
-  return (card.tag ? `<span class="tag">${esc(card.tag)}</span>` : "") +
+  const parts = (card.tag ? `<span class="tag">${esc(card.tag)}</span>` : "") +
     (card.nota ? `<div class="note">${esc(card.nota)}</div>` : "");
+  return parts || `<div class="notes-empty">Sin notas</div>`;
 }
 
-function renderCard() {
+// Elige 3 opciones incorrectas del mismo mazo (y del mismo tipo de palabra si se puede).
+function buildOptions(it) {
+  const c = it.card;
+  const field = it.dir === "es" ? "ru" : "es";
+  const answer = c[field];
+  const seen = new Set([norm(answer)]);
+  const head = (c.tag || "").split("·")[0].trim();
+  const own = state.deckById.get(c.deckId).cards.filter((x) => x.kind === "word" && x.id !== c.id);
+  const sameType = shuffle(own.filter((x) => (x.tag || "").split("·")[0].trim() === head));
+  const rest = shuffle(own);
+  const others = shuffle(state.decks.flatMap((d) => d.cards).filter((x) => x.kind === "word" && x.deckId !== c.deckId));
+  const picks = [];
+  for (const pool of [sameType, rest, others]) {
+    for (const x of pool) {
+      if (picks.length >= 3) break;
+      const k = norm(x[field]);
+      if (seen.has(k)) continue;
+      seen.add(k);
+      picks.push(x[field]);
+    }
+  }
+  return shuffle([{ text: answer, correct: true }, ...picks.map((t) => ({ text: t, correct: false }))]);
+}
+
+function hideAllControls() {
+  for (const id of ["btn-learned", "btn-reveal", "selfcheck", "btn-hint", "btn-next", "options", "feedback", "card-back"]) {
+    $(`#${id}`).hidden = true;
+  }
+}
+
+function updateCounters() {
   const s = state.session;
+  $("#cnt-due").textContent = s.queue.length;
+  $("#cnt-ok").textContent = s.ok;
+  $("#cnt-bad").textContent = s.bad;
+  const total = s.resolved + s.queue.length;
+  $("#study-progress").style.width = `${total ? Math.round((s.resolved / total) * 100) : 0}%`;
+}
+
+function renderItem() {
+  const s = state.session;
+  clearTimeout(s.timer);
   const it = s.queue[0];
-  const st = store.card(it.key);
-  const deck = state.deckById.get(it.card.deckId);
-  s.flipped = false;
+  const c = it.card;
+  const deck = state.deckById.get(c.deckId);
+  s.answered = false;
+  s.requeue = false;
+  hideAllControls();
+  updateCounters();
 
   $("#card-deck").textContent = deck ? deck.title : "";
-  $("#card-badge").hidden = !!st || s.cram;
-  $("#study-count").textContent = s.queue.length;
-  $("#study-progress").style.width = `${Math.round((s.done / (s.done + s.queue.length)) * 100)}%`;
+  $("#card-badge").hidden = it.phase !== "learn";
+  $("#card-badge").textContent = "Nueva";
+  if (it.failed && it.phase !== "learn") {
+    $("#card-badge").hidden = false;
+    $("#card-badge").textContent = "Repetir";
+  }
 
   const front = $("#card-front");
   const back = $("#card-back");
-  const c = it.card;
+  const speakBtn = $("#card-speak");
+  speakBtn.hidden = true;
+
+  if (it.phase === "learn") {
+    if (c.kind === "qa") {
+      front.innerHTML = `<span class="learn-label">Regla nueva</span><div class="qa-text">${esc(c.q)}</div>`;
+      back.innerHTML = `<div class="qa-text answer">${esc(c.a)}</div>`;
+    } else {
+      front.innerHTML = `<span class="learn-label">Palabra nueva</span>${ruBlock(c.ru)}`;
+      back.innerHTML = `<div class="big-es">${esc(c.es)}</div>` + extras(c);
+      speakBtn.hidden = !("speechSynthesis" in window);
+      if (store.settings.autoSpeak) speak(c.ru);
+    }
+    back.hidden = false;
+    $("#btn-learned").hidden = false;
+    return;
+  }
+
   if (it.dir === "qa") {
     front.innerHTML = `<div class="qa-text">${esc(c.q)}</div>`;
     back.innerHTML = `<div class="qa-text answer">${esc(c.a)}</div>`;
-  } else if (it.dir === "es") {
-    front.innerHTML = `<div class="big-es">${esc(c.es)}</div>`;
+    $("#btn-reveal").hidden = false;
+    return;
+  }
+
+  if (it.dir === "es") {
+    front.innerHTML = `<div class="big-es">${esc(c.es)}</div><div class="prompt-blank">___</div>`;
     back.innerHTML = ruBlock(c.ru) + extras(c);
   } else {
-    front.innerHTML = ruBlock(c.ru);
+    front.innerHTML = ruBlock(c.ru) + `<div class="prompt-blank">___</div>`;
     back.innerHTML = `<div class="big-es">${esc(c.es)}</div>` + extras(c);
+    speakBtn.hidden = !("speechSynthesis" in window);
+    if (store.settings.autoSpeak) speak(c.ru);
   }
-  back.hidden = true;
 
-  const canSpeak = "speechSynthesis" in window && it.dir !== "qa";
-  $("#card-speak").hidden = !(canSpeak && it.dir === "ru");
-  $("#show-answer").hidden = false;
-  $("#ratings").hidden = true;
-
-  const now = Date.now();
-  for (const el of $$("[data-ivl]")) {
-    const r = Number(el.dataset.ivl);
-    el.textContent = s.cram ? (r === 1 ? "otra vuelta" : "") : previewLabel(st, r, now);
-  }
-  if (store.settings.autoSpeak && it.dir === "ru") speak(c.ru);
+  it.options = buildOptions(it);
+  const box = $("#options");
+  box.innerHTML = it.options
+    .map((o, i) => `<button class="option${it.dir === "es" ? " ru" : ""}" type="button" data-opt="${i}"${it.dir === "es" ? ' lang="ru"' : ""}><span class="key">${i + 1}</span><span>${esc(o.text)}</span></button>`)
+    .join("");
+  box.hidden = false;
+  const hint = $("#btn-hint");
+  hint.textContent = "No sé, dame una pista";
+  hint.hidden = false;
 }
 
-function flip() {
+function markLearned() {
   const s = state.session;
-  if (!s || s.flipped) return;
-  s.flipped = true;
-  const it = s.queue[0];
-  $("#card-back").hidden = false;
-  $("#show-answer").hidden = true;
-  $("#ratings").hidden = false;
-  if (it.dir === "es") {
-    $("#card-speak").hidden = !("speechSynthesis" in window);
-    if (store.settings.autoSpeak) speak(it.card.ru);
-  }
-}
-
-function rate(r) {
-  const s = state.session;
-  if (!s || !s.flipped) return;
   const it = s.queue.shift();
+  it.phase = "quiz";
+  // Se pregunta después de un par de tarjetas, como en Chessbook.
+  s.queue.splice(Math.min(2, s.queue.length), 0, it);
+  renderItem();
+}
+
+function showFeedback(ok, text) {
+  const fb = $("#feedback");
+  fb.className = `feedback ${ok ? "ok" : "bad"}`;
+  fb.textContent = text;
+  fb.hidden = false;
+}
+
+function choose(i) {
+  const s = state.session;
+  const it = s.queue[0];
+  if (s.answered || it.phase !== "quiz" || !it.options || !it.options[i]) return;
+  s.answered = true;
+  const buttons = $$("#options .option");
+  buttons.forEach((b, j) => {
+    b.disabled = true;
+    if (it.options[j].correct) b.classList.add("correct");
+  });
+  const ok = it.options[i].correct;
+  if (!ok) buttons[i].classList.add("wrong");
+  revealAfterAnswer(it);
+  showFeedback(ok, ok ? "¡Correcto!" : "Incorrecto. Esta palabra vuelve a tu fila de hoy.");
+  settle(ok);
+  if (ok) s.timer = setTimeout(next, it.card.nota ? 2200 : 1100);
+}
+
+function revealAfterAnswer(it) {
+  $("#card-back").hidden = false;
+  $("#btn-hint").hidden = true;
+  $("#btn-next").hidden = false;
+  if (it.dir === "es") $("#card-speak").hidden = !("speechSynthesis" in window);
+}
+
+function useHint() {
+  const s = state.session;
+  const it = s.queue[0];
+  if (s.answered || it.phase !== "quiz") return;
+  if (it.hint === 0) {
+    it.hint = 1;
+    const wrong = $$("#options .option").filter((b, j) => !it.options[j].correct);
+    shuffle(wrong).slice(0, 2).forEach((b) => b.classList.add("gone"));
+    $("#btn-hint").textContent = "No sé, muéstrame la respuesta";
+    return;
+  }
+  s.answered = true;
+  $$("#options .option").forEach((b, j) => {
+    b.disabled = true;
+    if (it.options[j].correct) b.classList.add("correct");
+  });
+  revealAfterAnswer(it);
+  showFeedback(false, "Esta palabra vuelve a tu fila de hoy.");
+  settle(false);
+}
+
+function revealQA() {
+  $("#card-back").hidden = false;
+  $("#btn-reveal").hidden = true;
+  $("#selfcheck").hidden = false;
+}
+
+function selfCheck(knew) {
+  const s = state.session;
+  if (s.answered) return;
+  s.answered = true;
+  settle(knew);
+  next();
+}
+
+// Guarda el resultado de la tarjeta actual.
+function settle(ok) {
+  const s = state.session;
+  const it = s.queue[0];
   const now = Date.now();
-  s.tally[r]++;
-  if (s.cram) {
-    if (r === 1) s.queue.splice(Math.min(3, s.queue.length), 0, it);
-    else s.done++;
-  } else {
+  if (ok) s.ok++;
+  else s.bad++;
+  if (!s.cram) {
     const prev = store.card(it.key);
     if (!prev) store.countNew(dateKey(now));
-    const st = schedule(prev, r, now);
-    store.setCard(it.key, st);
-    if (st.due <= now + 20 * MIN) {
-      s.queue.splice(Math.min(3, s.queue.length), 0, it);
-    } else {
-      s.done++;
-    }
+    const rating = ok ? (it.hint && !it.failed ? 2 : 3) : 1;
+    store.setCard(it.key, schedule(prev, rating, now));
   }
-  if (s.queue.length) renderCard();
+  if (!ok) {
+    it.failed = true;
+    it.hint = 0;
+    s.requeue = true;
+  }
+  updateCounters();
+}
+
+function next() {
+  const s = state.session;
+  if (!s || !s.answered) return;
+  clearTimeout(s.timer);
+  const it = s.queue.shift();
+  if (s.requeue) s.queue.push(it);
+  else s.resolved++;
+  if (s.queue.length) renderItem();
   else finishSession();
 }
 
 function finishSession() {
   const s = state.session;
-  const total = s.tally[1] + s.tally[2] + s.tally[3] + s.tally[4];
-  $("#done-title").textContent = s.title;
+  $("#done-title").textContent = s.cram ? "Repaso rápido terminado" : "Práctica terminada";
   $("#done-summary").textContent =
-    `Respondiste ${total} veces: ${s.tally[3] + s.tally[4]} bien o fácil, ` +
-    `${s.tally[2]} difíciles y ${s.tally[1]} para repetir.`;
+    `${s.ok} respuestas correctas y ${s.bad} errores. ` +
+    (s.cram ? "El repaso rápido no cambia tu calendario." : "Las palabras que fallaste volverán pronto para reforzarlas.");
   show("done");
 }
 
 function closeSession() {
   const s = state.session;
+  if (s) clearTimeout(s.timer);
   state.session = null;
   if (s && s.returnTo === "deck" && state.currentDeck) {
     renderDeck();
@@ -570,27 +723,45 @@ function bind() {
   $("#deck-cram").addEventListener("click", startCram);
   $("#deck-search").addEventListener("input", renderWords);
 
-  $("#show-answer").addEventListener("click", flip);
-  $("#card").addEventListener("click", (e) => {
-    if (e.target.closest("#card-speak")) return;
-    flip();
+  $("#btn-learned").addEventListener("click", markLearned);
+  $("#btn-reveal").addEventListener("click", revealQA);
+  $("#btn-knew").addEventListener("click", () => selfCheck(true));
+  $("#btn-didnt").addEventListener("click", () => selfCheck(false));
+  $("#btn-hint").addEventListener("click", useHint);
+  $("#btn-next").addEventListener("click", next);
+  $("#options").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-opt]");
+    if (b) choose(Number(b.dataset.opt));
   });
   $("#card-speak").addEventListener("click", () => {
     const s = state.session;
     if (s) speak(s.queue[0].card.ru);
   });
-  $("#ratings").addEventListener("click", (e) => {
-    const b = e.target.closest("[data-rate]");
-    if (b) rate(Number(b.dataset.rate));
-  });
   $("#study-close").addEventListener("click", closeSession);
+  $("#study-exit").addEventListener("click", closeSession);
   $("#done-home").addEventListener("click", closeSession);
 
   document.addEventListener("keydown", (e) => {
-    if (state.view !== "study" || e.target.closest("input")) return;
-    if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip(); }
-    else if (["1", "2", "3", "4"].includes(e.key)) rate(Number(e.key));
-    else if (e.key === "Escape") closeSession();
+    const s = state.session;
+    if (state.view !== "study" || !s || e.target.closest("input")) return;
+    const it = s.queue[0];
+    if (e.key === "Escape") return closeSession();
+    if (s.answered) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); next(); }
+      return;
+    }
+    if (it.phase === "learn") {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); markLearned(); }
+    } else if (it.dir === "qa") {
+      if ($("#selfcheck").hidden) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); revealQA(); }
+      } else if (e.key === "1") selfCheck(false);
+      else if (e.key === "2") selfCheck(true);
+    } else if (["1", "2", "3", "4"].includes(e.key)) {
+      choose(Number(e.key) - 1);
+    } else if (e.key.toLowerCase() === "h") {
+      useHint();
+    }
   });
 
   // Ajustes

@@ -296,3 +296,54 @@ kbd { font: 12px var(--font-ui); opacity: .7; border: 1px solid currentColor; bo
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
+
+/* ---------- Práctica estilo Chessbook ---------- */
+.study-bar { display: flex; align-items: center; gap: 8px; }
+.study-title { margin: 0; flex: 1; min-width: 0; font: 700 22px/1.2 var(--font-ru); }
+.counters { display: flex; align-items: center; gap: 14px; font-variant-numeric: tabular-nums; }
+.counter { display: inline-flex; align-items: center; gap: 6px; font-size: 16px; }
+.counter b { font-weight: 700; }
+.dot { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; color: var(--card); }
+.dot-due { background: var(--hard); }
+.dot-ok { background: var(--good); }
+.dot-bad { background: var(--again); }
+.view-study .progress { flex: none; }
+
+.prompt-blank { font: 700 clamp(22px, 6vw, 30px)/1.2 var(--font-ui); color: var(--ink-soft); letter-spacing: .2em; }
+.learn-label { font-size: 13px; font-weight: 700; color: var(--margin); text-transform: uppercase; letter-spacing: .1em; }
+
+.feedback { margin: 0; font-weight: 700; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+.feedback.ok { color: var(--good); }
+.feedback.bad { color: var(--again); }
+
+.options { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+@media (min-width: 520px) { .options { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.option {
+  display: flex; align-items: center; gap: 12px; text-align: left;
+  min-height: 56px; padding: 10px 14px; border-radius: 12px;
+  border: 1.5px solid var(--line); background: var(--card); color: var(--ink);
+  font-size: 17px; line-height: 1.3; overflow-wrap: anywhere;
+}
+.option:hover:not(:disabled) { border-color: var(--accent); }
+.option:disabled { cursor: default; }
+.option .key { flex: none; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 7px; background: var(--grid); color: var(--ink-soft); font-size: 13px; font-weight: 700; }
+.option.ru { font-family: var(--font-ru); font-size: 20px; }
+.option.correct { border-color: var(--good); background: color-mix(in srgb, var(--good) 14%, var(--card)); }
+.option.correct .key { background: var(--good); color: var(--card); }
+.option.wrong { border-color: var(--again); background: color-mix(in srgb, var(--again) 12%, var(--card)); }
+.option.wrong .key { background: var(--again); color: var(--card); }
+.option.gone { visibility: hidden; }
+
+.menu { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+.menu-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 56px; padding: 0 4px; border: 0; border-bottom: 1px solid var(--line);
+  background: none; color: var(--ink); font-size: 17px; text-align: left;
+}
+.menu-item:hover { background: var(--grid); }
+.menu-primary { color: var(--accent); font-weight: 700; }
+.menu-ok { color: var(--good); font-weight: 700; }
+.menu-bad { color: var(--again); font-weight: 700; }
+.menu-quiet { color: var(--ink-soft); }
+.selfcheck { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+.notes-empty { font-size: 15px; color: var(--ink-soft); font-style: italic; }

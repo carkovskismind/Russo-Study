@@ -45,7 +45,7 @@
       <div class="stat"><span class="stat-num" id="stat-new">0</span><span class="stat-label">nuevas</span></div>
       <div class="stat"><span class="stat-num" id="stat-learned">0</span><span class="stat-label">aprendidas de <span id="stat-total">0</span></span></div>
     </div>
-    <button class="btn btn-primary btn-wide" id="start-today" type="button">Empezar sesión</button>
+    <button class="btn btn-primary btn-wide" id="start-today" type="button">Practicar</button>
     <p class="today-note" id="today-note"></p>
   </section>
 
@@ -86,9 +86,17 @@
     <button class="icon-btn" id="study-close" type="button" aria-label="Terminar sesión">
       <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M18.3 5.7 16.9 4.3 12 9.2 7.1 4.3 5.7 5.7 10.6 12l-4.9 4.9 1.4 1.4 4.9-4.9 4.9 4.9 1.4-1.4-4.9-4.9z"/></svg>
     </button>
-    <div class="progress" aria-hidden="true"><div class="progress-fill" id="study-progress"></div></div>
-    <span class="study-count" id="study-count">0</span>
+    <h1 class="study-title" id="study-title">Práctica</h1>
+    <div class="counters" aria-label="Progreso de la sesión">
+      <span class="counter" title="Pendientes"><b id="cnt-due">0</b><span class="dot dot-due" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 10.4 3.2 3.2-1.4 1.4-3.8-3.8V6h2v6.4Z"/></svg></span><span class="visually-hidden">pendientes</span></span>
+      <span class="counter" title="Correctas"><b id="cnt-ok">0</b><span class="dot dot-ok" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M9.5 16.2 5.3 12l-1.4 1.4 5.6 5.6L20.1 8.4 18.7 7z"/></svg></span><span class="visually-hidden">correctas</span></span>
+      <span class="counter" title="Errores"><b id="cnt-bad">0</b><span class="dot dot-bad" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M18.3 5.7 16.9 4.3 12 9.2 7.1 4.3 5.7 5.7 10.6 12l-4.9 4.9 1.4 1.4 4.9-4.9 4.9 4.9 1.4-1.4-4.9-4.9z"/></svg></span><span class="visually-hidden">errores</span></span>
+    </div>
   </header>
+  <div class="progress" aria-hidden="true"><div class="progress-fill" id="study-progress"></div></div>
 
   <article class="card" id="card" aria-live="polite">
     <div class="card-meta">
@@ -102,14 +110,19 @@
     </button>
   </article>
 
-  <div class="answer-zone">
-    <button class="btn btn-primary btn-wide" id="show-answer" type="button">Mostrar respuesta <kbd>espacio</kbd></button>
-    <div class="ratings" id="ratings" hidden>
-      <button class="rate rate-again" type="button" data-rate="1"><span class="rate-name">Otra vez</span><span class="rate-ivl" data-ivl="1"></span></button>
-      <button class="rate rate-hard" type="button" data-rate="2"><span class="rate-name">Difícil</span><span class="rate-ivl" data-ivl="2"></span></button>
-      <button class="rate rate-good" type="button" data-rate="3"><span class="rate-name">Bien</span><span class="rate-ivl" data-ivl="3"></span></button>
-      <button class="rate rate-easy" type="button" data-rate="4"><span class="rate-name">Fácil</span><span class="rate-ivl" data-ivl="4"></span></button>
+  <p class="feedback" id="feedback" role="status" hidden></p>
+  <div class="options" id="options" hidden></div>
+
+  <div class="menu" id="study-menu">
+    <button class="menu-item" id="btn-learned" type="button" hidden>Entendido, ahora pregúntame <kbd>enter</kbd></button>
+    <button class="menu-item" id="btn-reveal" type="button" hidden>Mostrar respuesta <kbd>espacio</kbd></button>
+    <div class="selfcheck" id="selfcheck" hidden>
+      <button class="menu-item menu-bad" id="btn-didnt" type="button">No lo sabía <kbd>1</kbd></button>
+      <button class="menu-item menu-ok" id="btn-knew" type="button">Lo sabía <kbd>2</kbd></button>
     </div>
+    <button class="menu-item" id="btn-hint" type="button" hidden>No sé, dame una pista</button>
+    <button class="menu-item menu-primary" id="btn-next" type="button" hidden>Continuar <kbd>enter</kbd></button>
+    <button class="menu-item menu-quiet" id="study-exit" type="button">Salir de la práctica</button>
   </div>
 </main>
 
