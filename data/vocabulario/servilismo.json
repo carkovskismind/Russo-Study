@@ -4,16 +4,16 @@
   "grupo": "Vocabulario",
   "descripcion": "Palabras para alguien servil, sin dignidad o que se humilla ante otros.",
   "tarjetas": [
-    {"ru": "пресмыка́ющийся", "es": "rastrero, que se arrastra (servil)", "tag": "Adj. / participio", "nota": "También es el nombre de los reptiles."},
-    {"ru": "пресмыка́ться", "es": "arrastrarse, rebajarse servilmente", "tag": "Verbo · 1.ª conj.", "nota": "пресмыка́ться пе́ред нача́льством = arrastrarse ante los jefes"},
-    {"ru": "подхали́м", "es": "lambiscón, adulador", "tag": "Masc. · anim.", "nota": "El más común en el habla diaria."},
-    {"ru": "холу́й", "es": "lacayo servil", "tag": "Masc. · anim.", "nota": "Despectivo y fuerte."},
-    {"ru": "уго́дник", "es": "complaciente, el que quiere agradar a todos", "tag": "Masc. · anim.", "nota": "fem. уго́дница. Menos fuerte que подхали́м."},
-    {"ru": "лизоблю́д", "es": "lamebotas", "tag": "Masc. · anim.", "nota": "Literalmente: «lame platos»."},
-    {"ru": "тря́пка", "es": "persona sin carácter, que se deja pisotear", "tag": "Fem. · inanim.", "nota": "Literalmente: «trapo». Se usa para hombres y mujeres."},
-    {"ru": "раболе́пный", "es": "servil", "tag": "Adj.", "nota": "Formal o literario."},
-    {"ru": "уго́дливый", "es": "servil, complaciente", "tag": "Adj."},
-    {"ru": "унижа́ться", "es": "humillarse, rebajarse", "tag": "Verbo · 1.ª conj."},
-    {"ru": "по́лзать на коле́нях", "es": "arrastrarse de rodillas", "tag": "Frase"}
+    {"ru": "пресмыка́ющийся", "es": "rastrero, que se arrastra (servil)", "pista": "Adjetivo; también es el nombre de los reptiles.", "tag": "Adj. / participio", "nota": "También es el nombre de los reptiles."},
+    {"ru": "пресмыка́ться", "es": "arrastrarse, rebajarse servilmente", "pista": "Verbo: humillarse ante los jefes.", "tag": "Verbo · 1.ª conj.", "nota": "пресмыка́ться пе́ред нача́льством = arrastrarse ante los jefes"},
+    {"ru": "подхали́м", "es": "lambiscón, adulador", "pista": "El que adula para quedar bien (el más común).", "tag": "Masc. · anim.", "nota": "El más común en el habla diaria."},
+    {"ru": "холу́й", "es": "lacayo servil", "pista": "Sirviente que obedece todo; muy despectivo.", "tag": "Masc. · anim.", "nota": "Despectivo y fuerte."},
+    {"ru": "уго́дник", "es": "complaciente, el que quiere agradar a todos", "pista": "Hace cualquier cosa para caer bien.", "tag": "Masc. · anim.", "nota": "fem. уго́дница. Menos fuerte que подхали́м."},
+    {"ru": "лизоблю́д", "es": "lamebotas", "pista": "Literalmente «el que lame platos».", "tag": "Masc. · anim.", "nota": "Literalmente: «lame platos»."},
+    {"ru": "тря́пка", "es": "persona sin carácter, que se deja pisotear", "pista": "Literalmente «trapo»: se deja pisotear.", "tag": "Fem. · inanim.", "nota": "Literalmente: «trapo». Se usa para hombres y mujeres."},
+    {"ru": "раболе́пный", "es": "servil", "pista": "Adjetivo literario: con actitud de esclavo.", "tag": "Adj.", "nota": "Formal o literario."},
+    {"ru": "уго́дливый", "es": "servil, complaciente", "pista": "Adjetivo: dispuesto a todo para agradar.", "tag": "Adj."},
+    {"ru": "унижа́ться", "es": "humillarse, rebajarse", "pista": "Bajar tu dignidad ante otros.", "tag": "Verbo · 1.ª conj."},
+    {"ru": "по́лзать на коле́нях", "es": "arrastrarse de rodillas", "pista": "Moverse por el suelo hincado.", "tag": "Frase"}
   ]
 }

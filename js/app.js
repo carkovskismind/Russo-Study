@@ -1,7 +1,7 @@
 import { Store } from "./store.js";
 import { schedule, endOfDay, dateKey } from "./srs.js";
 
-const APP_VERSION = "1.1.0";
+const APP_VERSION = "1.2.0";
 const NEW_PER_DECK_SESSION = 20;
 
 const $ = (sel) => document.querySelector(sel);
@@ -104,6 +104,7 @@ async function loadDecks() {
         es: c.es,
         tag: c.tag || "",
         nota: c.nota || "",
+        pista: c.pista || "",
         q: c.pregunta,
         a: c.respuesta
       });
@@ -285,6 +286,7 @@ function renderWords() {
         <span class="wl-ru" lang="ru">${dot}${esc(c.ru)}</span>
         <span class="wl-es">${esc(c.es)}</span>
         ${c.tag ? `<span class="wl-tag">${esc(c.tag)}</span>` : ""}
+        ${store.note(c.id) ? `<span class="wl-note">Tu nota: ${esc(store.note(c.id))}</span>` : ""}
       </li>`;
     })
     .join("");
@@ -421,7 +423,7 @@ function buildOptions(it) {
 }
 
 function hideAllControls() {
-  for (const id of ["btn-learned", "btn-reveal", "selfcheck", "btn-hint", "btn-next", "options", "feedback", "card-back"]) {
+  for (const id of ["btn-learned", "btn-reveal", "selfcheck", "btn-hint", "btn-next", "options", "feedback", "card-back", "hint-box", "note-box"]) {
     $(`#${id}`).hidden = true;
   }
 }
@@ -471,6 +473,7 @@ function renderItem() {
     }
     back.hidden = false;
     $("#btn-learned").hidden = false;
+    renderNoteBox();
     return;
   }
 
@@ -528,10 +531,14 @@ function choose(i) {
     b.disabled = true;
     if (it.options[j].correct) b.classList.add("correct");
   });
-  const ok = it.options[i].correct;
-  if (!ok) buttons[i].classList.add("wrong");
+  const right = it.options[i].correct;
+  if (!right) buttons[i].classList.add("wrong");
   revealAfterAnswer(it);
-  showFeedback(ok, ok ? "¡Correcto!" : "Incorrecto. Esta palabra vuelve a tu fila de hoy.");
+  // Usar la pista cuenta como error aunque la respuesta sea correcta.
+  const ok = right && !it.hint;
+  if (ok) showFeedback(true, "¡Correcto!");
+  else if (right) showFeedback(false, "Correcto, pero usaste la pista: cuenta como error y la repasarás otra vez.");
+  else showFeedback(false, "Incorrecto. Esta palabra vuelve a tu fila de hoy.");
   settle(ok);
   if (ok) s.timer = setTimeout(next, it.card.nota ? 2200 : 1100);
 }
@@ -541,6 +548,20 @@ function revealAfterAnswer(it) {
   $("#btn-hint").hidden = true;
   $("#btn-next").hidden = false;
   if (it.dir === "es") $("#card-speak").hidden = !("speechSynthesis" in window);
+  renderNoteBox();
+}
+
+// Pista escrita en el mazo; si la palabra no tiene, se arma una con su tipo.
+function hintText(it) {
+  const c = it.card;
+  if (c.pista) return c.pista;
+  const deck = state.deckById.get(c.deckId);
+  const answer = plain(it.dir === "es" ? c.ru : c.es).trim();
+  const parts = [];
+  if (c.tag) parts.push(c.tag);
+  if (deck) parts.push(`tema: ${deck.title}`);
+  if (answer) parts.push(`empieza con «${answer[0]}»`);
+  return parts.join(" · ");
 }
 
 function useHint() {
@@ -549,8 +570,11 @@ function useHint() {
   if (s.answered || it.phase !== "quiz") return;
   if (it.hint === 0) {
     it.hint = 1;
-    const wrong = $$("#options .option").filter((b, j) => !it.options[j].correct);
-    shuffle(wrong).slice(0, 2).forEach((b) => b.classList.add("gone"));
+    $("#hint-text").textContent = hintText(it);
+    const mine = store.note(it.card.id);
+    $("#hint-mine").hidden = !mine;
+    $("#hint-mine-text").textContent = mine;
+    $("#hint-box").hidden = false;
     $("#btn-hint").textContent = "No sé, muéstrame la respuesta";
     return;
   }
@@ -568,6 +592,49 @@ function revealQA() {
   $("#card-back").hidden = false;
   $("#btn-reveal").hidden = true;
   $("#selfcheck").hidden = false;
+  renderNoteBox();
+}
+
+// ---------- Notas personales ----------
+function renderNoteBox(editing = false) {
+  const s = state.session;
+  if (!s) return;
+  const c = s.queue[0].card;
+  const box = $("#note-box");
+  const text = store.note(c.id);
+  if (editing) {
+    box.innerHTML = `<label class="note-label" for="note-input">Tu nota personal</label>
+      <textarea id="note-input" rows="3" maxlength="500" placeholder="Escribe algo que te ayude a recordarla">${esc(text)}</textarea>
+      <div class="note-actions">
+        <button class="btn btn-primary" type="button" data-note="save">Guardar nota</button>
+        <button class="btn" type="button" data-note="cancel">Cancelar</button>
+      </div>`;
+    box.hidden = false;
+    const input = $("#note-input");
+    input.focus();
+    input.setSelectionRange(input.value.length, input.value.length);
+    return;
+  }
+  box.innerHTML = text
+    ? `<span class="note-label">Tu nota</span><p class="note-mine">${esc(text)}</p>
+       <button class="link-btn" type="button" data-note="edit">Editar nota</button>`
+    : `<button class="link-btn" type="button" data-note="edit">+ Agregar una nota personal</button>`;
+  box.hidden = false;
+}
+
+function handleNoteClick(e) {
+  const b = e.target.closest("[data-note]");
+  const s = state.session;
+  if (!b || !s) return;
+  clearTimeout(s.timer);
+  const c = s.queue[0].card;
+  if (b.dataset.note === "edit") renderNoteBox(true);
+  else if (b.dataset.note === "cancel") renderNoteBox(false);
+  else if (b.dataset.note === "save") {
+    store.setNote(c.id, $("#note-input").value);
+    renderNoteBox(false);
+    toast("Nota guardada");
+  }
 }
 
 function selfCheck(knew) {
@@ -729,6 +796,7 @@ function bind() {
   $("#btn-didnt").addEventListener("click", () => selfCheck(false));
   $("#btn-hint").addEventListener("click", useHint);
   $("#btn-next").addEventListener("click", next);
+  $("#note-box").addEventListener("click", handleNoteClick);
   $("#options").addEventListener("click", (e) => {
     const b = e.target.closest("[data-opt]");
     if (b) choose(Number(b.dataset.opt));
@@ -743,7 +811,7 @@ function bind() {
 
   document.addEventListener("keydown", (e) => {
     const s = state.session;
-    if (state.view !== "study" || !s || e.target.closest("input")) return;
+    if (state.view !== "study" || !s || e.target.closest("input, textarea")) return;
     const it = s.queue[0];
     if (e.key === "Escape") return closeSession();
     if (s.answered) {

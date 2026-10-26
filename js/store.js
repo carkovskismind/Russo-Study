@@ -19,6 +19,7 @@ function emptyProgress() {
     v: 1,
     cards: {},
     newLog: {},
+    notes: {},
     settings: { ...DEFAULT_SETTINGS, t: 0 },
     resetAt: 0
   };
@@ -49,6 +50,7 @@ function normalize(p) {
     v: 1,
     cards: p.cards && typeof p.cards === "object" ? p.cards : {},
     newLog: p.newLog && typeof p.newLog === "object" ? p.newLog : {},
+    notes: p.notes && typeof p.notes === "object" ? p.notes : {},
     settings: { ...base.settings, ...(p.settings || {}) },
     resetAt: p.resetAt || 0
   };
@@ -73,6 +75,13 @@ export function merge(a, b) {
     for (const [day, n] of Object.entries(src.newLog)) {
       if (resetDay && day < resetDay) continue;
       out.newLog[day] = Math.max(out.newLog[day] || 0, n);
+    }
+  }
+  // Las notas personales no se borran al reiniciar el progreso.
+  for (const src of [a, b]) {
+    for (const [id, n] of Object.entries(src.notes)) {
+      const cur = out.notes[id];
+      if (!cur || (n.t || 0) > (cur.t || 0)) out.notes[id] = n;
     }
   }
   out.settings = (b.settings.t || 0) > (a.settings.t || 0) ? b.settings : a.settings;
@@ -230,10 +239,22 @@ export class Store {
     this.p.newLog[day] = (this.p.newLog[day] || 0) + 1;
   }
 
+  note(id) {
+    const n = this.p.notes[id];
+    return n && n.text ? n.text : "";
+  }
+
+  setNote(id, text) {
+    this.p.notes[id] = { text: text.trim(), t: Date.now() };
+    this.save();
+  }
+
   reset() {
     const now = Date.now();
     const settings = { ...this.p.settings, t: now };
+    const notes = this.p.notes;
     this.p = emptyProgress();
+    this.p.notes = notes;
     this.p.settings = settings;
     this.p.resetAt = now;
     this.save();

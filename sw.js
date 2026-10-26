@@ -2,7 +2,7 @@
 // Los mazos (data/) se piden primero a la red para que tus cambios aparezcan
 // en cuanto los subas; si no hay conexión se usa la última copia guardada.
 // Si cambias archivos de la app (no los mazos), sube el número de CACHE.
-const CACHE = "russo-v2";
+const CACHE = "russo-v3";
 const SHELL = [
   "./",
   "index.html",

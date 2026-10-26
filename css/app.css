@@ -213,7 +213,7 @@ kbd { font: 12px var(--font-ui); opacity: .7; border: 1px solid currentColor; bo
 
 .card {
   position: relative;
-  min-height: 340px;
+  min-height: 230px;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 20px 20px 24px 40px;
@@ -291,7 +291,7 @@ kbd { font: 12px var(--font-ui); opacity: .7; border: 1px solid currentColor; bo
 }
 
 @media (min-width: 560px) {
-  .card { min-height: 380px; padding-left: 48px; }
+  .card { min-height: 260px; padding-left: 48px; }
 }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
@@ -347,3 +347,24 @@ kbd { font: 12px var(--font-ui); opacity: .7; border: 1px solid currentColor; bo
 .menu-quiet { color: var(--ink-soft); }
 .selfcheck { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
 .notes-empty { font-size: 15px; color: var(--ink-soft); font-style: italic; }
+
+/* Pista y notas personales */
+.hint-box {
+  border-radius: 12px; padding: 12px 14px;
+  background: color-mix(in srgb, var(--hard) 12%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--hard) 45%, transparent);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.hint-label { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--hard); }
+.hint-text { margin: 0; font-size: 17px; line-height: 1.4; }
+.hint-mine { margin: 0; font-size: 15px; color: var(--ink-soft); }
+.note-box { display: flex; flex-direction: column; gap: 8px; }
+.note-label { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.note-mine { margin: 0; font-size: 16px; white-space: pre-wrap; overflow-wrap: anywhere; border-left: 3px solid var(--accent); padding-left: 10px; }
+.note-box textarea {
+  width: 100%; min-height: 84px; padding: 10px 12px; border-radius: 12px;
+  border: 1px solid var(--line); background: var(--card); color: var(--ink); font: inherit; resize: vertical;
+}
+.note-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.link-btn { align-self: flex-start; border: 0; background: none; padding: 6px 0; color: var(--accent); font-weight: 700; }
+.wl-note { grid-column: 1 / -1; font-size: 13px; color: var(--accent); overflow-wrap: anywhere; }

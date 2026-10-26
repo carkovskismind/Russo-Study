@@ -1,244 +1,67 @@
 {
- "id": "plurales",
- "titulo": "Plurales",
- "grupo": "Gramática",
- "descripcion": "Reglas del plural, plurales irregulares y palabras que solo existen en singular o en plural.",
- "tarjetas": [
-  {
-   "pregunta": "¿Cómo se forma el plural de la mayoría de las palabras masculinas y femeninas?",
-   "respuesta": "+ -ы (90 %):\nстол → столы́, ма́ма → ма́мы (la vocal final se cambia por -ы)."
-  },
-  {
-   "pregunta": "Plural: ¿cuándo se usa -и en lugar de -ы?",
-   "respuesta": "- Después de к, г, х («militares»): кни́га → кни́ги, уро́к → уро́ки.\n- Después de ж, ш, ч, щ («serpientes»): ча́шка → ча́шки, нож → ножи́.\n- Después de -ь, -я, -й («suaves»): слова́рь → словари́, семья́ → се́мьи, музе́й → музе́и."
-  },
-  {
-   "pregunta": "¿Cómo se forma el plural de los neutros?",
-   "respuesta": "-о → -а: окно́ → о́кна, письмо́ → пи́сьма\n-е → -я: мо́ре → моря́, зда́ние → зда́ния\n-мя → -ена́: и́мя → имена́"
-  },
-  {
-   "pregunta": "¿Qué palabras nunca cambian en plural?",
-   "respuesta": "Las extranjeras en -о, -е, -и, -у, -ю:\nпальто́, кино́, метро́, такси́, шоссе́, жюри́, меню́, бистро́, кафе́, ко́фе, кака́о, кенгуру́."
-  },
-  {
-   "pregunta": "Palabras que solo existen en singular",
-   "respuesta": "спорт, мя́со, посу́да, ору́жие, оде́жда, о́бувь, ра́дость, любо́вь, бензи́н, во́здух, ме́бель, листва́, са́хар, молоко́, мёд, мука́, хлеб, еда́, вода́, косме́тика."
-  },
-  {
-   "pregunta": "Palabras que solo existen en plural (ropa y objetos)",
-   "respuesta": "часы́, очки́, де́ньги, но́жницы, весы́, духи́, брю́ки, штаны́, шо́рты, джи́нсы, колго́тки, ле́ггинсы, лоси́ны, трусы́, пла́вки, ша́хматы, ша́шки."
-  },
-  {
-   "pregunta": "Palabras que solo existen en plural (tiempo y otras)",
-   "respuesta": "бу́дни, су́тки, кани́кулы, перегово́ры, су́мерки, по́хороны, джу́нгли, ро́ды, тро́пики, хло́поты."
-  },
-  {
-   "pregunta": "Nombres geográficos que siempre van en plural",
-   "respuesta": "А́льпы, А́нды, Карпа́ты, Гава́йи, Мальди́вы, Филиппи́ны, Нидерла́нды.\nв А́льпах, на Гава́йях, в Нидерла́ндах."
-  },
-  {
-   "pregunta": "Plural de го́род (ciudad)",
-   "respuesta": "города́\nMasculino: + -а́ acentuada"
-  },
-  {
-   "pregunta": "Plural de дом (casa)",
-   "respuesta": "дома́\nMasculino: + -а́ acentuada"
-  },
-  {
-   "pregunta": "Plural de по́езд (tren)",
-   "respuesta": "поезда́\nMasculino: + -а́ acentuada"
-  },
-  {
-   "pregunta": "Plural de лес (bosque)",
-   "respuesta": "леса́\nMasculino: + -а́ acentuada"
-  },
-  {
-   "pregunta": "Plural de о́стров (isla)",
-   "respuesta": "острова́\nMasculino: + -а́ acentuada"
-  },
-  {
-   "pregunta": "Plural de а́дрес (dirección)",
-   "respuesta": "адреса́\nMasculino: + -а́ acentuada"
-  },
-  {
-   "pregunta": "Plural de па́спорт (pasaporte)",
-   "respuesta": "паспорта́\nMasculino: + -а́ acentuada"
-  },
-  {
-   "pregunta": "Plural de учи́тель (maestro)",
-   "respuesta": "учителя́\nMasculino: + -я́ acentuada"
-  },
-  {
-   "pregunta": "Plural de глаз (ojo)",
-   "respuesta": "глаза́\nMasculino: + -а́ acentuada"
-  },
-  {
-   "pregunta": "Plural de до́ктор (doctor)",
-   "respuesta": "доктора́\nMasculino: + -а́ acentuada"
-  },
-  {
-   "pregunta": "Plural de по́вар (cocinero)",
-   "respuesta": "повара́\nMasculino: + -а́ acentuada"
-  },
-  {
-   "pregunta": "Plural de цвет (color)",
-   "respuesta": "цвета́\nMasculino: + -а́ acentuada"
-  },
-  {
-   "pregunta": "Plural de но́мер (número)",
-   "respuesta": "номера́\nMasculino: + -а́ acentuada"
-  },
-  {
-   "pregunta": "Plural de стул (silla)",
-   "respuesta": "сту́лья\nMasculino: + -ья"
-  },
-  {
-   "pregunta": "Plural de лист (hoja (de árbol))",
-   "respuesta": "ли́стья\nMasculino: + -ья"
-  },
-  {
-   "pregunta": "Plural de брат (hermano)",
-   "respuesta": "бра́тья\nMasculino: + -ья"
-  },
-  {
-   "pregunta": "Plural de муж (esposo)",
-   "respuesta": "мужья́\nMasculino: + -ья"
-  },
-  {
-   "pregunta": "Plural de друг (amigo)",
-   "respuesta": "друзья́\nMasculino: + -ья (г → з)"
-  },
-  {
-   "pregunta": "Plural de сын (hijo)",
-   "respuesta": "сыновья́\nMasculino: + -овья"
-  },
-  {
-   "pregunta": "Plural de день (día)",
-   "respuesta": "дни\nLa -е- desaparece"
-  },
-  {
-   "pregunta": "Plural de оте́ц (padre)",
-   "respuesta": "отцы́\nLa -е- desaparece"
-  },
-  {
-   "pregunta": "Plural de иностра́нец (extranjero)",
-   "respuesta": "иностра́нцы\nLa -е- desaparece"
-  },
-  {
-   "pregunta": "Plural de мексика́нец (mexicano)",
-   "respuesta": "мексика́нцы\nLa -е- desaparece"
-  },
-  {
-   "pregunta": "Plural de не́мец (alemán)",
-   "respuesta": "не́мцы\nLa -е- desaparece"
-  },
-  {
-   "pregunta": "Plural de де́рево (árbol)",
-   "respuesta": "дере́вья\nNeutro: -о → -ья"
-  },
-  {
-   "pregunta": "Plural de крыло́ (ala)",
-   "respuesta": "кры́лья\nNeutro: -о → -ья"
-  },
-  {
-   "pregunta": "Plural de я́блоко (manzana)",
-   "respuesta": "я́блоки\nNeutro: -о → -и"
-  },
-  {
-   "pregunta": "Plural de у́хо (oreja)",
-   "respuesta": "у́ши\nNeutro: -о → -и (х → ш)"
-  },
-  {
-   "pregunta": "Plural de плечо́ (hombro)",
-   "respuesta": "пле́чи\nNeutro: -о → -и"
-  },
-  {
-   "pregunta": "Plural de сестра́ (hermana)",
-   "respuesta": "сёстры\nLa е se vuelve ё"
-  },
-  {
-   "pregunta": "Plural de жена́ (esposa)",
-   "respuesta": "жёны\nLa е se vuelve ё"
-  },
-  {
-   "pregunta": "Plural de о́зеро (lago)",
-   "respuesta": "озёра\nLa е se vuelve ё"
-  },
-  {
-   "pregunta": "Plural de мать (madre)",
-   "respuesta": "ма́тери\nFemenino: -ь → -ери"
-  },
-  {
-   "pregunta": "Plural de дочь (hija)",
-   "respuesta": "до́чери\nFemenino: -ь → -ери"
-  },
-  {
-   "pregunta": "Plural de челове́к (persona)",
-   "respuesta": "лю́ди\nPalabra diferente"
-  },
-  {
-   "pregunta": "Plural de ребёнок (niño)",
-   "respuesta": "де́ти\nPalabra diferente"
-  },
-  {
-   "pregunta": "Plural de сосе́д (vecino)",
-   "respuesta": "сосе́ди\nSin regla: -и"
-  },
-  {
-   "pregunta": "Plural de граждани́н (ciudadano)",
-   "respuesta": "гра́ждане\n-ин desaparece: -е"
-  },
-  {
-   "pregunta": "Plural de христиани́н (cristiano)",
-   "respuesta": "христиа́не\n-ин desaparece: -е"
-  },
-  {
-   "pregunta": "Plural de крестья́нин (campesino)",
-   "respuesta": "крестья́не\n-ин desaparece: -е"
-  },
-  {
-   "pregunta": "Plural de англича́нин (inglés)",
-   "respuesta": "англича́не\n-ин desaparece: -е"
-  },
-  {
-   "pregunta": "Plural de датча́нин (danés)",
-   "respuesta": "датча́не\n-ин desaparece: -е"
-  },
-  {
-   "pregunta": "Plural de армяни́н (armenio)",
-   "respuesta": "армя́не\n-ин desaparece: -е"
-  },
-  {
-   "pregunta": "Plural de цыга́н (gitano)",
-   "respuesta": "цыга́не\n-е"
-  },
-  {
-   "pregunta": "Plural de земля́нин (terrícola)",
-   "respuesta": "земля́не\n-ин desaparece: -е"
-  },
-  {
-   "pregunta": "Plural de инопланетя́нин (extraterrestre)",
-   "respuesta": "инопланетя́не\n-ин desaparece: -е"
-  },
-  {
-   "pregunta": "Plural de и́мя (nombre)",
-   "respuesta": "имена́\nNeutro en -мя: -ена́"
-  },
-  {
-   "pregunta": "Plural de вре́мя (tiempo)",
-   "respuesta": "времена́\nNeutro en -мя: -ена́"
-  },
-  {
-   "pregunta": "Plural de цыплёнок (pollito)",
-   "respuesta": "цыпля́та\n-ёнок → -ята"
-  },
-  {
-   "pregunta": "Plural de котёнок (gatito)",
-   "respuesta": "котя́та\n-ёнок → -ята"
-  },
-  {
-   "pregunta": "Plural de хозя́ин (dueño)",
-   "respuesta": "хозя́ева\nIrregular"
-  }
- ]
+  "id": "plurales",
+  "titulo": "Plurales",
+  "grupo": "Gramática",
+  "descripcion": "Reglas del plural, plurales irregulares y palabras que solo existen en singular o en plural.",
+  "tarjetas": [
+    {"pregunta": "¿Cómo se forma el plural de la mayoría de las palabras masculinas y femeninas?", "respuesta": "+ -ы (90 %):\nстол → столы́, ма́ма → ма́мы (la vocal final se cambia por -ы)."},
+    {"pregunta": "Plural: ¿cuándo se usa -и en lugar de -ы?", "respuesta": "- Después de к, г, х («militares»): кни́га → кни́ги, уро́к → уро́ки.\n- Después de ж, ш, ч, щ («serpientes»): ча́шка → ча́шки, нож → ножи́.\n- Después de -ь, -я, -й («suaves»): слова́рь → словари́, семья́ → се́мьи, музе́й → музе́и."},
+    {"pregunta": "¿Cómo se forma el plural de los neutros?", "respuesta": "-о → -а: окно́ → о́кна, письмо́ → пи́сьма\n-е → -я: мо́ре → моря́, зда́ние → зда́ния\n-мя → -ена́: и́мя → имена́"},
+    {"pregunta": "¿Qué palabras nunca cambian en plural?", "respuesta": "Las extranjeras en -о, -е, -и, -у, -ю:\nпальто́, кино́, метро́, такси́, шоссе́, жюри́, меню́, бистро́, кафе́, ко́фе, кака́о, кенгуру́."},
+    {"pregunta": "Palabras que solo existen en singular", "respuesta": "спорт, мя́со, посу́да, ору́жие, оде́жда, о́бувь, ра́дость, любо́вь, бензи́н, во́здух, ме́бель, листва́, са́хар, молоко́, мёд, мука́, хлеб, еда́, вода́, косме́тика."},
+    {"pregunta": "Palabras que solo existen en plural (ropa y objetos)", "respuesta": "часы́, очки́, де́ньги, но́жницы, весы́, духи́, брю́ки, штаны́, шо́рты, джи́нсы, колго́тки, ле́ггинсы, лоси́ны, трусы́, пла́вки, ша́хматы, ша́шки."},
+    {"pregunta": "Palabras que solo existen en plural (tiempo y otras)", "respuesta": "бу́дни, су́тки, кани́кулы, перегово́ры, су́мерки, по́хороны, джу́нгли, ро́ды, тро́пики, хло́поты."},
+    {"pregunta": "Nombres geográficos que siempre van en plural", "respuesta": "А́льпы, А́нды, Карпа́ты, Гава́йи, Мальди́вы, Филиппи́ны, Нидерла́нды.\nв А́льпах, на Гава́йях, в Нидерла́ндах."},
+    {"pregunta": "Plural de го́род (ciudad)", "respuesta": "города́\nMasculino: + -а́ acentuada"},
+    {"pregunta": "Plural de дом (casa)", "respuesta": "дома́\nMasculino: + -а́ acentuada"},
+    {"pregunta": "Plural de по́езд (tren)", "respuesta": "поезда́\nMasculino: + -а́ acentuada"},
+    {"pregunta": "Plural de лес (bosque)", "respuesta": "леса́\nMasculino: + -а́ acentuada"},
+    {"pregunta": "Plural de о́стров (isla)", "respuesta": "острова́\nMasculino: + -а́ acentuada"},
+    {"pregunta": "Plural de а́дрес (dirección)", "respuesta": "адреса́\nMasculino: + -а́ acentuada"},
+    {"pregunta": "Plural de па́спорт (pasaporte)", "respuesta": "паспорта́\nMasculino: + -а́ acentuada"},
+    {"pregunta": "Plural de учи́тель (maestro)", "respuesta": "учителя́\nMasculino: + -я́ acentuada"},
+    {"pregunta": "Plural de глаз (ojo)", "respuesta": "глаза́\nMasculino: + -а́ acentuada"},
+    {"pregunta": "Plural de до́ктор (doctor)", "respuesta": "доктора́\nMasculino: + -а́ acentuada"},
+    {"pregunta": "Plural de по́вар (cocinero)", "respuesta": "повара́\nMasculino: + -а́ acentuada"},
+    {"pregunta": "Plural de цвет (color)", "respuesta": "цвета́\nMasculino: + -а́ acentuada"},
+    {"pregunta": "Plural de но́мер (número)", "respuesta": "номера́\nMasculino: + -а́ acentuada"},
+    {"pregunta": "Plural de стул (silla)", "respuesta": "сту́лья\nMasculino: + -ья"},
+    {"pregunta": "Plural de лист (hoja (de árbol))", "respuesta": "ли́стья\nMasculino: + -ья"},
+    {"pregunta": "Plural de брат (hermano)", "respuesta": "бра́тья\nMasculino: + -ья"},
+    {"pregunta": "Plural de муж (esposo)", "respuesta": "мужья́\nMasculino: + -ья"},
+    {"pregunta": "Plural de друг (amigo)", "respuesta": "друзья́\nMasculino: + -ья (г → з)"},
+    {"pregunta": "Plural de сын (hijo)", "respuesta": "сыновья́\nMasculino: + -овья"},
+    {"pregunta": "Plural de день (día)", "respuesta": "дни\nLa -е- desaparece"},
+    {"pregunta": "Plural de оте́ц (padre)", "respuesta": "отцы́\nLa -е- desaparece"},
+    {"pregunta": "Plural de иностра́нец (extranjero)", "respuesta": "иностра́нцы\nLa -е- desaparece"},
+    {"pregunta": "Plural de мексика́нец (mexicano)", "respuesta": "мексика́нцы\nLa -е- desaparece"},
+    {"pregunta": "Plural de не́мец (alemán)", "respuesta": "не́мцы\nLa -е- desaparece"},
+    {"pregunta": "Plural de де́рево (árbol)", "respuesta": "дере́вья\nNeutro: -о → -ья"},
+    {"pregunta": "Plural de крыло́ (ala)", "respuesta": "кры́лья\nNeutro: -о → -ья"},
+    {"pregunta": "Plural de я́блоко (manzana)", "respuesta": "я́блоки\nNeutro: -о → -и"},
+    {"pregunta": "Plural de у́хо (oreja)", "respuesta": "у́ши\nNeutro: -о → -и (х → ш)"},
+    {"pregunta": "Plural de плечо́ (hombro)", "respuesta": "пле́чи\nNeutro: -о → -и"},
+    {"pregunta": "Plural de сестра́ (hermana)", "respuesta": "сёстры\nLa е se vuelve ё"},
+    {"pregunta": "Plural de жена́ (esposa)", "respuesta": "жёны\nLa е se vuelve ё"},
+    {"pregunta": "Plural de о́зеро (lago)", "respuesta": "озёра\nLa е se vuelve ё"},
+    {"pregunta": "Plural de мать (madre)", "respuesta": "ма́тери\nFemenino: -ь → -ери"},
+    {"pregunta": "Plural de дочь (hija)", "respuesta": "до́чери\nFemenino: -ь → -ери"},
+    {"pregunta": "Plural de челове́к (persona)", "respuesta": "лю́ди\nPalabra diferente"},
+    {"pregunta": "Plural de ребёнок (niño)", "respuesta": "де́ти\nPalabra diferente"},
+    {"pregunta": "Plural de сосе́д (vecino)", "respuesta": "сосе́ди\nSin regla: -и"},
+    {"pregunta": "Plural de граждани́н (ciudadano)", "respuesta": "гра́ждане\n-ин desaparece: -е"},
+    {"pregunta": "Plural de христиани́н (cristiano)", "respuesta": "христиа́не\n-ин desaparece: -е"},
+    {"pregunta": "Plural de крестья́нин (campesino)", "respuesta": "крестья́не\n-ин desaparece: -е"},
+    {"pregunta": "Plural de англича́нин (inglés)", "respuesta": "англича́не\n-ин desaparece: -е"},
+    {"pregunta": "Plural de датча́нин (danés)", "respuesta": "датча́не\n-ин desaparece: -е"},
+    {"pregunta": "Plural de армяни́н (armenio)", "respuesta": "армя́не\n-ин desaparece: -е"},
+    {"pregunta": "Plural de цыга́н (gitano)", "respuesta": "цыга́не\n-е"},
+    {"pregunta": "Plural de земля́нин (terrícola)", "respuesta": "земля́не\n-ин desaparece: -е"},
+    {"pregunta": "Plural de инопланетя́нин (extraterrestre)", "respuesta": "инопланетя́не\n-ин desaparece: -е"},
+    {"pregunta": "Plural de и́мя (nombre)", "respuesta": "имена́\nNeutro en -мя: -ена́"},
+    {"pregunta": "Plural de вре́мя (tiempo)", "respuesta": "времена́\nNeutro en -мя: -ена́"},
+    {"pregunta": "Plural de цыплёнок (pollito)", "respuesta": "цыпля́та\n-ёнок → -ята"},
+    {"pregunta": "Plural de котёнок (gatito)", "respuesta": "котя́та\n-ёнок → -ята"},
+    {"pregunta": "Plural de хозя́ин (dueño)", "respuesta": "хозя́ева\nIrregular"}
+  ]
 }

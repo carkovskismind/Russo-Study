@@ -43,6 +43,7 @@ for (const archivo of manifest.mazos || []) {
       return;
     }
     if (!t.ru || !t.es) { errores.push(`${donde}: necesita "ru" y "es"`); return; }
+    if (!t.pista) avisos.push(`${donde}: "${t.ru}" no tiene "pista"`);
     if (LATINA.test(t.ru)) errores.push(`${donde}: "${t.ru}" tiene letras latinas mezcladas`);
     [...t.ru].forEach((ch, j, arr) => {
       if (ch === "́" && !VOCAL.test(arr[j - 1] || "")) {

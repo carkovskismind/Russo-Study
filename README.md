@@ -2,7 +2,8 @@
 
 Tarjetas de estudio de ruso con repaso espaciado. Es una app web que se instala en el celular y guarda tu progreso en la nube para verlo en cualquier dispositivo.
 
-- **Repaso espaciado:** cada tarjeta vuelve justo antes de que la olvides. Calificas con *Otra vez*, *Difícil*, *Bien* o *Fácil*.
+- **Práctica como Chessbook:** las palabras nuevas se muestran primero y luego se preguntan con 4 opciones. Si fallas o pides pista, la palabra cuenta como error, pierde su progreso y vuelve a tu fila del día.
+- **Pistas y notas personales:** cada palabra tiene una explicación breve, y puedes agregar tu propia nota para recordarla (se sincroniza con tu progreso).
 - **Mazos por tema:** vocabulario, países y gentilicios, y gramática. Activa o desactiva cada mazo para tu sesión diaria.
 - **Etiquetas de gramática:** cada sustantivo dice su género y si es animado (`Fem. · anim.`).
 - **Extras:** cursiva rusa, pronunciación con la voz del dispositivo, búsqueda dentro de cada mazo y repaso rápido antes de un examen.
@@ -12,13 +13,14 @@ Tarjetas de estudio de ruso con repaso espaciado. Es una app web que se instala 
 Todo el vocabulario vive en la carpeta `data/`. Para agregar una palabra, abre el archivo del mazo y añade una línea dentro de `"tarjetas"`:
 
 ```json
-{"ru": "соба́ка", "es": "perro / perra", "tag": "Fem. · anim.", "nota": "pl. соба́ки"}
+{"ru": "соба́ка", "es": "perro / perra", "pista": "Animal doméstico que ladra.", "tag": "Fem. · anim.", "nota": "pl. соба́ки"}
 ```
 
 | Campo  | Obligatorio | Qué es |
 |--------|-------------|--------|
 | `ru`   | sí | La palabra en ruso. Puedes marcar el acento con el carácter ◌́ (U+0301) después de la vocal. |
 | `es`   | sí | La traducción. |
+| `pista` | recomendado | Explicación breve que aparece con «No sé, dame una pista». No debe decir la respuesta. Si falta, la app arma una con el tipo de palabra y la primera letra. |
 | `tag`  | no | Género, animado, tipo de palabra. |
 | `nota` | no | Plural, conjugación o cualquier aclaración. `\n` hace un salto de línea. |
 
