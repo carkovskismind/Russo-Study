@@ -3,6 +3,9 @@
 Tarjetas de estudio de ruso con repaso espaciado. Es una app web que se instala en el celular y guarda tu progreso en la nube para verlo en cualquier dispositivo.
 
 - **Práctica como Chessbook:** las palabras nuevas se muestran primero y luego se preguntan con 4 opciones. Si fallas o pides pista, la palabra cuenta como error, pierde su progreso y vuelve a tu fila del día.
+- **Pronunciación** debajo de cada palabra rusa, en las opciones y en la lista del mazo.
+- **Lista para hoy:** en cada mazo agrega palabras con «+ Hoy» o selecciona varias; entran extra en tu práctica del día y se quedan hasta que las practiques.
+- **Sonidos** al acertar y al fallar (se apagan en Ajustes) y tema **oscuro** o claro.
 - **Pistas y notas personales:** cada palabra tiene una explicación breve, y puedes agregar tu propia nota para recordarla (se sincroniza con tu progreso).
 - **Mazos por tema:** vocabulario, países y gentilicios, y gramática. Activa o desactiva cada mazo para tu sesión diaria.
 - **Etiquetas de gramática:** cada sustantivo dice su género y si es animado (`Fem. · anim.`).
@@ -13,12 +16,13 @@ Tarjetas de estudio de ruso con repaso espaciado. Es una app web que se instala 
 Todo el vocabulario vive en la carpeta `data/`. Para agregar una palabra, abre el archivo del mazo y añade una línea dentro de `"tarjetas"`:
 
 ```json
-{"ru": "соба́ка", "es": "perro / perra", "pista": "Animal doméstico que ladra.", "tag": "Fem. · anim.", "nota": "pl. соба́ки"}
+{"ru": "соба́ка", "fonetica": "sa-BA-ka", "es": "perro / perra", "pista": "Animal doméstico que ladra.", "tag": "Fem. · anim.", "nota": "pl. соба́ки"}
 ```
 
 | Campo  | Obligatorio | Qué es |
 |--------|-------------|--------|
 | `ru`   | sí | La palabra en ruso. Puedes marcar el acento con el carácter ◌́ (U+0301) después de la vocal. |
+| `fonetica` | recomendado | Pronunciación con letras del español; la sílaba fuerte en MAYÚSCULAS (`sa-BA-ka`). |
 | `es`   | sí | La traducción. |
 | `pista` | recomendado | Explicación breve que aparece con «No sé, dame una pista». No debe decir la respuesta. Si falta, la app arma una con el tipo de palabra y la primera letra. |
 | `tag`  | no | Género, animado, tipo de palabra. |

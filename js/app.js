@@ -1,7 +1,7 @@
 import { Store } from "./store.js";
 import { schedule, endOfDay, dateKey } from "./srs.js";
 
-const APP_VERSION = "1.2.0";
+const APP_VERSION = "1.3.0";
 const NEW_PER_DECK_SESSION = 20;
 
 const $ = (sel) => document.querySelector(sel);
@@ -11,6 +11,8 @@ const state = {
   decks: [],
   deckById: new Map(),
   currentDeck: null,
+  selecting: false,
+  selected: new Set(),
   session: null,
   view: "home",
   loginEmail: "",
@@ -20,6 +22,7 @@ const state = {
 const store = new Store((what) => {
   if (what === "status" || what === "auth") renderSync();
   if (what === "data" || what === "auth") {
+    applyTheme();
     if (state.view === "home") renderHome();
     if (state.view === "deck") renderDeck();
   }
@@ -105,6 +108,7 @@ async function loadDecks() {
         tag: c.tag || "",
         nota: c.nota || "",
         pista: c.pista || "",
+        fonetica: c.fonetica || "",
         q: c.pregunta,
         a: c.respuesta
       });
@@ -177,8 +181,11 @@ function renderHome() {
 
   const btn = $("#start-today");
   const note = $("#today-note");
-  btn.disabled = due + newCount === 0;
-  if (due + newCount === 0) {
+  const picks = pickedCards().length;
+  btn.disabled = due + newCount + picks === 0;
+  if (picks) {
+    note.textContent = `Más ${picks} ${picks === 1 ? "palabra que elegiste" : "palabras que elegiste"}.`;
+  } else if (due + newCount === 0) {
     note.textContent = fresh === 0
       ? "Terminaste todos los mazos activos. Activa otro mazo o usa el repaso rápido."
       : "Todo al día. Vuelve mañana o sube el límite de nuevas en Ajustes.";
@@ -242,6 +249,8 @@ function openDeck(id) {
   state.currentDeck = state.deckById.get(id);
   if (!state.currentDeck) return;
   $("#deck-search").value = "";
+  state.selecting = false;
+  state.selected = new Set();
   renderDeck();
   show("deck");
 }
@@ -261,6 +270,26 @@ function renderDeck() {
   renderWords();
 }
 
+function pickedCards() {
+  const out = [];
+  for (const id of store.pickedIds()) {
+    for (const d of state.decks) {
+      const c = d.cards.find((x) => x.id === id);
+      if (c) { out.push(c); break; }
+    }
+  }
+  return out;
+}
+
+function renderSelectBar() {
+  const bar = $("#select-bar");
+  const n = state.selected.size;
+  $("#select-toggle").textContent = state.selecting ? "Cancelar selección" : "Seleccionar varias";
+  bar.hidden = !state.selecting;
+  $("#select-count").textContent = n === 1 ? "1 palabra seleccionada" : `${n} palabras seleccionadas`;
+  $("#select-add").disabled = n === 0;
+}
+
 function renderWords() {
   const d = state.currentDeck;
   const q = norm($("#deck-search").value);
@@ -274,18 +303,27 @@ function renderWords() {
     host.innerHTML = `<li><span class="empty">Nada coincide con tu búsqueda.</span></li>`;
     return;
   }
+  renderSelectBar();
   host.innerHTML = list
     .map((c) => {
       const sts = keysFor(c).map((k) => store.card(k));
       const cls = sts.every((x) => x && x.ivl >= 1) ? "known" : sts.some(Boolean) ? "learning" : "";
       const dot = `<span class="wl-dot ${cls}" aria-hidden="true"></span>`;
+      const on = store.picked(c.id);
+      const check = state.selecting
+        ? `<input class="wl-check" type="checkbox" data-select="${esc(c.id)}" ${state.selected.has(c.id) ? "checked" : ""} aria-label="Seleccionar">`
+        : "";
+      const pick = `<button class="pick-btn${on ? " on" : ""}" type="button" data-pick="${esc(c.id)}" aria-pressed="${on}">${on ? "✓ Hoy" : "+ Hoy"}</button>`;
       if (c.kind === "qa") {
-        return `<li><span class="wl-es" style="grid-column:1/-1">${dot}${esc(c.q)}</span></li>`;
+        return `<li class="${state.selecting ? "selecting" : ""}">${check}
+          <span class="wl-es wl-full">${dot}${esc(c.q)}</span>
+          <span class="wl-foot">${pick}</span>
+        </li>`;
       }
-      return `<li>
-        <span class="wl-ru" lang="ru">${dot}${esc(c.ru)}</span>
+      return `<li class="${state.selecting ? "selecting" : ""}">${check}
+        <span class="wl-ru" lang="ru">${dot}${esc(c.ru)}${c.fonetica ? `<span class="fon">${esc(c.fonetica)}</span>` : ""}</span>
         <span class="wl-es">${esc(c.es)}</span>
-        ${c.tag ? `<span class="wl-tag">${esc(c.tag)}</span>` : ""}
+        <span class="wl-foot">${c.tag ? `<span class="wl-tag">${esc(c.tag)}</span>` : "<span></span>"}${pick}</span>
         ${store.note(c.id) ? `<span class="wl-note">Tu nota: ${esc(store.note(c.id))}</span>` : ""}
       </li>`;
     })
@@ -325,6 +363,18 @@ function startToday() {
   const today = dateKey(Date.now());
   const newLeft = Math.max(0, store.settings.newPerDay - store.newToday(today));
   const queue = buildQueue(state.decks.filter(deckEnabled), newLeft);
+  // Palabras elegidas a mano: extra, mezcladas con las demás.
+  const inQueue = new Set(queue.map((it) => it.key));
+  for (const c of pickedCards()) {
+    for (const key of keysFor(c)) {
+      if (inQueue.has(key)) {
+        queue.find((it) => it.key === key).picked = true;
+        continue;
+      }
+      const item = { card: c, key, dir: key.split("|").pop(), phase: store.card(key) ? "quiz" : "learn", failed: false, hint: 0, picked: true };
+      queue.splice(Math.floor(Math.random() * (queue.length + 1)), 0, item);
+    }
+  }
   startSession(queue, "Práctica", false);
 }
 
@@ -385,11 +435,12 @@ function speak(text) {
   window.speechSynthesis.speak(u);
 }
 
-function ruBlock(text) {
+function ruBlock(text, fon) {
   const cursive = store.settings.cursive
     ? `<div class="script-ru" lang="ru" aria-hidden="true">${esc(plain(text))}</div>`
     : "";
-  return `<div class="big-ru" lang="ru">${esc(text)}</div>${cursive}`;
+  const sound = fon ? `<div class="fon fon-big">${esc(fon)}</div>` : "";
+  return `<div class="big-ru" lang="ru">${esc(text)}</div>${sound}${cursive}`;
 }
 
 function extras(card) {
@@ -416,10 +467,13 @@ function buildOptions(it) {
       const k = norm(x[field]);
       if (seen.has(k)) continue;
       seen.add(k);
-      picks.push(x[field]);
+      picks.push({ text: x[field], fon: field === "ru" ? x.fonetica : "" });
     }
   }
-  return shuffle([{ text: answer, correct: true }, ...picks.map((t) => ({ text: t, correct: false }))]);
+  return shuffle([
+    { text: answer, fon: field === "ru" ? c.fonetica : "", correct: true },
+    ...picks.map((o) => ({ ...o, correct: false }))
+  ]);
 }
 
 function hideAllControls() {
@@ -466,7 +520,7 @@ function renderItem() {
       front.innerHTML = `<span class="learn-label">Regla nueva</span><div class="qa-text">${esc(c.q)}</div>`;
       back.innerHTML = `<div class="qa-text answer">${esc(c.a)}</div>`;
     } else {
-      front.innerHTML = `<span class="learn-label">Palabra nueva</span>${ruBlock(c.ru)}`;
+      front.innerHTML = `<span class="learn-label">Palabra nueva</span>${ruBlock(c.ru, c.fonetica)}`;
       back.innerHTML = `<div class="big-es">${esc(c.es)}</div>` + extras(c);
       speakBtn.hidden = !("speechSynthesis" in window);
       if (store.settings.autoSpeak) speak(c.ru);
@@ -486,9 +540,9 @@ function renderItem() {
 
   if (it.dir === "es") {
     front.innerHTML = `<div class="big-es">${esc(c.es)}</div><div class="prompt-blank">___</div>`;
-    back.innerHTML = ruBlock(c.ru) + extras(c);
+    back.innerHTML = ruBlock(c.ru, c.fonetica) + extras(c);
   } else {
-    front.innerHTML = ruBlock(c.ru) + `<div class="prompt-blank">___</div>`;
+    front.innerHTML = ruBlock(c.ru, c.fonetica) + `<div class="prompt-blank">___</div>`;
     back.innerHTML = `<div class="big-es">${esc(c.es)}</div>` + extras(c);
     speakBtn.hidden = !("speechSynthesis" in window);
     if (store.settings.autoSpeak) speak(c.ru);
@@ -497,7 +551,7 @@ function renderItem() {
   it.options = buildOptions(it);
   const box = $("#options");
   box.innerHTML = it.options
-    .map((o, i) => `<button class="option${it.dir === "es" ? " ru" : ""}" type="button" data-opt="${i}"${it.dir === "es" ? ' lang="ru"' : ""}><span class="key">${i + 1}</span><span>${esc(o.text)}</span></button>`)
+    .map((o, i) => `<button class="option${it.dir === "es" ? " ru" : ""}" type="button" data-opt="${i}"${it.dir === "es" ? ' lang="ru"' : ""}><span class="key">${i + 1}</span><span class="opt-text"><span>${esc(o.text)}</span>${o.fon ? `<span class="fon">${esc(o.fon)}</span>` : ""}</span></button>`)
     .join("");
   box.hidden = false;
   const hint = $("#btn-hint");
@@ -512,6 +566,41 @@ function markLearned() {
   // Se pregunta después de un par de tarjetas, como en Chessbook.
   s.queue.splice(Math.min(2, s.queue.length), 0, it);
   renderItem();
+}
+
+// ---------- Sonidos ----------
+let audioCtx = null;
+function playSound(ok) {
+  if (!store.settings.sound) return;
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    const t0 = audioCtx.currentTime;
+    const notes = ok
+      ? [{ f: 880, at: 0, len: 0.12, type: "sine" }, { f: 1318.5, at: 0.09, len: 0.2, type: "sine" }]
+      : [{ f: 220, at: 0, len: 0.16, type: "triangle" }, { f: 164.8, at: 0.12, len: 0.24, type: "triangle" }];
+    for (const n of notes) {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = n.type;
+      osc.frequency.value = n.f;
+      gain.gain.setValueAtTime(0.0001, t0 + n.at);
+      gain.gain.exponentialRampToValueAtTime(ok ? 0.18 : 0.22, t0 + n.at + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t0 + n.at + n.len);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(t0 + n.at);
+      osc.stop(t0 + n.at + n.len + 0.02);
+    }
+  } catch {
+    /* sin audio disponible */
+  }
+}
+
+function applyTheme() {
+  const theme = store.settings.theme === "light" ? "light" : "dark";
+  document.documentElement.dataset.theme = theme;
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute("content", theme === "light" ? "#f4f5f7" : "#0b0c0d");
 }
 
 function showFeedback(ok, text) {
@@ -536,9 +625,7 @@ function choose(i) {
   revealAfterAnswer(it);
   // Usar la pista cuenta como error aunque la respuesta sea correcta.
   const ok = right && !it.hint;
-  if (ok) showFeedback(true, "¡Correcto!");
-  else if (right) showFeedback(false, "Correcto, pero usaste la pista: cuenta como error y la repasarás otra vez.");
-  else showFeedback(false, "Incorrecto. Esta palabra vuelve a tu fila de hoy.");
+  playSound(right);
   settle(ok);
   if (ok) s.timer = setTimeout(next, it.card.nota ? 2200 : 1100);
 }
@@ -584,7 +671,7 @@ function useHint() {
     if (it.options[j].correct) b.classList.add("correct");
   });
   revealAfterAnswer(it);
-  showFeedback(false, "Esta palabra vuelve a tu fila de hoy.");
+  playSound(false);
   settle(false);
 }
 
@@ -641,6 +728,7 @@ function selfCheck(knew) {
   const s = state.session;
   if (s.answered) return;
   s.answered = true;
+  playSound(knew);
   settle(knew);
   next();
 }
@@ -672,7 +760,10 @@ function next() {
   clearTimeout(s.timer);
   const it = s.queue.shift();
   if (s.requeue) s.queue.push(it);
-  else s.resolved++;
+  else {
+    s.resolved++;
+    if (it.picked && !s.cram) store.setPicks([it.card.id], false);
+  }
   if (s.queue.length) renderItem();
   else finishSession();
 }
@@ -753,6 +844,8 @@ function renderSettings() {
   $("#new-per-day").value = s.newPerDay;
   $("#opt-cursive").checked = !!s.cursive;
   $("#opt-autospeak").checked = !!s.autoSpeak;
+  $("#opt-sound").checked = s.sound !== false;
+  $(`#theme-${s.theme === "light" ? "light" : "dark"}`).checked = true;
   $("#reset-confirm").hidden = true;
   $("#reset-ask").hidden = false;
   $("#app-version").textContent = `Russo Study ${APP_VERSION}`;
@@ -843,6 +936,52 @@ function bind() {
   });
   $("#opt-cursive").addEventListener("change", (e) => store.setSetting("cursive", e.target.checked));
   $("#opt-autospeak").addEventListener("change", (e) => store.setSetting("autoSpeak", e.target.checked));
+  $("#opt-sound").addEventListener("change", (e) => {
+    store.setSetting("sound", e.target.checked);
+    if (e.target.checked) playSound(true);
+  });
+  for (const r of $$('input[name="theme"]')) {
+    r.addEventListener("change", () => { if (r.checked) { store.setSetting("theme", r.value); applyTheme(); } });
+  }
+
+  // Lista del día desde un mazo
+  $("#deck-words").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-pick]");
+    if (!b) return;
+    const id = b.dataset.pick;
+    const on = !store.picked(id);
+    store.setPicks([id], on);
+    toast(on ? "Agregada a tu práctica de hoy" : "Quitada de tu práctica de hoy");
+    renderWords();
+  });
+  $("#deck-words").addEventListener("change", (e) => {
+    const c = e.target.closest("[data-select]");
+    if (!c) return;
+    if (c.checked) state.selected.add(c.dataset.select);
+    else state.selected.delete(c.dataset.select);
+    renderSelectBar();
+  });
+  $("#select-toggle").addEventListener("click", () => {
+    state.selecting = !state.selecting;
+    state.selected = new Set();
+    renderWords();
+  });
+  $("#select-all").addEventListener("click", () => {
+    const q = norm($("#deck-search").value);
+    for (const c of state.currentDeck.cards) {
+      const hay = norm([c.ru, c.es, c.q, c.a, c.nota, c.tag].join(" "));
+      if (!q || hay.includes(q)) state.selected.add(c.id);
+    }
+    renderWords();
+  });
+  $("#select-add").addEventListener("click", () => {
+    const ids = Array.from(state.selected);
+    store.setPicks(ids, true);
+    toast(ids.length === 1 ? "1 palabra agregada a hoy" : `${ids.length} palabras agregadas a hoy`);
+    state.selecting = false;
+    state.selected = new Set();
+    renderWords();
+  });
   $("#reset-ask").addEventListener("click", () => { $("#reset-confirm").hidden = false; $("#reset-ask").hidden = true; });
   $("#reset-no").addEventListener("click", () => { $("#reset-confirm").hidden = true; $("#reset-ask").hidden = false; });
   $("#reset-yes").addEventListener("click", () => {
@@ -887,6 +1026,7 @@ function bind() {
 
 // ---------- Arranque ----------
 async function main() {
+  applyTheme();
   bind();
   renderSync();
   try {

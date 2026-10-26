@@ -1,15 +1,14 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Russo Study</title>
 <meta name="description" content="Tarjetas de estudio de ruso con repaso espaciado">
-<meta name="theme-color" content="#f4f6fb" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#10151f" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#0b0c0d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Russo">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -77,7 +76,17 @@
     <span class="visually-hidden">Buscar en el mazo</span>
     <input id="deck-search" type="search" placeholder="Buscar en ruso o en español" autocomplete="off">
   </label>
+  <div class="select-tools">
+    <button class="link-btn" id="select-toggle" type="button">Seleccionar varias</button>
+  </div>
   <ul class="word-list" id="deck-words"></ul>
+  <div class="select-bar" id="select-bar" hidden>
+    <span id="select-count">0 palabras seleccionadas</span>
+    <div class="select-actions">
+      <button class="btn" id="select-all" type="button">Todas</button>
+      <button class="btn btn-primary" id="select-add" type="button" disabled>Agregar a hoy</button>
+    </div>
+  </div>
 </main>
 
 <!-- ESTUDIO -->
@@ -111,7 +120,7 @@
   </article>
 
   <aside class="hint-box" id="hint-box" hidden>
-    <span class="hint-label">Pista · cuenta como error</span>
+    <span class="hint-label">Pista</span>
     <p class="hint-text" id="hint-text"></p>
     <p class="hint-mine" id="hint-mine" hidden><b>Tu nota:</b> <span id="hint-mine-text"></span></p>
   </aside>
@@ -178,6 +187,15 @@
       <span>Leer en voz alta al mostrar ruso</span>
       <input type="checkbox" id="opt-autospeak" class="switch">
     </label>
+    <label class="field field-row switch-row" for="opt-sound">
+      <span>Sonidos al acertar y al fallar</span>
+      <input type="checkbox" id="opt-sound" class="switch">
+    </label>
+    <fieldset class="field">
+      <legend>Apariencia</legend>
+      <label class="radio"><input type="radio" name="theme" id="theme-dark" value="dark"> Oscuro</label>
+      <label class="radio"><input type="radio" name="theme" id="theme-light" value="light"> Claro</label>
+    </fieldset>
   </section>
 
   <section class="panel" aria-labelledby="danger-title">

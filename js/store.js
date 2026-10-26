@@ -11,6 +11,8 @@ export const DEFAULT_SETTINGS = {
   newPerDay: 15,
   cursive: false,
   autoSpeak: false,
+  sound: true,
+  theme: "dark",
   disabled: {}
 };
 
@@ -20,6 +22,7 @@ function emptyProgress() {
     cards: {},
     newLog: {},
     notes: {},
+    picks: {},
     settings: { ...DEFAULT_SETTINGS, t: 0 },
     resetAt: 0
   };
@@ -51,6 +54,7 @@ function normalize(p) {
     cards: p.cards && typeof p.cards === "object" ? p.cards : {},
     newLog: p.newLog && typeof p.newLog === "object" ? p.newLog : {},
     notes: p.notes && typeof p.notes === "object" ? p.notes : {},
+    picks: p.picks && typeof p.picks === "object" ? p.picks : {},
     settings: { ...base.settings, ...(p.settings || {}) },
     resetAt: p.resetAt || 0
   };
@@ -82,6 +86,13 @@ export function merge(a, b) {
     for (const [id, n] of Object.entries(src.notes)) {
       const cur = out.notes[id];
       if (!cur || (n.t || 0) > (cur.t || 0)) out.notes[id] = n;
+    }
+  }
+  // Palabras elegidas para estudiar: gana el cambio más reciente.
+  for (const src of [a, b]) {
+    for (const [id, n] of Object.entries(src.picks)) {
+      const cur = out.picks[id];
+      if (!cur || (n.t || 0) > (cur.t || 0)) out.picks[id] = n;
     }
   }
   out.settings = (b.settings.t || 0) > (a.settings.t || 0) ? b.settings : a.settings;
@@ -237,6 +248,21 @@ export class Store {
 
   countNew(day) {
     this.p.newLog[day] = (this.p.newLog[day] || 0) + 1;
+  }
+
+  picked(id) {
+    const n = this.p.picks[id];
+    return !!(n && n.on);
+  }
+
+  pickedIds() {
+    return Object.keys(this.p.picks).filter((id) => this.p.picks[id].on);
+  }
+
+  setPicks(ids, on) {
+    const t = Date.now();
+    for (const id of ids) this.p.picks[id] = { on, t };
+    this.save();
   }
 
   note(id) {

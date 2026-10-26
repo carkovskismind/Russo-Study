@@ -1,65 +1,47 @@
-/* Concepto: un cuaderno escolar ruso "в клетку" — papel cuadriculado azul,
-   margen rojo y tinta de pluma azul. Una columna centrada, pensada para el celular. */
+/* Concepto: tablero de práctica estilo Chessbook — fondo negro liso,
+   superficies gris carbón y color solo para el estado (pendiente, acierto, error).
+   Una columna centrada, pensada para el celular. Oscuro por defecto; claro en Ajustes. */
 :root {
-  --paper: #f4f6fb;
-  --card: #ffffff;
-  --grid: #dbe3f1;
-  --ink: #1b2742;
-  --ink-soft: #5a6680;
-  --line: #e1e6f0;
-  --accent: #2648b8;
-  --accent-ink: #ffffff;
-  --margin: #d2435a;
-  --again: #c23a50;
-  --hard: #a8670f;
-  --good: #23784d;
-  --easy: #2648b8;
-  --shadow: 0 1px 2px rgba(27, 39, 66, .06), 0 8px 24px rgba(27, 39, 66, .07);
+  --paper: #0b0c0d;
+  --card: #18191b;
+  --grid: #26282b;
+  --ink: #ececec;
+  --ink-soft: #92969c;
+  --line: #2a2c30;
+  --accent: #8fb1ff;
+  --accent-ink: #0b0c0d;
+  --margin: #e5534b;
+  --again: #ef5b52;
+  --hard: #e6a23c;
+  --good: #57b36a;
+  --easy: #8fb1ff;
+  --shadow: none;
 
   --font-ru: "PT Serif", Georgia, "Times New Roman", serif;
   --font-ui: "PT Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-script: "Marck Script", "Segoe Script", cursive;
 
-  --radius: 14px;
+  --radius: 12px;
   --gutter-l: max(16px, env(safe-area-inset-left, 0px));
   --gutter-r: max(16px, env(safe-area-inset-right, 0px));
-  color-scheme: light;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #10151f;
-    --card: #171e2b;
-    --grid: #1e2737;
-    --ink: #e6ebf5;
-    --ink-soft: #9aa6bd;
-    --line: #273146;
-    --accent: #86a0ff;
-    --accent-ink: #0d1424;
-    --margin: #ff6f84;
-    --again: #ff7a8c;
-    --hard: #e8a948;
-    --good: #5ccf93;
-    --easy: #86a0ff;
-    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25);
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --paper: #10151f;
-  --card: #171e2b;
-  --grid: #1e2737;
-  --ink: #e6ebf5;
-  --ink-soft: #9aa6bd;
-  --line: #273146;
-  --accent: #86a0ff;
-  --accent-ink: #0d1424;
-  --margin: #ff6f84;
-  --again: #ff7a8c;
-  --hard: #e8a948;
-  --good: #5ccf93;
-  --easy: #86a0ff;
-  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25);
   color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --paper: #f4f5f7;
+  --card: #ffffff;
+  --grid: #e7e9ee;
+  --ink: #17191c;
+  --ink-soft: #5d636c;
+  --line: #e1e4ea;
+  --accent: #2f5bd3;
+  --accent-ink: #ffffff;
+  --margin: #c9383a;
+  --again: #c9383a;
+  --hard: #b87412;
+  --good: #23864a;
+  --easy: #2f5bd3;
+  --shadow: 0 1px 2px rgba(20, 22, 28, .06), 0 6px 18px rgba(20, 22, 28, .06);
+  color-scheme: light;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -285,7 +267,7 @@ kbd { font: 12px var(--font-ui); opacity: .7; border: 1px solid currentColor; bo
 /* Aviso */
 .toast {
   position: fixed; left: 50%; transform: translateX(-50%);
-  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  top: calc(14px + env(safe-area-inset-top, 0px));
   background: var(--ink); color: var(--paper); border-radius: 10px; padding: 10px 16px;
   font-size: 14px; max-width: calc(100% - 32px); box-shadow: var(--shadow); z-index: 20;
 }
@@ -368,3 +350,41 @@ kbd { font: 12px var(--font-ui); opacity: .7; border: 1px solid currentColor; bo
 .note-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .link-btn { align-self: flex-start; border: 0; background: none; padding: 6px 0; color: var(--accent); font-weight: 700; }
 .wl-note { grid-column: 1 / -1; font-size: 13px; color: var(--accent); overflow-wrap: anywhere; }
+
+
+/* ---------- Estilo plano tipo Chessbook ---------- */
+.card { background-image: none; background: var(--card); padding: 20px 20px 24px; border: 1px solid var(--line); }
+@media (min-width: 560px) { .card { padding-left: 24px; } }
+.today, .done-box { border-left: 0; border: 1px solid var(--line); }
+.deck-list, .word-list, .panel { border: 1px solid var(--line); }
+.brand-mark { box-shadow: none; background: var(--card); color: var(--ink); border: 1px solid var(--line); }
+.card-badge { color: #fff; }
+
+/* Pronunciación */
+.fon { display: block; font: 400 14px/1.35 var(--font-ui); color: var(--ink-soft); letter-spacing: .02em; overflow-wrap: anywhere; }
+.fon-big { font-size: 18px; color: var(--hard); }
+.opt-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.option .fon { font-size: 13px; }
+.wl-ru .fon { margin-top: 2px; }
+
+/* Lista del día en el mazo */
+.word-list li.selecting { grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr); }
+.word-list li.selecting > .wl-check { grid-row: span 3; align-self: start; margin-top: 4px; }
+.wl-check { width: 20px; height: 20px; accent-color: var(--accent); margin: 0; }
+.wl-full { grid-column: 1 / -1; }
+.word-list li.selecting .wl-full, .word-list li.selecting .wl-foot, .word-list li.selecting .wl-note { grid-column: 2 / -1; }
+.wl-foot { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.pick-btn {
+  flex: none; border: 1px solid var(--line); background: transparent; color: var(--ink-soft);
+  border-radius: 999px; padding: 3px 12px; font-size: 13px; font-weight: 700;
+}
+.pick-btn.on { border-color: var(--good); color: var(--good); }
+.select-tools { display: flex; justify-content: flex-end; margin-top: -8px; }
+.select-bar {
+  position: sticky; bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 10px 12px; font-size: 14px; color: var(--ink-soft);
+}
+.select-actions { display: flex; gap: 8px; }
+.select-actions .btn { min-height: 40px; padding: 0 14px; }
