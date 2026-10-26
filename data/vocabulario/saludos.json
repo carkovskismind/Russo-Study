@@ -1,0 +1,28 @@
+{
+  "id": "saludos",
+  "titulo": "Saludos y cortesía",
+  "grupo": "Vocabulario",
+  "descripcion": "Frases para saludar, despedirte, agradecer y presentarte.",
+  "tarjetas": [
+    {"ru": "здра́вствуйте", "es": "hola (de usted o a varios)", "tag": "Frase", "nota": "Saludo formal."},
+    {"ru": "здра́вствуй", "es": "hola (de tú)", "tag": "Frase", "nota": "Saludo neutro a una persona a la que tuteas."},
+    {"ru": "приве́т", "es": "¡hola!", "tag": "Frase", "nota": "Informal."},
+    {"ru": "всем приве́т", "es": "¡hola a todos!", "tag": "Frase"},
+    {"ru": "до́брый ве́чер", "es": "buenas tardes / buenas noches (al llegar)", "tag": "Frase"},
+    {"ru": "споко́йной но́чи", "es": "buenas noches (al irse a dormir)", "tag": "Frase"},
+    {"ru": "до свида́ния", "es": "hasta luego / adiós", "tag": "Frase", "nota": "Despedida formal."},
+    {"ru": "пока́", "es": "adiós / bye", "tag": "Frase", "nota": "Despedida informal."},
+    {"ru": "спаси́бо", "es": "gracias", "tag": "Frase"},
+    {"ru": "спаси́бо за внима́ние", "es": "gracias por su atención", "tag": "Frase", "nota": "Para cerrar una exposición."},
+    {"ru": "пожа́луйста", "es": "por favor / de nada", "tag": "Frase"},
+    {"ru": "извини́те", "es": "disculpe / perdone", "tag": "Frase", "nota": "De tú: извини́."},
+    {"ru": "добро́ пожа́ловать", "es": "bienvenido(a)", "tag": "Frase"},
+    {"ru": "э́то всё", "es": "eso es todo", "tag": "Frase"},
+    {"ru": "меня́ зову́т…", "es": "me llamo…", "tag": "Frase", "nota": "Literalmente: «a mí me llaman…»."},
+    {"ru": "как вас зову́т?", "es": "¿cómo se llama usted?", "tag": "Frase", "nota": "De tú: как тебя́ зову́т?"},
+    {"ru": "как его́ зову́т?", "es": "¿cómo se llama él?", "tag": "Frase", "nota": "Ella: как её зову́т? Ellos: как их зову́т?"},
+    {"ru": "С Но́вым го́дом!", "es": "¡Feliz Año Nuevo!", "tag": "Frase"},
+    {"ru": "С пра́здником!", "es": "¡Felices fiestas!", "tag": "Frase"},
+    {"ru": "Нет пробле́м!", "es": "¡No hay problema!", "tag": "Frase"}
+  ]
+}

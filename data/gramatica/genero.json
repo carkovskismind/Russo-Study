@@ -1,0 +1,22 @@
+{
+  "id": "genero",
+  "titulo": "Género y adjetivos",
+  "grupo": "Gramática",
+  "descripcion": "Cómo saber el género de un sustantivo y cómo concuerda el adjetivo.",
+  "tarjetas": [
+    {"pregunta": "¿Qué letra decide el género de un sustantivo?", "respuesta": "La última letra.\nconsonante o -й → masculino (он): стол, музе́й\n-а / -я → femenino (она́): ма́ма, семья́\n-о / -е / -ё → neutro (оно́): окно́, мо́ре\n-ь → puede ser masculino o femenino: день (m), ночь (f)"},
+    {"pregunta": "Excepciones: palabras en -а / -я que son masculinas", "respuesta": "Las que nombran a hombres: па́па, де́душка, дя́дя, мужчи́на, судья́, Го́ша.\nEl adjetivo va en masculino: мой па́па."},
+    {"pregunta": "Excepciones: palabras en -мя", "respuesta": "Son neutras: и́мя, вре́мя, зна́мя.\nPlural en -ена́: имена́, времена́, знамёна."},
+    {"pregunta": "¿De qué género es ко́фе?", "respuesta": "Masculino, aunque termina en -е: чёрный ко́фе.\nNo cambia en ningún caso."},
+    {"pregunta": "¿Hay género anatómico y gramatical?", "respuesta": "Sí. Las personas tienen género anatómico (мужчи́на es hombre).\nLos objetos tienen solo género gramatical (стол es masculino, ла́мпа femenina).\nTodas las palabras en singular tienen género."},
+    {"pregunta": "Terminaciones del adjetivo según el género", "respuesta": "Masculino: -ый / -ий / -ой (но́вый, си́ний, большо́й)\nFemenino: -ая / -яя (но́вая, си́няя)\nNeutro: -ое / -ее (но́вое, си́нее)\nPlural: -ые / -ие (но́вые, си́ние)"},
+    {"pregunta": "¿Con qué concuerda el adjetivo?", "respuesta": "Con el género y el número del sustantivo:\nкра́сный пе́рец (m)\nбе́лая бума́га (f)\nжёлтое со́лнце (n)\nчёрные боти́нки (pl)"},
+    {"pregunta": "Los colores son…", "respuesta": "Adjetivos. Se dan en masculino porque цвет es masculino, y cambian según el sustantivo:\nзелёное де́рево, голуба́я маши́на, си́нее мо́ре."},
+    {"pregunta": "Adjetivos con terminación suave (-ий / -яя / -ее / -ие)", "respuesta": "си́ний → си́няя, си́нее, си́ние\nпосле́дний → после́дняя, после́днее, после́дние\nдома́шний → дома́шняя, дома́шнее, дома́шние"},
+    {"pregunta": "Adjetivos con acento al final (-ой)", "respuesta": "большо́й, голубо́й, золото́й, молодо́й, родно́й, второ́й.\nFemenino: больша́я, голуба́я, золота́я…"},
+    {"pregunta": "Palabras que son adjetivos usados como sustantivos", "respuesta": "Se declinan como adjetivos:\nгости́ная, столо́вая, ва́нная, де́тская (cuartos)\nучёный, полице́йский, пожа́рный (profesiones)\nру́сский, крёстный, знако́мый, живо́тное"},
+    {"pregunta": "Adjetivo vs. adverbio: хоро́ший / хорошо́", "respuesta": "El adjetivo califica a un sustantivo: хоро́ший друг.\nEl adverbio califica a un verbo: Он хорошо́ говори́т.\nIgual: интере́сный / интере́сно, краси́вый / краси́во, свобо́дный / свобо́дно."},
+    {"pregunta": "Posesivos según el género: мой, твой, наш, ваш", "respuesta": "мой брат · моя́ сестра́ · моё письмо́ · мои́ роди́тели\nтвой · твоя́ · твоё · твои́\nнаш · на́ша · на́ше · на́ши\nваш · ва́ша · ва́ше · ва́ши"},
+    {"pregunta": "Posesivos que nunca cambian", "respuesta": "его́ (de él), её (de ella), их (de ellos):\nего́ ма́ма, его́ брат, его́ де́ти — siempre igual."}
+  ]
+}

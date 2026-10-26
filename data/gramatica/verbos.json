@@ -1,0 +1,30 @@
+{
+  "id": "gramatica-verbos",
+  "titulo": "Verbos: conjugación y tiempos",
+  "grupo": "Gramática",
+  "descripcion": "Presente de la 1.ª y 2.ª conjugación, pasado, futuro y los usos de играть.",
+  "tarjetas": [
+    {"pregunta": "1.ª conjugación (-ать / -ять): terminaciones del presente", "respuesta": "я -ю (-у)     мы -ем\nты -ешь      вы -ете\nон -ет        они́ -ют (-ут)\nSe cambian las 2 últimas letras del infinitivo: де́лать → де́лаю, де́лаешь…"},
+    {"pregunta": "2.ª conjugación (-ить / -еть): terminaciones del presente", "respuesta": "я -ю (-у)     мы -им\nты -ишь      вы -ите\nон -ит        они́ -ят (-ат)\nSe cambian las 3 últimas letras del infinitivo: говори́ть → говорю́, говори́шь…"},
+    {"pregunta": "Conjuga де́лать (hacer) en presente", "respuesta": "я де́лаю, ты де́лаешь, он де́лает,\nмы де́лаем, вы де́лаете, они́ де́лают"},
+    {"pregunta": "Conjuga говори́ть (hablar) en presente", "respuesta": "я говорю́, ты говори́шь, он говори́т,\nмы говори́м, вы говори́те, они́ говоря́т"},
+    {"pregunta": "Conjuga люби́ть (amar) en presente", "respuesta": "я люблю́ (¡con л!), ты лю́бишь, он лю́бит,\nмы лю́бим, вы лю́бите, они́ лю́бят"},
+    {"pregunta": "Conjuga жить (vivir) en presente", "respuesta": "я живу́, ты живёшь, он живёт,\nмы живём, вы живёте, они́ живу́т"},
+    {"pregunta": "Conjuga стоя́ть (estar de pie) en presente", "respuesta": "я стою́, ты стои́шь, он стои́т,\nмы стои́м, вы стои́те, они́ стоя́т\n(2.ª conjugación; acento en la 2.ª sílaba)"},
+    {"pregunta": "Conjuga лежа́ть (estar acostado) en presente", "respuesta": "я лежу́, ты лежи́шь, он лежи́т,\nмы лежи́м, вы лежи́те, они́ лежа́т\nDespués de ж, ш, ч, щ: -ю → -у y -ят → -ат."},
+    {"pregunta": "Conjuga учи́ть (estudiar memorizando / enseñar) en presente", "respuesta": "я учу́, ты у́чишь, он у́чит,\nмы у́чим, вы у́чите, они́ у́чат"},
+    {"pregunta": "¿Cómo se forma el pasado?", "respuesta": "Infinitivo sin -ть + -л / -ла / -ло / -ли:\nде́лать → он де́лал, она́ де́лала, оно́ де́лало, они́ де́лали\nEl grupo de conjugación no importa. Cambia según el género de quien hace la acción."},
+    {"pregunta": "¿Cómo se forma el futuro (verbos imperfectivos)?", "respuesta": "бу́ду + infinitivo:\nя бу́ду, ты бу́дешь, он бу́дет, мы бу́дем, вы бу́дете, они́ бу́дут + де́лать\nЯ бу́ду игра́ть на гита́ре."},
+    {"pregunta": "Pasado y futuro de быть (ser / estar)", "respuesta": "En presente no se dice (Я студе́нтка).\nPasado: был, была́, бы́ло, бы́ли.\nFuturo: бу́ду, бу́дешь, бу́дет, бу́дем, бу́дете, бу́дут."},
+    {"pregunta": "игра́ть в + ¿qué caso? ¿para qué?", "respuesta": "в + acusativo: juegos y deportes.\nигра́ть в футбо́л, в ша́хматы, в ка́рты, в руле́тку (-а → -у), в видеои́гры.\n¿Во что ты игра́ешь?"},
+    {"pregunta": "игра́ть на + ¿qué caso? ¿para qué?", "respuesta": "на + prepositivo: instrumentos musicales.\nигра́ть на гита́ре, на скри́пке, на балала́йке, на пиани́но.\n¿На чём ты игра́ешь?"},
+    {"pregunta": "игра́ть para actuar: ¿cómo se dice?", "respuesta": "игра́ть в теа́тре / в спекта́кле (prepositivo) = actuar en el teatro / en una obra\nигра́ть в ро́ли Роме́о = interpretar el papel de Romeo"},
+    {"pregunta": "«No juego a nada» y «no toco nada»", "respuesta": "Я ни во что не игра́ю.\nЯ ни на чём не игра́ю.\nEn ruso la doble negación es obligatoria."},
+    {"pregunta": "¿Qué deportes van con игра́ть y cuáles con занима́ться?", "respuesta": "игра́ть в: los que se juegan (futbol, tenis, ajedrez, boliche, billar…).\nзанима́ться + instrumental: los que se practican (natación, yoga, gimnasia…): занима́ться спо́ртом."},
+    {"pregunta": "смотре́ть vs. ви́деть", "respuesta": "смотре́ть = mirar con intención: televisión, películas, espectáculos.\nви́деть = ver, tener la capacidad de ver: Я ви́жу мо́ре."},
+    {"pregunta": "слу́шать vs. слы́шать", "respuesta": "слу́шать = escuchar poniendo atención: слу́шать му́зыку.\nслы́шать = oír, captar el sonido: Я тебя́ не слы́шу."},
+    {"pregunta": "говори́ть / сказа́ть / расска́зывать / разгова́ривать", "respuesta": "говори́ть = hablar (universal)\nсказа́ть = decir algo concreto, una vez\nрасска́зывать = narrar (monólogo)\nразгова́ривать = conversar (diálogo)"},
+    {"pregunta": "изуча́ть / учи́ть / учи́ться / занима́ться", "respuesta": "изуча́ть + objeto = estudiar analizando un tema\nучи́ть + objeto = memorizar (o enseñar a alguien)\nучи́ться = estudiar en una institución (Я учу́сь в университе́те)\nзанима́ться = estudiar, practicar, dedicarse"},
+    {"pregunta": "¿Qué verbo es «preguntar» y cuál «responder»?", "respuesta": "спра́шивать = preguntar\nотвеча́ть = responder"}
+  ]
+}

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Russo Study</title>
+<meta name="description" content="Tarjetas de estudio de ruso con repaso espaciado">
+<meta name="theme-color" content="#f4f6fb" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#10151f" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Russo">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marck+Script&family=PT+Sans:wght@400;700&family=PT+Serif:wght@400;700&display=swap">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<!-- INICIO -->
+<main id="view-home" class="view">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">Я</span>
+      <div>
+        <h1>Russo Study</h1>
+        <p class="brand-sub">Тетрадь de repaso</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button class="sync-chip" id="sync-chip" type="button" data-state="local">Solo aquí</button>
+      <button class="icon-btn" id="open-settings" type="button" aria-label="Ajustes">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7Zm7.4-2.5a7.6 7.6 0 0 0 0-2l2.1-1.6-2-3.5-2.5 1a7.4 7.4 0 0 0-1.7-1L15 3h-4l-.4 2.6c-.6.3-1.2.6-1.7 1l-2.5-1-2 3.5L6.5 11a7.6 7.6 0 0 0 0 2l-2.1 1.6 2 3.5 2.5-1c.5.4 1.1.7 1.7 1L11 21h4l.4-2.6c.6-.3 1.2-.6 1.7-1l2.5 1 2-3.5L19.4 13Z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <section class="today" aria-labelledby="today-title">
+    <h2 id="today-title" class="eyebrow">Hoy</h2>
+    <div class="today-grid">
+      <div class="stat"><span class="stat-num" id="stat-due">0</span><span class="stat-label">para repasar</span></div>
+      <div class="stat"><span class="stat-num" id="stat-new">0</span><span class="stat-label">nuevas</span></div>
+      <div class="stat"><span class="stat-num" id="stat-learned">0</span><span class="stat-label">aprendidas de <span id="stat-total">0</span></span></div>
+    </div>
+    <button class="btn btn-primary btn-wide" id="start-today" type="button">Empezar sesión</button>
+    <p class="today-note" id="today-note"></p>
+  </section>
+
+  <div id="deck-groups" class="deck-groups">
+    <p class="loading">Cargando mazos…</p>
+  </div>
+
+  <footer class="foot">
+    <p>Los mazos marcados entran en tu sesión diaria. Toca un mazo para verlo o estudiarlo solo.</p>
+  </footer>
+</main>
+
+<!-- MAZO -->
+<main id="view-deck" class="view" hidden>
+  <header class="topbar">
+    <button class="icon-btn" type="button" data-back aria-label="Volver">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M15.4 5.4 14 4l-8 8 8 8 1.4-1.4L8.8 12z"/></svg>
+    </button>
+    <h1 class="deck-title" id="deck-title"></h1>
+    <span class="icon-btn-spacer"></span>
+  </header>
+  <p class="deck-desc" id="deck-desc"></p>
+  <div class="deck-stats" id="deck-stats"></div>
+  <div class="deck-actions">
+    <button class="btn btn-primary" id="deck-study" type="button">Estudiar</button>
+    <button class="btn" id="deck-cram" type="button">Repaso rápido</button>
+  </div>
+  <label class="search">
+    <span class="visually-hidden">Buscar en el mazo</span>
+    <input id="deck-search" type="search" placeholder="Buscar en ruso o en español" autocomplete="off">
+  </label>
+  <ul class="word-list" id="deck-words"></ul>
+</main>
+
+<!-- ESTUDIO -->
+<main id="view-study" class="view view-study" hidden>
+  <header class="study-bar">
+    <button class="icon-btn" id="study-close" type="button" aria-label="Terminar sesión">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M18.3 5.7 16.9 4.3 12 9.2 7.1 4.3 5.7 5.7 10.6 12l-4.9 4.9 1.4 1.4 4.9-4.9 4.9 4.9 1.4-1.4-4.9-4.9z"/></svg>
+    </button>
+    <div class="progress" aria-hidden="true"><div class="progress-fill" id="study-progress"></div></div>
+    <span class="study-count" id="study-count">0</span>
+  </header>
+
+  <article class="card" id="card" aria-live="polite">
+    <div class="card-meta">
+      <span class="card-deck" id="card-deck"></span>
+      <span class="card-badge" id="card-badge" hidden>Nueva</span>
+    </div>
+    <div class="card-front" id="card-front"></div>
+    <div class="card-back" id="card-back" hidden></div>
+    <button class="speak-btn" id="card-speak" type="button" aria-label="Escuchar en ruso" hidden>
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3Zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4ZM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6Z"/></svg>
+    </button>
+  </article>
+
+  <div class="answer-zone">
+    <button class="btn btn-primary btn-wide" id="show-answer" type="button">Mostrar respuesta <kbd>espacio</kbd></button>
+    <div class="ratings" id="ratings" hidden>
+      <button class="rate rate-again" type="button" data-rate="1"><span class="rate-name">Otra vez</span><span class="rate-ivl" data-ivl="1"></span></button>
+      <button class="rate rate-hard" type="button" data-rate="2"><span class="rate-name">Difícil</span><span class="rate-ivl" data-ivl="2"></span></button>
+      <button class="rate rate-good" type="button" data-rate="3"><span class="rate-name">Bien</span><span class="rate-ivl" data-ivl="3"></span></button>
+      <button class="rate rate-easy" type="button" data-rate="4"><span class="rate-name">Fácil</span><span class="rate-ivl" data-ivl="4"></span></button>
+    </div>
+  </div>
+</main>
+
+<!-- FIN DE SESIÓN -->
+<main id="view-done" class="view view-done" hidden>
+  <div class="done-box">
+    <p class="done-ru" lang="ru">Молоде́ц!</p>
+    <h1 id="done-title">Sesión terminada</h1>
+    <p id="done-summary"></p>
+    <button class="btn btn-primary btn-wide" id="done-home" type="button">Volver al inicio</button>
+  </div>
+</main>
+
+<!-- AJUSTES -->
+<main id="view-settings" class="view" hidden>
+  <header class="topbar">
+    <button class="icon-btn" type="button" data-back aria-label="Volver">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M15.4 5.4 14 4l-8 8 8 8 1.4-1.4L8.8 12z"/></svg>
+    </button>
+    <h1 class="deck-title">Ajustes</h1>
+    <span class="icon-btn-spacer"></span>
+  </header>
+
+  <section class="panel" aria-labelledby="acc-title">
+    <h2 id="acc-title" class="eyebrow">Cuenta y sincronización</h2>
+    <div id="account-box"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="study-title">
+    <h2 id="study-title" class="eyebrow">Estudio</h2>
+    <fieldset class="field">
+      <legend>Dirección de las tarjetas de vocabulario</legend>
+      <label class="radio"><input type="radio" name="dir" id="dir-ru" value="ru"> Ruso → español</label>
+      <label class="radio"><input type="radio" name="dir" id="dir-es" value="es"> Español → ruso</label>
+      <label class="radio"><input type="radio" name="dir" id="dir-both" value="both"> Ambas (cada palabra cuenta doble)</label>
+    </fieldset>
+    <label class="field field-row" for="new-per-day">
+      <span>Tarjetas nuevas por día</span>
+      <input type="number" id="new-per-day" min="0" max="200" step="5" inputmode="numeric">
+    </label>
+    <label class="field field-row switch-row" for="opt-cursive">
+      <span>Mostrar también en cursiva rusa</span>
+      <input type="checkbox" id="opt-cursive" class="switch">
+    </label>
+    <label class="field field-row switch-row" for="opt-autospeak">
+      <span>Leer en voz alta al mostrar ruso</span>
+      <input type="checkbox" id="opt-autospeak" class="switch">
+    </label>
+  </section>
+
+  <section class="panel" aria-labelledby="danger-title">
+    <h2 id="danger-title" class="eyebrow">Progreso</h2>
+    <p class="muted">Borra todo tu historial de repaso en este dispositivo y en la nube.</p>
+    <button class="btn btn-danger" id="reset-ask" type="button">Reiniciar progreso</button>
+    <div class="confirm" id="reset-confirm" hidden>
+      <p>¿Seguro? No se puede deshacer.</p>
+      <div class="confirm-actions">
+        <button class="btn btn-danger" id="reset-yes" type="button">Sí, borrar todo</button>
+        <button class="btn" id="reset-no" type="button">Cancelar</button>
+      </div>
+    </div>
+  </section>
+  <p class="version muted" id="app-version"></p>
+</main>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="js/config.js"></script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

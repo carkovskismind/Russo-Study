@@ -1,0 +1,27 @@
+{
+  "id": "casos",
+  "titulo": "Casos y preposiciones",
+  "grupo": "Gramática",
+  "descripcion": "Los seis casos, sus preguntas y funciones, y el prepositivo de lugar.",
+  "tarjetas": [
+    {"pregunta": "¿Cuántos casos gramaticales tiene el ruso?", "respuesta": "Seis (6):\nименительный, вини́тельный, предло́жный, роди́тельный, да́тельный, твори́тельный."},
+    {"pregunta": "Caso nominativo (имени́тельный паде́ж)\n¿Preguntas y funciones?", "respuesta": "Кто? Что? (¿Quién? ¿Qué?)\nMencionar, presentar, constatar.\nEs el sujeto de la frase y no lleva preposición: Э́то ма́ма."},
+    {"pregunta": "Caso acusativo (вини́тельный паде́ж)\n¿Preguntas y funciones?", "respuesta": "Кого́? Что? (¿A quién? ¿A qué?)\nObjeto directo, movimiento (куда́?), periodo de tiempo.\nSus terminaciones dependen de si la palabra es animada o inanimada: игра́ть в игру́, люби́ть ма́му."},
+    {"pregunta": "Caso prepositivo (предло́жный паде́ж)\n¿Preguntas y funciones?", "respuesta": "О ком? О чём? / Где? (¿Sobre quién? ¿Sobre qué? / ¿Dónde?)\nLugar (estando en) y tema (hablar acerca de…).\nSiempre lleva preposición: в, на, о."},
+    {"pregunta": "Caso genitivo (роди́тельный паде́ж)\n¿Preguntas y funciones?", "respuesta": "Кого́? Чего́? / Отку́да? (¿De quién? ¿De qué? / ¿De dónde?)\nProcedencia (из Ме́ксики), posesión con у (у меня́ есть), pertenencia, cantidad, negación (нет вре́мени)."},
+    {"pregunta": "Caso dativo (да́тельный паде́ж)\n¿Preguntas y funciones?", "respuesta": "Кому́? Чему́? (¿A quién? ¿A qué?)\nDar, ayudar, edad (мне 25 лет), gustos y sentimientos (мне нра́вится, мне стра́шно), llamar por teléfono, pasar por."},
+    {"pregunta": "Caso instrumental (твори́тельный паде́ж)\n¿Preguntas y funciones?", "respuesta": "Кем? Чем? (¿Con quién? ¿Con qué?)\nAcompañar (с дру́гом), ingrediente, hacer por medio de algo, dedicarse a (занима́ться спо́ртом), y después de был: Он был уго́дником."},
+    {"pregunta": "¿Qué caso no lleva ninguna preposición y siempre es el sujeto?", "respuesta": "El nominativo (имени́тельный паде́ж)."},
+    {"pregunta": "Animado vs. inanimado: ¿cuál es la diferencia?", "respuesta": "Animado = seres vivos con corazón: personas y animales. Responde a кто?\nInanimado = cosas, plantas e ideas. Responde a что?\nPersonajes de cuentos y seres legendarios se tratan como animados."},
+    {"pregunta": "Prepositivo de lugar: ¿cuándo se usa в?", "respuesta": "в = dentro de, en (inside).\nLugares tipo caja (con paredes y techo), localidades geográficas y espacios con límites:\nв кварти́ре, в па́рке, в Росси́и, в Москве́, в шко́ле."},
+    {"pregunta": "Prepositivo de lugar: ¿cuándo se usa на?", "respuesta": "на = sobre, en (on).\nSuperficies, espacios abiertos sin límites y actividades o eventos:\nна столе́, на у́лице, на мо́ре, на уро́ке, на рабо́те, на конце́рте, на по́чте, на заво́де, на се́вере."},
+    {"pregunta": "¿Cuándo в se vuelve во?", "respuesta": "Ante dos consonantes «chocosas» que empiezan con в o ф:\nво Фра́нции, во Вьетна́ме, во что? (во + 2 consonantes)"},
+    {"pregunta": "Prepositivo: terminación más común (92 %)", "respuesta": "+ -е\nSi termina en consonante: стол → на столе́, парк → в па́рке.\nSi termina en vocal -а / -о / -й / -ь (masc.), se cambia: Москва́ → в Москве́, мо́ре → на мо́ре."},
+    {"pregunta": "Prepositivo: ¿cuándo termina en -и?", "respuesta": "- Palabras en -ия, -ие, -ий: Росси́я → в Росси́и, зда́ние → в зда́нии.\n- Femeninas en -ь: пло́щадь → на пло́щади, тетра́дь → в тетра́ди."},
+    {"pregunta": "Prepositivo: excepciones en -у́ (acentuada)", "respuesta": "в саду́, в лесу́, в порту́, в аэропорту́, на полу́, в шкафу́, в углу́, в году́, в снегу́, в Крыму́.\nTambién: в раю́, в бою́, на краю́."},
+    {"pregunta": "Prepositivo en plural", "respuesta": "-ах / -ях:\nНидерла́нды → в Нидерла́ндах\nА́льпы → в А́льпах\nГава́йи → на Гава́йях\nдере́вья → на дере́вьях"},
+    {"pregunta": "¿Qué palabras no cambian en el prepositivo?", "respuesta": "Las extranjeras que terminan en -о, -е, -и, -у, -ю:\nв метро́, в кафе́, в такси́, в меню́, в кино́, на фо́то, в пальто́."},
+    {"pregunta": "Где? / Куда́? / Отку́да?", "respuesta": "Где? = dónde (estando): в па́рке (prepositivo)\nКуда́? = a dónde (movimiento): в парк (acusativo)\nОтку́да? = de dónde: из па́рка (genitivo)"},
+    {"pregunta": "до́ма / домо́й / дома́", "respuesta": "до́ма = en casa (Я до́ма.)\nдомо́й = a casa (Я иду́ домо́й.)\nдома́ = casas, edificios (plural de дом)"}
+  ]
+}

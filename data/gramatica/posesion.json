@@ -1,0 +1,20 @@
+{
+  "id": "posesion",
+  "titulo": "Posesión: «у меня есть»",
+  "grupo": "Gramática",
+  "descripcion": "Cómo se dice «tener» en ruso, en presente, pasado y futuro.",
+  "tarjetas": [
+    {"pregunta": "¿Cómo se dice «yo tengo…»?", "respuesta": "У меня́ (есть)…\nLiteralmente: «de mí hay…». У меня́ есть брат."},
+    {"pregunta": "«Tener» con todos los pronombres", "respuesta": "у меня́ — yo tengo\nу тебя́ — tú tienes\nу него́ — él tiene\nу неё — ella tiene\nу нас — nosotros tenemos\nу вас — usted(es) tiene(n)\nу них — ellos tienen"},
+    {"pregunta": "¿Cómo se pregunta «quién tiene…?» y «qué cosa tiene…?»", "respuesta": "У кого́ (есть)…? — ¿Quién tiene…? (animado)\nУ чего́ (есть)…? — ¿Qué cosa tiene…? (inanimado)"},
+    {"pregunta": "¿Cuándo se dice есть?", "respuesta": "Cuando importa que algo existe o se consiguió: obtener, conseguir, lograr, comprar, ahorrar.\nУ меня́ есть маши́на."},
+    {"pregunta": "¿Cuándo se omite есть?", "respuesta": "- Partes del cuerpo y carácter: У неё краси́вые глаза́.\n- Enfermedades y problemas: У меня́ грипп.\n- Celebraciones, vacaciones, exámenes: У нас пра́здник.\n- Sentimiento de amor.\n- Cuando hay un adjetivo antes del sustantivo: У Мэ́рилин краси́вая фигу́ра."},
+    {"pregunta": "«Tener» en pasado", "respuesta": "У меня́ был / была́ / бы́ло / бы́ли…\nEl verbo concuerda con lo poseído: У меня́ была́ ко́шка. У меня́ был кот."},
+    {"pregunta": "«No tener» en pasado", "respuesta": "У меня́ не́ было… (siempre бы́ло, neutro)\nУ меня́ не́ было вре́мени."},
+    {"pregunta": "«Tener» en futuro", "respuesta": "У меня́ бу́дет… / У меня́ не бу́дет…\nУ нас бу́дет экза́мен."},
+    {"pregunta": "Con un nombre: «Erik tiene una amiga»", "respuesta": "У Э́рика есть подру́га.\nEl nombre va en genitivo después de у: Э́рик → у Э́рика, Ма́ша → у Ма́ши."},
+    {"pregunta": "Verbo име́ть: ¿cuándo se usa?", "respuesta": "Es formal y poco común para «tener»:\n- En infinitivo, en negativo o en preguntas formales.\n- Bienes raíces y capital: Они́ име́ют большо́й капита́л.\n- Frases fijas: име́ть в виду́ (tener en cuenta), име́ть честь (tener el honor), име́ть пра́во (tener derecho).\nEn el habla diaria se usa у меня́ есть."},
+    {"pregunta": "Conjuga име́ть en presente", "respuesta": "я име́ю, ты име́ешь, он име́ет,\nмы име́ем, вы име́ете, они́ име́ют"},
+    {"pregunta": "Discurso: presentar tus objetos por género", "respuesta": "У меня́ есть моя́ кра́сная су́мка. (f)\nУ меня́ есть мой си́ний рюкза́к. (m)\nУ меня́ есть моё бе́лое пальто́. (n)\nУ меня́ есть мои́ чёрные боти́нки. (pl)"}
+  ]
+}

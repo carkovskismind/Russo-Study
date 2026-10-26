@@ -1,0 +1,23 @@
+{
+  "id": "reglas-gentilicios",
+  "titulo": "Reglas de los gentilicios",
+  "grupo": "Países y gentilicios",
+  "descripcion": "Cómo se forman el hombre, la mujer, el plural, el adjetivo y el adverbio a partir de cada país, y sus excepciones.",
+  "tarjetas": [
+    {"pregunta": "¿Qué cinco formas tiene cada país?", "respuesta": "1. Hombre (sustantivo masculino): мексика́нец\n2. Mujer (sustantivo femenino): мексика́нка\n3. Plural: мексика́нцы\n4. Adjetivo, para calificar cosas: мексика́нский\n5. Adverbio, para el idioma o el estilo: по-мексика́нски"},
+    {"pregunta": "¿Con mayúscula o minúscula?", "respuesta": "El país va con mayúscula: Ме́ксика.\nEl gentilicio, el adjetivo y el adverbio van con minúscula: мексика́нец, мексика́нский, по-мексика́нски."},
+    {"pregunta": "Patrón más común: -ец / -ка / -цы\nEjemplo con Испа́ния", "respuesta": "испа́нец · испа́нка · испа́нцы\nIgual: мексика́нец, италья́нец, украи́нец, америка́нец, африка́нец, кана́дец, япо́нец, португа́лец, норве́жец."},
+    {"pregunta": "¿Por qué мексика́нец da мексика́нцы y no «мексиканецы»?", "respuesta": "La -е- de -ец desaparece al cambiar la palabra: мексика́нец → мексика́нцы, не́мец → не́мцы.\nPasa lo mismo con оте́ц → отцы́."},
+    {"pregunta": "Patrón -ец / -йка / -йцы\n¿Cómo es con А́встрия?", "respuesta": "австри́ец · австри́йка · австри́йцы\nIgual: европе́ец / европе́йка, бельги́ец / бельги́йка, австрали́ец / австрали́йка, кита́ец / кита́йцы."},
+    {"pregunta": "Patrón -анин / -анка / -ане\nEjemplo con А́нглия", "respuesta": "англича́нин · англича́нка · англича́не\nEl plural pierde -ин: англича́не (no «англичанины»).\nIgual: датча́нин → датча́не, россия́нин → россия́не, славяни́н → славя́не, граждани́н → гра́ждане."},
+    {"pregunta": "Gentilicios cortos, sin sufijo\nEjemplos", "respuesta": "швед · шве́дка · шве́ды\nфинн · фи́нка · фи́нны\nчех · че́шка · че́хи\nгрек · греча́нка · гре́ки\nLa mujer se forma con -ка (o -анка en греча́нка)."},
+    {"pregunta": "Excepciones: Alemania, Francia, China, Turquía y Polonia", "respuesta": "Герма́ния → не́мец · не́мка · не́мцы (no se parece al país)\nФра́нция → францу́з · францу́женка · францу́зы\nКита́й → кита́ец · китая́нка · кита́йцы\nТу́рция → ту́рок · турча́нка · ту́рки\nПо́льша → поля́к · по́лька · поля́ки"},
+    {"pregunta": "¿Por qué ру́сский es diferente?", "respuesta": "Es un adjetivo usado como sustantivo: ру́сский (él), ру́сская (ella), ру́сские (ellos).\nSe declina como adjetivo. Todas las demás nacionalidades usan sustantivos (-ец, -анин…)."},
+    {"pregunta": "ру́сский vs. росси́йский", "respuesta": "ру́сский = de la etnia, la lengua y la cultura rusas: ру́сский язы́к, ру́сская ку́хня.\nросси́йский = del Estado de Rusia: росси́йский па́спорт, росси́йская а́рмия.\nIgual con las personas: ру́сский (etnia) / россия́нин (ciudadano)."},
+    {"pregunta": "¿Cómo se forma el adjetivo y cómo concuerda?", "respuesta": "Casi siempre con -ский: мексика́нский, францу́зский. Algunos con -цкий: неме́цкий, туре́цкий.\nConcuerda con el sustantivo:\nмексика́нский флаг (m)\nмексика́нская ку́хня (f)\nмексика́нское блю́до (n)\nмексика́нские зако́ны (pl)"},
+    {"pregunta": "¿Cómo se forma el adverbio y para qué sirve?", "respuesta": "по- + adjetivo sin la terminación -ий + -и:\nру́сский → по-ру́сски\nиспа́нский → по-испа́нски\nSirve para el idioma (говори́ть по-ру́сски) o para el estilo (по-мексика́нски = a la mexicana)."},
+    {"pregunta": "¿El idioma siempre coincide con el país?", "respuesta": "No:\nСША → по-англи́йски\nБрази́лия → по-португа́льски\nА́встрия → по-неме́цки\nМе́ксика → по-испа́нски\nИ́ндия → хи́нди"},
+    {"pregunta": "¿Cómo preguntar y responder la nacionalidad y el origen?", "respuesta": "Кто вы по национа́льности? — Я мексика́нка.\nОтку́да вы? — Я из Ме́ксики. (из + genitivo)\nГде вы живёте? — Я живу́ в Ме́ксике. (в + prepositivo)"},
+    {"pregunta": "Mujer de Brasil, de China y de la India", "respuesta": "бразилья́нка (Brasil)\nкитая́нка (China)\nиндиа́нка (India)\nTodas llevan -янка / -анка en vez de solo -ка."}
+  ]
+}

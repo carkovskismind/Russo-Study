@@ -1,0 +1,27 @@
+{
+  "id": "cultura",
+  "titulo": "Gustos, música y cine",
+  "grupo": "Vocabulario",
+  "descripcion": "Géneros de música y cine, y palabras para hablar de lo que te gusta.",
+  "tarjetas": [
+    {"ru": "му́зыка", "es": "música", "tag": "Fem. · inanim."},
+    {"ru": "рок", "es": "rock", "tag": "Masc. · inanim."},
+    {"ru": "поп", "es": "pop", "tag": "Masc. · inanim."},
+    {"ru": "джаз", "es": "jazz", "tag": "Masc. · inanim."},
+    {"ru": "блюз", "es": "blues", "tag": "Masc. · inanim."},
+    {"ru": "бача́та", "es": "bachata", "tag": "Fem. · inanim."},
+    {"ru": "бо́сса-но́ва", "es": "bossa nova", "tag": "Fem. · inanim."},
+    {"ru": "реггето́н", "es": "reguetón", "tag": "Masc. · inanim."},
+    {"ru": "фильм", "es": "película", "tag": "Masc. · inanim."},
+    {"ru": "коме́дия", "es": "comedia", "tag": "Fem. · inanim."},
+    {"ru": "детекти́в", "es": "película o novela policiaca", "tag": "Masc. · inanim."},
+    {"ru": "э́кшн", "es": "acción (género)", "tag": "Masc. · inanim."},
+    {"ru": "кримина́л", "es": "crimen (género)", "tag": "Masc. · inanim."},
+    {"ru": "документа́льный фильм", "es": "documental", "tag": "Masc. · inanim."},
+    {"ru": "фильм у́жасов", "es": "película de terror", "tag": "Masc. · inanim."},
+    {"ru": "бале́т", "es": "ballet", "tag": "Masc. · inanim."},
+    {"ru": "сувени́ры", "es": "recuerdos, souvenirs", "tag": "Plural · inanim."},
+    {"ru": "флаг", "es": "bandera", "tag": "Masc. · inanim.", "nota": "pl. фла́ги"},
+    {"ru": "зна́мя", "es": "estandarte, bandera", "tag": "Neutro · inanim.", "nota": "Termina en -мя: es neutro. pl. знамёна"}
+  ]
+}

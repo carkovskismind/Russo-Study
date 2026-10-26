@@ -1,0 +1,15 @@
+{
+  "id": "gramatica-numerales",
+  "titulo": "Numerales: reglas",
+  "grupo": "Gramática",
+  "descripcion": "Cómo se forman los números y cómo concuerdan.",
+  "tarjetas": [
+    {"pregunta": "¿Qué números cambian según el género?", "respuesta": "1: оди́н (m) · одна́ (f) · одно́ (n) · одни́ (pl)\n2: два (m, n) · две (f)\nоди́н дом, одна́ ко́мната, два этажа́, две ко́мнаты."},
+    {"pregunta": "11 al 19: ¿cómo se forman?", "respuesta": "número + -надцать («encima de diez»):\nодин → оди́ннадцать, два → двена́дцать, три → трина́дцать…\nLa -ь final de пять…девять se pierde: пятна́дцать."},
+    {"pregunta": "Decenas: 20 a 90", "respuesta": "20, 30: + -дцать (два́дцать, три́дцать)\n40: со́рок (forma única)\n50–80: + -десят (пятьдеся́т, шестьдеся́т, се́мьдесят, во́семьдесят)\n90: девяно́сто (forma única)"},
+    {"pregunta": "Centenas: 100 a 900", "respuesta": "100 сто · 200 две́сти\n300 три́ста · 400 четы́реста\n500–900: + -сот (пятьсо́т, шестьсо́т, семьсо́т, восемьсо́т, девятьсо́т)"},
+    {"pregunta": "Miles: 1000 a 5000", "respuesta": "1000 ты́сяча\n2000, 3000, 4000: две, три, четы́ре ты́сячи\n5000: пять ты́сяч"},
+    {"pregunta": "Terminaciones de los ordinales", "respuesta": "Son adjetivos:\n-ый / -ой (m), -ая (f), -ое (n), -ые (pl)\nпе́рвый, второ́й, четвёртый…\nExcepción: тре́тий / тре́тья / тре́тье / тре́тьи"},
+    {"pregunta": "¿Cómo se dice «en el primer piso»?", "respuesta": "на пе́рвом этаже́\nEl ordinal concuerda con эта́ж (masculino) en prepositivo."}
+  ]
+}
