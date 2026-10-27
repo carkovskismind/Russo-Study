@@ -1040,6 +1040,17 @@ function bind() {
   });
 }
 
+// ---------- Contador de visitas (GoatCounter) ----------
+function startVisitCounter() {
+  const code = String((window.RUSSO_CONFIG || {}).goatcounter || "").trim();
+  if (!code || !/^[a-z0-9-]+$/i.test(code) || location.protocol === "file:") return;
+  const s = document.createElement("script");
+  s.async = true;
+  s.src = "https://gc.zgo.at/count.js";
+  s.dataset.goatcounter = `https://${code}.goatcounter.com/count`;
+  document.head.appendChild(s);
+}
+
 // ---------- Arranque ----------
 async function main() {
   applyTheme();
@@ -1053,6 +1064,8 @@ async function main() {
   }
   renderHome();
   store.init().then(renderSync).catch((e) => console.warn(e));
+
+  startVisitCounter();
 
   if ("serviceWorker" in navigator && location.protocol !== "file:") {
     navigator.serviceWorker.register("sw.js").catch((e) => console.warn("SW", e));
