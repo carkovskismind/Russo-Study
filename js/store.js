@@ -205,17 +205,24 @@ export class Store {
   }
 
   // --- Cuenta ---
-  async sendCode(email) {
-    const { error } = await this.sb.auth.signInWithOtp({
-      email,
-      options: { shouldCreateUser: true, emailRedirectTo: location.origin + location.pathname }
-    });
+  async signIn(email, password) {
+    const { error } = await this.sb.auth.signInWithPassword({ email, password });
     if (error) throw error;
   }
 
-  async verifyCode(email, token) {
-    const { error } = await this.sb.auth.verifyOtp({ email, token, type: "email" });
+  // Devuelve true si la cuenta quedó con sesión iniciada; false si Supabase
+  // pide confirmar el correo antes de entrar.
+  async signUp(email, password) {
+    const { data, error } = await this.sb.auth.signUp({
+      email,
+      password,
+      options: { emailRedirectTo: location.origin + location.pathname }
+    });
     if (error) throw error;
+    if (data && data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+      throw new Error("User already registered");
+    }
+    return !!(data && data.session);
   }
 
   async signOut() {

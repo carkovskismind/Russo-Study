@@ -1,7 +1,7 @@
 import { Store } from "./store.js";
 import { schedule, endOfDay, dateKey } from "./srs.js";
 
-const APP_VERSION = "1.3.0";
+const APP_VERSION = "1.4.0";
 const NEW_PER_DECK_SESSION = 20;
 
 const $ = (sel) => document.querySelector(sel);
@@ -16,7 +16,7 @@ const state = {
   session: null,
   view: "home",
   loginEmail: "",
-  loginStep: "email"
+  loginStep: "signin"
 };
 
 const store = new Store((what) => {
@@ -821,21 +821,30 @@ function renderAccount() {
       </div>`;
     return;
   }
-  if (state.loginStep === "code") {
-    box.innerHTML = `<form class="account-form" id="code-form" novalidate>
-        <p>Te enviamos un código a <b>${esc(state.loginEmail)}</b>. Escríbelo aquí:</p>
-        <input class="code" id="login-code" inputmode="numeric" autocomplete="one-time-code" maxlength="10" placeholder="123456" required>
-        <button class="btn btn-primary" type="submit">Entrar</button>
-        <button class="btn" type="button" id="login-back">Usar otro correo</button>
-      </form>`;
-    return;
-  }
-  box.innerHTML = `<form class="account-form" id="email-form" novalidate>
-      <p class="muted">Inicia sesión con tu correo para guardar tu progreso en la nube. Te llegará un código para entrar, sin contraseña.</p>
+  const signup = state.loginStep === "signup";
+  box.innerHTML = `<form class="account-form" id="login-form" novalidate>
+      <p class="muted">${signup
+        ? "Crea tu cuenta una sola vez. Después entra con el mismo correo y contraseña en cada dispositivo."
+        : "Entra con tu correo y contraseña para guardar tu progreso en la nube."}</p>
       <label for="login-email" class="visually-hidden">Correo</label>
       <input id="login-email" type="email" autocomplete="email" placeholder="tu@correo.com" required value="${esc(state.loginEmail)}">
-      <button class="btn btn-primary" type="submit">Enviarme un código</button>
+      <label for="login-password" class="visually-hidden">Contraseña</label>
+      <input id="login-password" type="password" autocomplete="${signup ? "new-password" : "current-password"}" placeholder="${signup ? "Contraseña (mínimo 6 caracteres)" : "Contraseña"}" required minlength="6">
+      <button class="btn btn-primary" type="submit">${signup ? "Crear cuenta" : "Entrar"}</button>
+      <button class="link-btn" type="button" id="login-switch">${signup ? "Ya tengo cuenta: entrar" : "¿No tienes cuenta? Crea una"}</button>
     </form>`;
+}
+
+// Traduce los errores de inicio de sesión de Supabase.
+function authMessage(err) {
+  const m = String((err && err.message) || "");
+  if (/invalid login credentials/i.test(m)) return "Correo o contraseña incorrectos.";
+  if (/already registered|already exists/i.test(m)) return "Ese correo ya tiene cuenta. Usa «Entrar».";
+  if (/email not confirmed/i.test(m)) return "Falta confirmar tu correo. Abre el enlace que te llegó o apaga «Confirm email» en Supabase.";
+  if (/at least 6|password should be/i.test(m)) return "La contraseña debe tener al menos 6 caracteres.";
+  if (/rate limit|too many/i.test(m)) return "Demasiados intentos. Espera un momento y vuelve a intentar.";
+  if (/failed to fetch|network/i.test(m)) return "Sin conexión con el servidor. Revisa tu internet.";
+  return m || "No se pudo completar. Intenta de nuevo.";
 }
 
 function renderSettings() {
@@ -996,31 +1005,38 @@ function bind() {
     const btn = e.target.querySelector('button[type="submit"]');
     btn.disabled = true;
     try {
-      if (e.target.id === "email-form") {
-        const email = $("#login-email").value.trim();
-        if (!/^\S+@\S+\.\S+$/.test(email)) throw new Error("Escribe un correo válido.");
-        await store.sendCode(email);
-        state.loginEmail = email;
-        state.loginStep = "code";
-        toast("Código enviado. Revisa tu correo.");
+      const email = $("#login-email").value.trim();
+      const password = $("#login-password").value;
+      state.loginEmail = email;
+      if (!/^\S+@\S+\.\S+$/.test(email)) throw new Error("Escribe un correo válido.");
+      if (password.length < 6) throw new Error("La contraseña debe tener al menos 6 caracteres.");
+      if (state.loginStep === "signup") {
+        const inside = await store.signUp(email, password);
+        if (inside) toast("Cuenta creada. Ya estás dentro.");
+        else {
+          state.loginStep = "signin";
+          toast("Cuenta creada. Confirma tu correo con el enlace que te llegó y después entra.");
+        }
       } else {
-        const code = $("#login-code").value.replace(/\s/g, "");
-        if (!code) throw new Error("Escribe el código del correo.");
-        await store.verifyCode(state.loginEmail, code);
-        state.loginStep = "email";
+        await store.signIn(email, password);
         toast("Sesión iniciada");
       }
     } catch (err) {
-      toast(err.message || "No se pudo completar. Intenta de nuevo.");
+      toast(authMessage(err));
     } finally {
       btn.disabled = false;
       renderAccount();
     }
   });
   $("#account-box").addEventListener("click", async (e) => {
-    if (e.target.id === "login-back") { state.loginStep = "email"; renderAccount(); }
+    if (e.target.id === "login-switch") {
+      const input = $("#login-email");
+      if (input) state.loginEmail = input.value.trim();
+      state.loginStep = state.loginStep === "signup" ? "signin" : "signup";
+      renderAccount();
+    }
     if (e.target.id === "sync-now") { await store.pull(); toast("Sincronizado"); }
-    if (e.target.id === "sign-out") { await store.signOut(); state.loginStep = "email"; renderAccount(); renderSync(); }
+    if (e.target.id === "sign-out") { await store.signOut(); state.loginStep = "signin"; renderAccount(); renderSync(); }
   });
 }
 
