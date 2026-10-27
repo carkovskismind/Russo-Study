@@ -11,5 +11,5 @@ window.RUSSO_CONFIG = {
   // Contador de visitas anónimo (goatcounter.com). Escribe aquí el nombre
   // de tu panel: si tu panel es https://russo.goatcounter.com, pon "russo".
   // Déjalo vacío para no contar visitas.
-  goatcounter: ""
+  goatcounter: "carkovskismind"
 };
