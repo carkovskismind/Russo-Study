@@ -60,7 +60,7 @@ Sin este paso la app funciona, pero el progreso solo se guarda en el dispositivo
 1. Crea una cuenta gratis en [supabase.com](https://supabase.com) y un proyecto nuevo.
 2. Abre **SQL Editor → New query**, pega el contenido de `supabase/schema.sql` y presiona **Run**. Eso crea la tabla y las reglas para que solo tú veas tu progreso.
 3. En **Authentication → Sign In / Providers → Email**, deja **Email** activado y apaga **Confirm email** para poder entrar en cuanto creas la cuenta.
-4. En **Project Settings → API Keys** copia la **Publishable key** (o la **anon public** de *Legacy API keys*) y, junto con el **Project URL**, y pégalos en `js/config.js`.
+4. En **Project Settings → API Keys** copia la **Publishable key** (o la **anon public** de *Legacy API keys*) y pégala junto con el **Project URL** en `js/config.js` (en tu proyecto ya están puestos).
 
 La *anon key* es pública y está hecha para ir dentro de la app. **Nunca** pongas en el repositorio la llave `service_role`.
 
