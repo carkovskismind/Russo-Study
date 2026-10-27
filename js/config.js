@@ -5,6 +5,6 @@
 // Si dejas estos campos vacíos, la app funciona igual, pero el progreso
 // solo se guarda en el dispositivo donde estudias.
 window.RUSSO_CONFIG = {
-  supabaseUrl: "",
-  supabaseAnonKey: ""
+  supabaseUrl: "https://tyrunjtgipldferivzwy.supabase.co",
+  supabaseAnonKey: "sb_publishable_PHq0BobUJSRs3U3Qvw1bxw_rZ3FZp4I"
 };
