@@ -1,8 +1,9 @@
 import { Store } from "./store.js";
-import { schedule, endOfDay, dateKey } from "./srs.js";
+import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "1.4.0";
+const APP_VERSION = "2.0.0";
 const NEW_PER_DECK_SESSION = 20;
+const PILOT = "familia";
 
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => Array.from(document.querySelectorAll(sel));
@@ -11,9 +12,14 @@ const state = {
   decks: [],
   deckById: new Map(),
   currentDeck: null,
+  temaTab: "aprender",
+  temaFilter: "Todos",
+  openTile: PILOT,
   selecting: false,
   selected: new Set(),
+  word: null,
   session: null,
+  fr: null,
   view: "home",
   loginEmail: "",
   loginStep: "signin"
@@ -24,10 +30,51 @@ const store = new Store((what) => {
   if (what === "data" || what === "auth") {
     applyTheme();
     if (state.view === "home") renderHome();
-    if (state.view === "deck") renderDeck();
+    if (state.view === "temas") renderTemas();
+    if (state.view === "tema") renderTema();
   }
   if (what === "auth" && state.view === "settings") renderSettings();
 });
+
+// ---------- Aspecto de cada tema ----------
+const PALS = ["lav", "pe", "kh", "bl", "li", "pk", "mint", "aq"];
+const SVG = {
+  book: `<svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M32 18c-7-5-16-6-24-4v36c8-2 17-1 24 4zM32 18c7-5 16-6 24-4v36c-8-2-17-1-24 4zM32 18v36"/><text x="20" y="38" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="800" font-size="12" fill="currentColor" stroke="none">Аа</text></svg>`,
+  palette: `<svg width="52" height="52" viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M32 8C16 8 6 20 6 32s10 22 22 22c5 0 6-4 4-7s-1-7 4-7h8c8 0 14-6 14-13C58 16 46 8 32 8z"/><circle cx="20" cy="26" r="4.5" fill="currentColor"/><circle cx="32" cy="18" r="4.5" stroke-width="2.5"/><circle cx="44" cy="24" r="4.5" fill="currentColor"/><circle cx="18" cy="39" r="4.5" stroke-width="2.5"/></svg>`,
+  house: `<svg width="54" height="54" viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 32L32 12l24 20M15 28v26h34V28M28 54V40h9v14M44 16v9"/></svg>`
+};
+const VIS = {
+  familia: { pal: "lav", art: { type: "img", src: "img/familia.png" } },
+  saludos: { pal: "pe", art: { type: "head", src: "img/saludos.png" } },
+  numeros: { pal: "red", art: { type: "num", text: "123" } },
+  basicas: { pal: "kh", art: { type: "svg", svg: SVG.book } },
+  colores: { pal: "li", art: { type: "svg", svg: SVG.palette } },
+  casa: { pal: "pe", art: { type: "svg", svg: SVG.house } }
+};
+const RU_NAME = {
+  saludos: "Приве́т", basicas: "Слова́", familia: "Семья́", profesiones: "Профе́ссии", animales: "Живо́тные",
+  casa: "Дом", ciudad: "Го́род", naturaleza: "Приро́да", calendario: "Календа́рь", numeros: "Чи́сла",
+  colores: "Цвета́", adjetivos: "Хара́ктер", ideas: "Иде́и", verbos: "Глаго́лы", juegos: "И́гры",
+  instrumentos: "Му́зыка", comida: "Еда́", "ropa-cuerpo": "Оде́жда", escuela: "Шко́ла", textos: "Те́ксты",
+  cultura: "Культу́ра", servilismo: "Уго́дник", expresiones: "Фра́зы", paises: "Стра́ны",
+  "reglas-gentilicios": "мексика́нка", casos: "Падежи́", "gramatica-verbos": "я чита́ю", genero: "Род",
+  plurales: "кни́га → кни́ги", posesion: "у меня́ есть", "gramatica-numerales": "две кни́ги"
+};
+
+function visFor(deck) {
+  const v = VIS[deck.id];
+  if (v) return v;
+  return { pal: PALS[deck.index % PALS.length], art: null };
+}
+
+function artHtml(deck) {
+  const a = visFor(deck).art;
+  if (!a) return "";
+  if (a.type === "img") return `<img class="art art-img" src="${a.src}" alt="">`;
+  if (a.type === "head") return `<img class="art art-head" src="${a.src}" alt="">`;
+  if (a.type === "num") return `<span class="art art-num" aria-hidden="true">${esc(a.text)}</span>`;
+  return `<span class="art art-svg ink" aria-hidden="true">${a.svg}</span>`;
+}
 
 // ---------- Utilidades ----------
 const STRESS = /́/g;
@@ -38,6 +85,11 @@ function plain(s) {
 
 function norm(s) {
   return plain(s).toLowerCase().replace(/ё/g, "е").trim();
+}
+
+// Para comparar frases: sin acentos, sin mayúsculas y sin puntuación.
+function normSentence(s) {
+  return norm(s).replace(/[.,!?¿¡«»—–\-:;]/g, " ").split(/\s+/).filter(Boolean).join(" ");
 }
 
 function esc(s) {
@@ -56,13 +108,39 @@ function toast(msg) {
   toast.t = setTimeout(() => (el.hidden = true), 2600);
 }
 
+const VIEWS = ["home", "temas", "tema", "palabra", "study", "frase", "done", "settings"];
+const NAV_VIEWS = { home: "home", temas: "temas", settings: "settings" };
+
 function show(view) {
   state.view = view;
-  for (const v of ["home", "deck", "study", "done", "settings"]) {
-    $(`#view-${v}`).hidden = v !== view;
+  for (const v of VIEWS) $(`#view-${v}`).hidden = v !== view;
+  const navOn = NAV_VIEWS[view];
+  $("#nav").hidden = !navOn;
+  for (const b of $$("#nav [data-go]")) {
+    if (b.dataset.go === navOn) b.setAttribute("aria-current", "page");
+    else b.removeAttribute("aria-current");
   }
   window.scrollTo(0, 0);
 }
+
+function go(view) {
+  if (view === "home") renderHome();
+  if (view === "temas") renderTemas();
+  if (view === "settings") renderSettings();
+  show(view);
+}
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+const SPEAKER = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>`;
+const ARROW = `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>`;
 
 // ---------- Datos ----------
 async function loadDecks() {
@@ -109,15 +187,21 @@ async function loadDecks() {
         nota: c.nota || "",
         pista: c.pista || "",
         fonetica: c.fonetica || "",
+        seccion: c.seccion || "",
+        ejemplo: c.ejemplo || null,
+        tip: c.tip || "",
         q: c.pregunta,
         a: c.respuesta
       });
     });
     decks.push({
       id,
+      index: decks.length,
       title: json.titulo || id,
       group: json.grupo || "Vocabulario",
       desc: json.descripcion || "",
+      aprender: json.aprender || null,
+      frases: Array.isArray(json.frases) ? json.frases : [],
       cards
     });
   }
@@ -150,21 +234,56 @@ function deckEnabled(deck) {
 
 function deckStats(deck, now = Date.now()) {
   const eod = endOfDay(now);
-  let due = 0, learned = 0, fresh = 0, total = 0;
+  let due = 0, learned = 0, fresh = 0, total = 0, last = 0;
   for (const it of itemsFor(deck)) {
     total++;
     const st = store.card(it.key);
     if (!st) { fresh++; continue; }
     if (st.ivl >= 1) learned++;
     if (st.due <= eod) due++;
+    if ((st.t || 0) > last) last = st.t;
   }
-  return { due, learned, fresh, total };
+  for (const f of deck.frases) {
+    const fs = store.frase(`${deck.id}:${f.id}`);
+    if (fs && fs.t > last) last = fs.t;
+  }
+  const pct = total ? Math.round((learned / total) * 100) : 0;
+  return { due, learned, fresh, total, pct, last };
+}
+
+function deckNumber(deck) {
+  return `Tema ${String(deck.index + 1).padStart(2, "0")}`;
+}
+
+// Actividad de un día: lo que quedó registrado o, para el historial viejo,
+// las tarjetas cuyo último repaso cayó ese día.
+let activityCache = null;
+function activityByDay() {
+  if (activityCache) return activityCache;
+  const map = {};
+  for (const st of Object.values(store.p.cards)) {
+    if (!st || !st.t) continue;
+    const k = dateKey(st.t);
+    map[k] = (map[k] || 0) + 1;
+  }
+  for (const [k, n] of Object.entries(store.p.days || {})) map[k] = Math.max(map[k] || 0, n);
+  activityCache = map;
+  return map;
+}
+
+function logActivity() {
+  store.logActivity(dateKey(Date.now()));
+  activityCache = null;
 }
 
 // ---------- Inicio ----------
+const WEEK_LETTERS = ["L", "M", "M", "J", "V", "S", "D"];
+
 function renderHome() {
+  activityCache = null;
   const now = Date.now();
   const today = dateKey(now);
+  const act = activityByDay();
   let due = 0, learned = 0, total = 0, fresh = 0;
   for (const d of state.decks) {
     const s = deckStats(d, now);
@@ -174,100 +293,250 @@ function renderHome() {
   }
   const newLeft = Math.max(0, store.settings.newPerDay - store.newToday(today));
   const newCount = Math.min(newLeft, fresh);
-  $("#stat-due").textContent = due;
-  $("#stat-new").textContent = newCount;
-  $("#stat-learned").textContent = learned;
-  $("#stat-total").textContent = total;
-
-  const btn = $("#start-today");
-  const note = $("#today-note");
   const picks = pickedCards().length;
-  btn.disabled = due + newCount + picks === 0;
-  if (picks) {
-    note.textContent = `Más ${picks} ${picks === 1 ? "palabra que elegiste" : "palabras que elegiste"}.`;
-  } else if (due + newCount === 0) {
+  const forToday = due + newCount + picks;
+  const pct = total ? Math.round((learned / total) * 100) : 0;
+
+  $("#greet-name").textContent = (store.settings.name || "").trim() || "¡Hola!";
+  $("#stat-pct").textContent = `${pct}%`;
+  $("#stat-learned").textContent = learned.toLocaleString("es-MX");
+  $("#stat-total").textContent = total.toLocaleString("es-MX");
+  $("#stat-bar").style.width = `${Math.max(pct, learned ? 2 : 0)}%`;
+  $("#stat-today").textContent = forToday;
+  $("#start-today").disabled = forToday === 0;
+  $("#start-today").setAttribute("aria-label", forToday ? `Practicar ahora: ${forToday} para hoy` : "No hay práctica pendiente hoy");
+  const note = $("#today-note");
+  if (forToday === 0) {
     note.textContent = fresh === 0
-      ? "Terminaste todos los mazos activos. Activa otro mazo o usa el repaso rápido."
+      ? "Terminaste todos los temas activos. Activa otro en Ajustes o usa el repaso rápido de un tema."
       : "Todo al día. Vuelve mañana o sube el límite de nuevas en Ajustes.";
-  } else {
-    note.textContent = "";
-  }
+  } else note.textContent = picks ? `Incluye ${picks} ${picks === 1 ? "palabra que elegiste" : "palabras que elegiste"}.` : "";
 
-  const groups = new Map();
-  for (const d of state.decks) {
-    if (!groups.has(d.group)) groups.set(d.group, []);
-    groups.get(d.group).push(d);
+  // Semana (lunes a domingo)
+  const d0 = new Date(startOfDay(now));
+  const dow = (d0.getDay() + 6) % 7;
+  const monday = startOfDay(now) - dow * DAY;
+  let weekHtml = "";
+  for (let i = 0; i < 7; i++) {
+    const ts = monday + i * DAY + DAY / 2;
+    const k = dateKey(ts);
+    const cls = [k === today ? "today" : "", act[k] ? "done" : "", ts > now && k !== today ? "future" : ""].join(" ");
+    weekHtml += `<div class="day ${cls}"><small>${WEEK_LETTERS[i]}</small><b>${new Date(ts).getDate()}</b><i></i></div>`;
   }
-  const host = $("#deck-groups");
-  if (!state.decks.length) {
-    host.innerHTML = `<p class="loading">No hay mazos. Revisa data/mazos.json.</p>`;
-    return;
+  $("#week").innerHTML = weekHtml;
+
+  // Onda con la actividad de los últimos 7 días
+  const counts = [];
+  for (let i = 6; i >= 0; i--) counts.push(act[dateKey(now - i * DAY)] || 0);
+  $("#hero-wave path").setAttribute("d", wavePath(counts));
+
+  // Aprendidas esta semana y racha
+  let week = 0;
+  for (const st of Object.values(store.p.cards)) {
+    if (st && st.ivl >= 1 && st.reps === 1 && (st.t || 0) >= monday) week++;
   }
-  host.innerHTML = Array.from(groups.entries())
-    .map(([group, decks]) => {
-      const allOn = decks.every(deckEnabled);
-      const items = decks
-        .map((d) => {
-          const s = deckStats(d, now);
-          const pct = s.total ? Math.round((s.learned / s.total) * 100) : 0;
-          return `<li class="deck-item">
-            <button class="deck-open" type="button" data-deck="${esc(d.id)}">
-              <span class="deck-name">${esc(d.title)}</span>
-              <span class="deck-sub">
-                <span>${s.learned}/${s.total} aprendidas</span>
-                ${s.due ? `<span class="due">${s.due} para hoy</span>` : ""}
-              </span>
-              <span class="meter" aria-hidden="true"><span style="width:${pct}%"></span></span>
-            </button>
-            <input class="switch" type="checkbox" id="en-${esc(d.id)}" data-toggle="${esc(d.id)}"
-              ${deckEnabled(d) ? "checked" : ""} aria-label="Incluir ${esc(d.title)} en la sesión diaria">
-          </li>`;
-        })
-        .join("");
-      return `<section class="deck-group">
-        <div class="deck-group-head">
-          <h2 class="eyebrow">${esc(group)}</h2>
-          <button type="button" data-group="${esc(group)}" data-on="${allOn ? "0" : "1"}">${allOn ? "Quitar todos" : "Incluir todos"}</button>
-        </div>
-        <ul class="deck-list">${items}</ul>
-      </section>`;
-    })
+  $("#stat-learned2").textContent = learned.toLocaleString("es-MX");
+  $("#stat-week").textContent = `+${week} esta semana`;
+  let streak = 0;
+  let day = act[today] ? now : now - DAY;
+  while (act[dateKey(day)]) { streak++; day -= DAY; }
+  $("#stat-streak").textContent = `${streak} ${streak === 1 ? "día" : "días"}`;
+  $("#stat-streak-foot").textContent = streak ? (act[today] ? "¡no la rompas!" : "practica hoy para seguir") : "¡empieza hoy!";
+
+  // Seguir con
+  const recent = state.decks
+    .map((d) => ({ d, s: deckStats(d, now) }))
+    .filter((x) => x.s.last)
+    .sort((a, b) => b.s.last - a.s.last)
+    .slice(0, 2)
+    .map((x) => x.d);
+  const pilot = state.deckById.get(PILOT);
+  if (pilot && !recent.includes(pilot) && recent.length < 2) recent.unshift(pilot);
+  for (const d of state.decks) { if (recent.length >= 2) break; if (!recent.includes(d)) recent.push(d); }
+  $("#continue-list").innerHTML = recent.map((d) => rowHtml(d)).join("");
+}
+
+function wavePath(counts) {
+  const max = Math.max(...counts);
+  const pts = counts.map((c, i) => {
+    const x = (i / (counts.length - 1)) * 132;
+    const y = max ? 54 - (c / max) * 50 : 30 + Math.sin(i * 1.3) * 18;
+    return [x, y];
+  });
+  let d = `M${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
+  for (let i = 1; i < pts.length; i++) {
+    const [x0, y0] = pts[i - 1];
+    const [x1, y1] = pts[i];
+    const cx = (x0 + x1) / 2;
+    d += ` C${cx.toFixed(1)} ${y0.toFixed(1)} ${cx.toFixed(1)} ${y1.toFixed(1)} ${x1.toFixed(1)} ${y1.toFixed(1)}`;
+  }
+  return d;
+}
+
+function rowHtml(deck) {
+  const s = deckStats(deck);
+  const v = visFor(deck);
+  const ru = RU_NAME[deck.id];
+  return `<button class="trow card-frame pal-${v.pal}" type="button" data-open-tema="${esc(deck.id)}">
+    ${artHtml(deck)}
+    <span class="t-n">${deckNumber(deck)}${deck.id === PILOT ? " · Piloto" : ""}</span>
+    <span class="t-title">${esc(deck.title)} ${ru ? `<span lang="ru">${esc(ru)}</span>` : ""}</span>
+    <span class="t-foot"><span class="bar"><span style="width:${s.pct}%"></span></span><span class="pct">${s.pct}%</span></span>
+  </button>`;
+}
+
+// ---------- Temas ----------
+function renderTemas() {
+  const groups = ["Todos", ...new Set(state.decks.map((d) => d.group))];
+  if (!groups.includes(state.temaFilter)) state.temaFilter = "Todos";
+  $("#temas-chips").innerHTML = groups
+    .map((g) => `<button class="chip" type="button" role="tab" data-filter="${esc(g)}" aria-selected="${g === state.temaFilter}">${esc(g)}</button>`)
     .join("");
+  const list = state.decks.filter((d) => state.temaFilter === "Todos" || d.group === state.temaFilter);
+  const pilot = list.find((d) => d.id === PILOT);
+  const ordered = pilot ? [pilot, ...list.filter((d) => d !== pilot)] : list;
+  if (!ordered.some((d) => d.id === state.openTile)) state.openTile = ordered[0] ? ordered[0].id : null;
+  $("#temas-grid").innerHTML = ordered.length
+    ? ordered.map(tileHtml).join("")
+    : `<p class="loading">No hay temas en este grupo.</p>`;
 }
 
-function setDeckEnabled(ids, on) {
-  const disabled = { ...store.settings.disabled };
-  for (const id of ids) {
-    if (on) delete disabled[id];
-    else disabled[id] = true;
+function tileHtml(deck) {
+  const s = deckStats(deck);
+  const v = visFor(deck);
+  const ru = RU_NAME[deck.id] || "";
+  const open = deck.id === state.openTile;
+  const done = s.total && s.learned === s.total;
+  const foot = done
+    ? `<span class="t-done"><i>✓</i>Terminado</span>`
+    : `<span class="bar"><span style="width:${s.pct}%"></span></span><span class="pct">${s.pct}%</span>`;
+  const learnLabel = deck.aprender ? "Aprender" : "Ver palabras";
+  const meta = `${s.learned} de ${s.total} ${deck.cards.some((c) => c.kind === "qa") ? "tarjetas" : "palabras"}` +
+    (deck.frases.length ? ` · ${deck.frases.length} frases` : "");
+  return `<article class="tile card-frame pal-${v.pal}${open ? " open" : ""}" data-tile="${esc(deck.id)}" tabindex="${open ? -1 : 0}" role="button" aria-expanded="${open}" aria-label="${esc(deck.title)}">
+    ${artHtml(deck)}
+    <div class="t-body">
+      <span class="t-n">${deckNumber(deck)}${deck.id === PILOT ? " · Piloto" : ""}</span>
+      <span class="t-title">${esc(deck.title)}</span>
+      ${ru ? `<span class="t-ru" lang="ru">${esc(ru)}</span>` : ""}
+      <span class="t-foot">${foot}</span>
+    </div>
+    <div class="t-big">
+      <div class="t-top"><span class="t-tag">${deckNumber(deck)}${deck.id === PILOT ? " · Piloto" : ""}</span><span class="pct">${s.pct}%</span></div>
+      <span class="t-title">${esc(deck.title)}</span>
+      ${ru ? `<span class="t-ru" lang="ru">${esc(ru)}</span>` : ""}
+      <span class="t-meta">${meta}</span>
+      <div class="t-actions">
+        <button class="t-act fill" type="button" data-act="learn" data-deck="${esc(deck.id)}">${learnLabel}</button>
+        <button class="t-act" type="button" data-act="practice" data-deck="${esc(deck.id)}">Practicar</button>
+      </div>
+    </div>
+  </article>`;
+}
+
+// Abre un tema en la cuadrícula: el cuadrado crece y los demás se acomodan
+// deslizándose (técnica FLIP: solo se animan transform y clip-path).
+function openTileAnimated(id) {
+  if (id === state.openTile) return;
+  const grid = $("#temas-grid");
+  const tiles = Array.from(grid.querySelectorAll(".tile"));
+  const first = new Map(tiles.map((t) => [t.dataset.tile, t.getBoundingClientRect()]));
+  for (const t of tiles) {
+    const on = t.dataset.tile === id;
+    t.classList.toggle("open", on);
+    t.classList.toggle("opening", on);
+    t.setAttribute("aria-expanded", on);
+    t.tabIndex = on ? -1 : 0;
   }
-  store.setSetting("disabled", disabled);
+  state.openTile = id;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce || !Element.prototype.animate) return;
+  const opts = { duration: 520, easing: "cubic-bezier(.22,1,.36,1)" };
+  for (const t of tiles) {
+    const a = first.get(t.dataset.tile);
+    const b = t.getBoundingClientRect();
+    const dx = a.left - b.left;
+    const dy = a.top - b.top;
+    if (t.dataset.tile === id) {
+      const r = Math.max(0, b.width - a.width);
+      const btm = Math.max(0, b.height - a.height);
+      t.animate([
+        { transform: `translate(${dx}px, ${dy}px)`, clipPath: `inset(0 ${r}px ${btm}px 0 round 22px)` },
+        { transform: "none", clipPath: "inset(0 0 0 0 round 28px)" }
+      ], opts);
+    } else if (dx || dy) {
+      t.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: "none" }], opts);
+    }
+  }
+  const opened = grid.querySelector(".tile.open");
+  setTimeout(() => {
+    const r = opened.getBoundingClientRect();
+    if (r.top < 70 || r.bottom > window.innerHeight - 100) {
+      window.scrollBy({ top: r.top - 90, behavior: reduce ? "auto" : "smooth" });
+    }
+  }, 300);
 }
 
-// ---------- Mazo ----------
-function openDeck(id) {
-  state.currentDeck = state.deckById.get(id);
-  if (!state.currentDeck) return;
-  $("#deck-search").value = "";
+// ---------- Tema ----------
+function openTema(id, tab) {
+  const deck = state.deckById.get(id);
+  if (!deck) return;
+  state.currentDeck = deck;
+  state.temaTab = tab || "aprender";
   state.selecting = false;
   state.selected = new Set();
-  renderDeck();
-  show("deck");
+  $("#deck-search").value = "";
+  $("#tema-search-box").hidden = true;
+  renderTema();
+  show("tema");
 }
 
-function renderDeck() {
+function renderTema() {
   const d = state.currentDeck;
   if (!d) return;
   const s = deckStats(d);
-  $("#deck-title").textContent = d.title;
-  $("#deck-desc").textContent = d.desc;
-  $("#deck-stats").innerHTML =
-    `<span><b>${d.cards.length}</b> tarjetas</span>` +
-    `<span><b>${s.learned}</b> aprendidas</span>` +
-    `<span><b>${s.due}</b> para hoy</span>` +
-    `<span><b>${s.fresh}</b> sin ver</span>`;
-  $("#deck-study").disabled = s.due + s.fresh === 0;
+  const v = visFor(d);
+  $("#tema-title").textContent = d.title;
+  $("#tab-aprender").textContent = d.aprender ? "Aprender" : "Palabras";
+  for (const b of $$(".pill-tabs [data-tab]")) b.setAttribute("aria-selected", b.dataset.tab === state.temaTab);
+  $("#tema-aprender").hidden = state.temaTab !== "aprender";
+  $("#tema-practicar").hidden = state.temaTab !== "practicar";
+  if (state.temaTab !== "aprender") $("#select-bar").hidden = true;
+
+  // Introducción, reglas y tip del tema
+  const ap = d.aprender || {};
+  const isQA = d.cards.every((c) => c.kind === "qa");
+  let intro = `<div class="intro card-frame pal-${v.pal}">
+      <span class="label">De qué trata</span>
+      <p>${esc(ap.intro || d.desc || "")}</p>
+      <div class="intro-stats"><span><span class="num">${d.cards.length}</span> ${isQA ? "tarjetas" : "palabras"}</span><span><span class="num">${s.learned}</span> aprendidas</span></div>
+    </div>`;
+  const rules = (ap.reglas || []).map((r) => `<div class="rule card-frame pal-bl"><span class="label">La regla</span><p>${esc(r)}</p></div>`);
+  if (ap.tip) rules.push(`<div class="rule card-frame pal-li"><span class="label">Tip de memoria</span><p>${esc(ap.tip)}</p></div>`);
+  if (rules.length % 2 === 1) rules[rules.length - 1] = rules[rules.length - 1].replace('class="rule ', 'class="rule wide ');
+  if (rules.length) intro += `<div class="rules">${rules.join("")}</div>`;
+  $("#tema-intro").innerHTML = intro;
+  $("#tema-count").textContent = `${d.cards.length} ${isQA ? "tarjetas" : "palabras"}`;
   renderWords();
+  renderPractice();
+}
+
+function renderPractice() {
+  const d = state.currentDeck;
+  const s = deckStats(d);
+  const done = d.frases.filter((f) => store.frase(`${d.id}:${f.id}`)).length;
+  let html = `<button class="practice-card card-frame pal-lav" type="button" data-practice="cards"${s.due + s.fresh === 0 ? " disabled" : ""}>
+      <span class="pc-main"><span class="label">Repaso espaciado</span><span class="pc-title">Repasar con tarjetas</span>
+      <span class="pc-sub">${s.due} para hoy · ${s.fresh} sin ver</span></span><span class="go">${ARROW}</span></button>`;
+  if (d.frases.length) {
+    html += `<button class="practice-card card-frame pal-red" type="button" data-practice="frases">
+      <span class="pc-main"><span class="label">Nuevo</span><span class="pc-title">Armar frases</span>
+      <span class="pc-sub">${d.frases.length} frases · ${done} hechas. Armas la idea y eliges qué dijiste.</span></span><span class="go">${ARROW}</span></button>`;
+  }
+  html += `<button class="practice-card card-frame pal-kh" type="button" data-practice="cram">
+      <span class="pc-main"><span class="label">Sin presión</span><span class="pc-title">Repaso rápido</span>
+      <span class="pc-sub">Preguntas al azar. No cambia tu calendario.</span></span><span class="go">${ARROW}</span></button>`;
+  $("#tema-practice").innerHTML = html;
 }
 
 function pickedCards() {
@@ -285,52 +554,118 @@ function renderSelectBar() {
   const bar = $("#select-bar");
   const n = state.selected.size;
   $("#select-toggle").textContent = state.selecting ? "Cancelar selección" : "Seleccionar varias";
-  bar.hidden = !state.selecting;
-  $("#select-count").textContent = n === 1 ? "1 palabra seleccionada" : `${n} palabras seleccionadas`;
+  bar.hidden = !state.selecting || state.temaTab !== "aprender";
+  $("#select-count").textContent = n === 1 ? "1 palabra" : `${n} palabras`;
   $("#select-add").disabled = n === 0;
 }
 
-function renderWords() {
+function filteredCards() {
   const d = state.currentDeck;
   const q = norm($("#deck-search").value);
-  const list = d.cards.filter((c) => {
+  return d.cards.filter((c) => {
     if (!q) return true;
     const hay = norm([c.ru, c.es, c.q, c.a, c.nota, c.tag].join(" "));
     return hay.includes(q);
   });
+}
+
+function renderWords() {
+  const list = filteredCards();
   const host = $("#deck-words");
+  renderSelectBar();
   if (!list.length) {
-    host.innerHTML = `<li><span class="empty">Nada coincide con tu búsqueda.</span></li>`;
+    host.innerHTML = `<p class="muted">Nada coincide con tu búsqueda.</p>`;
     return;
   }
-  renderSelectBar();
-  host.innerHTML = list
-    .map((c) => {
-      const sts = keysFor(c).map((k) => store.card(k));
-      const cls = sts.every((x) => x && x.ivl >= 1) ? "known" : sts.some(Boolean) ? "learning" : "";
-      const dot = `<span class="wl-dot ${cls}" aria-hidden="true"></span>`;
-      const on = store.picked(c.id);
-      const check = state.selecting
-        ? `<input class="wl-check" type="checkbox" data-select="${esc(c.id)}" ${state.selected.has(c.id) ? "checked" : ""} aria-label="Seleccionar">`
-        : "";
-      const pick = `<button class="pick-btn${on ? " on" : ""}" type="button" data-pick="${esc(c.id)}" aria-pressed="${on}">${on ? "✓ Hoy" : "+ Hoy"}</button>`;
-      if (c.kind === "qa") {
-        return `<li class="${state.selecting ? "selecting" : ""}">${check}
-          <span class="wl-es wl-full">${dot}${esc(c.q)}</span>
-          <span class="wl-foot">${pick}</span>
-        </li>`;
-      }
-      return `<li class="${state.selecting ? "selecting" : ""}">${check}
-        <span class="wl-ru" lang="ru">${dot}${esc(c.ru)}${c.fonetica ? `<span class="fon">${esc(c.fonetica)}</span>` : ""}</span>
-        <span class="wl-es">${esc(c.es)}</span>
-        <span class="wl-foot">${c.tag ? `<span class="wl-tag">${esc(c.tag)}</span>` : "<span></span>"}${pick}</span>
-        ${store.note(c.id) ? `<span class="wl-note">Tu nota: ${esc(store.note(c.id))}</span>` : ""}
-      </li>`;
+  const sections = [];
+  for (const c of list) {
+    const name = c.seccion || "";
+    let sec = sections.find((x) => x.name === name);
+    if (!sec) sections.push((sec = { name, cards: [] }));
+    sec.cards.push(c);
+  }
+  let i = 0;
+  host.innerHTML = sections
+    .map((sec) => {
+      const rows = sec.cards.map((c) => wordRow(c, PALS[i++ % 6])).join("");
+      return `${sec.name ? `<h3 class="label sec-title">${esc(sec.name)}</h3>` : ""}<div class="wlist">${rows}</div>`;
     })
     .join("");
 }
 
-// ---------- Práctica (estilo Chessbook) ----------
+function wordRow(c, pal) {
+  const on = store.picked(c.id);
+  const right = state.selecting
+    ? `<input class="w-check" type="checkbox" data-select="${esc(c.id)}" ${state.selected.has(c.id) ? "checked" : ""} aria-label="Seleccionar">`
+    : `<button class="pick${on ? " on" : ""}" type="button" data-pick="${esc(c.id)}" aria-pressed="${on}" aria-label="${on ? "Quitar de mi práctica de hoy" : "Agregar a mi práctica de hoy"}">${on ? "✓" : "+"}</button>`;
+  if (c.kind === "qa") {
+    return `<div class="wrow qa-row card-frame pal-${pal}" data-word="${esc(c.id)}" role="button" tabindex="0">
+      <span class="w-main"><span class="w-ru">${esc(c.q)}</span></span>${right}</div>`;
+  }
+  return `<div class="wrow card-frame pal-${pal}" data-word="${esc(c.id)}" role="button" tabindex="0">
+    <span class="w-main"><span class="w-ru" lang="ru">${esc(c.ru)}</span>${c.fonetica ? `<span class="w-fon">${esc(c.fonetica)}</span>` : ""}</span>
+    <span class="w-es">${esc(c.es)}</span>${right}</div>`;
+}
+
+// ---------- Palabra ----------
+function findCard(id) {
+  for (const d of state.decks) {
+    const c = d.cards.find((x) => x.id === id);
+    if (c) return c;
+  }
+  return null;
+}
+
+function openPalabra(id) {
+  const c = findCard(id);
+  if (!c) return;
+  state.word = c;
+  renderPalabra();
+  show("palabra");
+}
+
+function renderPalabra(editingNote = false) {
+  const c = state.word;
+  const deck = state.deckById.get(c.deckId);
+  $("#palabra-crumb").textContent = [deck ? deck.title : "", c.seccion].filter(Boolean).join(" › ");
+  const on = store.picked(c.id);
+  const note = store.note(c.id);
+  const canSpeak = "speechSynthesis" in window;
+  let html;
+  if (c.kind === "qa") {
+    html = `<div class="word-card card-frame pal-li"><span class="label">Pregunta</span><p class="qa-text">${esc(c.q)}</p></div>
+      <div class="info card-frame pal-lav"><span class="label">Respuesta</span><p class="qa-text answer">${esc(c.a)}</p></div>`;
+  } else {
+    const tags = [...(c.tag ? c.tag.split("·").map((t) => t.trim()) : []), ...(c.nota && c.nota.length < 22 ? [c.nota] : [])];
+    html = `<div class="word-card card-frame pal-aq">
+      <div class="word-top"><div><div class="word-ru" lang="ru">${esc(c.ru)}</div>${c.fonetica ? `<div class="word-fon">${esc(c.fonetica)}</div>` : ""}</div>
+      ${canSpeak ? `<button class="audio-btn" type="button" data-say="${esc(c.ru)}" aria-label="Escuchar en ruso">${SPEAKER}</button>` : ""}</div>
+      <div class="word-es"><b>${esc(c.es)}</b>${tags.length ? `<span class="word-tags">${tags.map((t) => `<span>${esc(t)}</span>`).join("")}</span>` : ""}</div>
+    </div>`;
+    if (c.pista || (c.nota && c.nota.length >= 22)) {
+      html += `<div class="info card-frame pal-lav"><span class="label">Qué significa</span>${c.pista ? `<p>${esc(c.pista)}</p>` : ""}${c.nota && c.nota.length >= 22 ? `<p>${esc(c.nota)}</p>` : ""}</div>`;
+    }
+    if (c.ejemplo) {
+      html += `<div class="info card-frame pal-bl"><div class="info-row"><div><span class="label">Ejemplo</span>
+        <span class="ex-ru" lang="ru">${esc(c.ejemplo.ru)}</span>${c.ejemplo.fonetica ? `<span class="ex-fon">${esc(c.ejemplo.fonetica)}</span>` : ""}<span>${esc(c.ejemplo.es)}</span></div>
+        ${canSpeak ? `<button class="audio-btn sm" type="button" data-say="${esc(c.ejemplo.ru)}" aria-label="Escuchar el ejemplo">${SPEAKER}</button>` : ""}</div></div>`;
+    }
+    if (c.tip) html += `<div class="info card-frame pal-kh"><span class="label">Tip de memoria</span><p>${esc(c.tip)}</p></div>`;
+  }
+  if (editingNote) {
+    html += `<div class="note-area"><label class="label" for="word-note">Tu nota personal</label>
+      <textarea id="word-note" rows="3" maxlength="500" placeholder="Escribe algo que te ayude a recordarla">${esc(note)}</textarea>
+      <div class="note-actions"><button class="btn btn-primary" type="button" data-wnote="save">Guardar nota</button><button class="btn btn-ghost" type="button" data-wnote="cancel">Cancelar</button></div></div>`;
+  } else {
+    html += `<div class="note-area"><div class="row-between"><span class="muted">${note ? "Tu nota" : "Tu nota personal"}</span>
+      <button class="link-btn" type="button" data-wnote="edit">${note ? "Editar" : "+ Agregar"}</button></div>${note ? `<p>${esc(note)}</p>` : ""}</div>`;
+  }
+  html += `<button class="btn btn-wide ${on ? "btn-ghost" : "btn-primary"}" type="button" data-wpick>${on ? "✓ En tu práctica de hoy · quitar" : "+ Agregar a mi práctica de hoy"}</button>`;
+  $("#palabra-body").innerHTML = html;
+  if (editingNote) $("#word-note").focus();
+}
+
+// ---------- Práctica con tarjetas (estilo Chessbook) ----------
 // Las palabras nuevas se muestran primero con su respuesta; después se
 // preguntan con 4 opciones. Si fallas, la palabra pierde su progreso y
 // vuelve a la fila del día hasta que la contestes bien.
@@ -375,63 +710,42 @@ function startToday() {
       queue.splice(Math.floor(Math.random() * (queue.length + 1)), 0, item);
     }
   }
-  startSession(queue, "Práctica", false);
+  startSession(queue, "Práctica de hoy", false, "home");
 }
 
-function startDeck() {
-  const queue = buildQueue([state.currentDeck], NEW_PER_DECK_SESSION);
-  startSession(queue, state.currentDeck.title, false);
+function startDeck(deck) {
+  const queue = buildQueue([deck], NEW_PER_DECK_SESSION);
+  startSession(queue, deck.title, false, state.view === "tema" ? "tema" : state.view);
 }
 
-function startCram() {
-  const d = state.currentDeck;
-  let items = itemsFor(d).filter((it) => store.card(it.key));
-  if (!items.length) items = itemsFor(d);
+function startCram(deck) {
+  let items = itemsFor(deck).filter((it) => store.card(it.key));
+  if (!items.length) items = itemsFor(deck);
   items = shuffle(items).slice(0, 40).map((it) => ({ ...it, phase: "quiz", failed: false, hint: 0 }));
-  startSession(items, "Repaso rápido", true);
+  startSession(items, "Repaso rápido", true, state.view === "tema" ? "tema" : state.view);
 }
 
-function startSession(queue, title, cram) {
+function startSession(queue, title, cram, returnTo) {
   if (!queue.length) {
     toast("No hay tarjetas pendientes.");
     return;
   }
-  state.session = {
-    queue,
-    title,
-    cram,
-    ok: 0,
-    bad: 0,
-    resolved: 0,
-    answered: false,
-    requeue: false,
-    timer: null,
-    returnTo: state.view === "deck" ? "deck" : "home"
-  };
+  state.session = { queue, title, cram, ok: 0, bad: 0, resolved: 0, answered: false, requeue: false, timer: null, returnTo };
   $("#study-title").textContent = title;
   show("study");
   renderItem();
 }
 
-function shuffle(arr) {
-  const a = arr.slice();
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-function speak(text) {
+function speak(text, rate = 0.9) {
   if (!("speechSynthesis" in window)) return;
-  const clean = plain(text).replace(/\(.*?\)/g, "").replace(/[/·]/g, ",").trim();
+  const clean = plain(text).replace(/\(.*?\)/g, "").replace(/[/·]/g, ",").replace(/—/g, ",").trim();
   if (!clean) return;
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(clean);
   u.lang = "ru-RU";
   const voice = window.speechSynthesis.getVoices().find((v) => v.lang && v.lang.toLowerCase().startsWith("ru"));
   if (voice) u.voice = voice;
-  u.rate = 0.9;
+  u.rate = rate;
   window.speechSynthesis.speak(u);
 }
 
@@ -502,6 +816,7 @@ function renderItem() {
   hideAllControls();
   updateCounters();
 
+  $("#card").className = `card card-frame study-card pal-${deck ? visFor(deck).pal : "lav"}`;
   $("#card-deck").textContent = deck ? deck.title : "";
   $("#card-badge").hidden = it.phase !== "learn";
   $("#card-badge").textContent = "Nueva";
@@ -600,14 +915,7 @@ function applyTheme() {
   const theme = store.settings.theme === "light" ? "light" : "dark";
   document.documentElement.dataset.theme = theme;
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute("content", theme === "light" ? "#f4f5f7" : "#0b0c0d");
-}
-
-function showFeedback(ok, text) {
-  const fb = $("#feedback");
-  fb.className = `feedback ${ok ? "ok" : "bad"}`;
-  fb.textContent = text;
-  fb.hidden = false;
+  if (meta) meta.setAttribute("content", theme === "light" ? "#f4f1ea" : "#0b0b0c");
 }
 
 function choose(i) {
@@ -682,7 +990,7 @@ function revealQA() {
   renderNoteBox();
 }
 
-// ---------- Notas personales ----------
+// ---------- Notas personales (durante la práctica) ----------
 function renderNoteBox(editing = false) {
   const s = state.session;
   if (!s) return;
@@ -694,7 +1002,7 @@ function renderNoteBox(editing = false) {
       <textarea id="note-input" rows="3" maxlength="500" placeholder="Escribe algo que te ayude a recordarla">${esc(text)}</textarea>
       <div class="note-actions">
         <button class="btn btn-primary" type="button" data-note="save">Guardar nota</button>
-        <button class="btn" type="button" data-note="cancel">Cancelar</button>
+        <button class="btn btn-ghost" type="button" data-note="cancel">Cancelar</button>
       </div>`;
     box.hidden = false;
     const input = $("#note-input");
@@ -744,6 +1052,7 @@ function settle(ok) {
     const prev = store.card(it.key);
     if (!prev) store.countNew(dateKey(now));
     const rating = ok ? (it.hint && !it.failed ? 2 : 3) : 1;
+    logActivity();
     store.setCard(it.key, schedule(prev, rating, now));
   }
   if (!ok) {
@@ -774,6 +1083,8 @@ function finishSession() {
   $("#done-summary").textContent =
     `${s.ok} respuestas correctas y ${s.bad} errores. ` +
     (s.cram ? "El repaso rápido no cambia tu calendario." : "Las palabras que fallaste volverán pronto para reforzarlas.");
+  state.doneReturn = s.returnTo;
+  state.session = null;
   show("done");
 }
 
@@ -781,12 +1092,226 @@ function closeSession() {
   const s = state.session;
   if (s) clearTimeout(s.timer);
   state.session = null;
-  if (s && s.returnTo === "deck" && state.currentDeck) {
-    renderDeck();
-    show("deck");
+  backTo(s ? s.returnTo : "home");
+}
+
+function backTo(where) {
+  if (where === "tema" && state.currentDeck) {
+    renderTema();
+    show("tema");
+  } else go(where === "temas" ? "temas" : "home");
+}
+
+// ---------- Armar frases ----------
+// Paso 1: con la idea en español acomodas las fichas en ruso. Cuenta como
+// correcta cualquier frase de la lista "validas". Paso 2: eliges qué
+// significa la frase que armaste (y la puedes escuchar).
+
+function startFrases(deck) {
+  if (!deck.frases.length) return;
+  const queue = shuffle(deck.frases).map((f) => ({ f, failed: false }));
+  state.fr = { deck, queue, ok: 0, bad: 0, resolved: 0, results: [], total: queue.length, returnTo: "tema" };
+  show("frase");
+  newFraseItem();
+}
+
+function fraseKey(fr, f) {
+  return `${fr.deck.id}:${f.id}`;
+}
+
+function newFraseItem() {
+  const fr = state.fr;
+  const it = fr.queue[0];
+  const f = it.f;
+  const seenBefore = !!store.frase(fraseKey(fr, f));
+  let tokens = f.fichas.slice();
+  if (seenBefore || it.failed) tokens = tokens.concat((f.distractores || []).slice(0, 2));
+  let bank = shuffle(tokens);
+  for (let i = 0; i < 4 && bank.join(" ") === f.fichas.join(" "); i++) bank = shuffle(tokens);
+  fr.cur = { bank: bank.map((t) => ({ t, used: false })), placed: [], step: 1, hint: 0, checked: false, ok1: null, ok2: null, choice: null, rate: 0.9, reported: false };
+  fr.cur.options = shuffle(f.opciones);
+  renderFrase();
+}
+
+function fraseCounters() {
+  const fr = state.fr;
+  $("#fr-left").textContent = fr.queue.length;
+  $("#fr-ok").textContent = fr.ok;
+  $("#fr-bad").textContent = fr.bad;
+  let seg = "";
+  for (let i = 0; i < fr.total; i++) {
+    const r = fr.results[i];
+    seg += `<span class="${r === true ? "on" : r === false ? "bad" : ""}"></span>`;
+  }
+  $("#fr-segments").innerHTML = seg;
+}
+
+function builtSentence(cur) {
+  return cur.placed.map((i) => cur.bank[i].t).join(" ");
+}
+
+function displaySentence(fr, cur) {
+  const f = fr.queue[0].f;
+  if (!cur.ok1) return f.texto || f.validas[0];
+  const mine = builtSentence(cur);
+  if (normSentence(mine) === normSentence(f.texto || f.validas[0])) return f.texto || mine;
+  const t = mine.charAt(0).toUpperCase() + mine.slice(1);
+  return /[.!?]$/.test(t) ? t : `${t}.`;
+}
+
+function renderFrase() {
+  const fr = state.fr;
+  const cur = fr.cur;
+  const f = fr.queue[0].f;
+  fraseCounters();
+  const body = $("#frase-body");
+  if (cur.step === 1) {
+    const zoneCls = cur.checked ? (cur.ok1 ? " ok" : " bad") : "";
+    const placed = cur.placed.map((i) => `<button class="tok" type="button" lang="ru" data-ans="${i}"${cur.checked ? " disabled" : ""}>${esc(cur.bank[i].t)}</button>`).join("");
+    const bank = cur.bank.map((b, i) => b.used
+      ? `<span class="tok ghost" aria-hidden="true">${esc(b.t)}</span>`
+      : `<button class="tok" type="button" lang="ru" data-bank="${i}"${cur.checked ? " disabled" : ""}>${esc(b.t)}</button>`).join("");
+    let foot;
+    if (!cur.checked) {
+      foot = `<div class="fr-foot">
+        ${cur.hint ? `<div class="hint-box"><span class="label">Pista</span><p class="hint-text">${esc(f.pista || "Fíjate en el orden de la idea en español.")}</p></div>` : ""}
+        <button class="menu-item" type="button" data-fr="hint">${cur.hint ? "No sé, muéstrame la respuesta" : "No sé, dame una pista"}</button>
+        <button class="btn btn-primary btn-wide" type="button" data-fr="check"${cur.placed.length ? "" : " disabled"}>Comprobar</button></div>`;
+    } else if (cur.ok1) {
+      foot = `<div class="fr-foot"><button class="btn btn-primary btn-wide" type="button" data-fr="step2">Continuar</button></div>`;
+    } else {
+      foot = `<div class="solution card-frame pal-mint"><span class="label">Una respuesta correcta</span><div lang="ru">${esc(f.texto || f.validas[0])}</div>${f.fonetica ? `<span class="fon">${esc(f.fonetica)}</span>` : ""}</div>
+        <div class="fr-foot">
+          ${cur.placed.length && !cur.revealed ? `<button class="menu-item" type="button" data-fr="report1"${cur.reported ? " disabled" : ""}>${cur.reported ? "✓ Enviado, lo voy a revisar" : "Mi respuesta también es correcta"}</button>` : ""}
+          <button class="btn btn-primary btn-wide" type="button" data-fr="step2">Continuar</button></div>`;
+    }
+    body.innerHTML = `<div class="idea card-frame pal-lav"><div><span class="label">Arma la frase · paso 1 de 2</span><span class="idea-text">${esc(f.idea)}</span></div></div>
+      <div class="answer-zone${zoneCls}" aria-label="Tu frase">${placed}</div>
+      <p class="muted" style="margin:-4px 0 0;font-size:13px">${cur.checked ? (cur.ok1 ? "¡Bien armada!" : "Así no quedó. Revisa la respuesta de abajo.") : "Cualquier orden correcto cuenta. Toca una ficha para quitarla."}</p>
+      <div class="bank">${bank}</div>${foot}`;
+    return;
+  }
+  // Paso 2
+  const sentence = displaySentence(fr, cur);
+  const showFon = f.fonetica && normSentence(sentence) === normSentence(f.texto || f.validas[0]);
+  const canSpeak = "speechSynthesis" in window;
+  const opts = cur.options.map((o, i) => {
+    let cls = "option";
+    let key = i + 1;
+    if (cur.choice !== null) {
+      if (o === f.es) { cls += " correct"; key = "✓"; }
+      else if (i === cur.choice) cls += " wrong";
+    }
+    return `<button class="${cls}" type="button" data-fopt="${i}"${cur.choice !== null ? " disabled" : ""}><span class="key">${key}</span><span class="opt-text"><span>${esc(o)}</span></span></button>`;
+  }).join("");
+  body.innerHTML = `<div class="sentence card-frame pal-bl">
+      <span class="label">¿Qué dijiste? · paso 2 de 2</span>
+      <div class="sentence-row"><div><span class="sentence-ru" lang="ru">${esc(sentence)}</span>${showFon ? `<span class="fon">${esc(f.fonetica)}</span>` : ""}</div>
+      ${canSpeak ? `<button class="audio-btn" type="button" data-fr="say" aria-label="Escuchar la frase en ruso">${SPEAKER}</button>` : ""}</div>
+      ${canSpeak ? `<div class="speed"><button type="button" data-rate="0.9" aria-pressed="${cur.rate === 0.9}">Normal</button><button type="button" data-rate="0.55" aria-pressed="${cur.rate === 0.55}">Lento</button></div>` : ""}
+    </div>
+    <p class="muted" style="margin:0;font-size:14px">Elige la traducción de la frase que armaste:</p>
+    <div class="options">${opts}</div>
+    ${cur.choice !== null ? `<div class="fr-foot">
+      ${!cur.ok2 ? `<button class="menu-item" type="button" data-fr="report2"${cur.reported ? " disabled" : ""}>${cur.reported ? "✓ Enviado, lo voy a revisar" : "Mi respuesta también es correcta"}</button>` : ""}
+      <button class="btn btn-primary btn-wide" type="button" data-fr="next">Continuar</button></div>` : ""}`;
+}
+
+function fraseClick(e) {
+  const fr = state.fr;
+  if (!fr) return;
+  const cur = fr.cur;
+  const f = fr.queue[0].f;
+  const t = e.target.closest("button");
+  if (!t) return;
+  if (t.dataset.bank !== undefined && !cur.checked) {
+    const i = Number(t.dataset.bank);
+    cur.bank[i].used = true;
+    cur.placed.push(i);
+    return renderFrase();
+  }
+  if (t.dataset.ans !== undefined && !cur.checked) {
+    const i = Number(t.dataset.ans);
+    cur.placed = cur.placed.filter((x) => x !== i);
+    cur.bank[i].used = false;
+    return renderFrase();
+  }
+  if (t.dataset.rate) {
+    cur.rate = Number(t.dataset.rate);
+    speak(displaySentence(fr, cur), cur.rate);
+    return renderFrase();
+  }
+  if (t.dataset.fopt !== undefined && cur.choice === null) {
+    cur.choice = Number(t.dataset.fopt);
+    cur.ok2 = cur.options[cur.choice] === f.es;
+    cur.reported = false;
+    playSound(cur.ok2);
+    return renderFrase();
+  }
+  const act = t.dataset.fr;
+  if (act === "hint") {
+    if (!cur.hint) { cur.hint = 1; return renderFrase(); }
+    cur.checked = true;
+    cur.ok1 = false;
+    cur.revealed = true;
+    playSound(false);
+    return renderFrase();
+  }
+  if (act === "check") {
+    const mine = normSentence(builtSentence(cur));
+    cur.checked = true;
+    cur.ok1 = f.validas.some((v) => normSentence(v) === mine);
+    playSound(cur.ok1);
+    return renderFrase();
+  }
+  if (act === "step2") {
+    cur.step = 2;
+    cur.reported = false;
+    renderFrase();
+    if (store.settings.autoSpeak) speak(displaySentence(fr, cur), cur.rate);
+    return;
+  }
+  if (act === "say") return speak(displaySentence(fr, cur), cur.rate);
+  if (act === "report1" || act === "report2") {
+    cur.reported = true;
+    if (act === "report1") cur.reported1 = true;
+    store.report({
+      mazo: fr.deck.id,
+      frase_id: f.id,
+      paso: act === "report1" ? "armar" : "traduccion",
+      respuesta: act === "report1" ? builtSentence(cur) : cur.options[cur.choice],
+      esperada: act === "report1" ? (f.texto || f.validas[0]) : f.es
+    }).then((sent) => toast(sent ? "Gracias, lo voy a revisar" : "Guardado; se enviará cuando haya conexión"));
+    return renderFrase();
+  }
+  if (act === "next") return finishFraseItem();
+}
+
+function finishFraseItem() {
+  const fr = state.fr;
+  const cur = fr.cur;
+  const item = fr.queue.shift();
+  // Si reportaste que tu respuesta también era correcta, no se repite.
+  const ok = (cur.ok1 && !cur.hint && cur.ok2) || (cur.reported1 && cur.ok2);
+  store.setFrase(fraseKey(fr, item.f), ok);
+  logActivity();
+  if (ok) {
+    fr.ok++;
+    fr.results[fr.resolved++] = true;
   } else {
-    renderHome();
-    show("home");
+    fr.bad++;
+    if (!item.failed) {
+      item.failed = true;
+      fr.queue.push(item);
+    } else fr.results[fr.resolved++] = false;
+  }
+  if (fr.queue.length) newFraseItem();
+  else {
+    $("#done-title").textContent = "Frases terminadas";
+    $("#done-summary").textContent = `${fr.ok} frases bien y ${fr.bad} para repasar. Las que fallaste volverán con una ficha de más para despistar.`;
+    state.doneReturn = fr.returnTo;
+    state.fr = null;
+    show("done");
   }
 }
 
@@ -808,7 +1333,7 @@ function renderSync() {
 function renderAccount() {
   const box = $("#account-box");
   if (!store.syncConfigured) {
-    box.innerHTML = `<p class="muted">La sincronización todavía no está configurada, así que tu progreso se guarda solo en este dispositivo. Para activarla, agrega tus datos de Supabase en <code>js/config.js</code> (las instrucciones están en el README del repositorio).</p>`;
+    box.innerHTML = `<p class="muted">La sincronización todavía no está configurada, así que tu progreso se guarda solo en este dispositivo.</p>`;
     return;
   }
   if (store.user) {
@@ -816,8 +1341,8 @@ function renderAccount() {
     box.innerHTML = `<p>Sesión iniciada como <b>${esc(store.user.email)}</b>.</p>
       <p class="muted">Estado: ${label}. Tu progreso se guarda en la nube y aparece en todos tus dispositivos.</p>
       <div class="confirm-actions">
-        <button class="btn" id="sync-now" type="button">Sincronizar ahora</button>
-        <button class="btn" id="sign-out" type="button">Cerrar sesión</button>
+        <button class="btn btn-ghost" id="sync-now" type="button">Sincronizar ahora</button>
+        <button class="btn btn-ghost" id="sign-out" type="button">Cerrar sesión</button>
       </div>`;
     return;
   }
@@ -854,44 +1379,156 @@ function renderSettings() {
   $("#opt-cursive").checked = !!s.cursive;
   $("#opt-autospeak").checked = !!s.autoSpeak;
   $("#opt-sound").checked = s.sound !== false;
+  $("#opt-name").value = s.name || "";
   $(`#theme-${s.theme === "light" ? "light" : "dark"}`).checked = true;
   $("#reset-confirm").hidden = true;
   $("#reset-ask").hidden = false;
   $("#app-version").textContent = `Russo Study ${APP_VERSION}`;
+  $("#deck-toggles").innerHTML = state.decks
+    .map((d) => `<label class="deck-toggle" for="en-${esc(d.id)}"><span>${esc(d.title)}</span>
+      <input class="switch" type="checkbox" id="en-${esc(d.id)}" data-toggle="${esc(d.id)}" ${deckEnabled(d) ? "checked" : ""}></label>`)
+    .join("");
   renderAccount();
+}
+
+function setDeckEnabled(ids, on) {
+  const disabled = { ...store.settings.disabled };
+  for (const id of ids) {
+    if (on) delete disabled[id];
+    else disabled[id] = true;
+  }
+  store.setSetting("disabled", disabled);
 }
 
 // ---------- Eventos ----------
 function bind() {
+  document.addEventListener("click", (e) => {
+    const g = e.target.closest("[data-go]");
+    if (g) return go(g.dataset.go);
+    const t = e.target.closest("[data-open-tema]");
+    if (t) return openTema(t.dataset.openTema);
+  });
+
   $("#start-today").addEventListener("click", startToday);
-  $("#open-settings").addEventListener("click", () => { renderSettings(); show("settings"); });
-  $("#sync-chip").addEventListener("click", () => { renderSettings(); show("settings"); });
+  $("#sync-chip").addEventListener("click", () => go("settings"));
 
-  $("#deck-groups").addEventListener("click", (e) => {
-    const open = e.target.closest("[data-deck]");
-    if (open) return openDeck(open.dataset.deck);
-    const grp = e.target.closest("[data-group]");
-    if (grp) {
-      const ids = state.decks.filter((d) => d.group === grp.dataset.group).map((d) => d.id);
-      setDeckEnabled(ids, grp.dataset.on === "1");
-      renderHome();
+  // Temas
+  $("#temas-chips").addEventListener("click", (e) => {
+    const c = e.target.closest("[data-filter]");
+    if (!c) return;
+    state.temaFilter = c.dataset.filter;
+    renderTemas();
+  });
+  $("#temas-grid").addEventListener("click", (e) => {
+    const act = e.target.closest("[data-act]");
+    if (act) {
+      const deck = state.deckById.get(act.dataset.deck);
+      if (act.dataset.act === "learn") return openTema(deck.id, "aprender");
+      if (deck.frases.length) return openTema(deck.id, "practicar");
+      return startDeck(deck);
+    }
+    const tile = e.target.closest("[data-tile]");
+    if (tile && !tile.classList.contains("open")) openTileAnimated(tile.dataset.tile);
+  });
+  $("#temas-grid").addEventListener("keydown", (e) => {
+    const tile = e.target.closest("[data-tile]");
+    if (tile && (e.key === "Enter" || e.key === " ") && e.target === tile) {
+      e.preventDefault();
+      openTileAnimated(tile.dataset.tile);
     }
   });
-  $("#deck-groups").addEventListener("change", (e) => {
-    const t = e.target.closest("[data-toggle]");
-    if (t) {
-      setDeckEnabled([t.dataset.toggle], t.checked);
-      renderHome();
-    }
-  });
 
-  for (const b of $$("[data-back]")) {
-    b.addEventListener("click", () => { renderHome(); show("home"); });
+  // Tema
+  for (const b of $$(".pill-tabs [data-tab]")) {
+    b.addEventListener("click", () => { state.temaTab = b.dataset.tab; renderTema(); });
   }
-  $("#deck-study").addEventListener("click", startDeck);
-  $("#deck-cram").addEventListener("click", startCram);
+  $("#tema-search-toggle").addEventListener("click", () => {
+    if (state.temaTab !== "aprender") { state.temaTab = "aprender"; renderTema(); }
+    const box = $("#tema-search-box");
+    box.hidden = !box.hidden;
+    if (!box.hidden) $("#deck-search").focus();
+  });
   $("#deck-search").addEventListener("input", renderWords);
+  $("#deck-words").addEventListener("click", (e) => {
+    const p = e.target.closest("[data-pick]");
+    if (p) {
+      const id = p.dataset.pick;
+      const on = !store.picked(id);
+      store.setPicks([id], on);
+      toast(on ? "Agregada a tu práctica de hoy" : "Quitada de tu práctica de hoy");
+      return renderWords();
+    }
+    if (e.target.closest("[data-select]")) return;
+    const row = e.target.closest("[data-word]");
+    if (!row) return;
+    if (state.selecting) {
+      const id = row.dataset.word;
+      if (state.selected.has(id)) state.selected.delete(id);
+      else state.selected.add(id);
+      return renderWords();
+    }
+    openPalabra(row.dataset.word);
+  });
+  $("#deck-words").addEventListener("keydown", (e) => {
+    const row = e.target.closest("[data-word]");
+    if (row && e.target === row && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); row.click(); }
+  });
+  $("#deck-words").addEventListener("change", (e) => {
+    const c = e.target.closest("[data-select]");
+    if (!c) return;
+    if (c.checked) state.selected.add(c.dataset.select);
+    else state.selected.delete(c.dataset.select);
+    renderSelectBar();
+  });
+  $("#select-toggle").addEventListener("click", () => {
+    state.selecting = !state.selecting;
+    state.selected = new Set();
+    renderWords();
+  });
+  $("#select-all").addEventListener("click", () => {
+    for (const c of filteredCards()) state.selected.add(c.id);
+    renderWords();
+  });
+  $("#select-add").addEventListener("click", () => {
+    const ids = Array.from(state.selected);
+    store.setPicks(ids, true);
+    toast(ids.length === 1 ? "1 palabra agregada a hoy" : `${ids.length} palabras agregadas a hoy`);
+    state.selecting = false;
+    state.selected = new Set();
+    renderWords();
+  });
+  $("#tema-practice").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-practice]");
+    if (!b || b.disabled) return;
+    const d = state.currentDeck;
+    if (b.dataset.practice === "cards") startDeck(d);
+    else if (b.dataset.practice === "cram") startCram(d);
+    else startFrases(d);
+  });
 
+  // Palabra
+  $("#palabra-back").addEventListener("click", () => {
+    if (state.currentDeck && state.currentDeck.id === state.word.deckId) { renderTema(); show("tema"); }
+    else openTema(state.word.deckId);
+  });
+  $("#palabra-body").addEventListener("click", (e) => {
+    const say = e.target.closest("[data-say]");
+    if (say) return speak(say.dataset.say);
+    const n = e.target.closest("[data-wnote]");
+    if (n) {
+      if (n.dataset.wnote === "edit") return renderPalabra(true);
+      if (n.dataset.wnote === "save") { store.setNote(state.word.id, $("#word-note").value); toast("Nota guardada"); }
+      return renderPalabra(false);
+    }
+    if (e.target.closest("[data-wpick]")) {
+      const on = !store.picked(state.word.id);
+      store.setPicks([state.word.id], on);
+      toast(on ? "Agregada a tu práctica de hoy" : "Quitada de tu práctica de hoy");
+      renderPalabra();
+    }
+  });
+
+  // Estudio con tarjetas
   $("#btn-learned").addEventListener("click", markLearned);
   $("#btn-reveal").addEventListener("click", revealQA);
   $("#btn-knew").addEventListener("click", () => selfCheck(true));
@@ -909,7 +1546,15 @@ function bind() {
   });
   $("#study-close").addEventListener("click", closeSession);
   $("#study-exit").addEventListener("click", closeSession);
-  $("#done-home").addEventListener("click", closeSession);
+  $("#done-home").addEventListener("click", () => backTo(state.doneReturn || "home"));
+
+  // Frases
+  $("#frase-body").addEventListener("click", fraseClick);
+  $("#frase-close").addEventListener("click", () => {
+    const fr = state.fr;
+    state.fr = null;
+    backTo(fr ? fr.returnTo : "home");
+  });
 
   document.addEventListener("keydown", (e) => {
     const s = state.session;
@@ -943,6 +1588,7 @@ function bind() {
     e.target.value = n;
     store.setSetting("newPerDay", n);
   });
+  $("#opt-name").addEventListener("change", (e) => store.setSetting("name", e.target.value.trim().slice(0, 24)));
   $("#opt-cursive").addEventListener("change", (e) => store.setSetting("cursive", e.target.checked));
   $("#opt-autospeak").addEventListener("change", (e) => store.setSetting("autoSpeak", e.target.checked));
   $("#opt-sound").addEventListener("change", (e) => {
@@ -952,49 +1598,15 @@ function bind() {
   for (const r of $$('input[name="theme"]')) {
     r.addEventListener("change", () => { if (r.checked) { store.setSetting("theme", r.value); applyTheme(); } });
   }
-
-  // Lista del día desde un mazo
-  $("#deck-words").addEventListener("click", (e) => {
-    const b = e.target.closest("[data-pick]");
-    if (!b) return;
-    const id = b.dataset.pick;
-    const on = !store.picked(id);
-    store.setPicks([id], on);
-    toast(on ? "Agregada a tu práctica de hoy" : "Quitada de tu práctica de hoy");
-    renderWords();
-  });
-  $("#deck-words").addEventListener("change", (e) => {
-    const c = e.target.closest("[data-select]");
-    if (!c) return;
-    if (c.checked) state.selected.add(c.dataset.select);
-    else state.selected.delete(c.dataset.select);
-    renderSelectBar();
-  });
-  $("#select-toggle").addEventListener("click", () => {
-    state.selecting = !state.selecting;
-    state.selected = new Set();
-    renderWords();
-  });
-  $("#select-all").addEventListener("click", () => {
-    const q = norm($("#deck-search").value);
-    for (const c of state.currentDeck.cards) {
-      const hay = norm([c.ru, c.es, c.q, c.a, c.nota, c.tag].join(" "));
-      if (!q || hay.includes(q)) state.selected.add(c.id);
-    }
-    renderWords();
-  });
-  $("#select-add").addEventListener("click", () => {
-    const ids = Array.from(state.selected);
-    store.setPicks(ids, true);
-    toast(ids.length === 1 ? "1 palabra agregada a hoy" : `${ids.length} palabras agregadas a hoy`);
-    state.selecting = false;
-    state.selected = new Set();
-    renderWords();
+  $("#deck-toggles").addEventListener("change", (e) => {
+    const t = e.target.closest("[data-toggle]");
+    if (t) setDeckEnabled([t.dataset.toggle], t.checked);
   });
   $("#reset-ask").addEventListener("click", () => { $("#reset-confirm").hidden = false; $("#reset-ask").hidden = true; });
   $("#reset-no").addEventListener("click", () => { $("#reset-confirm").hidden = true; $("#reset-ask").hidden = false; });
   $("#reset-yes").addEventListener("click", () => {
     store.reset();
+    activityCache = null;
     $("#reset-confirm").hidden = true;
     $("#reset-ask").hidden = false;
     toast("Progreso reiniciado");
@@ -1056,11 +1668,12 @@ async function main() {
   applyTheme();
   bind();
   renderSync();
+  show("home");
   try {
     await loadDecks();
   } catch (e) {
     console.error(e);
-    $("#deck-groups").innerHTML = `<p class="loading">No se pudieron cargar los mazos: ${esc(e.message)}</p>`;
+    $("#continue-list").innerHTML = `<p class="loading">No se pudieron cargar los temas: ${esc(e.message)}</p>`;
   }
   renderHome();
   store.init().then(renderSync).catch((e) => console.warn(e));

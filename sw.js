@@ -2,7 +2,7 @@
 // Los mazos (data/) se piden primero a la red para que tus cambios aparezcan
 // en cuanto los subas; si no hay conexión se usa la última copia guardada.
 // Todo se pide primero a la red, así que los cambios aparecen al recargar.
-const CACHE = "russo-v6";
+const CACHE = "russo-v7";
 const SHELL = [
   "./",
   "index.html",
@@ -13,7 +13,10 @@ const SHELL = [
   "js/config.js",
   "manifest.webmanifest",
   "icons/icon-192.png",
-  "icons/icon-512.png"
+  "icons/icon-512.png",
+  "img/familia.png",
+  "img/saludos.png",
+  "img/perfil.png"
 ];
 
 self.addEventListener("install", (e) => {

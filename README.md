@@ -40,6 +40,23 @@ Para tarjetas de gramática usa `pregunta` y `respuesta` en lugar de `ru` y `es`
 - Usa comillas rectas `"` y escribe el ruso con letras cirílicas (no mezcles letras latinas).
 - Si cambias el texto `ru` de una palabra que ya estudiaste, la app la toma como palabra nueva.
 
+### Modo Aprender y frases para armar (piloto: Familia y personas)
+
+Cada palabra puede llevar además:
+
+| Campo | Qué es |
+|-------|--------|
+| `seccion` | Subgrupo dentro del tema («Abuelos y nietos»). La lista de Aprender se agrupa con esto. |
+| `ejemplo` | `{"ru": "...", "fonetica": "...", "es": "..."}`: una frase de ejemplo con audio. |
+| `tip` | Tip de memoria que aparece en la ficha de la palabra. |
+
+Y el mazo puede tener, junto a `tarjetas`:
+
+- `"aprender": {"intro": "...", "reglas": ["...", "..."], "tip": "..."}`: lo que se ve arriba del tema.
+- `"frases": [...]`: ejercicios de armar frases. Cada uno lleva `id`, `idea` (en español), `fichas` (las palabras en ruso), `validas` (todas las frases correctas que se pueden armar con esas fichas, en cualquier orden válido), `texto` (cómo se muestra), `fonetica`, `es` (traducción), `opciones` (4 traducciones; una es `es`), `distractores` (fichas de más que aparecen en los repasos) y `pista`.
+
+Si alguien toca «Mi respuesta también es correcta», se guarda en la tabla `reportes` de Supabase. Revísalos en **Table Editor → reportes** y, si tienen razón, agrega esa frase a `validas`.
+
 **Mazo nuevo:** crea un archivo `.json` con la misma forma que los demás (`id`, `titulo`, `grupo`, `descripcion`, `tarjetas`) y agrega su ruta en `data/mazos.json`.
 
 Cuando guardes cambios en GitHub, una revisión automática comprueba que los mazos estén bien escritos (pestaña **Actions**). Si sale en rojo, abre el detalle para ver qué línea falla. También puedes revisarlo en tu computadora con `node tools/validar.mjs`.
@@ -58,7 +75,7 @@ Cuando guardes cambios en GitHub, una revisión automática comprueba que los ma
 Sin este paso la app funciona, pero el progreso solo se guarda en el dispositivo donde estudias.
 
 1. Crea una cuenta gratis en [supabase.com](https://supabase.com) y un proyecto nuevo.
-2. Abre **SQL Editor → New query**, pega el contenido de `supabase/schema.sql` y presiona **Run**. Eso crea la tabla y las reglas para que solo tú veas tu progreso.
+2. Abre **SQL Editor → New query**, pega el contenido de `supabase/schema.sql` y presiona **Run**. Eso crea las tablas (tu progreso y los reportes de «Mi respuesta también es correcta») y las reglas para que solo tú veas tu progreso. Si ya lo habías corrido antes, córrelo otra vez: solo agrega lo nuevo.
 3. En **Authentication → Sign In / Providers → Email**, deja **Email** activado y apaga **Confirm email** para poder entrar en cuanto creas la cuenta.
 4. En **Project Settings → API Keys** copia la **Publishable key** (o la **anon public** de *Legacy API keys*) y pégala junto con el **Project URL** en `js/config.js` (en tu proyecto ya están puestos).
 

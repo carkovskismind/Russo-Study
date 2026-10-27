@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Russo Study</title>
 <meta name="description" content="Tarjetas de estudio de ruso con repaso espaciado">
-<meta name="theme-color" content="#0b0c0d">
+<meta name="theme-color" content="#0b0b0c">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Russo">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -14,100 +14,138 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marck+Script&family=PT+Sans:wght@400;700&family=PT+Serif:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Manrope:wght@400;500;600;700;800&family=Marck+Script&family=PT+Sans:wght@400;700&family=Unbounded:wght@700&display=swap">
 <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
 
 <!-- INICIO -->
-<main id="view-home" class="view">
-  <header class="topbar">
-    <div class="brand">
-      <span class="brand-mark" aria-hidden="true">Я</span>
-      <div>
-        <h1>Russo Study</h1>
-        <p class="brand-sub">Тетрадь de repaso</p>
-      </div>
-    </div>
-    <div class="topbar-actions">
-      <button class="sync-chip" id="sync-chip" type="button" data-state="local">Solo aquí</button>
-      <button class="icon-btn" id="open-settings" type="button" aria-label="Ajustes">
-        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7Zm7.4-2.5a7.6 7.6 0 0 0 0-2l2.1-1.6-2-3.5-2.5 1a7.4 7.4 0 0 0-1.7-1L15 3h-4l-.4 2.6c-.6.3-1.2.6-1.7 1l-2.5-1-2 3.5L6.5 11a7.6 7.6 0 0 0 0 2l-2.1 1.6 2 3.5 2.5-1c.5.4 1.1.7 1.7 1L11 21h4l.4-2.6c.6-.3 1.2-.6 1.7-1l2.5 1 2-3.5L19.4 13Z"/></svg>
-      </button>
-    </div>
+<main id="view-home" class="view has-nav">
+  <header class="row-between">
+    <button class="sync-chip" id="sync-chip" type="button" data-state="local">Solo aquí</button>
+    <button class="avatar" type="button" data-go="settings" aria-label="Tu perfil y ajustes"><img src="img/perfil.png" alt=""></button>
   </header>
 
-  <section class="today" aria-labelledby="today-title">
-    <h2 id="today-title" class="eyebrow">Hoy</h2>
-    <div class="today-grid">
-      <div class="stat"><span class="stat-num" id="stat-due">0</span><span class="stat-label">para repasar</span></div>
-      <div class="stat"><span class="stat-num" id="stat-new">0</span><span class="stat-label">nuevas</span></div>
-      <div class="stat"><span class="stat-num" id="stat-learned">0</span><span class="stat-label">aprendidas de <span id="stat-total">0</span></span></div>
-    </div>
-    <button class="btn btn-primary btn-wide" id="start-today" type="button">Practicar</button>
-    <p class="today-note" id="today-note"></p>
-  </section>
-
-  <div id="deck-groups" class="deck-groups">
-    <p class="loading">Cargando mazos…</p>
+  <div class="greet">
+    <span class="greet-hi" lang="ru">Приве́т!</span>
+    <span class="greet-name" id="greet-name">Bienvenida</span>
   </div>
 
-  <footer class="foot">
-    <p>Los mazos marcados entran en tu sesión diaria. Toca un mazo para verlo o estudiarlo solo.</p>
-  </footer>
+  <div class="week" id="week" aria-label="Tu semana"></div>
+
+  <button class="hero card-frame pal-mint" id="start-today" type="button">
+    <span class="hero-main">
+      <span class="label">Tu avance del curso</span>
+      <span class="num hero-pct" id="stat-pct">0%</span>
+      <span class="hero-sub"><span id="stat-learned">0</span> de <span id="stat-total">0</span> palabras</span>
+      <span class="bar bar-hero"><span id="stat-bar" style="width:0%"></span></span>
+    </span>
+    <span class="hero-today">
+      <span class="hero-today-label">para hoy</span>
+      <span class="num hero-today-num" id="stat-today">0</span>
+    </span>
+    <svg class="hero-wave" id="hero-wave" viewBox="0 0 132 60" preserveAspectRatio="none" aria-hidden="true"><path d=""/></svg>
+  </button>
+  <p class="today-note" id="today-note"></p>
+
+  <div class="duo">
+    <div class="stat-card card-frame pal-kh">
+      <span class="label">Aprendidas</span>
+      <span class="num stat-big" id="stat-learned2">0</span>
+      <span class="stat-foot" id="stat-week">+0 esta semana</span>
+    </div>
+    <div class="stat-card card-frame pal-pk">
+      <span class="label">Racha</span>
+      <span class="num stat-big" id="stat-streak">0 días</span>
+      <span class="stat-foot" id="stat-streak-foot">¡empieza hoy!</span>
+    </div>
+  </div>
+
+  <div class="row-between section-head">
+    <h2>Seguir con</h2>
+    <button class="link-btn" type="button" data-go="temas">Ver todos</button>
+  </div>
+  <div class="rows" id="continue-list"></div>
 </main>
 
-<!-- MAZO -->
-<main id="view-deck" class="view" hidden>
-  <header class="topbar">
-    <button class="icon-btn" type="button" data-back aria-label="Volver">
-      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M15.4 5.4 14 4l-8 8 8 8 1.4-1.4L8.8 12z"/></svg>
-    </button>
-    <h1 class="deck-title" id="deck-title"></h1>
-    <span class="icon-btn-spacer"></span>
+<!-- TEMAS -->
+<main id="view-temas" class="view has-nav" hidden>
+  <header class="row-between">
+    <h1 class="page-title">Tus temas</h1>
   </header>
-  <p class="deck-desc" id="deck-desc"></p>
-  <div class="deck-stats" id="deck-stats"></div>
-  <div class="deck-actions">
-    <button class="btn btn-primary" id="deck-study" type="button">Estudiar</button>
-    <button class="btn" id="deck-cram" type="button">Repaso rápido</button>
+  <div class="chips" id="temas-chips" role="tablist" aria-label="Filtrar temas"></div>
+  <div class="tiles" id="temas-grid"><p class="loading">Cargando temas…</p></div>
+</main>
+
+<!-- TEMA -->
+<main id="view-tema" class="view" hidden>
+  <header class="row-between">
+    <button class="circle-btn" type="button" data-go="temas" aria-label="Volver a temas">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <button class="circle-btn" type="button" id="tema-search-toggle" aria-label="Buscar palabra">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>
+    </button>
+  </header>
+  <h1 class="page-title" id="tema-title"></h1>
+  <div class="pill-tabs" role="tablist">
+    <button type="button" role="tab" id="tab-aprender" data-tab="aprender" aria-selected="true">Aprender</button>
+    <button type="button" role="tab" id="tab-practicar" data-tab="practicar" aria-selected="false">Practicar</button>
   </div>
-  <label class="search">
-    <span class="visually-hidden">Buscar en el mazo</span>
-    <input id="deck-search" type="search" placeholder="Buscar en ruso o en español" autocomplete="off">
-  </label>
-  <div class="select-tools">
-    <button class="link-btn" id="select-toggle" type="button">Seleccionar varias</button>
-  </div>
-  <ul class="word-list" id="deck-words"></ul>
+
+  <section id="tema-aprender">
+    <label class="search" id="tema-search-box" hidden>
+      <span class="visually-hidden">Buscar en el tema</span>
+      <input id="deck-search" type="search" placeholder="Buscar en ruso o en español" autocomplete="off">
+    </label>
+    <div id="tema-intro"></div>
+    <div class="row-between select-tools">
+      <span class="label muted" id="tema-count"></span>
+      <button class="link-btn" id="select-toggle" type="button">Seleccionar varias</button>
+    </div>
+    <div id="deck-words"></div>
+  </section>
+
+  <section id="tema-practicar" hidden>
+    <div class="rows" id="tema-practice"></div>
+  </section>
+
   <div class="select-bar" id="select-bar" hidden>
     <span id="select-count">0 palabras seleccionadas</span>
     <div class="select-actions">
-      <button class="btn" id="select-all" type="button">Todas</button>
+      <button class="btn btn-ghost" id="select-all" type="button">Todas</button>
       <button class="btn btn-primary" id="select-add" type="button" disabled>Agregar a hoy</button>
     </div>
   </div>
 </main>
 
-<!-- ESTUDIO -->
-<main id="view-study" class="view view-study" hidden>
-  <header class="study-bar">
-    <button class="icon-btn" id="study-close" type="button" aria-label="Terminar sesión">
-      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M18.3 5.7 16.9 4.3 12 9.2 7.1 4.3 5.7 5.7 10.6 12l-4.9 4.9 1.4 1.4 4.9-4.9 4.9 4.9 1.4-1.4-4.9-4.9z"/></svg>
+<!-- PALABRA -->
+<main id="view-palabra" class="view" hidden>
+  <header class="crumbs">
+    <button class="circle-btn" type="button" id="palabra-back" aria-label="Volver al tema">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
     </button>
-    <h1 class="study-title" id="study-title">Práctica</h1>
+    <span class="muted" id="palabra-crumb"></span>
+  </header>
+  <div id="palabra-body"></div>
+</main>
+
+<!-- ESTUDIO CON TARJETAS -->
+<main id="view-study" class="view view-study" hidden>
+  <header class="practice-head">
+    <button class="circle-btn" id="study-close" type="button" aria-label="Terminar sesión">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <h1 class="practice-title" id="study-title">Práctica</h1>
     <div class="counters" aria-label="Progreso de la sesión">
-      <span class="counter" title="Pendientes"><b id="cnt-due">0</b><span class="dot dot-due" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 10.4 3.2 3.2-1.4 1.4-3.8-3.8V6h2v6.4Z"/></svg></span><span class="visually-hidden">pendientes</span></span>
-      <span class="counter" title="Correctas"><b id="cnt-ok">0</b><span class="dot dot-ok" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M9.5 16.2 5.3 12l-1.4 1.4 5.6 5.6L20.1 8.4 18.7 7z"/></svg></span><span class="visually-hidden">correctas</span></span>
-      <span class="counter" title="Errores"><b id="cnt-bad">0</b><span class="dot dot-bad" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M18.3 5.7 16.9 4.3 12 9.2 7.1 4.3 5.7 5.7 10.6 12l-4.9 4.9 1.4 1.4 4.9-4.9 4.9 4.9 1.4-1.4-4.9-4.9z"/></svg></span><span class="visually-hidden">errores</span></span>
+      <span class="counter" title="Pendientes"><b id="cnt-due">0</b><span class="visually-hidden"> pendientes</span></span>
+      <span class="counter counter-ok" title="Correctas">✓ <b id="cnt-ok">0</b><span class="visually-hidden"> correctas</span></span>
+      <span class="counter counter-bad" title="Errores">✗ <b id="cnt-bad">0</b><span class="visually-hidden"> errores</span></span>
     </div>
   </header>
   <div class="progress" aria-hidden="true"><div class="progress-fill" id="study-progress"></div></div>
 
-  <article class="card" id="card" aria-live="polite">
+  <article class="card card-frame pal-lav study-card" id="card" aria-live="polite">
     <div class="card-meta">
       <span class="card-deck" id="card-deck"></span>
       <span class="card-badge" id="card-badge" hidden>Nueva</span>
@@ -115,12 +153,12 @@
     <div class="card-front" id="card-front"></div>
     <div class="card-back" id="card-back" hidden></div>
     <button class="speak-btn" id="card-speak" type="button" aria-label="Escuchar en ruso" hidden>
-      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3Zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4ZM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6Z"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>
     </button>
   </article>
 
   <aside class="hint-box" id="hint-box" hidden>
-    <span class="hint-label">Pista</span>
+    <span class="label">Pista</span>
     <p class="hint-text" id="hint-text"></p>
     <p class="hint-mine" id="hint-mine" hidden><b>Tu nota:</b> <span id="hint-mine-text"></span></p>
   </aside>
@@ -130,45 +168,69 @@
   <div class="note-box" id="note-box" hidden></div>
 
   <div class="menu" id="study-menu">
-    <button class="menu-item" id="btn-learned" type="button" hidden>Entendido, ahora pregúntame <kbd>enter</kbd></button>
-    <button class="menu-item" id="btn-reveal" type="button" hidden>Mostrar respuesta <kbd>espacio</kbd></button>
+    <button class="menu-item" id="btn-learned" type="button" hidden>Entendido, ahora pregúntame</button>
+    <button class="menu-item" id="btn-reveal" type="button" hidden>Mostrar respuesta</button>
     <div class="selfcheck" id="selfcheck" hidden>
-      <button class="menu-item menu-bad" id="btn-didnt" type="button">No lo sabía <kbd>1</kbd></button>
-      <button class="menu-item menu-ok" id="btn-knew" type="button">Lo sabía <kbd>2</kbd></button>
+      <button class="btn btn-bad" id="btn-didnt" type="button">No lo sabía</button>
+      <button class="btn btn-primary" id="btn-knew" type="button">Lo sabía</button>
     </div>
     <button class="menu-item" id="btn-hint" type="button" hidden>No sé, dame una pista</button>
-    <button class="menu-item menu-primary" id="btn-next" type="button" hidden>Continuar <kbd>enter</kbd></button>
+    <button class="btn btn-primary btn-wide" id="btn-next" type="button" hidden>Continuar</button>
     <button class="menu-item menu-quiet" id="study-exit" type="button">Salir de la práctica</button>
   </div>
 </main>
 
+<!-- ARMAR FRASES -->
+<main id="view-frase" class="view view-study" hidden>
+  <header class="practice-head">
+    <button class="circle-btn" id="frase-close" type="button" aria-label="Terminar práctica">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <h1 class="practice-title">Práctica</h1>
+    <div class="counters">
+      <span class="counter"><b id="fr-left">0</b><span class="visually-hidden"> pendientes</span></span>
+      <span class="counter counter-ok">✓ <b id="fr-ok">0</b></span>
+      <span class="counter counter-bad">✗ <b id="fr-bad">0</b></span>
+    </div>
+  </header>
+  <div class="segments" id="fr-segments" aria-hidden="true"></div>
+  <div id="frase-body"></div>
+</main>
+
 <!-- FIN DE SESIÓN -->
 <main id="view-done" class="view view-done" hidden>
-  <div class="done-box">
+  <div class="done-box card-frame pal-mint">
     <p class="done-ru" lang="ru">Молоде́ц!</p>
     <h1 id="done-title">Sesión terminada</h1>
     <p id="done-summary"></p>
-    <button class="btn btn-primary btn-wide" id="done-home" type="button">Volver al inicio</button>
+    <button class="btn btn-primary btn-wide" id="done-home" type="button">Volver</button>
   </div>
 </main>
 
 <!-- AJUSTES -->
-<main id="view-settings" class="view" hidden>
-  <header class="topbar">
-    <button class="icon-btn" type="button" data-back aria-label="Volver">
-      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M15.4 5.4 14 4l-8 8 8 8 1.4-1.4L8.8 12z"/></svg>
-    </button>
-    <h1 class="deck-title">Ajustes</h1>
-    <span class="icon-btn-spacer"></span>
-  </header>
+<main id="view-settings" class="view has-nav" hidden>
+  <h1 class="page-title">Ajustes</h1>
 
   <section class="panel" aria-labelledby="acc-title">
-    <h2 id="acc-title" class="eyebrow">Cuenta y sincronización</h2>
+    <h2 id="acc-title" class="label">Cuenta y sincronización</h2>
     <div id="account-box"></div>
   </section>
 
-  <section class="panel" aria-labelledby="study-title">
-    <h2 id="study-title" class="eyebrow">Estudio</h2>
+  <section class="panel" aria-labelledby="me-title">
+    <h2 id="me-title" class="label">Tú</h2>
+    <label class="field field-row" for="opt-name">
+      <span>Tu nombre para el saludo</span>
+      <input type="text" id="opt-name" maxlength="24" placeholder="Carol" autocomplete="given-name">
+    </label>
+    <fieldset class="field">
+      <legend>Apariencia</legend>
+      <label class="radio"><input type="radio" name="theme" id="theme-dark" value="dark"> Oscuro</label>
+      <label class="radio"><input type="radio" name="theme" id="theme-light" value="light"> Claro</label>
+    </fieldset>
+  </section>
+
+  <section class="panel" aria-labelledby="studyset-title">
+    <h2 id="studyset-title" class="label">Estudio</h2>
     <fieldset class="field">
       <legend>Dirección de las tarjetas de vocabulario</legend>
       <label class="radio"><input type="radio" name="dir" id="dir-ru" value="ru"> Ruso → español</label>
@@ -191,27 +253,40 @@
       <span>Sonidos al acertar y al fallar</span>
       <input type="checkbox" id="opt-sound" class="switch">
     </label>
-    <fieldset class="field">
-      <legend>Apariencia</legend>
-      <label class="radio"><input type="radio" name="theme" id="theme-dark" value="dark"> Oscuro</label>
-      <label class="radio"><input type="radio" name="theme" id="theme-light" value="light"> Claro</label>
-    </fieldset>
+  </section>
+
+  <section class="panel" aria-labelledby="decks-title">
+    <h2 id="decks-title" class="label">Temas en tu práctica diaria</h2>
+    <p class="muted">Los temas marcados entran en «para hoy».</p>
+    <div id="deck-toggles"></div>
   </section>
 
   <section class="panel" aria-labelledby="danger-title">
-    <h2 id="danger-title" class="eyebrow">Progreso</h2>
+    <h2 id="danger-title" class="label">Progreso</h2>
     <p class="muted">Borra todo tu historial de repaso en este dispositivo y en la nube.</p>
-    <button class="btn btn-danger" id="reset-ask" type="button">Reiniciar progreso</button>
+    <button class="btn btn-bad" id="reset-ask" type="button">Reiniciar progreso</button>
     <div class="confirm" id="reset-confirm" hidden>
       <p>¿Seguro? No se puede deshacer.</p>
       <div class="confirm-actions">
-        <button class="btn btn-danger" id="reset-yes" type="button">Sí, borrar todo</button>
-        <button class="btn" id="reset-no" type="button">Cancelar</button>
+        <button class="btn btn-bad" id="reset-yes" type="button">Sí, borrar todo</button>
+        <button class="btn btn-ghost" id="reset-no" type="button">Cancelar</button>
       </div>
     </div>
   </section>
   <p class="version muted" id="app-version"></p>
 </main>
+
+<nav class="nav" id="nav" aria-label="Navegación principal">
+  <button type="button" data-go="home" aria-label="Inicio">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
+  </button>
+  <button type="button" data-go="temas" aria-label="Temas">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>
+  </button>
+  <button type="button" data-go="settings" aria-label="Ajustes">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>
+  </button>
+</nav>
 
 <div class="toast" id="toast" role="status" hidden></div>
 

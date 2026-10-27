@@ -1,8 +1,8 @@
 {
   "mazos": [
+    "vocabulario/familia.json",
     "vocabulario/saludos.json",
     "vocabulario/basicas.json",
-    "vocabulario/familia.json",
     "vocabulario/profesiones.json",
     "vocabulario/animales.json",
     "vocabulario/casa.json",

@@ -5,6 +5,16 @@ import { dateKey } from "./srs.js";
 
 const LOCAL_KEY = "russo-progress-v1";
 const TABLE = "progress";
+const REPORTS = "reportes";
+const PENDING_KEY = "russo-reportes-pendientes";
+
+function readPending() {
+  try { return JSON.parse(localStorage.getItem(PENDING_KEY) || "[]"); } catch { return []; }
+}
+
+function writePending(list) {
+  try { localStorage.setItem(PENDING_KEY, JSON.stringify(list)); } catch { /* sin almacenamiento */ }
+}
 
 export const DEFAULT_SETTINGS = {
   dir: "ru",
@@ -13,6 +23,7 @@ export const DEFAULT_SETTINGS = {
   autoSpeak: false,
   sound: true,
   theme: "dark",
+  name: "",
   disabled: {}
 };
 
@@ -21,6 +32,8 @@ function emptyProgress() {
     v: 1,
     cards: {},
     newLog: {},
+    days: {},
+    frases: {},
     notes: {},
     picks: {},
     settings: { ...DEFAULT_SETTINGS, t: 0 },
@@ -53,6 +66,8 @@ function normalize(p) {
     v: 1,
     cards: p.cards && typeof p.cards === "object" ? p.cards : {},
     newLog: p.newLog && typeof p.newLog === "object" ? p.newLog : {},
+    days: p.days && typeof p.days === "object" ? p.days : {},
+    frases: p.frases && typeof p.frases === "object" ? p.frases : {},
     notes: p.notes && typeof p.notes === "object" ? p.notes : {},
     picks: p.picks && typeof p.picks === "object" ? p.picks : {},
     settings: { ...base.settings, ...(p.settings || {}) },
@@ -79,6 +94,21 @@ export function merge(a, b) {
     for (const [day, n] of Object.entries(src.newLog)) {
       if (resetDay && day < resetDay) continue;
       out.newLog[day] = Math.max(out.newLog[day] || 0, n);
+    }
+  }
+  // Actividad por día (para la racha y la gráfica de la semana).
+  for (const src of [a, b]) {
+    for (const [day, n] of Object.entries(src.days)) {
+      if (resetDay && day < resetDay) continue;
+      out.days[day] = Math.max(out.days[day] || 0, n);
+    }
+  }
+  // Frases para armar: gana el intento más reciente.
+  for (const src of [a, b]) {
+    for (const [id, f] of Object.entries(src.frases)) {
+      if (!f || (f.t || 0) <= resetAt) continue;
+      const cur = out.frases[id];
+      if (!cur || (f.t || 0) > (cur.t || 0)) out.frases[id] = f;
     }
   }
   // Las notas personales no se borran al reiniciar el progreso.
@@ -143,6 +173,7 @@ export class Store {
     });
     if (this.user) await this.pull();
     else this.setStatus("local");
+    this.flushReports();
 
     window.addEventListener("online", () => this.pull());
     document.addEventListener("visibilitychange", () => {
@@ -255,6 +286,48 @@ export class Store {
 
   countNew(day) {
     this.p.newLog[day] = (this.p.newLog[day] || 0) + 1;
+  }
+
+  logActivity(day) {
+    this.p.days[day] = (this.p.days[day] || 0) + 1;
+  }
+
+  activity(day) {
+    return this.p.days[day] || 0;
+  }
+
+  frase(id) {
+    return this.p.frases[id] || null;
+  }
+
+  setFrase(id, ok) {
+    const prev = this.p.frases[id] || { n: 0, ok: 0 };
+    this.p.frases[id] = { n: prev.n + 1, ok: prev.ok + (ok ? 1 : 0), last: ok ? 1 : 0, t: Date.now() };
+    this.save();
+  }
+
+  // «Mi respuesta también es correcta»: se guarda en Supabase para revisarla.
+  // Sin conexión o sin Supabase se queda en el dispositivo y se envía después.
+  async report(entry) {
+    const row = { ...entry, user_id: this.user ? this.user.id : null, created_at: new Date().toISOString() };
+    const pending = readPending();
+    pending.push(row);
+    writePending(pending);
+    return this.flushReports();
+  }
+
+  async flushReports() {
+    const pending = readPending();
+    if (!pending.length || !this.sb) return false;
+    try {
+      const { error } = await this.sb.from(REPORTS).insert(pending);
+      if (error) throw error;
+      writePending([]);
+      return true;
+    } catch (e) {
+      console.warn("No se pudo enviar el reporte", e);
+      return false;
+    }
   }
 
   picked(id) {
