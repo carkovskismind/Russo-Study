@@ -1,8 +1,8 @@
 // Service worker: permite instalar la app y estudiar sin conexión.
 // Los mazos (data/) se piden primero a la red para que tus cambios aparezcan
 // en cuanto los subas; si no hay conexión se usa la última copia guardada.
-// Si cambias archivos de la app (no los mazos), sube el número de CACHE.
-const CACHE = "russo-v5";
+// Todo se pide primero a la red, así que los cambios aparecen al recargar.
+const CACHE = "russo-v6";
 const SHELL = [
   "./",
   "index.html",
@@ -61,12 +61,10 @@ self.addEventListener("fetch", (e) => {
   // Nunca guardar en caché las llamadas a Supabase.
   if (url.hostname.endsWith("supabase.co")) return;
 
+  // Archivos de la app y mazos: siempre la versión más nueva si hay
+  // internet; la copia guardada solo se usa sin conexión.
   if (url.origin === location.origin) {
-    if (url.pathname.includes("/data/") || req.mode === "navigate" || url.pathname.endsWith("/js/config.js")) {
-      e.respondWith(networkFirst(req));
-      return;
-    }
-    e.respondWith(staleWhileRevalidate(req));
+    e.respondWith(networkFirst(req));
     return;
   }
 
