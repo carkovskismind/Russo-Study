@@ -14,8 +14,8 @@
         ]},
         {"de": "Лена", "ru": "А я на пло́щади. Куда́ ты идёшь?", "fonetica": "a ia na PLO-shcha-di. ku-DA ty i-DIOSH?", "es": "Y yo estoy en la plaza. ¿A dónde vas?"},
         {"de": "yo", "ru": "В музе́й.", "fonetica": "v mu-ZIEI", "es": "Al museo.", "opciones": [
-          {"ru": "В музе́й.", "fonetica": "v mu-ZIEI", "correcta": true, "porque": "¡Exacto! Para «a dónde», музе́й queda igual: в музе́й."},
-          {"ru": "В музе́е.", "fonetica": "v mu-ZIE-ie", "correcta": false, "porque": "в музе́е responde «¿dónde?»; para «¿a dónde?» se dice в музе́й."},
+          {"ru": "В музе́й.", "fonetica": "v mu-ZIEI", "correcta": true, "porque": "¡Exacto! Куда́? pregunta a dónde vas (movimiento) y ahí музе́й queda igual: в музе́й. Si la pregunta fuera Где? (dónde estás), dirías в музе́е."},
+          {"ru": "В музе́е.", "fonetica": "v mu-ZIE-ie", "correcta": false, "porque": "в музе́е responde a Где? (dónde estás). Лена preguntó Куда́? (a dónde vas): в музе́й."},
           {"ru": "На музе́й.", "fonetica": "na mu-ZIEI", "correcta": false, "porque": "Con музе́й se usa в: в музе́й."}
         ]},
         {"de": "Лена", "ru": "Ты е́дешь на авто́бусе?", "fonetica": "ty IE-dish na af-TO-bu-sie?", "es": "¿Vas en autobús?"},
