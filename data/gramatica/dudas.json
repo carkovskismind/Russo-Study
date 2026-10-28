@@ -1,0 +1,304 @@
+{
+  "basicas": {
+    "titulo": "Кто? Что? y э́то (sin verbo «ser»)",
+    "puntos": [
+      "кто pregunta por personas y animales; что, por cosas.",
+      "э́то = «esto es / es». En presente el ruso no usa el verbo «ser»: Э́то дом.",
+      "не va antes de la palabra que niegas; нет es el «no» de la respuesta.",
+      "где = dónde estás · куда́ = a dónde vas · отку́да = de dónde vienes."
+    ],
+    "ejemplos": [
+      {"ru": "Кто э́то? — Э́то мой брат.", "fonetica": "kto E-ta? — E-ta moi brat", "es": "¿Quién es? — Es mi hermano."},
+      {"ru": "Что э́то? — Э́то ка́рта.", "fonetica": "shto E-ta? — E-ta KAR-ta", "es": "¿Qué es esto? — Es un mapa."},
+      {"ru": "Нет, э́то не кот, э́то соба́ка.", "fonetica": "niet, E-ta ni kot, E-ta sa-BA-ka", "es": "No, no es un gato, es un perro."},
+      {"ru": "Где ты? — Я здесь.", "fonetica": "gdie ty? — ia zdies'", "es": "¿Dónde estás? — Estoy aquí."}
+    ],
+    "ojo": "Para un animal también se pregunta кто: Кто э́то? — Э́то соба́ка."
+  },
+  "escuela": {
+    "titulo": "Él, ella, ello: el género",
+    "puntos": [
+      "Pronombres: я, ты, он, она́, оно́, мы, вы, они́.",
+      "El final de la palabra dice su género: consonante = он (вопро́с), -а / -я = она́ (анке́та), -о / -е = оно́ (сло́во, зада́ние).",
+      "Las que terminan en -ь pueden ser он u она́: учи́тель (он), ме́бель (она́). Mira su etiqueta."
+    ],
+    "ejemplos": [
+      {"ru": "Где вопро́с? — Вот он.", "fonetica": "gdie vap-ROS? — vot on", "es": "¿Dónde está la pregunta? — Aquí está."},
+      {"ru": "Где анке́та? — Вот она́.", "fonetica": "gdie an-KIE-ta? — vot a-NA", "es": "¿Dónde está el cuestionario? — Aquí está."},
+      {"ru": "Где зада́ние? — Вот оно́.", "fonetica": "gdie za-DA-ni-ie? — vot a-NO", "es": "¿Dónde está la tarea? — Aquí está."},
+      {"ru": "Где отве́ты? — Вот они́.", "fonetica": "gdie at-VIE-ty? — vot a-NI", "es": "¿Dónde están las respuestas? — Aquí están."}
+    ],
+    "ojo": "па́па y дя́дя terminan en -а, pero son hombres: мой па́па (no «моя́ па́па»)."
+  },
+  "familia": {
+    "titulo": "Mi, tu, su: мой, моя́, моё, мои́",
+    "puntos": [
+      "«Mi» cambia según la palabra: мой брат, моя́ сестра́, моё и́мя, мои́ роди́тели.",
+      "Igual твой / твоя́ / твоё / твои́ y наш / на́ша / на́ше / на́ши.",
+      "его́ (de él), её (de ella) e их (de ellos) nunca cambian.",
+      "Plurales especiales: брат → бра́тья, сестра́ → сёстры, ребёнок → де́ти, челове́к → лю́ди."
+    ],
+    "ejemplos": [
+      {"ru": "Э́то моя́ ма́ма.", "fonetica": "E-ta ma-IA MA-ma", "es": "Esta es mi mamá."},
+      {"ru": "Её зову́т Ле́на.", "fonetica": "ie-IO za-VUT LIE-na", "es": "Ella se llama Lena."},
+      {"ru": "Э́то мои́ роди́тели.", "fonetica": "E-ta ma-I ra-DI-ti-li", "es": "Estos son mis padres."},
+      {"ru": "Э́то его́ сестра́ и его́ брат.", "fonetica": "E-ta ie-VO sis-TRA i ie-VO brat", "es": "Esta es su hermana y este es su hermano (de él)."}
+    ],
+    "ojo": "его́ y её no cambian con la cosa: его́ брат, его́ сестра́, его́ де́ти."
+  },
+  "saludos": {
+    "titulo": "¿Tú o usted? ты y вы",
+    "puntos": [
+      "вы sirve para una persona con respeto (usted) y para varias personas.",
+      "ты es para amigos, familia y niños.",
+      "Por eso hay dos «hola»: здра́вствуйте (usted o varios) y здра́вствуй o приве́т (tú).",
+      "El nombre: Как вас зову́т? (usted) · Как тебя́ зову́т? (tú) · Меня́ зову́т…"
+    ],
+    "ejemplos": [
+      {"ru": "Здра́вствуйте! Как вас зову́т?", "fonetica": "ZDRAST-vui-tie! kak vas za-VUT", "es": "¡Buenos días! ¿Cómo se llama usted?"},
+      {"ru": "Приве́т! Как тебя́ зову́т?", "fonetica": "pri-VIET! kak ti-BIA za-VUT", "es": "¡Hola! ¿Cómo te llamas?"},
+      {"ru": "Меня́ зову́т Ка́тя.", "fonetica": "mi-NIA za-VUT KA-tia", "es": "Me llamo Katia."},
+      {"ru": "Извини́те, пожа́луйста.", "fonetica": "iz-vi-NI-tie, pa-ZHA-lus-ta", "es": "Disculpe, por favor."}
+    ],
+    "ojo": "приве́т con tu maestra suena demasiado familiar; con ella usa здра́вствуйте."
+  },
+  "profesiones": {
+    "titulo": "Hablar de tu trabajo",
+    "puntos": [
+      "Para decir tu profesión no hace falta verbo: Я инжене́р.",
+      "Muchas tienen pareja: студе́нт / студе́нтка, официа́нт / официа́нтка.",
+      "Otras sirven igual para hombre y mujer: врач, инжене́р, архите́ктор.",
+      "El lugar: Я рабо́таю в больни́це / на заво́де."
+    ],
+    "ejemplos": [
+      {"ru": "Я студе́нтка.", "fonetica": "ia stu-DIENT-ka", "es": "Soy estudiante (mujer)."},
+      {"ru": "Мой па́па — инжене́р.", "fonetica": "moi PA-pa in-zhy-NIER", "es": "Mi papá es ingeniero."},
+      {"ru": "Где вы рабо́таете?", "fonetica": "gdie vy ra-BO-ta-ie-tie", "es": "¿Dónde trabaja usted?"},
+      {"ru": "Она́ рабо́тает в шко́ле.", "fonetica": "a-NA ra-BO-ta-iet f SHKO-lie", "es": "Ella trabaja en una escuela."}
+    ],
+    "ojo": "врач no cambia para mujer: Моя́ ма́ма — врач."
+  },
+  "animales": {
+    "titulo": "Los animales son «кто»",
+    "puntos": [
+      "Para los animales se pregunta кто, igual que para las personas.",
+      "Plural normal con -ы / -и: соба́ки, пти́цы, ры́бы.",
+      "Las crías en -ёнок cambian a -я́та: котёнок → котя́та, цыплёнок → цыпля́та.",
+      "Algunas palabras no cambian nunca: кенгуру́."
+    ],
+    "ejemplos": [
+      {"ru": "Кто э́то? — Э́то ко́шка.", "fonetica": "kto E-ta? — E-ta KOSH-ka", "es": "¿Quién es? — Es una gata."},
+      {"ru": "У меня́ есть соба́ка.", "fonetica": "u mi-NIA iest' sa-BA-ka", "es": "Tengo un perro."},
+      {"ru": "Мой кот бе́лый.", "fonetica": "moi kot BIE-lyi", "es": "Mi gato es blanco."},
+      {"ru": "Э́то мои́ котя́та.", "fonetica": "E-ta ma-I ka-TIA-ta", "es": "Estos son mis gatitos."}
+    ],
+    "ojo": "соба́ка es femenina aunque sea un perro macho: моя́ соба́ка."
+  },
+  "casa": {
+    "titulo": "¿Dónde está? в / на + -е",
+    "puntos": [
+      "Para decir dónde está algo: в (dentro) o на (encima) + la palabra con -е: в ко́мнате, на столе́.",
+      "Algunas usan -у con acento: в шкафу́, на полу́, в саду́, в углу́.",
+      "до́ма = en casa (lugar) · домо́й = a casa (movimiento).",
+      "Las cosas «están» de pie, acostadas o colgadas: стои́т, лежи́т, виси́т."
+    ],
+    "ejemplos": [
+      {"ru": "Ва́за на столе́.", "fonetica": "VA-za na sta-LIE", "es": "El florero está en la mesa."},
+      {"ru": "Карти́на виси́т на стене́.", "fonetica": "kar-TI-na vi-SIT na sti-NIE", "es": "El cuadro está colgado en la pared."},
+      {"ru": "Ковёр лежи́т на полу́.", "fonetica": "ka-VIOR li-ZHYT na pa-LU", "es": "La alfombra está en el piso."},
+      {"ru": "Я до́ма.", "fonetica": "ia DO-ma", "es": "Estoy en casa."},
+      {"ru": "Я иду́ домо́й.", "fonetica": "ia i-DU da-MOI", "es": "Voy a casa."}
+    ],
+    "ojo": "A «Где ты?» no se responde домо́й (es «a casa»); se responde до́ма."
+  },
+  "ciudad": {
+    "titulo": "в o на con lugares de la ciudad",
+    "puntos": [
+      "Casi siempre в: в шко́ле, в музе́е, в па́рке.",
+      "на para lugares abiertos y eventos (на у́лице, на пло́щади, на конце́рте) y en algunas palabras que se aprenden de memoria: на по́чте, на вокза́ле, на заво́де.",
+      "Transporte con на: на авто́бусе, на метро́, на такси́.",
+      "кафе́, кино́, метро́ y такси́ nunca cambian: в кафе́, в кино́."
+    ],
+    "ejemplos": [
+      {"ru": "Я в па́рке.", "fonetica": "ia f PAR-kie", "es": "Estoy en el parque."},
+      {"ru": "Мы на пло́щади.", "fonetica": "my na PLO-shcha-di", "es": "Estamos en la plaza."},
+      {"ru": "Она́ рабо́тает на по́чте.", "fonetica": "a-NA ra-BO-ta-iet na POCH-tie", "es": "Ella trabaja en la oficina de correos."},
+      {"ru": "Я е́ду на метро́.", "fonetica": "ia IE-du na mit-RO", "es": "Voy en metro."},
+      {"ru": "Он в аэропорту́.", "fonetica": "on v a-e-ra-par-TU", "es": "Él está en el aeropuerto."}
+    ],
+    "ojo": "аэропо́рт cambia a -у: в аэропорту́ (no «в аэропо́рте»)."
+  },
+  "paises": {
+    "titulo": "¿De dónde eres? Отку́да вы?",
+    "puntos": [
+      "Отку́да? → из + el país con -ы / -и: из Ме́ксики, из Росси́и.",
+      "Где? → в + el país con -е / -и: в Ме́ксике, в Росси́и.",
+      "Cada país tiene hombre / mujer / plural: мексика́нец, мексика́нка, мексика́нцы.",
+      "El idioma va con по-…: говори́ть по-ру́сски, по-испа́нски."
+    ],
+    "ejemplos": [
+      {"ru": "Отку́да вы? — Я из Ме́ксики.", "fonetica": "at-KU-da vy? — ia iz MIE-ksi-ki", "es": "¿De dónde es usted? — Soy de México."},
+      {"ru": "Я мексика́нка.", "fonetica": "ia mi-ksi-KAN-ka", "es": "Soy mexicana."},
+      {"ru": "Я живу́ в Ме́ксике.", "fonetica": "ia zhy-VU v MIE-ksi-kie", "es": "Vivo en México."},
+      {"ru": "Вы говори́те по-ру́сски?", "fonetica": "vy ga-va-RI-tie pa-RUS-ki", "es": "¿Habla usted ruso?"},
+      {"ru": "Он францу́з, он из Фра́нции.", "fonetica": "on fran-TSUS, on iz FRAN-tsy-i", "es": "Es francés, es de Francia."}
+    ],
+    "ojo": "Con говори́ть el idioma va con по-…, sin «язы́к»: Я говорю́ по-ру́сски (no «я говорю́ ру́сский»)."
+  },
+  "naturaleza": {
+    "titulo": "Dónde: на се́вере, на мо́ре, в лесу́",
+    "puntos": [
+      "Los puntos cardinales van con на: на се́вере, на ю́ге, на восто́ке, на за́паде.",
+      "на мо́ре = en el mar o en la playa (de vacaciones).",
+      "лес usa -у con acento, como сад: в лесу́."
+    ],
+    "ejemplos": [
+      {"ru": "Москва́ на за́паде Росси́и.", "fonetica": "mas-KVA na ZA-pa-die ra-SI-i", "es": "Moscú está en el oeste de Rusia."},
+      {"ru": "Мы отдыха́ем на мо́ре.", "fonetica": "my at-dy-JA-iem na MO-rie", "es": "Descansamos en el mar."},
+      {"ru": "Мы гуля́ем в лесу́.", "fonetica": "my gu-LIA-iem v li-SU", "es": "Paseamos por el bosque."}
+    ],
+    "ojo": "Se dice в лесу́, no «в ле́се»."
+  },
+  "numeros": {
+    "titulo": "Números con palabras",
+    "puntos": [
+      "оди́н cambia como «mi»: оди́н дом, одна́ ко́мната, одно́ зда́ние.",
+      "два va con palabras masculinas y neutras; две, con femeninas.",
+      "Después de 2, 3 y 4 la palabra cambia un poco (два этажа́, три ко́мнаты); desde 5, otra vez (пять ко́мнат). Al principio basta con reconocerlas.",
+      "Los ordinales son adjetivos: пе́рвый эта́ж, пе́рвая ко́мната."
+    ],
+    "ejemplos": [
+      {"ru": "Ско́лько? — Три.", "fonetica": "SKOL'-ka? — tri", "es": "¿Cuántos? — Tres."},
+      {"ru": "Два плюс три — пять.", "fonetica": "dva plius tri — piat'", "es": "Dos más tres, cinco."},
+      {"ru": "В до́ме три ко́мнаты.", "fonetica": "v DO-mie tri KOM-na-ty", "es": "En la casa hay tres cuartos."},
+      {"ru": "Я живу́ на пя́том этаже́.", "fonetica": "ia zhy-VU na PIA-tam e-ta-ZHE", "es": "Vivo en el quinto piso."}
+    ],
+    "ojo": "«Dos hermanas» es две сестры́: con palabras femeninas va две, no два."
+  },
+  "colores": {
+    "titulo": "Los colores cambian como adjetivos",
+    "puntos": [
+      "El color copia el género de la cosa: кра́сный (m), кра́сная (f), кра́сное (n), кра́сные (pl).",
+      "Para preguntar: како́й / кака́я / како́е / каки́е? o Како́го цве́та?",
+      "си́ний es suave: си́ний, си́няя, си́нее, си́ние. ха́ки no cambia nunca.",
+      "цвет = color · цвето́к = flor."
+    ],
+    "ejemplos": [
+      {"ru": "Како́го цве́та твой дом? — Бе́лый.", "fonetica": "ka-KO-va TSVIE-ta tvoi dom? — BIE-lyi", "es": "¿De qué color es tu casa? — Blanca."},
+      {"ru": "У меня́ кра́сная маши́на.", "fonetica": "u mi-NIA KRAS-na-ia ma-SHY-na", "es": "Tengo un coche rojo."},
+      {"ru": "Ва́за си́няя.", "fonetica": "VA-za SI-nia-ia", "es": "El florero es azul."},
+      {"ru": "Каки́е у тебя́ брю́ки? — Се́рые.", "fonetica": "ka-KI-ie u ti-BIA BRIU-ki? — SIE-ry-ie", "es": "¿Cómo son tus pantalones? — Grises."}
+    ],
+    "ojo": "Con palabras femeninas el color termina en -ая: чёрная ко́шка (no «чёрный ко́шка»)."
+  },
+  "adjetivos": {
+    "titulo": "¿Cómo es? Adjetivos",
+    "puntos": [
+      "El adjetivo copia el género: но́вый дом, но́вая кварти́ра, но́вое зда́ние, но́вые сту́лья.",
+      "Finales: -ый / -ий / -ой (m), -ая / -яя (f), -ое / -ее (n), -ые / -ие (pl).",
+      "Las formas en -о (краси́во, интере́сно, хорошо́) dicen cómo es una situación o cómo se hace algo."
+    ],
+    "ejemplos": [
+      {"ru": "Э́то большо́й дом.", "fonetica": "E-ta bal'-SHOI dom", "es": "Es una casa grande."},
+      {"ru": "Моя́ ко́мната ма́ленькая.", "fonetica": "ma-IA KOM-na-ta MA-lin'-ka-ia", "es": "Mi cuarto es pequeño."},
+      {"ru": "Как интере́сно!", "fonetica": "kak in-ti-RIES-na", "es": "¡Qué interesante!"},
+      {"ru": "Он хорошо́ говори́т по-ру́сски.", "fonetica": "on ja-ra-SHO ga-va-RIT pa-RUS-ki", "es": "Él habla bien ruso."}
+    ],
+    "ojo": "хоро́ший (bueno) describe a alguien o algo; хорошо́ (bien), cómo se hace: хоро́ший врач, хорошо́ рабо́тает."
+  },
+  "verbos": {
+    "titulo": "Verbos: ahora y antes",
+    "puntos": [
+      "Presente de рабо́тать: я рабо́таю, ты рабо́таешь, он рабо́тает, мы рабо́таем, вы рабо́таете, они́ рабо́тают.",
+      "Otros llevan -и-: говори́ть → я говорю́, ты говори́шь, они́ говоря́т.",
+      "Pasado: quita -ть y pon -л (él), -ла (ella), -ло (ello), -ли (varios): рабо́тал, рабо́тала, рабо́тали.",
+      "не va justo antes del verbo: Я не зна́ю."
+    ],
+    "ejemplos": [
+      {"ru": "Я живу́ в Ме́ксике.", "fonetica": "ia zhy-VU v MIE-ksi-kie", "es": "Vivo en México."},
+      {"ru": "Ты говори́шь по-ру́сски?", "fonetica": "ty ga-va-RISH pa-RUS-ki", "es": "¿Hablas ruso?"},
+      {"ru": "Ра́ньше я рабо́тала в шко́ле.", "fonetica": "RAN'-she ia ra-BO-ta-la f SHKO-lie", "es": "Antes trabajaba en una escuela (mujer)."},
+      {"ru": "Где вы бы́ли? — Я был до́ма.", "fonetica": "gdie vy BY-li? — ia byl DO-ma", "es": "¿Dónde estuvo? — Estuve en casa (hombre)."},
+      {"ru": "Я не зна́ю.", "fonetica": "ia ni ZNA-iu", "es": "No sé."}
+    ],
+    "ojo": "El pasado cambia según quién habla: una mujer dice я была́, я рабо́тала; un hombre, я был, я рабо́тал."
+  },
+  "juegos": {
+    "titulo": "игра́ть в + juego o deporte",
+    "puntos": [
+      "Para juegos y deportes: игра́ть в + el juego: в футбо́л, в ша́хматы, в ка́рты.",
+      "Los nombres masculinos y los plurales quedan igual después de в.",
+      "Con instrumentos es distinto: игра́ть на гита́ре (mira «Instrumentos»)."
+    ],
+    "ejemplos": [
+      {"ru": "Я игра́ю в те́ннис.", "fonetica": "ia ig-RA-iu f TE-nis", "es": "Juego tenis."},
+      {"ru": "Мы игра́ем в ша́хматы.", "fonetica": "my ig-RA-iem f SHAJ-ma-ty", "es": "Jugamos ajedrez."},
+      {"ru": "Ты игра́ешь в футбо́л?", "fonetica": "ty ig-RA-iesh f fud-BOL", "es": "¿Juegas futbol?"},
+      {"ru": "Они́ игра́ют в ка́рты.", "fonetica": "a-NI ig-RA-iut f KAR-ty", "es": "Ellos juegan cartas."}
+    ],
+    "ojo": "Siempre lleva в: игра́ть в футбо́л (no «игра́ть футбо́л»)."
+  },
+  "instrumentos": {
+    "titulo": "игра́ть на + instrumento",
+    "puntos": [
+      "Para tocar un instrumento: игра́ть на + el instrumento con -е: на гита́ре, на скри́пке.",
+      "Los masculinos también toman -е: на саксофо́не, на бараба́не.",
+      "Truco: в para juegos, на para instrumentos."
+    ],
+    "ejemplos": [
+      {"ru": "Я игра́ю на гита́ре.", "fonetica": "ia ig-RA-iu na gui-TA-rie", "es": "Toco la guitarra."},
+      {"ru": "Она́ игра́ет на скри́пке.", "fonetica": "a-NA ig-RA-iet na SKRIP-kie", "es": "Ella toca el violín."},
+      {"ru": "Мой брат игра́ет на бараба́не.", "fonetica": "moi brat ig-RA-iet na ba-ra-BA-nie", "es": "Mi hermano toca el tambor."},
+      {"ru": "Ты игра́ешь на фортепиа́но?", "fonetica": "ty ig-RA-iesh na far-ti-pi-A-na", "es": "¿Tocas el piano?"}
+    ],
+    "ojo": "фортепиа́но y пиани́но nunca cambian: на пиани́но."
+  },
+  "textos": {
+    "titulo": "Leer y escribir algo",
+    "puntos": [
+      "Después de чита́ть, писа́ть o люби́ть, la palabra masculina o neutra queda igual: Я чита́ю журна́л.",
+      "La femenina cambia -а → -у y -я → -ю: Я пишу́ запи́ску. Я чита́ю статью́.",
+      "Los plurales de cosas quedan igual: Я люблю́ стихи́."
+    ],
+    "ejemplos": [
+      {"ru": "Я чита́ю журна́л.", "fonetica": "ia chi-TA-iu zhur-NAL", "es": "Leo una revista."},
+      {"ru": "Она́ пи́шет письмо́.", "fonetica": "a-NA PI-shet pis'-MO", "es": "Ella escribe una carta."},
+      {"ru": "Я пишу́ запи́ску.", "fonetica": "ia pi-SHU za-PIS-ku", "es": "Escribo un recado."},
+      {"ru": "Ты чита́ешь статью́?", "fonetica": "ty chi-TA-iesh stat-IU", "es": "¿Lees el artículo?"}
+    ],
+    "ojo": "Con palabras en -а, después del verbo pon -у: Я пишу́ запи́ску (no «пишу́ запи́ска»)."
+  },
+  "cultura": {
+    "titulo": "Gustos: Я люблю́… / Я не люблю́…",
+    "puntos": [
+      "люблю́ + cosa. Femeninas -а → -у: Я люблю́ му́зыку.",
+      "люблю́ + verbo terminado en -ть: Я люблю́ танцева́ть.",
+      "Para lo que no te gusta, pon не: Я не люблю́ фи́льмы у́жасов.",
+      "Personas: меня́, тебя́, его́, её, нас, вас, их → Я тебя́ люблю́."
+    ],
+    "ejemplos": [
+      {"ru": "Я люблю́ рок и джаз.", "fonetica": "ia liub-LIU rok i dzhas", "es": "Me encantan el rock y el jazz."},
+      {"ru": "Я о́чень люблю́ му́зыку.", "fonetica": "ia O-chin' liub-LIU MU-zy-ku", "es": "Me encanta la música."},
+      {"ru": "Ты лю́бишь танцева́ть?", "fonetica": "ty LIU-bish tan-tsy-VAT'", "es": "¿Te gusta bailar?"},
+      {"ru": "Я его́ люблю́.", "fonetica": "ia ie-VO liub-LIU", "es": "Lo quiero."}
+    ],
+    "ojo": "«Te quiero» es Я тебя́ люблю́ (no «я ты люблю́»): la persona cambia de forma."
+  },
+  "ropa-cuerpo": {
+    "titulo": "Tengo: у меня́ (есть)",
+    "puntos": [
+      "«Tengo» = у меня́ есть + la cosa sin cambiar: У меня́ есть часы́.",
+      "Con partes del cuerpo y al describir se omite есть: У неё дли́нные во́лосы.",
+      "Otras personas: у тебя́, у него́, у неё, у нас, у вас, у них.",
+      "Pasado: у меня́ был / была́ / бы́ло / бы́ли. Futuro: у меня́ бу́дет / бу́дут."
+    ],
+    "ejemplos": [
+      {"ru": "У меня́ есть очки́.", "fonetica": "u mi-NIA iest' ach-KI", "es": "Tengo lentes."},
+      {"ru": "У тебя́ есть моби́льник?", "fonetica": "u ti-BIA iest' ma-BIL'-nik", "es": "¿Tienes celular?"},
+      {"ru": "У неё дли́нные во́лосы.", "fonetica": "u ni-IO DLIN-ny-ie VO-la-sy", "es": "Ella tiene el cabello largo."},
+      {"ru": "У меня́ бы́ло пальто́.", "fonetica": "u mi-NIA BY-la pal'-TO", "es": "Yo tenía un abrigo."},
+      {"ru": "У нас бу́дут часы́.", "fonetica": "u nas BU-dut chi-SY", "es": "Vamos a tener un reloj."}
+    ],
+    "ojo": "En pasado, был / была́ / бы́ло / бы́ли va con la cosa, no contigo: у меня́ бы́ло пальто́ (neutro), у меня́ бы́ли очки́ (plural)."
+  }
+}

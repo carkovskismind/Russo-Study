@@ -1,0 +1,100 @@
+{
+  "id": "casa",
+  "titulo": "Casa y vivienda · ejercicios",
+  "dialogos": [
+    {
+      "id": "casa-d1",
+      "titulo": "¿Dónde vives?",
+      "mensajes": [
+        {"de": "Лена", "ru": "Ты живёшь в до́ме и́ли в кварти́ре?", "fonetica": "ty zhy-VIOSH v DO-mie I-li f kvar-TI-rie?", "es": "¿Vives en una casa o en un departamento?"},
+        {"de": "yo", "ru": "Я живу́ в кварти́ре.", "fonetica": "ia zhy-VU f kvar-TI-rie", "es": "Vivo en un departamento.", "opciones": [
+          {"ru": "Я живу́ в кварти́ре.", "fonetica": "ia zhy-VU f kvar-TI-rie", "correcta": true, "porque": "¡Bien! Dónde = в + la palabra con -е."},
+          {"ru": "Я живу́ кварти́ра.", "fonetica": "ia zhy-VU kvar-TI-ra", "correcta": false, "porque": "Falta в y el cambio: в кварти́ре."},
+          {"ru": "Я живу́ домо́й.", "fonetica": "ia zhy-VU da-MOI", "correcta": false, "porque": "домо́й es «a casa» (movimiento); para dónde vives se usa в + el lugar."}
+        ]},
+        {"de": "Лена", "ru": "На како́м этаже́?", "fonetica": "na ka-KOM e-ta-ZHE?", "es": "¿En qué piso?"},
+        {"de": "yo", "ru": "На тре́тьем этаже́.", "fonetica": "na TRIE-tim e-ta-ZHE", "es": "En el tercer piso.", "opciones": [
+          {"ru": "На тре́тьем этаже́.", "fonetica": "na TRIE-tim e-ta-ZHE", "correcta": true, "porque": "¡Exacto! эта́ж va con на, y тре́тий cambia junto con él."},
+          {"ru": "В тре́тьем этаже́.", "fonetica": "f TRIE-tim e-ta-ZHE", "correcta": false, "porque": "Con эта́ж se usa на: на тре́тьем этаже́."},
+          {"ru": "На тре́тий эта́ж.", "fonetica": "na TRIE-tii e-TASH", "correcta": false, "porque": "Así se diría «al tercer piso» (hacia allá); para dónde estás: на тре́тьем этаже́."}
+        ]},
+        {"de": "Лена", "ru": "В до́ме есть лифт?", "fonetica": "v DO-mie iest' lift?", "es": "¿Hay elevador en el edificio?"},
+        {"de": "yo", "ru": "Да, есть.", "fonetica": "da, iest'", "es": "Sí, hay."},
+        {"de": "Лена", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO!", "es": "¡Qué bien!"}
+      ]
+    },
+    {
+      "id": "casa-d2",
+      "titulo": "¿Dónde está mi taza?",
+      "mensajes": [
+        {"de": "Лена", "ru": "Где моя́ ча́шка?", "fonetica": "gdie ma-IA CHASH-ka?", "es": "¿Dónde está mi taza?"},
+        {"de": "yo", "ru": "На столе́.", "fonetica": "na sta-LIE", "es": "En la mesa.", "opciones": [
+          {"ru": "На столе́.", "fonetica": "na sta-LIE", "correcta": true, "porque": "¡Eso! Encima de la mesa = на столе́."},
+          {"ru": "На стол.", "fonetica": "na stol", "correcta": false, "porque": "Para «dónde» la palabra cambia: на столе́."},
+          {"ru": "Домо́й.", "fonetica": "da-MOI", "correcta": false, "porque": "домо́й es una dirección («a casa»); aquí se pregunta dónde está."}
+        ]},
+        {"de": "Лена", "ru": "А где ча́йник?", "fonetica": "a gdie CHAI-nik?", "es": "¿Y la tetera?"},
+        {"de": "yo", "ru": "На плите́.", "fonetica": "na pli-TIE", "es": "En la estufa.", "opciones": [
+          {"ru": "На плите́.", "fonetica": "na pli-TIE", "correcta": true, "porque": "¡Muy bien! Está encima de la estufa: на плите́."},
+          {"ru": "В плите́.", "fonetica": "f pli-TIE", "correcta": false, "porque": "в плите́ sería «dentro de la estufa»; la tetera está encima: на плите́."},
+          {"ru": "На плита́.", "fonetica": "na pli-TA", "correcta": false, "porque": "Después de на la palabra cambia: на плите́."}
+        ]},
+        {"de": "Лена", "ru": "Спаси́бо!", "fonetica": "spa-SI-ba!", "es": "¡Gracias!"}
+      ]
+    },
+    {
+      "id": "casa-d3",
+      "titulo": "¿Estás en casa?",
+      "mensajes": [
+        {"de": "Лена", "ru": "Ты сейча́с до́ма?", "fonetica": "ty si-CHAS DO-ma?", "es": "¿Estás en casa ahora?"},
+        {"de": "yo", "ru": "Да, я до́ма.", "fonetica": "da, ia DO-ma", "es": "Sí, estoy en casa.", "opciones": [
+          {"ru": "Да, я до́ма.", "fonetica": "da, ia DO-ma", "correcta": true, "porque": "¡Perfecto! до́ма = en casa."},
+          {"ru": "Да, я домо́й.", "fonetica": "da, ia da-MOI", "correcta": false, "porque": "домо́й es «a casa» (movimiento); estar en casa es до́ма."},
+          {"ru": "Да, я дома́.", "fonetica": "da, ia da-MA", "correcta": false, "porque": "Con la fuerza al final, дома́ significa «casas»; «en casa» es до́ма."}
+        ]},
+        {"de": "Лена", "ru": "Где ты сиди́шь?", "fonetica": "gdie ty si-DISH?", "es": "¿Dónde estás sentada?"},
+        {"de": "yo", "ru": "Я сижу́ в гости́ной на дива́не.", "fonetica": "ia si-ZHU v gas-TI-nai na di-VA-nie", "es": "Estoy sentada en la sala, en el sofá.", "opciones": [
+          {"ru": "Я сижу́ в гости́ной на дива́не.", "fonetica": "ia si-ZHU v gas-TI-nai na di-VA-nie", "correcta": true, "porque": "¡Así es! гости́ная cambia como adjetivo: в гости́ной."},
+          {"ru": "Я сижу́ в гости́ная на дива́не.", "fonetica": "ia si-ZHU v gas-TI-na-ia na di-VA-nie", "correcta": false, "porque": "гости́ная cambia como un adjetivo: в гости́ной."},
+          {"ru": "Я сижу́ на гости́ной на дива́не.", "fonetica": "ia si-ZHU na gas-TI-nai na di-VA-nie", "correcta": false, "porque": "La sala es un cuarto, se está dentro: в гости́ной."}
+        ]},
+        {"de": "Лена", "ru": "Хорошо́, пока́!", "fonetica": "ja-ra-SHO, pa-KA!", "es": "Bueno, ¡adiós!"}
+      ]
+    }
+  ],
+  "cajas": [
+    {
+      "id": "casa-c1",
+      "pregunta": "¿в o на? Elige la caja de cada lugar.",
+      "cajas": ["в", "на"],
+      "items": [
+        {"ru": "ко́мнате", "base": "ко́мната", "caja": "в", "porque": "Un cuarto se está dentro: в ко́мнате."},
+        {"ru": "столе́", "base": "стол", "caja": "на", "porque": "Encima de la mesa: на столе́."},
+        {"ru": "шкафу́", "base": "шкаф", "caja": "в", "porque": "Dentro del clóset: в шкафу́ (con -у)."},
+        {"ru": "полу́", "base": "пол", "caja": "на", "porque": "Sobre el piso: на полу́ (con -у)."},
+        {"ru": "стене́", "base": "стена́", "caja": "на", "porque": "Colgado en la pared: на стене́."},
+        {"ru": "спа́льне", "base": "спа́льня", "caja": "в", "porque": "La recámara es un cuarto: в спа́льне."},
+        {"ru": "ку́хне", "base": "ку́хня", "caja": "на", "porque": "Es la excepción de la casa: на ку́хне. Se aprende de memoria."},
+        {"ru": "балко́не", "base": "балко́н", "caja": "на", "porque": "El balcón está abierto: на балко́не."},
+        {"ru": "этаже́", "base": "эта́ж", "caja": "на", "porque": "Los pisos de un edificio van con на: на этаже́."},
+        {"ru": "да́че", "base": "да́ча", "caja": "на", "porque": "Se dice на да́че; se aprende de memoria."}
+      ]
+    },
+    {
+      "id": "casa-c2",
+      "pregunta": "¿до́ма (dónde) o домо́й (a dónde)? Completa la frase.",
+      "cajas": ["до́ма", "домо́й"],
+      "items": [
+        {"ru": "Я иду́ …", "caja": "домо́й", "porque": "иду́ = voy: hay movimiento, va домо́й."},
+        {"ru": "Я сейча́с …", "caja": "до́ма", "porque": "Dice dónde estás ahora: до́ма."},
+        {"ru": "Ма́ма отдыха́ет …", "caja": "до́ма", "porque": "Descansa en un lugar: до́ма."},
+        {"ru": "Мы е́дем … на авто́бусе.", "caja": "домо́й", "porque": "е́дем = vamos (en transporte): домо́й."},
+        {"ru": "Па́па рабо́тает …", "caja": "до́ма", "porque": "Trabaja en un lugar, sin moverse: до́ма."},
+        {"ru": "Ко́шка сиди́т …", "caja": "до́ма", "porque": "Está sentada en un lugar: до́ма."},
+        {"ru": "Когда́ ты идёшь …?", "caja": "домо́й", "porque": "идёшь = vas: movimiento, домо́й."},
+        {"ru": "Сего́дня я чита́ю …", "caja": "до́ма", "porque": "Lees en un lugar: до́ма."},
+        {"ru": "Они́ иду́т …", "caja": "домо́й", "porque": "иду́т = van: домо́й."}
+      ]
+    }
+  ]
+}
