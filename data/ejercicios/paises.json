@@ -1,0 +1,103 @@
+{
+  "id": "paises",
+  "titulo": "Países y gentilicios · ejercicios",
+  "dialogos": [
+    {
+      "id": "paises-d1",
+      "titulo": "¿De dónde eres?",
+      "mensajes": [
+        {"de": "Лена", "ru": "Приве́т! Меня́ зову́т Ле́на. А тебя́?", "fonetica": "pri-VIET! mi-NIA za-VUT LIE-na. a ti-BIA?", "es": "¡Hola! Me llamo Lena. ¿Y tú?"},
+        {"de": "yo", "ru": "Меня́ зову́т Кэ́рол.", "fonetica": "mi-NIA za-VUT KE-ral", "es": "Me llamo Carol."},
+        {"de": "Лена", "ru": "Отку́да ты?", "fonetica": "at-KU-da ty?", "es": "¿De dónde eres?"},
+        {"de": "yo", "ru": "Я из Ме́ксики.", "fonetica": "ia iz MIE-ksi-ki", "es": "Soy de México.", "opciones": [
+          {"ru": "Я из Ме́ксики.", "fonetica": "ia iz MIE-ksi-ki", "correcta": true, "porque": "¡Eso! De dónde = из + el país con -и."},
+          {"ru": "Я в Ме́ксике.", "fonetica": "ia v MIE-ksi-kie", "correcta": false, "porque": "в Ме́ксике dice dónde estás; para «de dónde» se usa из: из Ме́ксики."},
+          {"ru": "Я из Ме́ксика.", "fonetica": "ia iz MIE-ksi-ka", "correcta": false, "porque": "Casi: después de из la palabra cambia a -и: из Ме́ксики."}
+        ]},
+        {"de": "Лена", "ru": "А я ру́сская, я из Росси́и. Ты говори́шь по-ру́сски?", "fonetica": "a ia RUS-ka-ia, ia iz ra-SI-i. ty ga-va-RISH pa-RUS-ki?", "es": "Y yo soy rusa, soy de Rusia. ¿Hablas ruso?"},
+        {"de": "yo", "ru": "Да, я говорю́ по-ру́сски и по-испа́нски.", "fonetica": "da, ia ga-va-RIU pa-RUS-ki i pa-is-PAN-ski", "es": "Sí, hablo ruso y español.", "opciones": [
+          {"ru": "Да, я говорю́ по-ру́сски и по-испа́нски.", "fonetica": "da, ia ga-va-RIU pa-RUS-ki i pa-is-PAN-ski", "correcta": true, "porque": "¡Muy bien! Con говори́ть el idioma va con по-…"},
+          {"ru": "Да, я говорю́ ру́сский и испа́нский.", "fonetica": "da, ia ga-va-RIU RUS-kii i is-PAN-skii", "correcta": false, "porque": "Con говори́ть el idioma se dice con по-…: по-ру́сски, по-испа́нски."},
+          {"ru": "Да, я говорю́ по-Росси́и.", "fonetica": "da, ia ga-va-RIU pa-ra-SI-i", "correcta": false, "porque": "по-… se forma con el adjetivo (ру́сский → по-ру́сски), no con el país."}
+        ]},
+        {"de": "Лена", "ru": "Как интере́сно! Пока́!", "fonetica": "kak in-ti-RIES-na! pa-KA!", "es": "¡Qué interesante! ¡Adiós!"}
+      ]
+    },
+    {
+      "id": "paises-d2",
+      "titulo": "Una familia de dos países",
+      "mensajes": [
+        {"de": "Лена", "ru": "Э́то мой друг Ма́рко. Он италья́нец.", "fonetica": "E-ta moi druk MAR-ka. on i-ta-LIA-nits", "es": "Este es mi amigo Marco. Es italiano."},
+        {"de": "Лена", "ru": "Его́ жена́ из Испа́нии. Кто она́ по национа́льности?", "fonetica": "ie-VO zhy-NA iz is-PA-ni-i. kto a-NA pa na-tsy-a-NAL'-nas-ti?", "es": "Su esposa es de España. ¿Cuál es su nacionalidad?"},
+        {"de": "yo", "ru": "Она́ испа́нка.", "fonetica": "a-NA is-PAN-ka", "es": "Es española.", "opciones": [
+          {"ru": "Она́ испа́нка.", "fonetica": "a-NA is-PAN-ka", "correcta": true, "porque": "¡Perfecto! Mujer de España = испа́нка."},
+          {"ru": "Она́ испа́нец.", "fonetica": "a-NA is-PA-nits", "correcta": false, "porque": "испа́нец es para un hombre; para una mujer se dice испа́нка."},
+          {"ru": "Она́ испа́нская.", "fonetica": "a-NA is-PANS-ka-ia", "correcta": false, "porque": "испа́нская es adjetivo, para cosas (испа́нская ку́хня); para una persona se dice испа́нка."}
+        ]},
+        {"de": "Лена", "ru": "Пра́вильно! У них есть де́ти.", "fonetica": "PRA-vil'-na! u nij iest' DIE-ti", "es": "¡Correcto! Tienen hijos."},
+        {"de": "Лена", "ru": "Как ты ду́маешь, где они́ живу́т?", "fonetica": "kak ty DU-ma-iesh, gdie a-NI zhy-VUT?", "es": "¿Dónde crees que viven?"},
+        {"de": "yo", "ru": "Они́ живу́т в Ита́лии.", "fonetica": "a-NI zhy-VUT v i-TA-li-i", "es": "Viven en Italia.", "opciones": [
+          {"ru": "Они́ живу́т в Ита́лии.", "fonetica": "a-NI zhy-VUT v i-TA-li-i", "correcta": true, "porque": "¡Así es! Dónde = в + el país; -ия cambia a -ии."},
+          {"ru": "Они́ живу́т в Ита́лия.", "fonetica": "a-NI zhy-VUT v i-TA-li-ia", "correcta": false, "porque": "Después de в la palabra cambia: в Ита́лии."},
+          {"ru": "Они́ живу́т из Ита́лии.", "fonetica": "a-NI zhy-VUT iz i-TA-li-i", "correcta": false, "porque": "из es «de» (de dónde vienes); para dónde viven se usa в."}
+        ]},
+        {"de": "Лена", "ru": "Да! И они́ говоря́т по-италья́нски и по-испа́нски.", "fonetica": "da! i a-NI ga-va-RIAT pa-i-ta-LIAN-ski i pa-is-PAN-ski", "es": "¡Sí! Y hablan italiano y español."}
+      ]
+    },
+    {
+      "id": "paises-d3",
+      "titulo": "El idioma no siempre es el país",
+      "mensajes": [
+        {"de": "Лена", "ru": "Мой друг из Брази́лии. Как ты ду́маешь, он говори́т по-брази́льски?", "fonetica": "moi druk iz bra-ZI-li-i. kak ty DU-ma-iesh, on ga-va-RIT pa-bra-ZIL'-ski?", "es": "Mi amigo es de Brasil. ¿Crees que habla «brasileño»?"},
+        {"de": "yo", "ru": "Нет, он говори́т по-португа́льски.", "fonetica": "niet, on ga-va-RIT pa-par-tu-GAL'-ski", "es": "No, habla portugués.", "opciones": [
+          {"ru": "Нет, он говори́т по-португа́льски.", "fonetica": "niet, on ga-va-RIT pa-par-tu-GAL'-ski", "correcta": true, "porque": "¡Exacto! En Brasil se habla portugués."},
+          {"ru": "Да, он говори́т по-брази́льски.", "fonetica": "da, on ga-va-RIT pa-bra-ZIL'-ski", "correcta": false, "porque": "по-брази́льски significa «a la brasileña» (un estilo); el idioma de Brasil es el portugués."},
+          {"ru": "Нет, он говори́т по-испа́нски.", "fonetica": "niet, on ga-va-RIT pa-is-PAN-ski", "correcta": false, "porque": "Casi todos sus vecinos hablan español, pero en Brasil se habla portugués."}
+        ]},
+        {"de": "Лена", "ru": "Пра́вильно! А в А́встрии говоря́т…", "fonetica": "PRA-vil'-na! a v AF-stri-i ga-va-RIAT…", "es": "¡Correcto! Y en Austria hablan…"},
+        {"de": "yo", "ru": "…по-неме́цки.", "fonetica": "pa-ni-MIETS-ki", "es": "…alemán.", "opciones": [
+          {"ru": "…по-неме́цки.", "fonetica": "pa-ni-MIETS-ki", "correcta": true, "porque": "¡Sí! En Austria se habla alemán."},
+          {"ru": "…по-австри́йски.", "fonetica": "pa-af-STRII-ski", "correcta": false, "porque": "по-австри́йски es «al estilo austriaco»; el idioma de Austria es el alemán: по-неме́цки."},
+          {"ru": "…по-англи́йски.", "fonetica": "pa-an-GLII-ski", "correcta": false, "porque": "En Austria se habla alemán: по-неме́цки."}
+        ]},
+        {"de": "Лена", "ru": "Коне́чно! А в Ме́ксике говоря́т по-испа́нски.", "fonetica": "ka-NIESH-na! a v MIE-ksi-kie ga-va-RIAT pa-is-PAN-ski", "es": "¡Claro! Y en México hablan español."}
+      ]
+    }
+  ],
+  "cajas": [
+    {
+      "id": "paises-c1",
+      "pregunta": "¿Es un hombre, una mujer o varias personas?",
+      "cajas": ["hombre", "mujer", "varios"],
+      "items": [
+        {"ru": "мексика́нец", "caja": "hombre", "porque": "-ец es la forma de hombre: мексика́нец."},
+        {"ru": "мексика́нка", "caja": "mujer", "porque": "-ка es la forma de mujer: мексика́нка."},
+        {"ru": "испа́нцы", "caja": "varios", "porque": "-цы es plural: испа́нец → испа́нцы."},
+        {"ru": "англича́нин", "caja": "hombre", "porque": "-анин es la forma de hombre."},
+        {"ru": "англича́не", "caja": "varios", "porque": "-ане es plural: el -ин desaparece."},
+        {"ru": "не́мка", "caja": "mujer", "porque": "-ка: mujer de Alemania."},
+        {"ru": "францу́з", "caja": "hombre", "porque": "Forma corta de hombre; la mujer es францу́женка."},
+        {"ru": "францу́женка", "caja": "mujer", "porque": "Mujer de Francia; es una forma especial."},
+        {"ru": "кита́йцы", "caja": "varios", "porque": "-цы es plural: кита́ец → кита́йцы."},
+        {"ru": "греча́нка", "caja": "mujer", "porque": "-анка: mujer de Grecia."}
+      ]
+    },
+    {
+      "id": "paises-c2",
+      "pregunta": "¿Es una persona, un adjetivo (para cosas) o un idioma?",
+      "cajas": ["persona", "adjetivo", "idioma"],
+      "items": [
+        {"ru": "италья́нец", "caja": "persona", "porque": "Un hombre de Italia."},
+        {"ru": "италья́нский", "caja": "adjetivo", "porque": "Termina en -ский: describe cosas (италья́нский язы́к)."},
+        {"ru": "по-италья́нски", "caja": "idioma", "porque": "по-… + -ски: el idioma o el estilo."},
+        {"ru": "япо́нка", "caja": "persona", "porque": "Una mujer de Japón."},
+        {"ru": "япо́нский", "caja": "adjetivo", "porque": "-ский: adjetivo."},
+        {"ru": "по-япо́нски", "caja": "idioma", "porque": "по-…ски: en japonés."},
+        {"ru": "швед", "caja": "persona", "porque": "Un hombre de Suecia (forma corta)."},
+        {"ru": "неме́цкий", "caja": "adjetivo", "porque": "-цкий también es adjetivo."},
+        {"ru": "не́мец", "caja": "persona", "porque": "Un hombre de Alemania."},
+        {"ru": "по-францу́зски", "caja": "idioma", "porque": "по-…ски: en francés."}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,286 @@
+{
+  "id": "lectura",
+  "titulo": "Aprende a leer",
+  "descripcion": "El alfabeto ruso en 6 pasos cortos: de las letras que ya conoces a leer palabras reales.",
+  "pasos": [
+    {
+      "id": "amigas",
+      "titulo": "1. Letras amigas",
+      "intro": "Buenas noticias: estas letras se ven y suenan casi igual que en español. Ya las sabes leer.",
+      "letras": [
+        {"letra": "А а", "sonido": "a", "como_suena": "Como la «a» de «casa».", "tip": "Igual que en español. ¡Primera letra lista!", "ejemplos": [
+          {"ru": "Анто́н", "fonetica": "an-TON", "es": "Antón (nombre)"},
+          {"ru": "а́льфа", "fonetica": "AL'-fa", "es": "alfa"}
+        ]},
+        {"letra": "К к", "sonido": "k", "como_suena": "Como la «k» de «kilo».", "tip": "Siempre suena k, nunca cambia.", "ejemplos": [
+          {"ru": "Ка́тя", "fonetica": "KA-tia", "es": "Katia (nombre)"},
+          {"ru": "кино́", "fonetica": "ki-NO", "es": "cine"}
+        ]},
+        {"letra": "М м", "sonido": "m", "como_suena": "Como la «m» de «mamá».", "tip": "La minúscula м es una M pequeñita, sin curvas.", "ejemplos": [
+          {"ru": "Макс", "fonetica": "maks", "es": "Max (nombre)"},
+          {"ru": "музе́й", "fonetica": "mu-ZIEI", "es": "museo"}
+        ]},
+        {"letra": "О о", "sonido": "o / a", "como_suena": "Con acento suena «o»; sin acento suena casi «a» (lo verás en el paso 4).", "tip": "Redonda como una boca que dice «o»… solo cuando lleva la fuerza.", "ejemplos": [
+          {"ru": "О́ля", "fonetica": "O-lia", "es": "Olia (nombre)"},
+          {"ru": "о́фис", "fonetica": "O-fis", "es": "oficina"}
+        ]},
+        {"letra": "Т т", "sonido": "t", "como_suena": "Como la «t» de «taza».", "tip": "Igual que en español; la minúscula т es una T pequeñita.", "ejemplos": [
+          {"ru": "тон", "fonetica": "ton", "es": "tono"},
+          {"ru": "Анто́н", "fonetica": "an-TON", "es": "Antón (nombre)"}
+        ]}
+      ],
+      "practica": [
+        {"ru": "ма́ма", "fonetica": "MA-ma", "es": "mamá"},
+        {"ru": "кот", "fonetica": "kot", "es": "gato"},
+        {"ru": "а́том", "fonetica": "A-tam", "es": "átomo"},
+        {"ru": "тома́т", "fonetica": "ta-MAT", "es": "tomate"}
+      ]
+    },
+    {
+      "id": "falsas",
+      "titulo": "2. Falsas amigas",
+      "intro": "Estas letras se parecen a las nuestras, pero suenan distinto. Son las que más confunden al principio; con unas cuantas lecturas se acomodan.",
+      "letras": [
+        {"letra": "В в", "sonido": "v", "como_suena": "Una «v» de verdad: los dientes de arriba tocan el labio de abajo.", "tip": "Parece B, pero es V de вино́ (vino).", "ejemplos": [
+          {"ru": "Ве́ра", "fonetica": "VIE-ra", "es": "Vera (nombre)"},
+          {"ru": "вино́", "fonetica": "vi-NO", "es": "vino"}
+        ]},
+        {"letra": "Е е", "sonido": "ie", "como_suena": "Como «ie» en «pie» o «hielo».", "tip": "Parece E, pero trae una «i» escondida delante: Ле́на = «LIE-na».", "ejemplos": [
+          {"ru": "Ле́на", "fonetica": "LIE-na", "es": "Lena (nombre)"},
+          {"ru": "зе́бра", "fonetica": "ZIE-bra", "es": "cebra"}
+        ]},
+        {"letra": "Н н", "sonido": "n", "como_suena": "Como la «n» de «nada».", "tip": "Parece H, pero es N: «la H rusa dice No».", "ejemplos": [
+          {"ru": "нос", "fonetica": "nos", "es": "nariz"},
+          {"ru": "На́дя", "fonetica": "NA-dia", "es": "Nadia (nombre)"}
+        ]},
+        {"letra": "Р р", "sonido": "r", "como_suena": "Una «r» vibrante, como en «rosa» o «pero».", "tip": "Parece P, pero es R de ро́за (rosa).", "ejemplos": [
+          {"ru": "ро́за", "fonetica": "RO-za", "es": "rosa"},
+          {"ru": "порт", "fonetica": "port", "es": "puerto"}
+        ]},
+        {"letra": "С с", "sonido": "s", "como_suena": "Siempre «s», como en «sol». Nunca suena k.", "tip": "Parece C, pero silba como serpiente: С de Све́та.", "ejemplos": [
+          {"ru": "Све́та", "fonetica": "SVIE-ta", "es": "Sveta (nombre)"},
+          {"ru": "сала́т", "fonetica": "sa-LAT", "es": "ensalada"}
+        ]},
+        {"letra": "У у", "sonido": "u", "como_suena": "Como la «u» de «uva».", "tip": "Parece Y, pero dice «u»: У de У́ля.", "ejemplos": [
+          {"ru": "У́ля", "fonetica": "U-lia", "es": "Ulia (nombre)"},
+          {"ru": "музе́й", "fonetica": "mu-ZIEI", "es": "museo"}
+        ]},
+        {"letra": "Х х", "sonido": "j", "como_suena": "Como una «j» suave, la de «jamón» dicha sin raspar.", "tip": "Parece X, pero se ríe: ха-ха = «ja-ja».", "ejemplos": [
+          {"ru": "хор", "fonetica": "jor", "es": "coro"},
+          {"ru": "Заха́р", "fonetica": "za-JAR", "es": "Zajar (nombre)"}
+        ]}
+      ],
+      "practica": [
+        {"ru": "Ве́ра", "fonetica": "VIE-ra", "es": "Vera (nombre)"},
+        {"ru": "нос", "fonetica": "nos", "es": "nariz"},
+        {"ru": "сок", "fonetica": "sok", "es": "jugo"},
+        {"ru": "хор", "fonetica": "jor", "es": "coro"},
+        {"ru": "рука́", "fonetica": "ru-KA", "es": "mano"},
+        {"ru": "рестора́н", "fonetica": "ris-ta-RAN", "es": "restaurante"}
+      ]
+    },
+    {
+      "id": "nuevas",
+      "titulo": "3. Letras nuevas",
+      "intro": "Estas no existen en español. Cada una trae su sonido; muchas ya las conoces de otras palabras (ch, sh, ts).",
+      "letras": [
+        {"letra": "Б б", "sonido": "b", "como_suena": "Como la «b» de «boca».", "tip": "La minúscula б parece un 6: «Б de Бори́с».", "ejemplos": [
+          {"ru": "Бори́с", "fonetica": "ba-RIS", "es": "Borís (nombre)"},
+          {"ru": "би́знес", "fonetica": "BIZ-nis", "es": "negocio"}
+        ]},
+        {"letra": "Г г", "sonido": "g", "como_suena": "Siempre «g» de «gato», también antes de е e и.", "tip": "Parece una escuadra. Nunca suena como la g de «gente».", "ejemplos": [
+          {"ru": "Га́ля", "fonetica": "GA-lia", "es": "Galia (nombre)"},
+          {"ru": "ген", "fonetica": "guien", "es": "gen"}
+        ]},
+        {"letra": "Д д", "sonido": "d", "como_suena": "Como la «d» de «dedo».", "tip": "Parece una casita con patitas: Д de дом (casa).", "ejemplos": [
+          {"ru": "Ди́на", "fonetica": "DI-na", "es": "Dina (nombre)"},
+          {"ru": "диск", "fonetica": "disk", "es": "disco"}
+        ]},
+        {"letra": "Ж ж", "sonido": "zh", "como_suena": "Como la «y» de los argentinos en «yo», con zumbido.", "tip": "Parece un bichito con muchas patas que zumba: zh-zh-zh.", "ejemplos": [
+          {"ru": "Жа́нна", "fonetica": "ZHAN-na", "es": "Zhanna (nombre)"},
+          {"ru": "журна́л", "fonetica": "zhur-NAL", "es": "revista"}
+        ]},
+        {"letra": "З з", "sonido": "z", "como_suena": "Una «s» con zumbido, como una abeja: zzz.", "tip": "Parece un 3: «З de зе́бра».", "ejemplos": [
+          {"ru": "Заха́р", "fonetica": "za-JAR", "es": "Zajar (nombre)"},
+          {"ru": "зе́бра", "fonetica": "ZIE-bra", "es": "cebra"}
+        ]},
+        {"letra": "И и", "sonido": "i", "como_suena": "Como la «i» de «isla».", "tip": "Parece una N al revés, pero dice «i»: И de игуа́на.", "ejemplos": [
+          {"ru": "игуа́на", "fonetica": "i-gu-A-na", "es": "iguana"},
+          {"ru": "вино́", "fonetica": "vi-NO", "es": "vino"}
+        ]},
+        {"letra": "Й й", "sonido": "i corta", "como_suena": "Una «i» cortita, como la «y» de «hoy».", "tip": "Es la И con gorrito: el gorrito la hace cortita.", "ejemplos": [
+          {"ru": "йо́га", "fonetica": "IO-ga", "es": "yoga"},
+          {"ru": "музе́й", "fonetica": "mu-ZIEI", "es": "museo"}
+        ]},
+        {"letra": "Л л", "sonido": "l", "como_suena": "Como la «l» de «lima».", "tip": "Parece un techito: Л de лимо́н.", "ejemplos": [
+          {"ru": "Ле́на", "fonetica": "LIE-na", "es": "Lena (nombre)"},
+          {"ru": "лимо́н", "fonetica": "li-MON", "es": "limón"}
+        ]},
+        {"letra": "П п", "sonido": "p", "como_suena": "Como la «p» de «puerta».", "tip": "Parece una puerta abierta: П de порт.", "ejemplos": [
+          {"ru": "Пётр", "fonetica": "piotr", "es": "Piotr, Pedro (nombre)"},
+          {"ru": "порт", "fonetica": "port", "es": "puerto"}
+        ]},
+        {"letra": "Ф ф", "sonido": "f", "como_suena": "Como la «f» de «foca».", "tip": "Un círculo atravesado por un palito, como la letra griega fi.", "ejemplos": [
+          {"ru": "Фе́дя", "fonetica": "FIE-dia", "es": "Fedia (nombre)"},
+          {"ru": "фон", "fonetica": "fon", "es": "fondo"}
+        ]},
+        {"letra": "Ц ц", "sonido": "ts", "como_suena": "«ts», como en «tsunami».", "tip": "Ц de цуна́ми: la palabra ya trae su sonido.", "ejemplos": [
+          {"ru": "царь", "fonetica": "tsar'", "es": "zar"},
+          {"ru": "цуна́ми", "fonetica": "tsu-NA-mi", "es": "tsunami"}
+        ]},
+        {"letra": "Ч ч", "sonido": "ch", "como_suena": "Como la «ch» de «chocolate», suavecita.", "tip": "Parece un 4 al revés, y «cuatro» en ruso empieza con Ч: четы́ре.", "ejemplos": [
+          {"ru": "Ча́рли", "fonetica": "CHAR-li", "es": "Charlie (nombre)"},
+          {"ru": "чат", "fonetica": "chat", "es": "chat"}
+        ]},
+        {"letra": "Ш ш", "sonido": "sh", "como_suena": "«sh», como cuando pides silencio: «shh».", "tip": "Parece un peine con tres dientes: shh, peinado y en silencio.", "ejemplos": [
+          {"ru": "Шу́рик", "fonetica": "SHU-rik", "es": "Shúrik (nombre)"},
+          {"ru": "шок", "fonetica": "shok", "es": "shock"}
+        ]},
+        {"letra": "Щ щ", "sonido": "shch", "como_suena": "Una «sh» larga y suave, como «shi» dicho sonriendo.", "tip": "Es la Ш con colita: la colita hace que el sonido dure más.", "ejemplos": [
+          {"ru": "щи", "fonetica": "shchi", "es": "sopa de col"}
+        ]},
+        {"letra": "Ы ы", "sonido": "y", "como_suena": "Una «i» dicha con la lengua echada hacia atrás, entre «i» y «u».", "tip": "Di «i» mientras sonríes poquito y retraes la lengua. Nunca va al inicio de una palabra.", "ejemplos": [
+          {"ru": "мы", "fonetica": "my", "es": "nosotros"}
+        ]},
+        {"letra": "Э э", "sonido": "e", "como_suena": "Una «e» limpia, como en «eso», sin «i» delante.", "tip": "Es una E mirando al revés: dice «e» a secas, a diferencia de Е («ie»).", "ejemplos": [
+          {"ru": "Э́мма", "fonetica": "EM-ma", "es": "Emma (nombre)"},
+          {"ru": "э́тика", "fonetica": "E-ti-ka", "es": "ética"}
+        ]},
+        {"letra": "Ю ю", "sonido": "iu", "como_suena": "«iu», como en «ciudad».", "tip": "Una I pegada a una O: I + O = «iu».", "ejemplos": [
+          {"ru": "Ю́ля", "fonetica": "IU-lia", "es": "Julia (nombre)"},
+          {"ru": "ю́мор", "fonetica": "IU-mar", "es": "humor"}
+        ]},
+        {"letra": "Я я", "sonido": "ia", "como_suena": "«ia», como en «ya».", "tip": "Una R al revés. Y sola es una palabra: я = yo.", "ejemplos": [
+          {"ru": "Я́на", "fonetica": "IA-na", "es": "Yana (nombre)"},
+          {"ru": "я́хта", "fonetica": "IAJ-ta", "es": "yate"}
+        ]},
+        {"letra": "Ё ё", "sonido": "io", "como_suena": "«io», como en «yo». Siempre lleva la fuerza de la palabra.", "tip": "Е con dos puntitos = «io», y ahí cae el acento. No necesita marca extra.", "ejemplos": [
+          {"ru": "ёлка", "fonetica": "IOL-ka", "es": "abeto, árbol de Año Nuevo"},
+          {"ru": "Пётр", "fonetica": "piotr", "es": "Piotr, Pedro (nombre)"}
+        ]}
+      ],
+      "practica": [
+        {"ru": "Пётр", "fonetica": "piotr", "es": "Piotr, Pedro (nombre)"},
+        {"ru": "щи", "fonetica": "shchi", "es": "sopa de col"},
+        {"ru": "мы", "fonetica": "my", "es": "nosotros"},
+        {"ru": "журна́л", "fonetica": "zhur-NAL", "es": "revista"},
+        {"ru": "я́хта", "fonetica": "IAJ-ta", "es": "yate"},
+        {"ru": "цуна́ми", "fonetica": "tsu-NA-mi", "es": "tsunami"}
+      ]
+    },
+    {
+      "id": "acento",
+      "titulo": "4. El acento y la О que suena «a»",
+      "intro": "Cada palabra rusa tiene una sílaba fuerte. En la app la marcamos con una rayita (а́) y en la fonética va en MAYÚSCULAS. En libros y letreros normales la rayita no aparece; por eso conviene aprender cada palabra con su acento.",
+      "letras": [
+        {"letra": "О con acento", "sonido": "o", "como_suena": "Cuando la О lleva la fuerza, suena «o» clara.", "tip": "О fuerte = «o» redonda.", "ejemplos": [
+          {"ru": "вино́", "fonetica": "vi-NO", "es": "vino"},
+          {"ru": "О́ля", "fonetica": "O-lia", "es": "Olia (nombre)"}
+        ]},
+        {"letra": "О sin acento", "sonido": "a", "como_suena": "Cuando la О no lleva la fuerza, suena casi «a».", "tip": "Si la О no es la jefa de la palabra, se relaja y dice «a».", "ejemplos": [
+          {"ru": "молоко́", "fonetica": "ma-la-KO", "es": "leche"},
+          {"ru": "хорошо́", "fonetica": "ja-ra-SHO", "es": "bien"},
+          {"ru": "Москва́", "fonetica": "mas-KVA", "es": "Moscú"}
+        ]},
+        {"letra": "Е y Я sin acento", "sonido": "i", "como_suena": "Sin acento, Е y Я suenan casi como «i».", "tip": "Sin fuerza, se encogen hasta quedar en «i».", "ejemplos": [
+          {"ru": "сестра́", "fonetica": "sis-TRA", "es": "hermana"},
+          {"ru": "язы́к", "fonetica": "i-ZYK", "es": "idioma, lengua"}
+        ]},
+        {"letra": "El acento cambia el sentido", "sonido": "—", "como_suena": "La misma escritura con acento en otro lugar puede ser otra palabra.", "tip": "до́ма (en casa) / дома́ (casas): escucha dónde cae la fuerza.", "ejemplos": [
+          {"ru": "до́ма", "fonetica": "DO-ma", "es": "en casa"},
+          {"ru": "дома́", "fonetica": "da-MA", "es": "casas"}
+        ]}
+      ],
+      "practica": [
+        {"ru": "молоко́", "fonetica": "ma-la-KO", "es": "leche"},
+        {"ru": "хорошо́", "fonetica": "ja-ra-SHO", "es": "bien"},
+        {"ru": "го́род", "fonetica": "GO-rat", "es": "ciudad"},
+        {"ru": "ко́мната", "fonetica": "KOM-na-ta", "es": "cuarto, habitación"},
+        {"ru": "сестра́", "fonetica": "sis-TRA", "es": "hermana"},
+        {"ru": "Москва́", "fonetica": "mas-KVA", "es": "Moscú"}
+      ]
+    },
+    {
+      "id": "suaves-duras",
+      "titulo": "5. Consonantes suaves y duras, Ь y Ъ",
+      "intro": "Una consonante rusa puede sonar dura (normal) o suave (con una «i» muy pequeña pegada). Lo decide la letra que va después.",
+      "letras": [
+        {"letra": "А Э Ы О У", "sonido": "dura", "como_suena": "Después de una consonante, estas vocales la dejan dura, normal.", "tip": "Las cinco «firmes»: la consonante no cambia.", "ejemplos": [
+          {"ru": "мы", "fonetica": "my", "es": "nosotros"},
+          {"ru": "нос", "fonetica": "nos", "es": "nariz"}
+        ]},
+        {"letra": "Я Е И Ё Ю", "sonido": "suave", "como_suena": "Estas vocales ablandan la consonante de antes: le ponen una «i» chiquita.", "tip": "Cada firme tiene su pareja suave: А-Я, Э-Е, Ы-И, О-Ё, У-Ю.", "ejemplos": [
+          {"ru": "Ле́на", "fonetica": "LIE-na", "es": "Lena (nombre)"},
+          {"ru": "Ка́тя", "fonetica": "KA-tia", "es": "Katia (nombre)"},
+          {"ru": "Пётр", "fonetica": "piotr", "es": "Piotr, Pedro (nombre)"}
+        ]},
+        {"letra": "Ь ь", "sonido": "sin sonido", "como_suena": "El signo suave no se pronuncia: solo ablanda la consonante de antes. En la fonética lo marcamos con un apóstrofo (').", "tip": "Es como una almohadita detrás de la consonante.", "ejemplos": [
+          {"ru": "царь", "fonetica": "tsar'", "es": "zar"},
+          {"ru": "оте́ль", "fonetica": "a-TEL'", "es": "hotel"},
+          {"ru": "пять", "fonetica": "piat'", "es": "cinco"}
+        ]},
+        {"letra": "Ъ ъ", "sonido": "sin sonido", "como_suena": "El signo duro tampoco se pronuncia: hace una pausita y la vocal que sigue empieza con «i».", "tip": "Es una pared pequeña: separa la consonante de la vocal.", "ejemplos": [
+          {"ru": "объе́кт", "fonetica": "ab-IEKT", "es": "objeto"},
+          {"ru": "подъе́зд", "fonetica": "pad-IEST", "es": "entrada del edificio"}
+        ]},
+        {"letra": "Ж Ш Ц", "sonido": "siempre duras", "como_suena": "Estas tres siempre son duras: después de ellas la И suena como Ы.", "tip": "Las tres «tercas»: no se ablandan nunca.", "ejemplos": [
+          {"ru": "маши́на", "fonetica": "ma-SHY-na", "es": "coche"},
+          {"ru": "жить", "fonetica": "zhyt'", "es": "vivir"}
+        ]},
+        {"letra": "Ч Щ Й", "sonido": "siempre suaves", "como_suena": "Estas tres siempre suenan suaves, lleven lo que lleven después.", "tip": "Las tres «dulces»: siempre suaves.", "ejemplos": [
+          {"ru": "чай", "fonetica": "chai", "es": "té"},
+          {"ru": "щи", "fonetica": "shchi", "es": "sopa de col"}
+        ]}
+      ],
+      "practica": [
+        {"ru": "Ка́тя", "fonetica": "KA-tia", "es": "Katia (nombre)"},
+        {"ru": "царь", "fonetica": "tsar'", "es": "zar"},
+        {"ru": "объе́кт", "fonetica": "ab-IEKT", "es": "objeto"},
+        {"ru": "мы", "fonetica": "my", "es": "nosotros"},
+        {"ru": "пять", "fonetica": "piat'", "es": "cinco"},
+        {"ru": "подъе́зд", "fonetica": "pad-IEST", "es": "entrada del edificio"}
+      ]
+    },
+    {
+      "id": "combinaciones",
+      "titulo": "6. Se escribe de un modo, se lee de otro",
+      "intro": "Unas pocas combinaciones no se leen letra por letra. Son pocas y salen en palabras muy usadas, así que se aprenden rápido.",
+      "letras": [
+        {"letra": "ЧТ", "sonido": "sht", "como_suena": "En что y sus parientes, ЧТ se lee «sht».", "tip": "что suena «shto», como un estornudo bajito.", "ejemplos": [
+          {"ru": "что", "fonetica": "shto", "es": "qué"},
+          {"ru": "потому́ что", "fonetica": "pa-ta-MU shta", "es": "porque"}
+        ]},
+        {"letra": "ЖЧ y СЧ", "sonido": "shch", "como_suena": "Las dos se leen como Щ: una «sh» larga y suave.", "tip": "Si ves Ж o С pegada a Ч, piensa en Щ.", "ejemplos": [
+          {"ru": "мужчи́на", "fonetica": "mu-SHCHI-na", "es": "hombre"},
+          {"ru": "счёт", "fonetica": "shchot", "es": "cuenta"}
+        ]},
+        {"letra": "ЧН", "sonido": "shn (a veces)", "como_suena": "En algunas palabras muy usadas, ЧН se lee «shn». En la mayoría se lee normal, «chn».", "tip": "La famosa: коне́чно = «ka-NIESH-na».", "ejemplos": [
+          {"ru": "коне́чно", "fonetica": "ka-NIESH-na", "es": "claro, por supuesto"},
+          {"ru": "Со́лнечная систе́ма", "fonetica": "SOL-nich-na-ia sis-TIE-ma", "es": "sistema solar (aquí se lee normal)"}
+        ]},
+        {"letra": "-ОГО / -ЕГО", "sonido": "-ava / -iva", "como_suena": "En estas terminaciones la Г suena «v».", "tip": "его́ se lee «ie-VO»: la Г se disfraza de В.", "ejemplos": [
+          {"ru": "его́", "fonetica": "ie-VO", "es": "su (de él) / lo"},
+          {"ru": "сего́дня", "fonetica": "si-VOD-nia", "es": "hoy"},
+          {"ru": "ничего́", "fonetica": "ni-chi-VO", "es": "nada"}
+        ]},
+        {"letra": "Final de palabra", "sonido": "más suave", "como_suena": "Al final de la palabra, Б Д Ж З В Г suenan como П Т Ш С Ф К.", "tip": "Al final, la letra se cansa y suelta el zumbido: сад suena «sat».", "ejemplos": [
+          {"ru": "сад", "fonetica": "sat", "es": "jardín"},
+          {"ru": "друг", "fonetica": "druk", "es": "amigo"},
+          {"ru": "эта́ж", "fonetica": "e-TASH", "es": "piso (de un edificio)"}
+        ]},
+        {"letra": "Letras calladas", "sonido": "—", "como_suena": "En unas pocas palabras una letra no se pronuncia.", "tip": "En здра́вствуйте la primera В se calla: «ZDRAST-vui-tie».", "ejemplos": [
+          {"ru": "здра́вствуйте", "fonetica": "ZDRAST-vui-tie", "es": "hola (de usted)"},
+          {"ru": "со́лнце", "fonetica": "SON-tse", "es": "sol"}
+        ]}
+      ],
+      "practica": [
+        {"ru": "Что э́то?", "fonetica": "shto E-ta", "es": "¿Qué es esto?"},
+        {"ru": "коне́чно", "fonetica": "ka-NIESH-na", "es": "claro, por supuesto"},
+        {"ru": "мужчи́на", "fonetica": "mu-SHCHI-na", "es": "hombre"},
+        {"ru": "сего́дня", "fonetica": "si-VOD-nia", "es": "hoy"},
+        {"ru": "здра́вствуйте", "fonetica": "ZDRAST-vui-tie", "es": "hola (de usted)"},
+        {"ru": "Как его́ зову́т?", "fonetica": "kak ie-VO za-VUT", "es": "¿Cómo se llama él?"}
+      ]
+    }
+  ]
+}
