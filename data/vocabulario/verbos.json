@@ -85,6 +85,7 @@
     {"ru": "идти́", "fonetica": "it-TI", "es": "ir (a pie)", "pista": "Moverse a pie.", "tag": "Verbo · irregular · movimiento", "nota": "иду́, идёшь… иду́т"},
     {"ru": "е́хать", "fonetica": "IE-jat'", "es": "ir (en transporte)", "pista": "Moverse en un vehículo.", "tag": "Verbo · irregular · movimiento", "nota": "е́ду, е́дешь… е́дут"},
     {"ru": "победи́ть", "fonetica": "pa-bi-DIT'", "es": "ganar, vencer", "pista": "Lograr la victoria.", "tag": "Verbo · perfectivo"},
-    {"ru": "проигра́ть", "fonetica": "pra-ig-RAT'", "es": "perder (un juego)", "pista": "Lo contrario de ganar.", "tag": "Verbo · perfectivo"}
+    {"ru": "проигра́ть", "fonetica": "pra-ig-RAT'", "es": "perder (un juego)", "pista": "Lo contrario de ganar.", "tag": "Verbo · perfectivo"},
+    {"ru": "называ́ться", "fonetica": "na-zy-VAT'-sia", "es": "llamarse (cosas, lugares)", "pista": "Se usa para el nombre de una cosa o un lugar, no de una persona.", "tag": "Verbo · 1.ª conj. · decir", "nota": "называ́ется / называ́ются · Как называ́ется э́та у́лица? Para personas: Меня́ зову́т…"}
   ]
 }

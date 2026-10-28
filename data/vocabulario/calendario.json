@@ -37,6 +37,7 @@
     {"ru": "Же́нский день", "fonetica": "ZHENS-kii dien'", "es": "Día de la Mujer (8 de marzo)", "pista": "Fiesta de inicios de marzo.", "tag": "Masc. · inanim."},
     {"ru": "День мёртвых", "fonetica": "dien' MIORT-vyj", "es": "Día de Muertos", "pista": "Fiesta mexicana del 2 de noviembre.", "tag": "Masc. · inanim."},
     {"ru": "День незави́симости", "fonetica": "dien' ni-za-VI-si-mas-ti", "es": "Día de la Independencia", "pista": "Fiesta patria del 16 de septiembre en México.", "tag": "Masc. · inanim."},
-    {"ru": "по́хороны", "fonetica": "PO-ja-ra-ny", "es": "funeral", "pista": "Ceremonia de despedida de un difunto.", "tag": "Plural · inanim.", "nota": "Solo existe en plural."}
+    {"ru": "по́хороны", "fonetica": "PO-ja-ra-ny", "es": "funeral", "pista": "Ceremonia de despedida de un difunto.", "tag": "Plural · inanim.", "nota": "Solo existe en plural."},
+    {"ru": "день", "fonetica": "dien'", "es": "día", "pista": "Veinticuatro horas; también lo contrario de la noche.", "tag": "Masc. · inanim.", "nota": "pl. дни (la -е- desaparece) · днём = de día"}
   ]
 }

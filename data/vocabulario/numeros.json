@@ -53,6 +53,8 @@
     {"ru": "восьмо́й", "fonetica": "vas'-MOI", "es": "octavo", "pista": "Ordinal del 8.", "tag": "Num. ordinal"},
     {"ru": "девя́тый", "fonetica": "di-VIA-tyi", "es": "noveno", "pista": "Ordinal del 9.", "tag": "Num. ordinal"},
     {"ru": "деся́тый", "fonetica": "di-SIA-tyi", "es": "décimo", "pista": "Ordinal del 10.", "tag": "Num. ordinal"},
-    {"ru": "чётный / нечётный", "fonetica": "CHIOT-nyi / ni-CHIOT-nyi", "es": "par / impar", "pista": "Divisible entre dos / no divisible entre dos.", "tag": "Adj.", "nota": "En la cultura eslava se regala un número impar de flores a una persona viva."}
+    {"ru": "чётный / нечётный", "fonetica": "CHIOT-nyi / ni-CHIOT-nyi", "es": "par / impar", "pista": "Divisible entre dos / no divisible entre dos.", "tag": "Adj.", "nota": "En la cultura eslava se regala un número impar de flores a una persona viva."},
+    {"ru": "миллио́н", "fonetica": "mi-li-ON", "es": "1 000 000 (millón)", "pista": "Mil veces mil.", "tag": "Num. · Masc.", "nota": "2 миллио́на · 5 миллио́нов"},
+    {"ru": "но́мер", "fonetica": "NO-mir", "es": "número (de teléfono, de cuarto)", "pista": "Lo que marcas para llamar a alguien; también el cuarto de un hotel.", "tag": "Masc. · inanim.", "nota": "pl. номера́ · Како́й у тебя́ но́мер телефо́на?"}
   ]
 }

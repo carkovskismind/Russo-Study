@@ -37,6 +37,10 @@
     {"ru": "пу́льке", "fonetica": "PUL'-kie", "es": "pulque", "pista": "Bebida fermentada de maguey.", "tag": "Neutro · inanim.", "nota": "No cambia."},
     {"ru": "теки́ла", "fonetica": "ti-KI-la", "es": "tequila", "pista": "Bebida de agave de Jalisco.", "tag": "Fem. · inanim."},
     {"ru": "во́дка", "fonetica": "VOT-ka", "es": "vodka", "pista": "Bebida alcohólica rusa transparente.", "tag": "Fem. · inanim."},
-    {"ru": "меню́", "fonetica": "mi-NIU", "es": "menú", "pista": "Lista de platillos en un restaurante.", "tag": "Neutro · inanim.", "nota": "No cambia."}
+    {"ru": "меню́", "fonetica": "mi-NIU", "es": "menú", "pista": "Lista de platillos en un restaurante.", "tag": "Neutro · inanim.", "nota": "No cambia."},
+    {"ru": "бана́н", "fonetica": "ba-NAN", "es": "plátano", "pista": "Fruta amarilla y alargada.", "tag": "Masc. · inanim.", "nota": "pl. бана́ны"},
+    {"ru": "фру́кты", "fonetica": "FRUK-ty", "es": "fruta, frutas", "pista": "Manzanas, peras y mangos, todos juntos.", "tag": "Plural · inanim.", "nota": "sg. фрукт"},
+    {"ru": "реце́пт", "fonetica": "ri-TSEPT", "es": "receta", "pista": "Instrucciones para preparar un platillo.", "tag": "Masc. · inanim.", "nota": "pl. реце́пты · también la receta del médico."},
+    {"ru": "буты́лка", "fonetica": "bu-TYL-ka", "es": "botella", "pista": "Recipiente de vidrio o plástico para líquidos.", "tag": "Fem. · inanim.", "nota": "pl. буты́лки · в буты́лке"}
   ]
 }

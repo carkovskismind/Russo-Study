@@ -41,6 +41,10 @@
     {"ru": "настоя́щее вре́мя", "fonetica": "nas-ta-IA-shchi-ie VRIE-mia", "es": "tiempo presente", "pista": "Tiempo de ahora.", "tag": "Neutro · inanim."},
     {"ru": "проше́дшее вре́мя", "fonetica": "pra-SHET-shi-ie VRIE-mia", "es": "tiempo pasado", "pista": "Tiempo de antes.", "tag": "Neutro · inanim."},
     {"ru": "бу́дущее вре́мя", "fonetica": "BU-du-shchi-ie VRIE-mia", "es": "tiempo futuro", "pista": "Tiempo de después.", "tag": "Neutro · inanim."},
-    {"ru": "по горизонта́ли / по вертика́ли", "fonetica": "pa ga-ri-zan-TA-li / pa vir-ti-KA-li", "es": "horizontal / vertical (en un crucigrama)", "pista": "Direcciones de un crucigrama.", "tag": "Frase"}
+    {"ru": "по горизонта́ли / по вертика́ли", "fonetica": "pa ga-ri-zan-TA-li / pa vir-ti-KA-li", "es": "horizontal / vertical (en un crucigrama)", "pista": "Direcciones de un crucigrama.", "tag": "Frase"},
+    {"ru": "фи́зика", "fonetica": "FI-zi-ka", "es": "física", "pista": "Ciencia de la energía y el movimiento.", "tag": "Fem. · inanim."},
+    {"ru": "исто́рия", "fonetica": "is-TO-ri-ia", "es": "historia", "pista": "Materia que estudia el pasado.", "tag": "Fem. · inanim.", "nota": "También «cuento, anécdota»: интере́сная исто́рия."},
+    {"ru": "геогра́фия", "fonetica": "gui-a-GRA-fi-ia", "es": "geografía", "pista": "Materia de los mapas, los países y los ríos.", "tag": "Fem. · inanim."},
+    {"ru": "кни́га", "fonetica": "KNI-ga", "es": "libro", "pista": "Objeto con páginas que lees.", "tag": "Fem. · inanim.", "nota": "pl. кни́ги · в кни́ге"}
   ]
 }

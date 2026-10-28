@@ -69,6 +69,15 @@
     {"ru": "свобо́дно", "fonetica": "sva-BOD-na", "es": "con fluidez / libremente", "pista": "Sin dificultad; se usa para hablar idiomas con soltura.", "tag": "Adv.", "nota": "Он свобо́дно говори́т по-ру́сски."},
     {"ru": "интере́сно", "fonetica": "in-ti-RIES-na", "es": "es interesante / de forma interesante", "pista": "Forma de decir que algo llama la atención.", "tag": "Adv."},
     {"ru": "краси́во", "fonetica": "kra-SI-va", "es": "es bonito / bonitamente", "pista": "Forma de decir que algo es agradable a la vista.", "tag": "Adv."},
-    {"ru": "лу́чше", "fonetica": "LUT-she", "es": "mejor", "pista": "Comparativo de «bien».", "tag": "Adv."}
+    {"ru": "лу́чше", "fonetica": "LUT-she", "es": "mejor", "pista": "Comparativo de «bien».", "tag": "Adv."},
+    {"ru": "тут", "fonetica": "tut", "es": "aquí (coloquial)", "pista": "Palabra corta y coloquial para el lugar donde estás.", "tag": "Adv.", "nota": "Igual que здесь, más coloquial: Я тут."},
+    {"ru": "вон", "fonetica": "von", "es": "allá está, ahí está (lejos)", "pista": "Se dice señalando algo que está lejos de ti.", "tag": "Partícula", "nota": "вот = aquí está (cerca) · вон = allá está (lejos): Вон наш дом."},
+    {"ru": "сза́ди", "fonetica": "ZA-di", "es": "atrás, detrás", "pista": "Posición: a tus espaldas.", "tag": "Adv.", "nota": "La с casi no se oye. Lo contrario: впереди́ (adelante)."},
+    {"ru": "напро́тив", "fonetica": "na-PRO-tif", "es": "enfrente", "pista": "Posición: del otro lado, cara a cara.", "tag": "Adv.", "nota": "напро́тив шко́лы = enfrente de la escuela (+ genitivo)."},
+    {"ru": "за́втра", "fonetica": "ZAF-tra", "es": "mañana (el día siguiente)", "pista": "El día que viene después de hoy.", "tag": "Adv.", "nota": "сего́дня (hoy) → за́втра. До за́втра! = ¡Hasta mañana!"},
+    {"ru": "меня́", "fonetica": "mi-NIA", "es": "me, a mí", "pista": "Forma de я cuando alguien hace algo a esa persona.", "tag": "Pron. personal · acusativo", "nota": "Меня́ зову́т… · Ты меня́ зна́ешь? · у меня́ есть"},
+    {"ru": "тебя́", "fonetica": "ti-BIA", "es": "te, a ti", "pista": "Forma de ты cuando es objeto: «Я … люблю́».", "tag": "Pron. personal · acusativo", "nota": "Я тебя́ люблю́. · Как тебя́ зову́т?"},
+    {"ru": "нас", "fonetica": "nas", "es": "nos, a nosotros", "pista": "Forma de мы cuando es objeto.", "tag": "Pron. personal · acusativo", "nota": "Нас зову́т… · у нас есть"},
+    {"ru": "вас", "fonetica": "vas", "es": "los, a ustedes / lo, la (a usted)", "pista": "Forma de вы cuando es objeto.", "tag": "Pron. personal · acusativo", "nota": "Как вас зову́т? · Я вас понима́ю."}
   ]
 }
