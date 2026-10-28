@@ -1,0 +1,95 @@
+# Publica la app en GitHub Pages:
+#   /Russo-Study/        ← rama main (la app real)
+#   /Russo-Study/beta/   ← rama beta (para ver cambios en vivo sin tocar la real)
+# Requiere: Settings → Pages → Source: «GitHub Actions».
+name: Publicar sitio
+
+on:
+  push:
+    branches: [main, beta]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  actions: write
+
+# El entorno github-pages solo deja publicar desde main. Por eso, un push a
+# beta no publica directo: le pide a main que vuelva a armar el sitio (que
+# siempre junta main + beta).
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  relay:
+    if: github.ref == 'refs/heads/beta'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pedir publicación desde main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --repo "${{ github.repository }}" --ref main
+
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: src-main
+
+      - name: ¿Existe la rama beta?
+        id: beta
+        run: |
+          if git ls-remote --exit-code --heads "https://github.com/${{ github.repository }}.git" beta >/dev/null; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Descargar beta
+        if: steps.beta.outputs.exists == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: beta
+          path: src-beta
+
+      - name: Armar _site
+        run: |
+          EXCLUDE=(--exclude='.git' --exclude='.github' --exclude='.claude' --exclude='tools' --exclude='supabase' --exclude='*.md')
+          mkdir -p _site
+          rsync -a "${EXCLUDE[@]}" src-main/ _site/
+          rm -rf _site/beta
+          if [ -d src-beta ]; then
+            mkdir -p _site/beta
+            rsync -a "${EXCLUDE[@]}" --exclude='beta' src-beta/ _site/beta/
+            # Nombre «Russo Beta» al instalarla en el celular.
+            node -e '
+              const fs = require("fs"); const f = "_site/beta/manifest.webmanifest";
+              const m = JSON.parse(fs.readFileSync(f, "utf8"));
+              m.name = "Russo Beta"; m.short_name = "Russo Beta";
+              fs.writeFileSync(f, JSON.stringify(m, null, 2));
+            '
+            sed -i 's|<meta name="apple-mobile-web-app-title" content="[^"]*">|<meta name="apple-mobile-web-app-title" content="Russo Beta">|; s|<title>[^<]*</title>|<title>Russo Beta</title>|' _site/beta/index.html
+          fi
+          touch _site/.nojekyll
+          find _site -maxdepth 2 | sort
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

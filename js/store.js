@@ -3,10 +3,17 @@
 
 import { dateKey } from "./srs.js";
 
-const LOCAL_KEY = "russo-progress-v1";
-const TABLE = "progress";
+// Versión beta (/beta/): progreso de prueba totalmente aparte. Usa otras
+// claves en el dispositivo, otra sesión de Supabase y la tabla progress_beta,
+// así nada de lo que hagas en la beta toca tu progreso real.
+export const IS_BETA = /\/beta\//.test(location.pathname);
+const PREFIX = IS_BETA ? "russo-beta-" : "russo-";
+
+const LOCAL_KEY = PREFIX + "progress-v1";
+const TABLE = IS_BETA ? "progress_beta" : "progress";
 const REPORTS = "reportes";
-const PENDING_KEY = "russo-reportes-pendientes";
+const PENDING_KEY = PREFIX + "reportes-pendientes";
+const AUTH_KEY = IS_BETA ? "russo-beta-auth" : undefined;
 
 function readPending() {
   try { return JSON.parse(localStorage.getItem(PENDING_KEY) || "[]"); } catch { return []; }
@@ -143,7 +150,12 @@ export class Store {
     if (cfg.supabaseUrl && cfg.supabaseAnonKey && window.supabase) {
       try {
         this.sb = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
-          auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+          auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true,
+            ...(AUTH_KEY ? { storageKey: AUTH_KEY } : {})
+          }
         });
       } catch (e) {
         console.error("No se pudo iniciar Supabase", e);
@@ -309,7 +321,7 @@ export class Store {
   // «Mi respuesta también es correcta»: se guarda en Supabase para revisarla.
   // Sin conexión o sin Supabase se queda en el dispositivo y se envía después.
   async report(entry) {
-    const row = { ...entry, user_id: this.user ? this.user.id : null, created_at: new Date().toISOString() };
+    const row = { ...entry, mazo: (IS_BETA ? "beta/" : "") + entry.mazo, user_id: this.user ? this.user.id : null, created_at: new Date().toISOString() };
     const pending = readPending();
     pending.push(row);
     writePending(pending);

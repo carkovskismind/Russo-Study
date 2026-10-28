@@ -2,7 +2,12 @@
 // Los mazos (data/) se piden primero a la red para que tus cambios aparezcan
 // en cuanto los subas; si no hay conexión se usa la última copia guardada.
 // Todo se pide primero a la red, así que los cambios aparecen al recargar.
-const CACHE = "russo-v7";
+// El mismo archivo sirve a la app real (raíz) y a la beta (/beta/sw.js).
+// Cada una usa su propia caché y la app real no toca nada bajo /beta/.
+const IS_BETA = /\/beta\/sw\.js$/.test(location.pathname);
+const CACHE_FAMILY = IS_BETA ? "russo-beta-v" : "russo-v";
+const CACHE = CACHE_FAMILY + "8";
+const BETA_PATH = new URL("beta", self.registration.scope).pathname; // p. ej. /Russo-Study/beta
 const SHELL = [
   "./",
   "index.html",
@@ -26,7 +31,7 @@ self.addEventListener("install", (e) => {
 self.addEventListener("activate", (e) => {
   e.waitUntil(
     caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
+      .then((keys) => Promise.all(keys.filter((k) => k.startsWith(CACHE_FAMILY) && k !== CACHE).map((k) => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
@@ -60,6 +65,9 @@ self.addEventListener("fetch", (e) => {
   const req = e.request;
   if (req.method !== "GET") return;
   const url = new URL(req.url);
+
+  // La app real no intercepta ni guarda nada de la beta.
+  if (!IS_BETA && url.origin === location.origin && url.pathname.startsWith(BETA_PATH)) return;
 
   // Nunca guardar en caché las llamadas a Supabase.
   if (url.hostname.endsWith("supabase.co")) return;
