@@ -53,5 +53,6 @@ Responde siempre en español, claro y breve.
 | `mazos` | Tarjetas de vocabulario, frases (contenido), datos del Diccionario. |
 | `programador` | Único que toca `index.html`, `css/`, `js/`, `sw.js`. |
 | `revisor` | Prueba la app y el contenido; **solo reporta**, no corrige. |
+| `diseno-ux` | Maquetas fieles a los bocetos de Carol, coherentes con el diseño aprobado en oscuro y claro. |
 
 Orden de trabajo en un mismo archivo: primero `mazos`, después `gramatica`. Nunca dos agentes a la vez sobre el mismo archivo.
