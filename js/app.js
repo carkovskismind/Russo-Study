@@ -112,7 +112,7 @@ function toast(msg) {
   toast.t = setTimeout(() => (el.hidden = true), 2600);
 }
 
-const VIEWS = ["home", "temas", "tema", "palabra", "study", "frase", "done", "settings"];
+const VIEWS = ["home", "temas", "tema", "palabra", "study", "frase", "dialogo", "cajas", "done", "settings"];
 const NAV_VIEWS = { home: "home", temas: "temas", settings: "settings" };
 
 function show(view) {
@@ -524,9 +524,6 @@ function startMode(deck, key) {
   if (key === "dialogo") return startDialogo(deck);
   if (key === "cajas") return startCajas(deck);
 }
-
-function startDialogo() { toast("Pronto"); }
-function startCajas() { toast("Pronto"); }
 
 // Abre un tema en la cuadrícula: el cuadrado crece y los demás se acomodan
 // deslizándose (técnica FLIP: solo se animan transform y clip-path).
@@ -1194,7 +1191,7 @@ function backTo(where) {
   if (where === "tema" && state.currentDeck) {
     renderTema();
     show("tema");
-  } else go(where === "temas" ? "temas" : "home");
+  } else go(where === "temas" || where === "mapa" ? where : "home");
 }
 
 // ---------- Armar frases ----------
@@ -1664,6 +1661,275 @@ function rebuildMine() {
   deck.cards = mineCards();
 }
 
+// ---------- Mini diálogos (tipo chat) ----------
+// Lena escribe y tú contestas eligiendo una opción. Al acertar el chat avanza
+// solo (≈1 s); al fallar se explica por qué y sigues cuando quieras.
+
+const REDUCE = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const CHECK = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Correcta"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
+
+function backFrom(where) {
+  return where === "tema" || where === "temas" || where === "mapa" ? where : "home";
+}
+
+function startDialogo(deck) {
+  const list = ejOf(deck).dialogos;
+  if (!list.length) return;
+  state.dl = { deck, list, di: 0, ok: 0, bad: 0, es: false, timer: null, returnTo: state.view === "tema" ? "tema" : state.view };
+  $("#dialogo-es").setAttribute("aria-pressed", "false");
+  show("dialogo");
+  beginDialog();
+}
+
+function beginDialog() {
+  const dl = state.dl;
+  clearTimeout(dl.timer);
+  const d = dl.list[dl.di];
+  dl.cur = { d, mi: 0, shown: [], wait: null, choice: null, fail: false, typing: false, finished: false };
+  stepDialog();
+}
+
+function stepDialog() {
+  const dl = state.dl;
+  if (!dl) return;
+  const c = dl.cur;
+  if (c.mi >= c.d.mensajes.length) {
+    c.typing = false;
+    c.finished = true;
+    return renderDialogo();
+  }
+  const m = c.d.mensajes[c.mi];
+  if (m.opciones) {
+    c.typing = false;
+    c.wait = { m, opts: shuffle(m.opciones) };
+    c.choice = null;
+    return renderDialogo();
+  }
+  const mine = m.de === "yo";
+  c.typing = !mine;
+  renderDialogo();
+  dl.timer = setTimeout(() => {
+    if (state.dl !== dl || dl.cur !== c) return;
+    c.typing = false;
+    c.shown.push({ m, mine });
+    c.mi++;
+    if (!mine && store.settings.autoSpeak) speak(m.ru);
+    renderDialogo();
+    dl.timer = setTimeout(stepDialog, REDUCE() ? 0 : 250);
+  }, REDUCE() ? 0 : mine ? 300 : 650);
+}
+
+function bubbleHtml(b, dl, first) {
+  const m = b.m;
+  const canSpeak = "speechSynthesis" in window;
+  const es = dl.es && m.es ? `<span class="b-es">${esc(m.es)}</span>` : "";
+  if (b.mine) {
+    return `<div class="b-row mine"><div class="bubble out${b.late ? " late" : ""}"><div class="b-main"><span class="b-ru" lang="ru">${esc(m.ru)}</span>${CHECK}</div>${m.fonetica ? `<span class="b-fon">${esc(m.fonetica)}</span>` : ""}${es}</div></div>`;
+  }
+  return `<div class="b-row">${first ? `<span class="b-name">${esc(m.de)}</span>` : ""}<div class="bubble in"><div class="b-main"><span class="b-ru" lang="ru">${esc(m.ru)}</span>${canSpeak ? `<button class="b-say" type="button" data-bsay="${esc(m.ru)}" aria-label="Escuchar el mensaje de ${esc(m.de)}">${SPEAKER}</button>` : ""}</div>${m.fonetica ? `<span class="b-fon">${esc(m.fonetica)}</span>` : ""}${es}</div></div>`;
+}
+
+function renderDialogo() {
+  const dl = state.dl;
+  const c = dl.cur;
+  const other = (c.d.mensajes.find((m) => m.de !== "yo") || {}).de || "";
+  $("#dialogo-sub").innerHTML = `${esc(other)} te escribe · <span class="num">${dl.di + 1}</span> de <span class="num">${dl.list.length}</span>`;
+  const bubbles = c.shown.map((b, i) => bubbleHtml(b, dl, !b.mine && (i === 0 || c.shown[i - 1].mine))).join("");
+  const typing = c.typing ? `<div class="b-row"><div class="typing" aria-label="Está escribiendo"><i></i><i></i><i></i></div></div>` : "";
+  const mine = c.wait ? `<div class="b-row mine"><div class="typing mine" aria-label="Tu respuesta"><i></i><i></i><i></i></div></div>` : "";
+  let foot = "";
+  if (c.wait) {
+    const m = c.wait.m;
+    const answered = c.choice !== null;
+    const opts = c.wait.opts.map((o, i) => {
+      let cls = "chat-opt";
+      let key = i + 1;
+      if (answered) {
+        if (o.correcta) { cls += " correct"; key = "✓"; }
+        else if (i === c.choice) cls += " wrong";
+      }
+      return `<button class="${cls}" type="button" data-dopt="${i}"${answered ? " disabled" : ""}><span class="num key">${key}</span><span class="opt-text"><span class="ru-t" lang="ru">${esc(o.ru)}</span>${o.fonetica ? `<span class="fon">${esc(o.fonetica)}</span>` : ""}</span></button>`;
+    }).join("");
+    let why = "";
+    if (answered && c.fail) {
+      const o = c.wait.opts[c.choice];
+      why = `<section class="fr-error" role="status"><b>Casi. Mira por qué.</b><p>${esc(o.porque || "Esa opción no encaja aquí.")}</p></section>
+        <section class="fr-ok-note"><span class="label">La correcta</span><p>${esc(c.wait.opts.find((x) => x.correcta).porque || "")}</p></section>
+        <button class="btn btn-primary btn-wide" type="button" data-dnext="1">Continuar</button>`;
+    }
+    foot = `<div class="chat-foot"><span class="chat-q">¿Qué le contestas?</span>${opts}${why}</div>`;
+  } else if (c.finished) {
+    const last = dl.di >= dl.list.length - 1;
+    foot = `<div class="chat-foot"><p class="chat-end">${c.fail ? "Diálogo terminado. Lo repasas cuando quieras." : "¡Diálogo completo!"}</p><button class="btn btn-primary btn-wide" type="button" data-dnext="2">${last ? "Terminar" : "Siguiente diálogo"}</button></div>`;
+  }
+  $("#dialogo-body").innerHTML = `<div class="chat" aria-live="polite">${bubbles}${typing}${mine}</div>${foot}`;
+  const f = $("#dialogo-body .chat-foot");
+  if (f) f.scrollIntoView({ block: "end", behavior: REDUCE() ? "auto" : "smooth" });
+}
+
+function dialogoClick(e) {
+  const dl = state.dl;
+  if (!dl) return;
+  const c = dl.cur;
+  const say = e.target.closest("[data-bsay]");
+  if (say) return speak(say.dataset.bsay);
+  const o = e.target.closest("[data-dopt]");
+  if (o && c.wait && c.choice === null) {
+    const i = Number(o.dataset.dopt);
+    const opt = c.wait.opts[i];
+    c.choice = i;
+    playSound(!!opt.correcta);
+    if (opt.correcta) {
+      c.shown.push({ m: { ...c.wait.m, ru: opt.ru, fonetica: opt.fonetica }, mine: true });
+      c.mi++;
+      c.wait = null;
+      renderDialogo();
+      dl.timer = setTimeout(() => { if (state.dl === dl && dl.cur === c) stepDialog(); }, 1000);
+    } else {
+      c.fail = true;
+      renderDialogo();
+    }
+    return;
+  }
+  const n = e.target.closest("[data-dnext]");
+  if (!n) return;
+  if (n.dataset.dnext === "1") {
+    // Después de un error: se muestra la respuesta correcta y sigue el chat.
+    const right = c.wait.opts.find((x) => x.correcta);
+    c.shown.push({ m: { ...c.wait.m, ru: right.ru, fonetica: right.fonetica }, mine: true, late: true });
+    c.mi++;
+    c.wait = null;
+    c.choice = null;
+    return stepDialog();
+  }
+  // Fin del diálogo
+  store.setEjer(c.d.id, !c.fail);
+  logActivity();
+  if (c.fail) dl.bad++; else dl.ok++;
+  if (dl.di < dl.list.length - 1) {
+    dl.di++;
+    return beginDialog();
+  }
+  finishEjer("Diálogos terminados", `${dl.ok} de ${dl.list.length} sin errores. Los que tuvieron errores los puedes repetir cuando quieras.`, dl.returnTo);
+  state.dl = null;
+}
+
+function finishEjer(title, summary, returnTo) {
+  $("#done-title").textContent = title;
+  $("#done-summary").textContent = summary;
+  state.doneReturn = returnTo;
+  show("done");
+}
+
+// ---------- Cajas ----------
+// Tocas una palabra y luego su caja. Si te equivocas se explica por qué y la
+// palabra pasa a su caja correcta.
+
+const BOX_PALS = ["bl", "pe", "li", "pk"];
+
+function startCajas(deck) {
+  const list = ejOf(deck).cajas;
+  if (!list.length) return;
+  state.cj = { deck, list, ci: 0, ok: 0, bad: 0, returnTo: state.view === "tema" ? "tema" : state.view };
+  show("cajas");
+  beginCaja();
+}
+
+function beginCaja() {
+  const cj = state.cj;
+  const e = cj.list[cj.ci];
+  cj.cur = {
+    e,
+    bank: shuffle(e.items.map((it, i) => ({ ...it, i }))),
+    boxes: e.cajas.map(() => []),
+    sel: null,
+    err: null,
+    fail: false,
+    done: 0
+  };
+  renderCajas();
+}
+
+function renderCajas() {
+  const cj = state.cj;
+  const c = cj.cur;
+  const total = c.e.items.length;
+  $("#cajas-title").textContent = c.e.pregunta.length > 34 ? c.e.cajas.join(" o ") + "?" : c.e.pregunta;
+  $("#cajas-sub").innerHTML = `<span class="num">${c.done}</span> de <span class="num">${total}</span> acomodadas`;
+  const finished = c.done === total && !c.err;
+  const boxes = c.e.cajas.map((name, k) => {
+    const chips = c.boxes[k].map((x) => `<span class="cx-chip${x.bad ? " bad" : ""}" lang="ru">${esc(x.ru)}</span>`).join("");
+    const active = c.sel !== null && !c.err;
+    return `<button class="cbox card-frame pal-${BOX_PALS[k % BOX_PALS.length]}${active ? " ready" : ""}" type="button" data-box="${k}" aria-label="Caja ${esc(name)}"${active ? "" : " disabled"}><span class="cbox-name" lang="ru">${esc(name)}</span>${chips}</button>`;
+  }).join("");
+  let msg = "";
+  if (c.err) {
+    msg = `<section class="fr-error" role="status"><b><span lang="ru">${esc(c.err.item.ru)}</span> va con <span lang="ru">${esc(c.err.item.caja)}</span></b><p>${esc(c.err.item.porque)}</p></section>`;
+  }
+  const bank = c.bank.map((x) => `<button class="cx-pick${c.sel === x.i ? " on" : ""}" type="button" lang="ru" data-pick-item="${x.i}" aria-pressed="${c.sel === x.i}"${c.err ? " disabled" : ""}>${esc(x.ru)}</button>`).join("");
+  let btn = "";
+  if (c.err) btn = `<button class="btn btn-primary btn-wide cx-btn" type="button" data-cnext="1">Entendido, sigue</button>`;
+  else if (finished) btn = `<button class="btn btn-primary btn-wide cx-btn" type="button" data-cnext="2">${cj.ci >= cj.list.length - 1 ? "Terminar" : "Siguiente ejercicio"}</button>`;
+  $("#cajas-body").innerHTML = `<p class="cx-hint">${finished ? (c.fail ? "Listo. Repásalo cuando quieras." : "¡Todo en su caja!") : esc(c.e.pregunta) + " Toca una palabra y luego su caja."}</p>
+    <div class="cboxes" style="--n:${c.e.cajas.length}">${boxes}</div>
+    ${msg}
+    ${c.bank.length ? `<div class="cx-bank"><span class="chat-q">Faltan</span><div class="cx-picks">${bank}</div></div>` : ""}
+    ${btn}`;
+  const sc = c.err ? $("#cajas-body .fr-error") : null;
+  if (sc) sc.scrollIntoView({ block: "nearest", behavior: REDUCE() ? "auto" : "smooth" });
+}
+
+function cajasClick(e) {
+  const cj = state.cj;
+  if (!cj) return;
+  const c = cj.cur;
+  const pick = e.target.closest("[data-pick-item]");
+  if (pick && !c.err) {
+    const i = Number(pick.dataset.pickItem);
+    c.sel = c.sel === i ? null : i;
+    return renderCajas();
+  }
+  const box = e.target.closest("[data-box]");
+  if (box && c.sel !== null && !c.err) {
+    const k = Number(box.dataset.box);
+    const idx = c.bank.findIndex((x) => x.i === c.sel);
+    const item = c.bank[idx];
+    c.sel = null;
+    if (item.caja === c.e.cajas[k]) {
+      c.bank.splice(idx, 1);
+      c.boxes[k].push({ ru: item.ru });
+      c.done++;
+      playSound(true);
+    } else {
+      c.fail = true;
+      c.boxes[k].push({ ru: item.ru, bad: true });
+      c.err = { item, k, idx };
+      playSound(false);
+    }
+    return renderCajas();
+  }
+  const n = e.target.closest("[data-cnext]");
+  if (!n) return;
+  if (n.dataset.cnext === "1") {
+    const { item, k, idx } = c.err;
+    c.boxes[k] = c.boxes[k].filter((x) => !x.bad);
+    c.boxes[c.e.cajas.indexOf(item.caja)].push({ ru: item.ru });
+    c.bank.splice(c.bank.findIndex((x) => x.i === item.i), 1);
+    c.done++;
+    c.err = null;
+    return renderCajas();
+  }
+  store.setEjer(c.e.id, !c.fail);
+  logActivity();
+  if (c.fail) cj.bad++; else cj.ok++;
+  if (cj.ci < cj.list.length - 1) {
+    cj.ci++;
+    return beginCaja();
+  }
+  finishEjer("Cajas terminadas", `${cj.ok} de ${cj.list.length} ejercicios sin errores. Los que tuvieron errores los puedes repetir cuando quieras.`, cj.returnTo);
+  state.cj = null;
+}
+
 // ---------- Ajustes y cuenta ----------
 function renderSync() {
   const chip = $("#sync-chip");
@@ -1910,6 +2176,27 @@ function bind() {
   $("#study-close").addEventListener("click", closeSession);
   $("#study-exit").addEventListener("click", closeSession);
   $("#done-home").addEventListener("click", () => backTo(state.doneReturn || "home"));
+
+  // Diálogo y cajas
+  $("#dialogo-body").addEventListener("click", dialogoClick);
+  $("#dialogo-close").addEventListener("click", () => {
+    const dl = state.dl;
+    if (dl) clearTimeout(dl.timer);
+    state.dl = null;
+    backTo(dl ? dl.returnTo : "home");
+  });
+  $("#dialogo-es").addEventListener("click", (e) => {
+    if (!state.dl) return;
+    state.dl.es = !state.dl.es;
+    e.currentTarget.setAttribute("aria-pressed", String(state.dl.es));
+    renderDialogo();
+  });
+  $("#cajas-body").addEventListener("click", cajasClick);
+  $("#cajas-close").addEventListener("click", () => {
+    const cj = state.cj;
+    state.cj = null;
+    backTo(cj ? cj.returnTo : "home");
+  });
 
   // Frases
   $("#frase-body").addEventListener("click", fraseClick);
