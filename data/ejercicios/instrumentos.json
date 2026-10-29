@@ -1,0 +1,78 @@
+{
+  "id": "instrumentos",
+  "titulo": "Música e instrumentos · ejercicios",
+  "dialogos": [
+    {
+      "id": "instrumentos-d1",
+      "titulo": "¿Qué tocas?",
+      "mensajes": [
+        {"de": "Лена", "ru": "Ты игра́ешь на гита́ре?", "fonetica": "ty ig-RA-yesh na gi-TA-rie", "es": "¿Tocas la guitarra?"},
+        {"de": "yo", "ru": "Да, я игра́ю на гита́ре.", "fonetica": "da, ia ig-RA-iu na gi-TA-rie", "es": "Sí, toco la guitarra.", "opciones": [
+          {"ru": "Да, я игра́ю на гита́ре.", "fonetica": "da, ia ig-RA-iu na gi-TA-rie", "correcta": true, "porque": "¡Bien! Con instrumentos se usa на."},
+          {"ru": "Да, я игра́ю в гита́ру.", "fonetica": "da, ia ig-RA-iu v gi-TA-ru", "correcta": false, "porque": "Con instrumentos se usa на, no в."},
+          {"ru": "Да, я игра́ю на гита́ра.", "fonetica": "da, ia ig-RA-iu na gi-TA-ra", "correcta": false, "porque": "Después de на la palabra cambia: на гита́ре."}
+        ]},
+        {"de": "Лена", "ru": "А твой брат?", "fonetica": "a tvoi brat", "es": "¿Y tu hermano?"},
+        {"de": "yo", "ru": "Он игра́ет на скри́пке.", "fonetica": "on ig-RA-iet na SKRIP-kie", "es": "Él toca el violín.", "opciones": [
+          {"ru": "Он игра́ет на скри́пке.", "fonetica": "on ig-RA-iet na SKRIP-kie", "correcta": true, "porque": "¡Eso! Con он: игра́ет."},
+          {"ru": "Он игра́ет в скри́пке.", "fonetica": "on ig-RA-iet f SKRIP-kie", "correcta": false, "porque": "Con instrumentos se usa на, no в."},
+          {"ru": "Он игра́ю на скри́пке.", "fonetica": "on ig-RA-iu na SKRIP-kie", "correcta": false, "porque": "игра́ю es de я; con он: игра́ет."}
+        ]},
+        {"de": "Лена", "ru": "Как краси́во!", "fonetica": "kak kra-SI-va", "es": "¡Qué bonito!"}
+      ]
+    },
+    {
+      "id": "instrumentos-d2",
+      "titulo": "En la orquesta",
+      "mensajes": [
+        {"de": "Лена", "ru": "Э́то фле́йта и́ли труба́?", "fonetica": "E-ta FLEI-ta I-li tru-BA", "es": "¿Es flauta o trompeta?"},
+        {"de": "yo", "ru": "Э́то не фле́йта, э́то труба́.", "fonetica": "E-ta nie FLEI-ta, E-ta tru-BA", "es": "No es flauta, es trompeta.", "opciones": [
+          {"ru": "Э́то не фле́йта, э́то труба́.", "fonetica": "E-ta nie FLEI-ta, E-ta tru-BA", "correcta": true, "porque": "¡Bien! не va antes de lo que niegas."},
+          {"ru": "Э́то нет фле́йта, э́то труба́.", "fonetica": "E-ta niet FLEI-ta, E-ta tru-BA", "correcta": false, "porque": "Para negar una palabra se usa не: не фле́йта."},
+          {"ru": "Э́то не фле́йта, э́то ту́ба.", "fonetica": "E-ta nie FLEI-ta, E-ta TU-ba", "correcta": false, "porque": "ту́ба es tuba; la respuesta es труба́ (trompeta)."}
+        ]},
+        {"de": "Лена", "ru": "А э́то балала́йка?", "fonetica": "a E-ta ba-la-LAI-ka", "es": "¿Y esto es una balalaica?"},
+        {"de": "yo", "ru": "Да, э́то балала́йка.", "fonetica": "da, E-ta ba-la-LAI-ka", "es": "Sí, es una balalaica.", "opciones": [
+          {"ru": "Да, э́то балала́йка.", "fonetica": "da, E-ta ba-la-LAI-ka", "correcta": true, "porque": "¡Eso! Confirmas con да."},
+          {"ru": "Нет, э́то балала́йка.", "fonetica": "niet, E-ta ba-la-LAI-ka", "correcta": false, "porque": "Dices нет pero lo confirmas: да."},
+          {"ru": "Да, э́то гу́сли.", "fonetica": "da, E-ta GUS-li", "correcta": false, "porque": "Dices да a балала́йка, pero nombras гу́сли."}
+        ]},
+        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-ti-RIES-na", "es": "¡Qué interesante!"}
+      ]
+    }
+  ],
+  "cajas": [
+    {
+      "id": "instrumentos-c1",
+      "pregunta": "Elige a qué familia pertenece cada instrumento.",
+      "cajas": ["viento", "cuerda", "teclado", "percusión"],
+      "items": [
+        {"ru": "труба́", "caja": "viento", "porque": "Se sopla."},
+        {"ru": "фле́йта", "caja": "viento", "porque": "Se sopla."},
+        {"ru": "саксофо́н", "caja": "viento", "porque": "Se sopla."},
+        {"ru": "скри́пка", "caja": "cuerda", "porque": "Suena con cuerdas."},
+        {"ru": "гита́ра", "caja": "cuerda", "porque": "Suena con cuerdas."},
+        {"ru": "балала́йка", "caja": "cuerda", "porque": "Suena con cuerdas."},
+        {"ru": "пиани́но", "caja": "teclado", "porque": "Tiene teclas."},
+        {"ru": "роя́ль", "caja": "teclado", "porque": "Tiene teclas."},
+        {"ru": "орга́н", "caja": "teclado", "porque": "Tiene teclas."},
+        {"ru": "бараба́н", "caja": "percusión", "porque": "Se golpea."},
+        {"ru": "ко́локол", "caja": "percusión", "porque": "Se golpea."},
+        {"ru": "треуго́льник", "caja": "percusión", "porque": "Se golpea."}
+      ]
+    },
+    {
+      "id": "instrumentos-c2",
+      "pregunta": "в o на: ¿qué preposición va con cada cosa?",
+      "cajas": ["в", "на"],
+      "items": [
+        {"ru": "… ша́хматы", "caja": "в", "porque": "Con juegos se usa в."},
+        {"ru": "… гита́ре", "caja": "на", "porque": "Con instrumentos se usa на."},
+        {"ru": "… футбо́л", "caja": "в", "porque": "Con deportes se usa в."},
+        {"ru": "… пиани́но", "caja": "на", "porque": "Con instrumentos se usa на."},
+        {"ru": "… ка́рты", "caja": "в", "porque": "Con juegos se usa в."},
+        {"ru": "… скри́пке", "caja": "на", "porque": "Con instrumentos se usa на."}
+      ]
+    }
+  ]
+}

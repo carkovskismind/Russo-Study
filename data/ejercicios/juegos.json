@@ -1,0 +1,61 @@
+{
+  "id": "juegos",
+  "titulo": "Juegos y deportes · ejercicios",
+  "dialogos": [
+    {
+      "id": "juegos-d1",
+      "titulo": "¿A qué juegas?",
+      "mensajes": [
+        {"de": "Лена", "ru": "Во что ты игра́ешь?", "fonetica": "va shto ty ig-RA-yesh", "es": "¿A qué juegas?"},
+        {"de": "yo", "ru": "Я игра́ю в футбо́л.", "fonetica": "ia ig-RA-iu f fud-BOL", "es": "Juego futbol.", "opciones": [
+          {"ru": "Я игра́ю в футбо́л.", "fonetica": "ia ig-RA-iu f fud-BOL", "correcta": true, "porque": "¡Bien! Con juegos y deportes se usa в."},
+          {"ru": "Я игра́ю на футбо́л.", "fonetica": "ia ig-RA-iu na fud-BOL", "correcta": false, "porque": "Con juegos y deportes se usa в, no на."},
+          {"ru": "Я игра́ешь в футбо́л.", "fonetica": "ia ig-RA-yesh f fud-BOL", "correcta": false, "porque": "Con я el verbo es игра́ю."}
+        ]},
+        {"de": "Лена", "ru": "А твоя́ сестра́?", "fonetica": "a tva-IA sis-TRA", "es": "¿Y tu hermana?"},
+        {"de": "yo", "ru": "Она́ игра́ет в волейбо́л.", "fonetica": "a-NA ig-RA-iet v va-lei-BOL", "es": "Ella juega voleibol.", "opciones": [
+          {"ru": "Она́ игра́ет в волейбо́л.", "fonetica": "a-NA ig-RA-iet v va-lei-BOL", "correcta": true, "porque": "¡Eso! Con она́: игра́ет."},
+          {"ru": "Она́ игра́ют в волейбо́л.", "fonetica": "a-NA ig-RA-iut v va-lei-BOL", "correcta": false, "porque": "игра́ют es para ellos; con она́: игра́ет."},
+          {"ru": "Она́ игра́ет волейбо́л.", "fonetica": "a-NA ig-RA-iet va-lei-BOL", "correcta": false, "porque": "Falta в: игра́ет в волейбо́л."}
+        ]},
+        {"de": "Лена", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
+      ]
+    },
+    {
+      "id": "juegos-d2",
+      "titulo": "Ajedrez y cartas",
+      "mensajes": [
+        {"de": "Лена", "ru": "Ты игра́ешь в ша́хматы?", "fonetica": "ty ig-RA-yesh f SHAJ-ma-ty", "es": "¿Juegas ajedrez?"},
+        {"de": "yo", "ru": "Да, я игра́ю в ша́хматы.", "fonetica": "da, ia ig-RA-iu f SHAJ-ma-ty", "es": "Sí, juego ajedrez.", "opciones": [
+          {"ru": "Да, я игра́ю в ша́хматы.", "fonetica": "da, ia ig-RA-iu f SHAJ-ma-ty", "correcta": true, "porque": "¡Bien! Confirmas con да."},
+          {"ru": "Да, я игра́ю в ша́шки.", "fonetica": "da, ia ig-RA-iu f SHASH-ki", "correcta": false, "porque": "ша́шки son damas; ella preguntó por ajedrez: ша́хматы."},
+          {"ru": "Нет, я игра́ю в ша́хматы.", "fonetica": "niet, ia ig-RA-iu f SHAJ-ma-ty", "correcta": false, "porque": "Dices нет pero sí juegas: да."}
+        ]},
+        {"de": "Лена", "ru": "А в ка́рты?", "fonetica": "a f KAR-ty", "es": "¿Y cartas?"},
+        {"de": "yo", "ru": "Нет, я не игра́ю в ка́рты.", "fonetica": "niet, ia nie ig-RA-iu f KAR-ty", "es": "No, no juego cartas.", "opciones": [
+          {"ru": "Нет, я не игра́ю в ка́рты.", "fonetica": "niet, ia nie ig-RA-iu f KAR-ty", "correcta": true, "porque": "¡Exacto! не va justo antes del verbo."},
+          {"ru": "Нет, я нет игра́ю в ка́рты.", "fonetica": "niet, ia niet ig-RA-iu f KAR-ty", "correcta": false, "porque": "Para negar el verbo se usa не: не игра́ю."},
+          {"ru": "Да, я не игра́ю в ка́рты.", "fonetica": "da, ia nie ig-RA-iu f KAR-ty", "correcta": false, "porque": "Dices да pero luego niegas: нет."}
+        ]},
+        {"de": "Лена", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
+      ]
+    }
+  ],
+  "cajas": [
+    {
+      "id": "juegos-c1",
+      "pregunta": "¿Se juega con pelota o es un juego de mesa?",
+      "cajas": ["con pelota", "de mesa"],
+      "items": [
+        {"ru": "футбо́л", "caja": "con pelota", "porque": "Se juega con un balón."},
+        {"ru": "волейбо́л", "caja": "con pelota", "porque": "Se juega con un balón."},
+        {"ru": "баскетбо́л", "caja": "con pelota", "porque": "Se juega con un balón."},
+        {"ru": "те́ннис", "caja": "con pelota", "porque": "Se juega con una pelota."},
+        {"ru": "ша́хматы", "caja": "de mesa", "porque": "Se juega sobre un tablero."},
+        {"ru": "ша́шки", "caja": "de mesa", "porque": "Se juega sobre un tablero."},
+        {"ru": "домино́", "caja": "de mesa", "porque": "Se juega sobre la mesa."},
+        {"ru": "лото́", "caja": "de mesa", "porque": "Se juega sobre la mesa."}
+      ]
+    }
+  ]
+}

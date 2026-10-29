@@ -1,0 +1,77 @@
+{
+  "id": "naturaleza",
+  "titulo": "Naturaleza · ejercicios",
+  "dialogos": [
+    {
+      "id": "naturaleza-d1",
+      "titulo": "¿Dónde está?",
+      "mensajes": [
+        {"de": "Лена", "ru": "Где со́лнце?", "fonetica": "gdie SON-tse", "es": "¿Dónde está el sol?"},
+        {"de": "yo", "ru": "Со́лнце на не́бе.", "fonetica": "SON-tse na NIE-bie", "es": "El sol está en el cielo.", "opciones": [
+          {"ru": "Со́лнце на не́бе.", "fonetica": "SON-tse na NIE-bie", "correcta": true, "porque": "¡Bien! Con не́бо se usa на."},
+          {"ru": "Со́лнце в не́бе.", "fonetica": "SON-tse v NIE-bie", "correcta": false, "porque": "Con не́бо se usa на: на не́бе."},
+          {"ru": "Со́лнце на не́бо.", "fonetica": "SON-tse na NIE-ba", "correcta": false, "porque": "Para decir dónde, la palabra cambia: на не́бе."}
+        ]},
+        {"de": "Лена", "ru": "А где снег?", "fonetica": "a gdie snieg", "es": "¿Y dónde está la nieve?"},
+        {"de": "yo", "ru": "Снег на се́вере.", "fonetica": "snieg na SIE-vi-rie", "es": "La nieve está en el norte.", "opciones": [
+          {"ru": "Снег на се́вере.", "fonetica": "snieg na SIE-vi-rie", "correcta": true, "porque": "¡Eso! Con los puntos cardinales se usa на."},
+          {"ru": "Снег в се́вере.", "fonetica": "snieg f SIE-vi-rie", "correcta": false, "porque": "Con los puntos cardinales se usa на: на се́вере."},
+          {"ru": "Снег на се́вер.", "fonetica": "snieg na SIE-vir", "correcta": false, "porque": "Para decir dónde, се́вер cambia: на се́вере."}
+        ]},
+        {"de": "Лена", "ru": "Как краси́во!", "fonetica": "kak kra-SI-va", "es": "¡Qué bonito!"}
+      ]
+    },
+    {
+      "id": "naturaleza-d2",
+      "titulo": "En el bosque",
+      "mensajes": [
+        {"de": "Лена", "ru": "Что в лесу́?", "fonetica": "shto v lie-SU", "es": "¿Qué hay en el bosque?"},
+        {"de": "yo", "ru": "В лесу́ мно́го дере́вьев.", "fonetica": "v lie-SU MNO-ga di-RIE-vyef", "es": "En el bosque hay muchos árboles.", "opciones": [
+          {"ru": "В лесу́ мно́го дере́вьев.", "fonetica": "v lie-SU MNO-ga di-RIE-vyef", "correcta": true, "porque": "¡Bien! Después de мно́го va el plural: дере́вьев."},
+          {"ru": "В лесу́ мно́го де́рево.", "fonetica": "v lie-SU MNO-ga DIE-ri-va", "correcta": false, "porque": "Después de мно́го va el plural: дере́вьев."},
+          {"ru": "В лес мно́го дере́вьев.", "fonetica": "v lies MNO-ga di-RIE-vyef", "correcta": false, "porque": "Para decir dónde, лес cambia: в лесу́."}
+        ]},
+        {"de": "Лена", "ru": "Там есть цвето́к?", "fonetica": "tam iest tsvi-TOK", "es": "¿Hay una flor allá?"},
+        {"de": "yo", "ru": "Да, там есть цвето́к.", "fonetica": "da, tam iest tsvi-TOK", "es": "Sí, allá hay una flor.", "opciones": [
+          {"ru": "Да, там есть цвето́к.", "fonetica": "da, tam iest tsvi-TOK", "correcta": true, "porque": "¡Eso! есть = hay."},
+          {"ru": "Нет, там есть цвето́к.", "fonetica": "niet, tam iest tsvi-TOK", "correcta": false, "porque": "Dices нет pero dices que hay una flor: да."},
+          {"ru": "Да, там нет цвето́к.", "fonetica": "da, tam niet tsvi-TOK", "correcta": false, "porque": "нет significa «no hay»; dices que sí hay: есть."}
+        ]},
+        {"de": "Лена", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
+      ]
+    }
+  ],
+  "cajas": [
+    {
+      "id": "naturaleza-c1",
+      "pregunta": "в o на: elige la preposición para decir dónde.",
+      "cajas": ["в", "на"],
+      "items": [
+        {"ru": "лесу́", "base": "лес", "caja": "в", "porque": "El bosque se ve «por dentro»: в лесу́."},
+        {"ru": "ко́смосе", "base": "ко́смос", "caja": "в", "porque": "El espacio se ve «por dentro»: в ко́смосе."},
+        {"ru": "во́здухе", "base": "во́здух", "caja": "в", "porque": "El aire se ve «por dentro»: в во́здухе."},
+        {"ru": "не́бе", "base": "не́бо", "caja": "на", "porque": "Con не́бо se usa на."},
+        {"ru": "се́вере", "base": "се́вер", "caja": "на", "porque": "Con los puntos cardinales se usa на."},
+        {"ru": "ю́ге", "base": "юг", "caja": "на", "porque": "Con los puntos cardinales se usa на."},
+        {"ru": "о́строве", "base": "о́стров", "caja": "на", "porque": "Con isla se usa на."},
+        {"ru": "восто́ке", "base": "восто́к", "caja": "на", "porque": "Con los puntos cardinales se usa на."}
+      ]
+    },
+    {
+      "id": "naturaleza-c2",
+      "pregunta": "¿Es del espacio, del agua o de la tierra?",
+      "cajas": ["espacio", "agua", "tierra"],
+      "items": [
+        {"ru": "Марс", "caja": "espacio", "porque": "Es un planeta."},
+        {"ru": "Юпи́тер", "caja": "espacio", "porque": "Es un planeta."},
+        {"ru": "Сату́рн", "caja": "espacio", "porque": "Es un planeta."},
+        {"ru": "мо́ре", "caja": "agua", "porque": "Es agua."},
+        {"ru": "океа́н", "caja": "agua", "porque": "Es agua."},
+        {"ru": "о́зеро", "caja": "agua", "porque": "Es agua."},
+        {"ru": "лес", "caja": "tierra", "porque": "Está en tierra firme."},
+        {"ru": "го́ры", "caja": "tierra", "porque": "Están en tierra firme."},
+        {"ru": "о́стров", "caja": "tierra", "porque": "Es tierra rodeada de agua."}
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "ejercicios": ["paises", "casa", "ciudad"],
+  "ejercicios": ["paises", "casa", "ciudad", "basicas", "saludos", "familia", "animales", "profesiones", "numeros", "falsos-amigos", "textos", "cultura", "ropa-cuerpo", "comida", "verbos", "juegos", "instrumentos", "escuela", "naturaleza", "calendario", "colores", "adjetivos", "ideas"],
   "mazos": [
     "vocabulario/familia.json",
     "vocabulario/saludos.json",

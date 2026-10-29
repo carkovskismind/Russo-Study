@@ -1,0 +1,75 @@
+{
+  "id": "saludos",
+  "titulo": "Saludos · ejercicios",
+  "dialogos": [
+    {
+      "id": "saludos-d1",
+      "titulo": "Conocerse",
+      "mensajes": [
+        {"de": "Лена", "ru": "Приве́т! Как тебя́ зову́т?", "fonetica": "pri-VIET! kak ti-BIA za-VUT", "es": "¡Hola! ¿Cómo te llamas?"},
+        {"de": "yo", "ru": "Меня́ зову́т Ка́рол.", "fonetica": "mi-NIA za-VUT ka-ROL", "es": "Me llamo Carol.", "opciones": [
+          {"ru": "Меня́ зову́т Ка́рол.", "fonetica": "mi-NIA za-VUT ka-ROL", "correcta": true, "porque": "¡Perfecto! Para tu nombre: меня́ зову́т."},
+          {"ru": "Тебя́ зову́т Ка́рол.", "fonetica": "ti-BIA za-VUT ka-ROL", "correcta": false, "porque": "тебя́ es «a ti»; hablas de ti misma: меня́ зову́т."},
+          {"ru": "Меня́ спаси́бо Ка́рол.", "fonetica": "mi-NIA spa-SI-ba ka-ROL", "correcta": false, "porque": "спаси́бо es «gracias»; para decir tu nombre: меня́ зову́т."}
+        ]},
+        {"de": "Лена", "ru": "О́чень прия́тно!", "fonetica": "O-chin pri-IAT-na", "es": "¡Mucho gusto!"},
+        {"de": "yo", "ru": "О́чень прия́тно!", "fonetica": "O-chin pri-IAT-na", "es": "¡Mucho gusto!", "opciones": [
+          {"ru": "О́чень прия́тно!", "fonetica": "O-chin pri-IAT-na", "correcta": true, "porque": "¡Eso! Se responde igual."},
+          {"ru": "До свида́ния!", "fonetica": "da svi-DA-nia", "correcta": false, "porque": "Es una despedida; apenas se están conociendo."},
+          {"ru": "Пожа́луйста!", "fonetica": "pa-ZHAL-sta", "correcta": false, "porque": "пожа́луйста es «por favor / de nada»; aquí respondes al «mucho gusto»."}
+        ]}
+      ]
+    },
+    {
+      "id": "saludos-d2",
+      "titulo": "Despedirse",
+      "mensajes": [
+        {"de": "Лена", "ru": "Спаси́бо!", "fonetica": "spa-SI-ba", "es": "¡Gracias!"},
+        {"de": "yo", "ru": "Пожа́луйста!", "fonetica": "pa-ZHAL-sta", "es": "¡De nada!", "opciones": [
+          {"ru": "Пожа́луйста!", "fonetica": "pa-ZHAL-sta", "correcta": true, "porque": "¡Bien! A un «gracias» se responde пожа́луйста."},
+          {"ru": "Извини́те!", "fonetica": "iz-vi-NI-tie", "correcta": false, "porque": "извини́те es «disculpe»; para responder a un gracias: пожа́луйста."},
+          {"ru": "Здра́вствуйте!", "fonetica": "ZDRAST-vui-tie", "correcta": false, "porque": "Es un saludo; aquí te están dando las gracias."}
+        ]},
+        {"de": "Лена", "ru": "До за́втра!", "fonetica": "da ZAF-tra", "es": "¡Hasta mañana!"},
+        {"de": "yo", "ru": "До за́втра!", "fonetica": "da ZAF-tra", "es": "¡Hasta mañana!", "opciones": [
+          {"ru": "До за́втра!", "fonetica": "da ZAF-tra", "correcta": true, "porque": "¡Eso! Se responde igual."},
+          {"ru": "Добро́ пожа́ловать!", "fonetica": "dab-RO pa-ZHA-la-vat'", "correcta": false, "porque": "Es una bienvenida: se dice al recibir a alguien, no al despedirse."},
+          {"ru": "Приве́т!", "fonetica": "pri-VIET", "correcta": false, "porque": "приве́т es para saludar; ella se está despidiendo."}
+        ]},
+        {"de": "Лена", "ru": "Пока́!", "fonetica": "pa-KA", "es": "¡Adiós!"}
+      ]
+    }
+  ],
+  "cajas": [
+    {
+      "id": "saludos-c1",
+      "pregunta": "¿Se dice al llegar o al irse? Elige la caja.",
+      "cajas": ["al llegar", "al irse"],
+      "items": [
+        {"ru": "Здра́вствуйте!", "caja": "al llegar", "porque": "Es un saludo."},
+        {"ru": "Приве́т!", "caja": "al llegar", "porque": "Es un saludo informal."},
+        {"ru": "До́брое у́тро!", "caja": "al llegar", "porque": "Se dice por la mañana, al encontrarse."},
+        {"ru": "Добро́ пожа́ловать!", "caja": "al llegar", "porque": "Se le dice a quien acaba de llegar."},
+        {"ru": "До свида́ния!", "caja": "al irse", "porque": "Es una despedida."},
+        {"ru": "Пока́!", "caja": "al irse", "porque": "Es una despedida informal."},
+        {"ru": "До за́втра!", "caja": "al irse", "porque": "Te despides hasta el día siguiente."},
+        {"ru": "Споко́йной но́чи!", "caja": "al irse", "porque": "Se dice al irse a dormir."}
+      ]
+    },
+    {
+      "id": "saludos-c2",
+      "pregunta": "¿A un amigo (ты) o a usted (вы)? Elige la caja.",
+      "cajas": ["a un amigo (ты)", "a usted (вы)"],
+      "items": [
+        {"ru": "Здра́вствуй!", "caja": "a un amigo (ты)", "porque": "Sin -те es la forma de ты."},
+        {"ru": "Здра́вствуйте!", "caja": "a usted (вы)", "porque": "Con -те es la forma de usted (o de varias personas)."},
+        {"ru": "Как тебя́ зову́т?", "caja": "a un amigo (ты)", "porque": "тебя́ es de ты."},
+        {"ru": "Как вас зову́т?", "caja": "a usted (вы)", "porque": "вас es de вы."},
+        {"ru": "Извини́!", "caja": "a un amigo (ты)", "porque": "Sin -те es la forma de ты."},
+        {"ru": "Извини́те!", "caja": "a usted (вы)", "porque": "Con -те es la forma de usted."},
+        {"ru": "Прости́!", "caja": "a un amigo (ты)", "porque": "Sin -те es la forma de ты."},
+        {"ru": "Прости́те!", "caja": "a usted (вы)", "porque": "Con -те es la forma de usted."}
+      ]
+    }
+  ]
+}
