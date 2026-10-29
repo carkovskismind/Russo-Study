@@ -4,12 +4,21 @@
   "grupo": "Gramática",
   "descripcion": "Cómo se forman los números y cómo concuerdan.",
   "tarjetas": [
-    {"pregunta": "¿Qué números cambian según el género?", "respuesta": "1: оди́н (m) · одна́ (f) · одно́ (n) · одни́ (pl)\n2: два (m, n) · две (f)\nоди́н дом, одна́ ко́мната, два этажа́, две ко́мнаты."},
+    {"id": "gramatica-numerales:¿qué números cambian según el género?", "pregunta": "El número 1 con un sustantivo masculino", "respuesta": "оди́н (m): оди́н дом, оди́н брат."},
+    {"pregunta": "El número 1 con un sustantivo femenino", "respuesta": "одна́ (f): одна́ ко́мната, одна́ сестра́."},
+    {"pregunta": "El número 1 con un sustantivo neutro", "respuesta": "одно́ (n): одно́ окно́, одно́ письмо́."},
+    {"pregunta": "El número 1 con un sustantivo que solo existe en plural", "respuesta": "одни́ (pl): одни́ часы́, одни́ очки́."},
+    {"pregunta": "El número 2 con un sustantivo masculino o neutro", "respuesta": "два (m, n): два этажа́, два окна́."},
+    {"pregunta": "El número 2 con un sustantivo femenino", "respuesta": "две (f): две ко́мнаты, две сестры́."},
     {"pregunta": "11 al 19: ¿cómo se forman?", "respuesta": "número + -надцать («encima de diez»):\nодин → оди́ннадцать, два → двена́дцать, три → трина́дцать…\nLa -ь final de пять…девять se pierde: пятна́дцать."},
     {"pregunta": "Decenas: 20 a 90", "respuesta": "20, 30: + -дцать (два́дцать, три́дцать)\n40: со́рок (forma única)\n50–80: + -десят (пятьдеся́т, шестьдеся́т, се́мьдесят, во́семьдесят)\n90: девяно́сто (forma única)"},
     {"pregunta": "Centenas: 100 a 900", "respuesta": "100 сто · 200 две́сти\n300 три́ста · 400 четы́реста\n500–900: + -сот (пятьсо́т, шестьсо́т, семьсо́т, восемьсо́т, девятьсо́т)"},
     {"pregunta": "Miles: 1000 a 5000", "respuesta": "1000 ты́сяча\n2000, 3000, 4000: две, три, четы́ре ты́сячи\n5000: пять ты́сяч"},
-    {"pregunta": "Terminaciones de los ordinales", "respuesta": "Son adjetivos:\n-ый / -ой (m), -ая (f), -ое (n), -ые (pl)\nпе́рвый, второ́й, четвёртый…\nExcepción: тре́тий / тре́тья / тре́тье / тре́тьи"},
+    {"id": "gramatica-numerales:terminaciones de los ordinales", "pregunta": "Ordinales: terminación del masculino", "respuesta": "-ый o -ой (m): пе́рвый, второ́й, четвёртый.\nSon adjetivos y concuerdan con el sustantivo."},
+    {"pregunta": "Ordinales: terminación del femenino", "respuesta": "-ая (f): пе́рвая, втора́я, четвёртая."},
+    {"pregunta": "Ordinales: terminación del neutro", "respuesta": "-ое (n): пе́рвое, второ́е, четвёртое."},
+    {"pregunta": "Ordinales: terminación del plural", "respuesta": "-ые (pl): пе́рвые, вторы́е, четвёртые."},
+    {"pregunta": "Ordinal тре́тий: ¿qué tiene de irregular?", "respuesta": "Su base es suave (тре́ть-), así que no sigue -ый / -ой: masculino тре́тий. Las demás formas están en las tarjetas de Números."},
     {"pregunta": "¿Cómo se dice «en el primer piso»?", "respuesta": "на пе́рвом этаже́\nEl ordinal concuerda con эта́ж (masculino) en prepositivo."}
   ]
 }
