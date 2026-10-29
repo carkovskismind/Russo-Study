@@ -1,0 +1,51 @@
+{
+  "nota": "Orden sugerido de los temas según las clases de CENLEX. Cada tema aparece una sola vez. «pronto» = módulo que todavía no está listo. «leer» = el punto de Aprende a leer (no es un mazo).",
+  "modulos": [
+    {
+      "id": "m1",
+      "n": 1,
+      "titulo": "Módulo 1",
+      "temas": [
+        { "id": "leer", "leer": true, "es": "leer", "ru": "Чита́ть" },
+        { "id": "basicas", "es": "básicas" },
+        { "id": "saludos", "es": "saludos" },
+        { "id": "familia", "es": "familia" },
+        { "id": "animales", "es": "animales" },
+        { "id": "profesiones", "es": "profesiones" },
+        { "id": "numeros", "es": "números" },
+        { "id": "falsos-amigos", "es": "falsos amigos" },
+        { "id": "textos", "es": "textos" },
+        { "id": "cultura", "es": "gustos" }
+      ]
+    },
+    {
+      "id": "m2",
+      "n": 2,
+      "titulo": "Módulo 2",
+      "temas": [
+        { "id": "casa", "es": "casa" },
+        { "id": "ciudad", "es": "ciudad" },
+        { "id": "verbos", "es": "verbos" },
+        { "id": "juegos", "es": "juegos" },
+        { "id": "instrumentos", "es": "música" },
+        { "id": "paises", "es": "países" },
+        { "id": "escuela", "es": "escuela" },
+        { "id": "naturaleza", "es": "naturaleza" },
+        { "id": "calendario", "es": "calendario" },
+        { "id": "colores", "es": "colores" },
+        { "id": "adjetivos", "es": "carácter" },
+        { "id": "ideas", "es": "ideas" }
+      ]
+    },
+    {
+      "id": "m3",
+      "n": 3,
+      "titulo": "Módulo 3",
+      "pronto": true,
+      "temas": [
+        { "id": "ropa-cuerpo", "es": "ropa" },
+        { "id": "comida", "es": "comida" }
+      ]
+    }
+  ]
+}

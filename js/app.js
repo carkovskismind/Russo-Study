@@ -17,6 +17,8 @@ const state = {
   ej: {},
   lectura: null,
   leer: { step: 0, sel: 0 },
+  ruta: null,
+  mapa: null,
   openTile: PILOT,
   selecting: false,
   selected: new Set(),
@@ -63,7 +65,7 @@ const RU_NAME = {
   colores: "Цвета́", adjetivos: "Хара́ктер", ideas: "Иде́и", verbos: "Глаго́лы", juegos: "И́гры",
   instrumentos: "Му́зыка", comida: "Еда́", "ropa-cuerpo": "Оде́жда", escuela: "Шко́ла", textos: "Те́ксты",
   cultura: "Культу́ра", servilismo: "Уго́дник", expresiones: "Фра́зы", paises: "Стра́ны",
-  "reglas-gentilicios": "мексика́нка", casos: "Падежи́", "gramatica-verbos": "я чита́ю", genero: "Род",
+  "reglas-gentilicios": "мексика́нка", "falsos-amigos": "Ло́жные друзья́", casos: "Падежи́", "gramatica-verbos": "я чита́ю", genero: "Род",
   plurales: "кни́га → кни́ги", posesion: "у меня́ есть", "gramatica-numerales": "две кни́ги"
 };
 
@@ -114,7 +116,7 @@ function toast(msg) {
   toast.t = setTimeout(() => (el.hidden = true), 2600);
 }
 
-const VIEWS = ["home", "temas", "tema", "palabra", "study", "frase", "dialogo", "cajas", "leer", "done", "settings"];
+const VIEWS = ["home", "temas", "mapa", "tema", "palabra", "study", "frase", "dialogo", "cajas", "leer", "done", "settings"];
 const NAV_VIEWS = { home: "home", temas: "temas", settings: "settings" };
 
 function show(view) {
@@ -126,10 +128,12 @@ function show(view) {
     if (b.dataset.go === navOn) b.setAttribute("aria-current", "page");
     else b.removeAttribute("aria-current");
   }
+  document.body.classList.toggle("on-mapa", view === "mapa");
   window.scrollTo(0, 0);
 }
 
 function go(view) {
+  if (view === "mapa") renderMapa();
   if (view === "home") renderHome();
   if (view === "temas") renderTemas();
   if (view === "settings") renderSettings();
@@ -220,6 +224,10 @@ async function loadDecks() {
     if (r.ok) state.dudas = await r.json();
   } catch (e) { console.warn("dudas", e); }
   try {
+    const r = await fetch("data/ruta.json", { cache: "no-cache" });
+    if (r.ok) state.ruta = await r.json();
+  } catch (e) { console.warn("ruta", e); }
+  try {
     const r = await fetch("data/lectura/lectura.json", { cache: "no-cache" });
     if (r.ok) state.lectura = await r.json();
   } catch (e) { console.warn("lectura", e); }
@@ -277,7 +285,12 @@ function deckStats(deck, now = Date.now()) {
 
 function deckNumber(deck) {
   if (deck.mine) return "Personal";
-  return `Tema ${String(deck.index + 1).padStart(2, "0")}`;
+  const pos = state.ruta ? rutaPos(deck.id) : null;
+  return pos ? `Tema ${pos.label}` : "Biblioteca";
+}
+
+function deckTag(deck) {
+  return state.ruta && suggestedDeck() === deck ? " · Sugerido" : "";
 }
 
 // Actividad de un día: lo que quedó registrado o, para el historial viejo,
@@ -377,10 +390,12 @@ function renderHome() {
     .sort((a, b) => b.s.last - a.s.last)
     .slice(0, 2)
     .map((x) => x.d);
-  const pilot = state.deckById.get(PILOT);
+  const pilot = suggestedDeck() || state.deckById.get(PILOT);
   if (pilot && !recent.includes(pilot) && recent.length < 2) recent.unshift(pilot);
   for (const d of state.decks) { if (recent.length >= 2) break; if (!recent.includes(d)) recent.push(d); }
   $("#continue-list").innerHTML = recent.map((d) => rowHtml(d)).join("");
+  if (state.ruta) renderRutaMini();
+  else $("#ruta-block").hidden = true;
 }
 
 function wavePath(counts) {
@@ -406,7 +421,7 @@ function rowHtml(deck) {
   const ru = RU_NAME[deck.id];
   return `<button class="trow card-frame pal-${v.pal}" type="button" data-open-tema="${esc(deck.id)}">
     ${artHtml(deck)}
-    <span class="t-n">${deckNumber(deck)}${deck.id === PILOT ? " · Piloto" : ""}</span>
+    <span class="t-n">${deckNumber(deck)}${deckTag(deck)}</span>
     <span class="t-title">${esc(deck.title)} ${ru ? `<span lang="ru">${esc(ru)}</span>` : ""}</span>
     <span class="t-foot"><span class="bar"><span style="width:${s.pct}%"></span></span><span class="pct">${s.pct}%</span></span>
   </button>`;
@@ -428,13 +443,27 @@ function renderTemas() {
     .map((g) => `<button class="chip" type="button" role="tab" data-filter="${esc(g)}" aria-selected="${g === state.temaFilter}">${esc(g)}</button>`)
     .join("");
   const list = state.decks.filter((d) => state.temaFilter === "Todos" || groupOf(d) === state.temaFilter);
-  const pilot = list.find((d) => d.id === PILOT);
-  const ordered = pilot ? [pilot, ...list.filter((d) => d !== pilot)] : list;
-  if (!ordered.some((d) => d.id === state.openTile)) state.openTile = ordered[0] ? ordered[0].id : null;
+  const ordered = rutaOrder(list);
+  if (!ordered.some((d) => d.id === state.openTile) || !state.openSet) {
+    const sug = suggestedDeck();
+    state.openTile = sug && ordered.includes(sug) ? sug.id : ordered[0] ? ordered[0].id : null;
+    state.openSet = true;
+  }
   const leer = state.temaFilter === "Todos" ? leerTileHtml() : "";
   $("#temas-grid").innerHTML = ordered.length
     ? leer + ordered.map(tileHtml).join("")
     : `<p class="loading">No hay temas en este grupo.</p>`;
+}
+
+// Temas en el orden de la ruta; los que no están en ella (biblioteca) van al final.
+function rutaOrder(list) {
+  if (!state.ruta) return list;
+  const rank = new Map();
+  let n = 0;
+  for (const m of rutaMods()) for (const t of modTemas(m)) if (t.deck) rank.set(t.deck.id, n++);
+  const inRuta = list.filter((d) => rank.has(d.id)).sort((a, b) => rank.get(a.id) - rank.get(b.id));
+  const rest = list.filter((d) => !rank.has(d.id));
+  return [...inRuta, ...rest];
 }
 
 function tileHtml(deck) {
@@ -450,13 +479,13 @@ function tileHtml(deck) {
   return `<article class="tile card-frame pal-${v.pal}${open ? " open" : ""}" data-tile="${esc(deck.id)}" tabindex="${open ? -1 : 0}" role="button" aria-expanded="${open}" aria-label="${esc(deck.title)}">
     ${artHtml(deck)}
     <div class="t-body">
-      <span class="t-n">${deckNumber(deck)}${deck.id === PILOT ? " · Piloto" : ""}</span>
+      <span class="t-n">${deckNumber(deck)}${deckTag(deck)}</span>
       <span class="t-title">${esc(deck.title)}</span>
       ${ru ? `<span class="t-ru" lang="ru">${esc(ru)}</span>` : ""}
       <span class="t-foot">${foot}</span>
     </div>
     <div class="t-big">
-      <div class="t-top"><span class="t-tag">${deckNumber(deck)}${deck.id === PILOT ? " · Piloto" : ""}</span><span class="pct">${s.pct}%</span></div>
+      <div class="t-top"><span class="t-tag">${deckNumber(deck)}${deckTag(deck)}</span><span class="pct">${s.pct}%</span></div>
       <span class="t-title">${esc(deck.title)}</span>
       ${ru ? `<span class="t-ru" lang="ru">${esc(ru)}</span>` : ""}
       <span class="t-meta">${meta}</span>
@@ -2035,6 +2064,386 @@ function leerClick(e) {
   }
 }
 
+// ---------- Ruta y mapa ----------
+// data/ruta.json fija el orden de los temas por módulo. «Memorizado» = el 80 %
+// o más de las palabras del tema ya se acertaron al menos una vez (el mismo
+// conteo que muestra el % de cada tema). El «tema actual» de un módulo es el
+// primer tema (sin contar Aprende a leer) que todavía no está memorizado.
+
+const MEM_PCT = 0.8;
+const PAGE = 7;
+const PALF = { lav: "#ECE7FF", pe: "#FFEDE3", kh: "#F1EDDF", bl: "#E6EBFF", li: "#F2F9D3", pk: "#F9D3EF", mint: "#CEFBC8", red: "#FFE6E6", aq: "#D8F7F2" };
+
+function isMemorized(deck) {
+  const s = deckStats(deck);
+  return s.total > 0 && s.learned / s.total >= MEM_PCT;
+}
+
+function rutaMods() {
+  return state.ruta ? state.ruta.modulos : [];
+}
+
+// Temas de un módulo con su mazo (los que no existen se omiten).
+const modCache = new Map();
+function modTemas(mod) {
+  if (!modCache.has(mod.id)) modCache.set(mod.id, buildModTemas(mod));
+  return modCache.get(mod.id);
+}
+
+function buildModTemas(mod) {
+  return mod.temas
+    .map((t, i) => ({ ...t, deck: t.leer ? null : state.deckById.get(t.id), mod, label: `${mod.n}.${i + 1}` }))
+    .filter((t) => t.leer || t.deck);
+}
+
+function modCurrent(mod) {
+  if (mod.pronto) return null;
+  return modTemas(mod).find((t) => t.deck && !isMemorized(t.deck)) || null;
+}
+
+function currentMod() {
+  const mods = rutaMods().filter((m) => !m.pronto);
+  return mods.find((m) => modCurrent(m)) || mods[mods.length - 1] || null;
+}
+
+function modWords(mod) {
+  let learned = 0, total = 0;
+  for (const t of modTemas(mod)) {
+    if (!t.deck) continue;
+    const s = deckStats(t.deck);
+    learned += s.learned;
+    total += s.total;
+  }
+  return { learned, total };
+}
+
+// Palabras de hoy en un tema (lo que arma «Seguir con»).
+function todayWords(deck) {
+  const s = deckStats(deck);
+  return s.due + Math.min(s.fresh, NEW_PER_DECK_SESSION);
+}
+
+function rutaPos(deckId) {
+  for (const m of rutaMods()) {
+    const t = modTemas(m).find((x) => x.deck && x.deck.id === deckId);
+    if (t) return t;
+  }
+  return null;
+}
+
+function suggestedDeck() {
+  const m = currentMod();
+  const c = m && modCurrent(m);
+  return c ? c.deck : null;
+}
+
+// ----- Mini mapa del inicio -----
+function renderRutaMini() {
+  const host = $("#ruta-mini");
+  const mod = currentMod();
+  if (!mod) { $("#ruta-block").hidden = true; return; }
+  $("#ruta-block").hidden = false;
+  const T = modTemas(mod);
+  const cur = modCurrent(mod);
+  const ci = cur ? T.indexOf(cur) : T.length - 1;
+  const start = Math.max(0, Math.min(ci - 1, T.length - 4));
+  const list = T.slice(start, start + 4);
+  const w = modWords(mod);
+  let grid = "";
+  for (let r = 0; r < 9; r++) {
+    for (let c = -1; c < 5; c++) {
+      const x = c * 110 + (r % 2 ? 55 : 0) - 41;
+      const y = r * 32 - 42;
+      grid += `<polygon points="${x + 55},${y} ${x + 110},${y + 32} ${x + 55},${y + 64} ${x},${y + 32}" fill="${(r + c) % 2 ? "#121214" : "#18181B"}"/>`;
+    }
+  }
+  const plates = list.map((t, i) => {
+    const cx = 56 + i * 50, cy = 66 + i * 44;
+    const isCur = cur && t === cur;
+    const done = t.deck && isMemorized(t.deck);
+    const face = isCur ? "#4AF2D5" : done ? PALF[t.deck ? visFor(t.deck).pal : "aq"] : "#2A2A2F";
+    const ink = isCur ? "#0B0B0C" : done ? "#111" : "#A3A3AA";
+    const hw = 36, hh = 21;
+    const pts = (dy) => `${cx},${cy - hh + dy} ${cx + hw},${cy + dy} ${cx},${cy + hh + dy} ${cx - hw},${cy + dy}`;
+    const name = t.leer ? "Aprende a leer" : t.deck.title.split(/[,y·]/)[0].trim();
+    return `<polygon points="${pts(7)}" fill="#6B675F"/><polygon points="${pts(0)}" fill="${face}"/>
+      ${done ? `<path d="M${cx - 7} ${cy} l5 5 l9 -10" fill="none" stroke="${ink}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>` : `<circle cx="${cx}" cy="${cy}" r="${isCur ? 6 : 4}" fill="${ink}"/>`}
+      <text x="${cx + 46}" y="${cy + 5}" fill="${isCur ? "#F3EFE6" : "#A3A3AA"}" font-size="12" font-weight="800" font-family="Manrope,sans-serif">${esc(name)}</text>`;
+  }).join("");
+  host.innerHTML = `<svg class="rm-svg" viewBox="0 0 358 250" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${grid}${plates}</svg>
+    <span class="rm-chip">${esc(mod.titulo)} · <span class="num">${w.learned}</span> de <span class="num">${w.total}</span> palabras</span>
+    ${cur && cur.deck ? `<span class="rm-today">Hoy: <span class="num">${todayWords(cur.deck)}</span></span>` : ""}`;
+  host.setAttribute("aria-label", `Abrir el mapa de tu ruta. ${mod.titulo}${cur && cur.deck ? `, sigues en ${cur.deck.title}` : ""}`);
+}
+
+// ----- Pantalla del mapa (diseño D) -----
+// Posiciones de las 8 plataformas en el arte (boceto de 940 px mostrado a 470).
+const MAPA_RAW = [[833, 750], [1055, 887], [774, 988], [650, 1131], [901, 1300], [1148, 1446], [915, 1583], [698, 1722]];
+const MS = 0.3005, MOX = -40, MOY = 130, MPAD = 8, MF = 0.26, MK = 0.55, MT = 9;
+const r1 = (x) => Math.round(x * 10) / 10;
+
+function plateShape(w, ox, oy) {
+  const n = r1;
+  const P = (p) => n(p[0]) + " " + n(p[1]);
+  const add = (p, q) => [p[0] + q[0], p[1] + q[1]];
+  const lerp = (p, q, f) => [p[0] + (q[0] - p[0]) * f, p[1] + (q[1] - p[1]) * f];
+  const mid = (p, q) => lerp(p, q, 0.5);
+  const h = w * MK;
+  const C = [[ox - w / 2, oy], [ox, oy - h / 2], [ox + w / 2, oy], [ox, oy + h / 2]];
+  const io = C.map((c, i) => ({ c, i: lerp(c, C[(i + 3) % 4], MF), o: lerp(c, C[(i + 1) % 4], MF) }));
+  const [L, Tt, R, B] = io;
+  const top = "M" + P(L.o) + " L" + P(Tt.i) + " Q" + P(Tt.c) + " " + P(Tt.o) + " L" + P(R.i) + " Q" + P(R.c) + " " + P(R.o) +
+    " L" + P(B.i) + " Q" + P(B.c) + " " + P(B.o) + " L" + P(L.i) + " Q" + P(L.c) + " " + P(L.o) + " Z";
+  const lm = [0.25 * L.i[0] + 0.5 * L.c[0] + 0.25 * L.o[0], L.c[1]];
+  const rm = [0.25 * R.i[0] + 0.5 * R.c[0] + 0.25 * R.o[0], R.c[1]];
+  const d = [0, MT];
+  const sil = "M" + P(lm) + " Q" + P(mid(L.c, L.o)) + " " + P(L.o) + " L" + P(Tt.i) + " Q" + P(Tt.c) + " " + P(Tt.o) +
+    " L" + P(R.i) + " Q" + P(mid(R.i, R.c)) + " " + P(rm) + " L" + P(add(rm, d)) +
+    " Q" + P(add(mid(R.c, R.o), d)) + " " + P(add(R.o, d)) + " L" + P(add(B.i, d)) + " Q" + P(add(B.c, d)) + " " + P(add(B.o, d)) +
+    " L" + P(add(L.i, d)) + " Q" + P(add(mid(L.i, L.c), d)) + " " + P(add(lm, d)) + " Z";
+  return { top, sil };
+}
+
+// Ventana de 8 plataformas del módulo: 7 temas + la siguiente (otro tramo o módulo).
+function mapaWindow(mod, page) {
+  const T = modTemas(mod);
+  const pages = Math.max(1, Math.ceil(T.length / PAGE));
+  const p = Math.max(0, Math.min(page, pages - 1));
+  const items = T.slice(p * PAGE, p * PAGE + PAGE).map((t) => ({ t, kind: "own" }));
+  let extra = null;
+  if (p < pages - 1) extra = { t: T[(p + 1) * PAGE], kind: "page" };
+  else {
+    const mods = rutaMods();
+    const nx = mods[mods.indexOf(mod) + 1];
+    const nt = nx ? modTemas(nx)[0] : null;
+    if (nt) extra = { t: nt, kind: "mod" };
+  }
+  if (extra) items.push(extra);
+  return { items, p, pages };
+}
+
+function mapaStatus(it, cur) {
+  const { t, kind } = it;
+  if (t.mod.pronto || kind === "mod") return "m3";
+  if (t.leer) return leerDone() === (state.lectura ? state.lectura.pasos.length : 6) ? "done" : "next";
+  if (cur && t === cur) return "now";
+  return t.deck && isMemorized(t.deck) ? "done" : "next";
+}
+
+function mapaRu(t) {
+  return t.leer ? t.ru || "Чита́ть" : RU_NAME[t.deck.id] || t.deck.title;
+}
+
+function plateWidth(ru, now) {
+  const len = [...ru.replace(/́/g, "")].length;
+  const w = len <= 5 ? 92 : len <= 7 ? 102 : len <= 9 ? 110 : 118;
+  return now ? w + 12 : w;
+}
+
+function mapaStageHtml() {
+  const m = state.mapa;
+  const mod = rutaMods().find((x) => x.id === m.mod) || rutaMods()[0];
+  const cur = modCurrent(mod);
+  const win = mapaWindow(mod, m.page);
+  const allT = modTemas(mod);
+  m.page = win.p;
+  // Selección: si no hay (o ya no está en la ventana) se toma el tema actual
+  let selIt = win.items.find((it) => m.sel && it.t.id === m.sel.id && it.t.mod.id === m.sel.mod);
+  if (!selIt) selIt = win.items.find((it) => cur && it.t === cur) || win.items[0];
+  m.sel = selIt ? { id: selIt.t.id, mod: selIt.t.mod.id } : null;
+
+  const pts = MAPA_RAW.slice(0, win.items.length).map((r) => ({ x: r[0] * MS + MOX, y: r[1] * MS + MOY }));
+  let bridges = "";
+  for (let i = 0; i < pts.length - 1; i++) {
+    const a = [pts[i].x, pts[i].y + MT / 2 + 1], b = [pts[i + 1].x, pts[i + 1].y + MT / 2 + 1];
+    const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    const nx = -(b[1] - a[1]) / len * 4.5, ny = (b[0] - a[0]) / len * 4.5;
+    const l = Math.min(a[0], b[0]) - 10, t = Math.min(a[1], b[1]) - 10;
+    const q = (p) => r1(p[0] - l) + " " + r1(p[1] - t);
+    const w = Math.abs(b[0] - a[0]) + 20, hh = Math.abs(b[1] - a[1]) + 20;
+    const d = "M" + q([a[0] + nx, a[1] + ny]) + " L" + q([b[0] + nx, b[1] + ny]) + " L" + q([b[0] - nx, b[1] - ny]) + " L" + q([a[0] - nx, a[1] - ny]) + " Z";
+    bridges += `<svg class="mp-bridge" aria-hidden="true" width="${r1(w)}" height="${r1(hh)}" viewBox="0 0 ${r1(w)} ${r1(hh)}" style="left:${r1(l)}px;top:${r1(t)}px"><path d="${d}" fill="none" stroke="#F3EFE6" stroke-width="6" stroke-linejoin="round"/><path d="${d}" fill="#F3EFE6" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
+  }
+
+  let plates = "";
+  let pin = "";
+  win.items.forEach((it, i) => {
+    const t = it.t;
+    const st = mapaStatus(it, cur);
+    const x = pts[i].x, y = pts[i].y;
+    const ru = mapaRu(t);
+    const w = plateWidth(ru, st === "now");
+    const h = w * MK, sw = w + MPAD * 2, sh = h + MT + MPAD * 2;
+    const sp = plateShape(w, sw / 2, h / 2 + MPAD);
+    const m3 = st === "m3";
+    const face = m3 ? "#141417" : PALF[t.leer ? "aq" : visFor(t.deck).pal];
+    const side = m3 ? "#0B0B0C" : "#F3EFE6";
+    const line = m3 ? "#8E8A82" : "#111111";
+    const dash = m3 ? "5 4" : "none";
+    const selected = selIt === it;
+    const len = [...ru.replace(/́/g, "")].length;
+    const fs = len <= 5 ? 13 : len <= 8 ? 12 : 11;
+    const es = t.leer ? "aprender" : m3 && t.mod.pronto ? `${t.es} · M${t.mod.n}` : t.es;
+    const aria = `${ru}, ${es}${st === "done" ? ", memorizado" : st === "now" ? ", estás aquí" : m3 ? ", próximamente" : ""}`;
+    plates += `<svg class="mp-plate" aria-hidden="true" width="${r1(sw)}" height="${r1(sh)}" viewBox="0 0 ${r1(sw)} ${r1(sh)}" style="left:${r1(x - sw / 2)}px;top:${r1(y - h / 2 - MPAD)}px">
+      <path d="${sp.sil}" fill="${m3 ? "none" : "#F3EFE6"}" stroke="${m3 ? "none" : "#F3EFE6"}" stroke-width="7" stroke-linejoin="round"/>
+      <path d="${sp.sil}" fill="${side}" stroke="${line}" stroke-width="2" stroke-linejoin="round" stroke-dasharray="${dash}"/>
+      <path d="${sp.top}" fill="${face}" stroke="${selected && st !== "now" ? "#4AF2D5" : line}" stroke-width="${selected && st !== "now" ? 3.4 : 2}" stroke-linejoin="round" stroke-dasharray="${dash}"/></svg>
+      <button class="mp-label" type="button" data-mp="${i}" aria-label="${esc(aria)}" aria-pressed="${selected}" style="left:${r1(x - 46)}px;top:${r1(y - 22)}px">
+        <span class="ru" lang="ru" style="font-size:${fs}px;color:${m3 ? "#C9C5BC" : "#111"}">${esc(ru)}</span>
+        <span class="mp-es" style="color:${m3 ? "#A3A3AA" : "#3A3A40"}">${esc(es)}</span></button>`;
+    if (st === "done") plates += `<span class="mp-check" aria-hidden="true" style="left:${r1(x - w / 2 - 14)}px;top:${r1(y - 12)}px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#0B0B0C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>`;
+    if (st === "now") pin = `<svg class="mp-pin" aria-hidden="true" width="64" height="83" viewBox="0 0 48 62" style="left:${r1(x + 18 - 32)}px;top:${r1(y - 12 - 83)}px"><path d="M24 2C12 2 3 11 3 23c0 15 21 37 21 37s21-22 21-37C45 11 36 2 24 2z" fill="#4AF2D5" stroke="#0B0B0C" stroke-width="2.5"/><circle cx="24" cy="23" r="11.5" fill="#F3EFE6"/><path d="M18.5 23.5l4 4 7.5-8" fill="none" stroke="#0B0B0C" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  });
+
+  // Tarjeta del tema seleccionado
+  const st = selIt ? mapaStatus(selIt, cur) : "next";
+  const t = selIt ? selIt.t : null;
+  let card = "";
+  if (t) {
+    const ru = mapaRu(t);
+    const isNow = cur && t === cur;
+    const top = t.mod.pronto ? "Pronto" : isNow ? "Estás aquí" : st === "done" ? "Memorizado" : "Tema";
+    let body = "";
+    if (t.leer) {
+      const n = state.lectura ? state.lectura.pasos.length : 6;
+      body = `<span class="mc-sub">${leerDone()} de ${n} pasos</span><div class="mc-grid one"><button class="mc-btn fill" type="button" data-mc="leer">Abrir</button></div>`;
+    } else if (t.mod.pronto) {
+      body = `<span class="mc-sub">${esc(t.deck.title)}</span><p class="mc-soon">Este módulo llega pronto.</p>`;
+    } else {
+      const ej = ejOf(t.deck);
+      const btns = [];
+      if (ej.cajas.length) btns.push(["cajas", "Cajas", false]);
+      if (t.deck.frases.length) btns.push(["frases", "Frases", false]);
+      btns.push(["words", "Palabras", true]);
+      if (ej.dialogos.length) btns.push(["dialogo", "Mini diálogo", false]);
+      body = `<span class="mc-sub">${esc(t.deck.title)}</span><div class="mc-grid${btns.length === 1 ? " one" : ""}">${btns.map(([k, l, f]) => `<button class="mc-btn${f ? " fill" : ""}" type="button" data-mc="${k}">${l}</button>`).join("")}</div>`;
+    }
+    card = `<section class="mapa-card" aria-label="Tema seleccionado">
+      <div class="mc-head"><span class="mc-top">${top}</span>${t.deck && !t.mod.pronto ? `<button class="mc-list" type="button" data-mc="list">Ver lista</button>` : ""}</div>
+      <span class="mc-title">${t.leer ? "Aprende a leer" : `Tema <span class="num">${t.label}</span>`}: <span class="ru" lang="ru">${esc(ru)}</span></span>
+      ${body}</section>`;
+  }
+
+  // Parte baja
+  const w = modWords(mod);
+  const head = mod.pronto
+    ? `Próximamente`
+    : `<span class="num">${w.learned}</span> de <span class="num">${w.total}</span> palabras`;
+  const tabs = rutaMods().map((x) => `<button type="button" role="tab" class="num" data-mtab="${x.id}" aria-selected="${x.id === mod.id}">M${x.n}</button>`).join("");
+  let today, goBtn;
+  if (mod.pronto) {
+    today = `<span>El <b>${esc(mod.titulo)}</b> llega pronto. Carol lo va empezando en clase.</span>`;
+    const back = currentMod();
+    goBtn = back ? `<button class="mapa-go" type="button" data-mgo="mod:${back.id}">Ir al ${esc(back.titulo)}</button>` : "";
+  } else if (cur && cur.deck) {
+    today = `<span>Hoy toca <b>${esc(cur.deck.title)}</b> · <span class="num">${todayWords(cur.deck)}</span> palabras</span>`;
+    const es = cur.es.charAt(0).toUpperCase() + cur.es.slice(1);
+    goBtn = `<button class="mapa-go" type="button" data-mgo="words">Seguir con ${esc(es)}</button>`;
+  } else {
+    today = `<span><b>${esc(mod.titulo)}</b> completo. ¡Bien!</span>`;
+    goBtn = `<button class="mapa-go" type="button" data-mgo="temas">Ver todos los temas</button>`;
+  }
+  const pager = win.pages > 1
+    ? `<button class="mapa-pg" type="button" data-mpg="-1" style="left:96px" aria-label="Tramo anterior"${win.p === 0 ? " disabled" : ""}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+       <button class="mapa-pg" type="button" data-mpg="1" style="left:332px" aria-label="Tramo siguiente"${win.p >= win.pages - 1 ? " disabled" : ""}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>`
+    : "";
+  return `<img class="mapa-art" src="img/mapa/m2.png" alt="">
+    ${bridges}${plates}${pin}${card}
+    <h1 class="mapa-mod">Módulo <span class="num">${mod.n}</span></h1>${pager}
+    <div class="mapa-today"><span class="mt-dot" aria-hidden="true"></span>${today}</div>
+    <div class="mapa-bar"><button class="mapa-list" type="button" data-mgo="temas" aria-label="Ver lista de temas"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg></button>${goBtn}</div>
+    <button class="mapa-back" type="button" data-mgo="home" aria-label="Volver al inicio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <span class="mapa-h">Tu mapa</span><span class="mapa-n">${head}</span>
+    <div class="mapa-tabs" role="tablist" aria-label="Módulos">${tabs}</div>`;
+}
+
+function fitMapa() {
+  const ms = Math.min(1, window.innerWidth / 390);
+  $("#view-mapa").style.setProperty("--ms", ms);
+}
+
+function renderMapa() {
+  if (!state.mapa) {
+    const mod = currentMod() || rutaMods()[0];
+    state.mapa = { mod: mod ? mod.id : "m1", page: 0, sel: null };
+    const cur = mod && modCurrent(mod);
+    if (cur) state.mapa.page = Math.floor(modTemas(mod).indexOf(cur) / PAGE);
+  }
+  fitMapa();
+  $("#mapa-stage").innerHTML = mapaStageHtml();
+}
+
+function openMapa() {
+  state.mapa = null;
+  renderMapa();
+  go("mapa");
+}
+
+function mapaWinItems() {
+  const mod = rutaMods().find((x) => x.id === state.mapa.mod);
+  return { mod, win: mapaWindow(mod, state.mapa.page) };
+}
+
+function mapaClick(e) {
+  const m = state.mapa;
+  if (!m) return;
+  const tab = e.target.closest("[data-mtab]");
+  if (tab) {
+    const mod = rutaMods().find((x) => x.id === tab.dataset.mtab);
+    const cur = modCurrent(mod);
+    state.mapa = { mod: mod.id, page: cur ? Math.floor(modTemas(mod).indexOf(cur) / PAGE) : 0, sel: null };
+    renderMapa();
+    const b = $(`#mapa-stage [data-mtab="${mod.id}"]`);
+    if (b) b.focus();
+    return;
+  }
+  const pg = e.target.closest("[data-mpg]");
+  if (pg && !pg.disabled) {
+    m.page += Number(pg.dataset.mpg);
+    m.sel = null;
+    renderMapa();
+    return;
+  }
+  const pl = e.target.closest("[data-mp]");
+  if (pl) {
+    const { win } = mapaWinItems();
+    const it = win.items[Number(pl.dataset.mp)];
+    if (it.kind === "page") { m.page++; m.sel = { id: it.t.id, mod: it.t.mod.id }; }
+    else if (it.kind === "mod") { m.mod = it.t.mod.id; m.page = 0; m.sel = { id: it.t.id, mod: it.t.mod.id }; }
+    else m.sel = { id: it.t.id, mod: it.t.mod.id };
+    renderMapa();
+    const b = $(`#mapa-stage [aria-pressed="true"].mp-label`);
+    if (b) b.focus();
+    return;
+  }
+  const mc = e.target.closest("[data-mc]");
+  if (mc) {
+    const mod = rutaMods().find((x) => x.id === m.mod);
+    const t = modTemas(mod).concat(rutaMods().flatMap((x) => modTemas(x))).find((x) => m.sel && x.id === m.sel.id && x.mod.id === m.sel.mod);
+    if (!t) return;
+    if (mc.dataset.mc === "leer") return openLeer();
+    if (mc.dataset.mc === "list") return openTema(t.deck.id);
+    return startMode(t.deck, mc.dataset.mc);
+  }
+  const go2 = e.target.closest("[data-mgo]");
+  if (go2) {
+    const a = go2.dataset.mgo;
+    if (a === "home" || a === "temas") return go(a);
+    if (a.startsWith("mod:")) {
+      const mod = rutaMods().find((x) => x.id === a.slice(4));
+      const cur = modCurrent(mod);
+      state.mapa = { mod: mod.id, page: cur ? Math.floor(modTemas(mod).indexOf(cur) / PAGE) : 0, sel: null };
+      return renderMapa();
+    }
+    if (a === "words") {
+      const mod = rutaMods().find((x) => x.id === m.mod);
+      const cur = modCurrent(mod);
+      if (cur) startMode(cur.deck, "words");
+    }
+  }
+}
+
 // ---------- Ajustes y cuenta ----------
 function renderSync() {
   const chip = $("#sync-chip");
@@ -2287,6 +2696,10 @@ function bind() {
   $("#study-close").addEventListener("click", closeSession);
   $("#study-exit").addEventListener("click", closeSession);
   $("#done-home").addEventListener("click", () => backTo(state.doneReturn || "home"));
+
+  // Mapa
+  $("#mapa-stage").addEventListener("click", mapaClick);
+  window.addEventListener("resize", () => { if (state.view === "mapa") fitMapa(); });
 
   // Aprende a leer
   $("#leer-back").addEventListener("click", () => go(state.leerFrom === "mapa" ? "mapa" : "temas"));

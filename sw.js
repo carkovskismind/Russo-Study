@@ -21,7 +21,15 @@ const SHELL = [
   "icons/icon-512.png",
   "img/familia.png",
   "img/saludos.png",
-  "img/perfil.png"
+  "img/perfil.png",
+  "img/mapa/m2.png",
+  "data/ruta.json",
+  "data/mazos.json",
+  "data/gramatica/dudas.json",
+  "data/lectura/lectura.json",
+  "data/ejercicios/paises.json",
+  "data/ejercicios/casa.json",
+  "data/ejercicios/ciudad.json"
 ];
 
 self.addEventListener("install", (e) => {

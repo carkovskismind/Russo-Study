@@ -61,6 +61,14 @@
     </div>
   </div>
 
+  <div id="ruta-block">
+    <div class="row-between section-head">
+      <h2>Tu ruta</h2>
+      <button class="link-btn" type="button" data-go="mapa">Ver mapa</button>
+    </div>
+    <button class="ruta-mini" id="ruta-mini" type="button" data-go="mapa" aria-label="Abrir el mapa de tu ruta"></button>
+  </div>
+
   <div class="row-between section-head">
     <h2>Seguir con</h2>
     <button class="link-btn" type="button" data-go="temas">Ver todos</button>
@@ -68,10 +76,16 @@
   <div class="rows" id="continue-list"></div>
 </main>
 
+<!-- MAPA -->
+<main id="view-mapa" class="view view-mapa" hidden>
+  <div class="mapa-box"><div class="mapa-stage" id="mapa-stage"></div></div>
+</main>
+
 <!-- TEMAS -->
 <main id="view-temas" class="view has-nav" hidden>
   <header class="row-between">
     <h1 class="page-title">Tus temas</h1>
+    <button class="link-btn" type="button" data-go="mapa">Ver mapa</button>
   </header>
   <div class="chips" id="temas-chips" role="tablist" aria-label="Filtrar temas"></div>
   <div class="tiles" id="temas-grid"><p class="loading">Cargando temas…</p></div>
