@@ -15,6 +15,8 @@ const state = {
   temaFilter: "Todos",
   dudas: {},
   ej: {},
+  lectura: null,
+  leer: { step: 0, sel: 0 },
   openTile: PILOT,
   selecting: false,
   selected: new Set(),
@@ -112,7 +114,7 @@ function toast(msg) {
   toast.t = setTimeout(() => (el.hidden = true), 2600);
 }
 
-const VIEWS = ["home", "temas", "tema", "palabra", "study", "frase", "dialogo", "cajas", "done", "settings"];
+const VIEWS = ["home", "temas", "tema", "palabra", "study", "frase", "dialogo", "cajas", "leer", "done", "settings"];
 const NAV_VIEWS = { home: "home", temas: "temas", settings: "settings" };
 
 function show(view) {
@@ -217,6 +219,10 @@ async function loadDecks() {
     const r = await fetch("data/gramatica/dudas.json", { cache: "no-cache" });
     if (r.ok) state.dudas = await r.json();
   } catch (e) { console.warn("dudas", e); }
+  try {
+    const r = await fetch("data/lectura/lectura.json", { cache: "no-cache" });
+    if (r.ok) state.lectura = await r.json();
+  } catch (e) { console.warn("lectura", e); }
   await Promise.all((manifest.ejercicios || []).map(async (id) => {
     try {
       const r = await fetch(`data/ejercicios/${id}.json`, { cache: "no-cache" });
@@ -425,8 +431,9 @@ function renderTemas() {
   const pilot = list.find((d) => d.id === PILOT);
   const ordered = pilot ? [pilot, ...list.filter((d) => d !== pilot)] : list;
   if (!ordered.some((d) => d.id === state.openTile)) state.openTile = ordered[0] ? ordered[0].id : null;
+  const leer = state.temaFilter === "Todos" ? leerTileHtml() : "";
   $("#temas-grid").innerHTML = ordered.length
-    ? ordered.map(tileHtml).join("")
+    ? leer + ordered.map(tileHtml).join("")
     : `<p class="loading">No hay temas en este grupo.</p>`;
 }
 
@@ -1930,6 +1937,104 @@ function cajasClick(e) {
   state.cj = null;
 }
 
+// ---------- Aprende a leer ----------
+const LEER_PAL = ["mint", "pe", "bl", "li", "pk", "kh"];
+const LEER_KIND = ["Letra amiga", "Falsa amiga", "Letra nueva", "Acento", "Suaves y duras", "Se lee distinto"];
+const LEER_SHORT = ["Amigas", "Falsas amigas", "Nuevas", "Acento y О", "Suaves y duras", "Leer palabras"];
+
+function leerDone() {
+  const pasos = state.lectura ? state.lectura.pasos : [];
+  return pasos.filter((p) => store.lectura(p.id)).length;
+}
+
+function leerTileHtml() {
+  if (!state.lectura) return "";
+  const n = state.lectura.pasos.length;
+  const d = leerDone();
+  const pct = Math.round((d / n) * 100);
+  return `<article class="tile card-frame pal-aq" data-leer="1" tabindex="0" role="button" aria-label="Aprende a leer, ${d} de ${n} pasos">
+    <span class="art art-svg ink" aria-hidden="true">${SVG.book}</span>
+    <div class="t-body">
+      <span class="t-n">Desde cero</span>
+      <span class="t-title">Aprende a leer</span>
+      <span class="t-ru" lang="ru">Чита́ть</span>
+      <span class="t-foot"><span class="bar"><span style="width:${pct}%"></span></span><span class="pct">${d}/${n}</span></span>
+    </div>
+  </article>`;
+}
+
+function openLeer() {
+  if (!state.lectura) return toast("No se pudo cargar la lectura.");
+  state.leerFrom = state.view === "mapa" ? "mapa" : "temas";
+  const pasos = state.lectura.pasos;
+  const first = pasos.findIndex((p) => !store.lectura(p.id));
+  state.leer = { step: first < 0 ? 0 : first, sel: 0 };
+  renderLeer();
+  show("leer");
+}
+
+function renderLeer() {
+  const pasos = state.lectura.pasos;
+  const { step, sel } = state.leer;
+  const p = pasos[step];
+  $("#leer-paso").innerHTML = `Paso <span class="num">${step + 1}</span> de <span class="num">${pasos.length}</span>`;
+  $("#leer-steps").innerHTML = pasos.map((x, i) => {
+    const done = !!store.lectura(x.id);
+    const cls = done ? "done" : i === step ? "now" : "";
+    return `<button class="step ${cls}" type="button" role="tab" data-step="${i}" aria-selected="${i === step}" aria-label="Paso ${i + 1}: ${esc(LEER_SHORT[i] || x.titulo)}${done ? ", visto" : ""}"><i></i><span>${esc(LEER_SHORT[i] || x.titulo)}</span></button>`;
+  }).join("");
+  const pal = LEER_PAL[step % LEER_PAL.length];
+  const L = p.letras[sel] || p.letras[0];
+  const canSpeak = "speechSynthesis" in window;
+  const wide = L.letra.length > 7;
+  const hasSound = L.sonido && L.sonido !== "—";
+  const big = `<section class="leer-big card-frame pal-${pal}">
+    <span class="label">${esc(LEER_KIND[step] || "Letra")}</span>
+    <div class="leer-row">
+      <span class="leer-letra${wide ? " wide" : ""}" lang="ru">${esc(L.letra)}</span>
+      <div class="leer-txt"><b>${esc(L.tip)}</b><span>${esc(L.como_suena)}</span>${hasSound ? `<span class="leer-son">Suena: <b>${esc(L.sonido)}</b></span>` : ""}</div>
+    </div>
+    ${(L.ejemplos || []).map((x) => `<div class="leer-ex"><div><span class="leer-ex-ru" lang="ru">${esc(x.ru)}</span><span class="leer-ex-fon">${esc(x.fonetica)} · ${esc(x.es)}</span></div>${canSpeak ? `<button class="audio-btn" type="button" data-lsay="${esc(x.ru)}" aria-label="Escuchar ${esc(x.ru)}">${SPEAKER}</button>` : ""}</div>`).join("")}
+  </section>`;
+  const tiles = p.letras.map((l, i) => {
+    const snd = l.sonido && l.sonido !== "—";
+    const w = l.letra.length > 7;
+    return `<button class="ltile card-frame pal-${pal}${i === sel ? " on" : ""}${w ? " wide" : ""}" type="button" data-lsel="${i}" aria-pressed="${i === sel}" aria-label="${esc(l.letra)}${snd ? ", suena " + esc(l.sonido) : ""}"><span class="ltile-l" lang="ru">${esc(l.letra)}</span>${snd && !w ? `<span class="ltile-s">${esc(l.sonido)}</span>` : ""}</button>`;
+  }).join("");
+  const practica = (p.practica || []).map((x) => `<div class="lprac"><div><span class="lprac-ru" lang="ru">${esc(x.ru)}</span><span class="lprac-fon">${esc(x.fonetica)} · ${esc(x.es)}</span></div>${canSpeak ? `<button class="dic-say" type="button" data-lsay="${esc(x.ru)}" aria-label="Escuchar ${esc(x.ru)}">${SPEAKER}</button>` : ""}</div>`).join("");
+  const last = step >= pasos.length - 1;
+  $("#leer-body").innerHTML = `<p class="leer-intro">${esc(p.intro)}</p>
+    ${big}
+    <div class="row-between sec-row"><h2 class="sec-h">${esc(p.titulo.replace(/^\d+\.\s*/, ""))}</h2><span class="muted small-note">Toca una para verla</span></div>
+    <div class="ltiles">${tiles}</div>
+    ${practica ? `<h2 class="sec-h">Léelas en voz alta</h2><div class="lpracs">${practica}</div>` : ""}
+    <button class="btn btn-primary btn-wide" type="button" data-lnext="1">${last ? "Terminar lectura" : "Listo, siguiente paso"}</button>`;
+}
+
+function leerClick(e) {
+  const say = e.target.closest("[data-lsay]");
+  if (say) return speak(say.dataset.lsay);
+  const sel = e.target.closest("[data-lsel]");
+  if (sel) {
+    state.leer.sel = Number(sel.dataset.lsel);
+    renderLeer();
+    const b = $(`#leer-body [data-lsel="${state.leer.sel}"]`);
+    if (b) b.focus({ preventScroll: true });
+    return;
+  }
+  if (e.target.closest("[data-lnext]")) {
+    const pasos = state.lectura.pasos;
+    store.setLectura(pasos[state.leer.step].id);
+    if (state.leer.step >= pasos.length - 1) {
+      toast("¡Terminaste Aprende a leer!");
+      return go(state.leerFrom === "mapa" ? "mapa" : "temas");
+    }
+    state.leer = { step: state.leer.step + 1, sel: 0 };
+    renderLeer();
+    window.scrollTo(0, 0);
+  }
+}
+
 // ---------- Ajustes y cuenta ----------
 function renderSync() {
   const chip = $("#sync-chip");
@@ -2052,10 +2157,16 @@ function bind() {
       }
       return;
     }
+    if (e.target.closest("[data-leer]")) return openLeer();
     const tile = e.target.closest("[data-tile]");
     if (tile && !tile.classList.contains("open")) openTileAnimated(tile.dataset.tile);
   });
   $("#temas-grid").addEventListener("keydown", (e) => {
+    const lt = e.target.closest("[data-leer]");
+    if (lt && (e.key === "Enter" || e.key === " ") && e.target === lt) {
+      e.preventDefault();
+      return openLeer();
+    }
     const tile = e.target.closest("[data-tile]");
     if (tile && (e.key === "Enter" || e.key === " ") && e.target === tile) {
       e.preventDefault();
@@ -2176,6 +2287,14 @@ function bind() {
   $("#study-close").addEventListener("click", closeSession);
   $("#study-exit").addEventListener("click", closeSession);
   $("#done-home").addEventListener("click", () => backTo(state.doneReturn || "home"));
+
+  // Aprende a leer
+  $("#leer-back").addEventListener("click", () => go(state.leerFrom === "mapa" ? "mapa" : "temas"));
+  $("#leer-steps").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-step]");
+    if (b) { state.leer = { step: Number(b.dataset.step), sel: 0 }; renderLeer(); window.scrollTo(0, 0); }
+  });
+  $("#leer-body").addEventListener("click", leerClick);
 
   // Diálogo y cajas
   $("#dialogo-body").addEventListener("click", dialogoClick);
