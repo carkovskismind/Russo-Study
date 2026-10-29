@@ -6,7 +6,7 @@
       "id": "ropa-cuerpo-d1",
       "titulo": "¿De quién es?",
       "mensajes": [
-        {"de": "Лена", "ru": "Чьи э́то очки́?", "fonetica": "ch'i E-ta ach-KI", "es": "¿De quién son estos lentes?"},
+        {"de": "Лена", "ru": "Чьи э́то очки́?", "fonetica": "chi E-ta ach-KI", "es": "¿De quién son estos lentes?"},
         {"de": "yo", "ru": "Э́то мои́ очки́.", "fonetica": "E-ta ma-I ach-KI", "es": "Son mis lentes.", "opciones": [
           {"ru": "Э́то мои́ очки́.", "fonetica": "E-ta ma-I ach-KI", "correcta": true, "porque": "¡Bien! очки́ es plural: мои́."},
           {"ru": "Э́то мой очки́.", "fonetica": "E-ta moi ach-KI", "correcta": false, "porque": "очки́ es plural: мои́."},

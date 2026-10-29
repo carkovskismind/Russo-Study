@@ -12,9 +12,9 @@
           {"ru": "Тебя́ зову́т Ка́рол.", "fonetica": "ti-BIA za-VUT ka-ROL", "correcta": false, "porque": "тебя́ es «a ti»; hablas de ti misma: меня́ зову́т."},
           {"ru": "Меня́ спаси́бо Ка́рол.", "fonetica": "mi-NIA spa-SI-ba ka-ROL", "correcta": false, "porque": "спаси́бо es «gracias»; para decir tu nombre: меня́ зову́т."}
         ]},
-        {"de": "Лена", "ru": "О́чень прия́тно!", "fonetica": "O-chin pri-IAT-na", "es": "¡Mucho gusto!"},
-        {"de": "yo", "ru": "О́чень прия́тно!", "fonetica": "O-chin pri-IAT-na", "es": "¡Mucho gusto!", "opciones": [
-          {"ru": "О́чень прия́тно!", "fonetica": "O-chin pri-IAT-na", "correcta": true, "porque": "¡Eso! Se responde igual."},
+        {"de": "Лена", "ru": "О́чень прия́тно!", "fonetica": "O-chin' pri-IAT-na", "es": "¡Mucho gusto!"},
+        {"de": "yo", "ru": "О́чень прия́тно!", "fonetica": "O-chin' pri-IAT-na", "es": "¡Mucho gusto!", "opciones": [
+          {"ru": "О́чень прия́тно!", "fonetica": "O-chin' pri-IAT-na", "correcta": true, "porque": "¡Eso! Se responde igual."},
           {"ru": "До свида́ния!", "fonetica": "da svi-DA-nia", "correcta": false, "porque": "Es una despedida; apenas se están conociendo."},
           {"ru": "Пожа́луйста!", "fonetica": "pa-ZHAL-sta", "correcta": false, "porque": "пожа́луйста es «por favor / de nada»; aquí respondes al «mucho gusto»."}
         ]}

@@ -6,11 +6,11 @@
       "id": "juegos-d1",
       "titulo": "¿A qué juegas?",
       "mensajes": [
-        {"de": "Лена", "ru": "Во что ты игра́ешь?", "fonetica": "va shto ty ig-RA-yesh", "es": "¿A qué juegas?"},
+        {"de": "Лена", "ru": "Во что ты игра́ешь?", "fonetica": "va shto ty ig-RA-iesh", "es": "¿A qué juegas?"},
         {"de": "yo", "ru": "Я игра́ю в футбо́л.", "fonetica": "ia ig-RA-iu f fud-BOL", "es": "Juego futbol.", "opciones": [
           {"ru": "Я игра́ю в футбо́л.", "fonetica": "ia ig-RA-iu f fud-BOL", "correcta": true, "porque": "¡Bien! Con juegos y deportes se usa в."},
           {"ru": "Я игра́ю на футбо́л.", "fonetica": "ia ig-RA-iu na fud-BOL", "correcta": false, "porque": "Con juegos y deportes se usa в, no на."},
-          {"ru": "Я игра́ешь в футбо́л.", "fonetica": "ia ig-RA-yesh f fud-BOL", "correcta": false, "porque": "Con я el verbo es игра́ю."}
+          {"ru": "Я игра́ешь в футбо́л.", "fonetica": "ia ig-RA-iesh f fud-BOL", "correcta": false, "porque": "Con я el verbo es игра́ю."}
         ]},
         {"de": "Лена", "ru": "А твоя́ сестра́?", "fonetica": "a tva-IA sis-TRA", "es": "¿Y tu hermana?"},
         {"de": "yo", "ru": "Она́ игра́ет в волейбо́л.", "fonetica": "a-NA ig-RA-iet v va-lei-BOL", "es": "Ella juega voleibol.", "opciones": [
@@ -25,7 +25,7 @@
       "id": "juegos-d2",
       "titulo": "Ajedrez y cartas",
       "mensajes": [
-        {"de": "Лена", "ru": "Ты игра́ешь в ша́хматы?", "fonetica": "ty ig-RA-yesh f SHAJ-ma-ty", "es": "¿Juegas ajedrez?"},
+        {"de": "Лена", "ru": "Ты игра́ешь в ша́хматы?", "fonetica": "ty ig-RA-iesh f SHAJ-ma-ty", "es": "¿Juegas ajedrez?"},
         {"de": "yo", "ru": "Да, я игра́ю в ша́хматы.", "fonetica": "da, ia ig-RA-iu f SHAJ-ma-ty", "es": "Sí, juego ajedrez.", "opciones": [
           {"ru": "Да, я игра́ю в ша́хматы.", "fonetica": "da, ia ig-RA-iu f SHAJ-ma-ty", "correcta": true, "porque": "¡Bien! Confirmas con да."},
           {"ru": "Да, я игра́ю в ша́шки.", "fonetica": "da, ia ig-RA-iu f SHASH-ki", "correcta": false, "porque": "ша́шки son damas; ella preguntó por ajedrez: ша́хматы."},

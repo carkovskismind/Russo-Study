@@ -16,7 +16,7 @@
         {"de": "yo", "ru": "Э́то мой брат.", "fonetica": "E-ta moi brat", "es": "Es mi hermano.", "opciones": [
           {"ru": "Э́то мой брат.", "fonetica": "E-ta moi brat", "correcta": true, "porque": "¡Eso! брат es masculino: мой."},
           {"ru": "Э́то моя́ брат.", "fonetica": "E-ta ma-IA brat", "correcta": false, "porque": "брат es masculino: мой брат."},
-          {"ru": "Э́то моё брат.", "fonetica": "E-ta ma-YO brat", "correcta": false, "porque": "моё es neutro; брат es masculino: мой."}
+          {"ru": "Э́то моё брат.", "fonetica": "E-ta ma-IO brat", "correcta": false, "porque": "моё es neutro; брат es masculino: мой."}
         ]},
         {"de": "Лена", "ru": "Как краси́во!", "fonetica": "kak kra-SI-va", "es": "¡Qué bonito!"}
       ]
@@ -25,15 +25,15 @@
       "id": "familia-d2",
       "titulo": "¿Tienes hermanos?",
       "mensajes": [
-        {"de": "Лена", "ru": "У тебя́ есть брат?", "fonetica": "u ti-BIA iest brat", "es": "¿Tienes un hermano?"},
-        {"de": "yo", "ru": "Нет, у меня́ есть сестра́.", "fonetica": "niet, u mi-NIA iest sis-TRA", "es": "No, tengo una hermana.", "opciones": [
-          {"ru": "Нет, у меня́ есть сестра́.", "fonetica": "niet, u mi-NIA iest sis-TRA", "correcta": true, "porque": "¡Muy bien! «Tengo» = у меня́ есть."},
-          {"ru": "Да, у меня́ есть сестра́.", "fonetica": "da, u mi-NIA iest sis-TRA", "correcta": false, "porque": "Ella pregunta por un hermano y tú no tienes: нет."},
-          {"ru": "Нет, я есть сестра́.", "fonetica": "niet, ia iest sis-TRA", "correcta": false, "porque": "Para decir «tengo» se usa у меня́ есть, no я есть."}
+        {"de": "Лена", "ru": "У тебя́ есть брат?", "fonetica": "u ti-BIA iest' brat", "es": "¿Tienes un hermano?"},
+        {"de": "yo", "ru": "Нет, у меня́ есть сестра́.", "fonetica": "niet, u mi-NIA iest' sis-TRA", "es": "No, tengo una hermana.", "opciones": [
+          {"ru": "Нет, у меня́ есть сестра́.", "fonetica": "niet, u mi-NIA iest' sis-TRA", "correcta": true, "porque": "¡Muy bien! «Tengo» = у меня́ есть."},
+          {"ru": "Да, у меня́ есть сестра́.", "fonetica": "da, u mi-NIA iest' sis-TRA", "correcta": false, "porque": "Ella pregunta por un hermano y tú no tienes: нет."},
+          {"ru": "Нет, я есть сестра́.", "fonetica": "niet, ia iest' sis-TRA", "correcta": false, "porque": "Para decir «tengo» se usa у меня́ есть, no я есть."}
         ]},
-        {"de": "Лена", "ru": "Как её зову́т?", "fonetica": "kak i-YO za-VUT", "es": "¿Cómo se llama ella?"},
-        {"de": "yo", "ru": "Её зову́т Ма́ша.", "fonetica": "i-YO za-VUT MA-sha", "es": "Se llama Masha.", "opciones": [
-          {"ru": "Её зову́т Ма́ша.", "fonetica": "i-YO za-VUT MA-sha", "correcta": true, "porque": "¡Bien! Hablas de una chica: её."},
+        {"de": "Лена", "ru": "Как её зову́т?", "fonetica": "kak i-IO za-VUT", "es": "¿Cómo se llama ella?"},
+        {"de": "yo", "ru": "Её зову́т Ма́ша.", "fonetica": "i-IO za-VUT MA-sha", "es": "Se llama Masha.", "opciones": [
+          {"ru": "Её зову́т Ма́ша.", "fonetica": "i-IO za-VUT MA-sha", "correcta": true, "porque": "¡Bien! Hablas de una chica: её."},
           {"ru": "Его́ зову́т Ма́ша.", "fonetica": "i-VO za-VUT MA-sha", "correcta": false, "porque": "его́ es «de él / a él»; hablas de una chica: её."},
           {"ru": "Меня́ зову́т Ма́ша.", "fonetica": "mi-NIA za-VUT MA-sha", "correcta": false, "porque": "меня́ es «a mí»; hablas de tu hermana, no de ti: её."}
         ]},

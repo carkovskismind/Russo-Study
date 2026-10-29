@@ -90,7 +90,10 @@ for (const archivo of manifest.mazos || []) {
     const base = limpiar(f.fichas.join(" ")).sort().join("|");
     for (const v of f.validas) {
       revisarRuso(v, donde);
-      if (limpiar(v).sort().join("|") !== base) errores.push(`${donde}: «${v}» no usa exactamente las fichas`);
+      // Una válida puede cambiar fichas por sinónimos que estén en "distractores" (p. ej. здесь → тут).
+      const permitidas = new Set([...f.fichas, ...(f.distractores || [])].flatMap((x) => limpiar(x)));
+      const mias = limpiar(v);
+      if (limpiar(v).sort().join("|") !== base && !(mias.length === limpiar(f.fichas.join(" ")).length && mias.every((x) => permitidas.has(x)))) errores.push(`${donde}: «${v}» no usa exactamente las fichas`);
     }
     if (f.texto && !f.validas.some((v) => limpiar(v).join(" ") === limpiar(f.texto).join(" "))) {
       errores.push(`${donde}: "texto" no coincide con ninguna respuesta válida`);

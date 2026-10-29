@@ -6,11 +6,11 @@
       "id": "basicas-d1",
       "titulo": "¿Dónde estás?",
       "mensajes": [
-        {"de": "Лена", "ru": "Ты сейча́с здесь?", "fonetica": "ty si-CHAS zdies", "es": "¿Estás aquí ahora?"},
-        {"de": "yo", "ru": "Да, я здесь.", "fonetica": "da, ia zdies", "es": "Sí, estoy aquí.", "opciones": [
-          {"ru": "Да, я здесь.", "fonetica": "da, ia zdies", "correcta": true, "porque": "¡Bien! здесь = aquí, donde estás."},
+        {"de": "Лена", "ru": "Ты сейча́с здесь?", "fonetica": "ty si-CHAS zdies'", "es": "¿Estás aquí ahora?"},
+        {"de": "yo", "ru": "Да, я здесь.", "fonetica": "da, ia zdies'", "es": "Sí, estoy aquí.", "opciones": [
+          {"ru": "Да, я здесь.", "fonetica": "da, ia zdies'", "correcta": true, "porque": "¡Bien! здесь = aquí, donde estás."},
           {"ru": "Да, я куда́.", "fonetica": "da, ia ku-DA", "correcta": false, "porque": "куда́ es «a dónde», una pregunta; para decir dónde estás se usa здесь o там."},
-          {"ru": "Нет, я здесь.", "fonetica": "niet, ia zdies", "correcta": false, "porque": "нет es «no»; tú quieres decir «sí»: да."}
+          {"ru": "Нет, я здесь.", "fonetica": "niet, ia zdies'", "correcta": false, "porque": "нет es «no»; tú quieres decir «sí»: да."}
         ]},
         {"de": "Лена", "ru": "А он где?", "fonetica": "a on gdie", "es": "¿Y él dónde?"},
         {"de": "yo", "ru": "Он там.", "fonetica": "on tam", "es": "Él está allá.", "opciones": [
@@ -32,8 +32,8 @@
           {"ru": "Э́то твоя́.", "fonetica": "E-ta tva-IA", "correcta": false, "porque": "Hablas de ti: моя́ (mía), no твоя́ (tuya)."}
         ]},
         {"de": "Лена", "ru": "А э́то чьё?", "fonetica": "a E-ta chio", "es": "¿Y esto de quién es? (algo neutro)"},
-        {"de": "yo", "ru": "Э́то твоё.", "fonetica": "E-ta tva-YO", "es": "Es tuyo.", "opciones": [
-          {"ru": "Э́то твоё.", "fonetica": "E-ta tva-YO", "correcta": true, "porque": "¡Exacto! чьё es neutro y la respuesta también: твоё."},
+        {"de": "yo", "ru": "Э́то твоё.", "fonetica": "E-ta tva-IO", "es": "Es tuyo.", "opciones": [
+          {"ru": "Э́то твоё.", "fonetica": "E-ta tva-IO", "correcta": true, "porque": "¡Exacto! чьё es neutro y la respuesta también: твоё."},
           {"ru": "Э́то твой.", "fonetica": "E-ta tvoi", "correcta": false, "porque": "чьё es neutro; la respuesta también: твоё."},
           {"ru": "Э́то наш.", "fonetica": "E-ta nash", "correcta": false, "porque": "наш es «nuestro» y masculino; aquí es de ella y neutro: твоё."}
         ]},
@@ -44,17 +44,17 @@
       "id": "basicas-d3",
       "titulo": "¿Por qué?",
       "mensajes": [
-        {"de": "Лена", "ru": "Ты то́лько сего́дня здесь?", "fonetica": "ty TOL-ka si-VOD-nia zdies", "es": "¿Estás aquí solo hoy?"},
-        {"de": "yo", "ru": "Нет, я здесь и за́втра.", "fonetica": "niet, ia zdies i ZAF-tra", "es": "No, estoy aquí también mañana.", "opciones": [
-          {"ru": "Нет, я здесь и за́втра.", "fonetica": "niet, ia zdies i ZAF-tra", "correcta": true, "porque": "¡Bien! нет porque no es «solo hoy»."},
-          {"ru": "Да, я здесь и за́втра.", "fonetica": "da, ia zdies i ZAF-tra", "correcta": false, "porque": "да confirma «solo hoy», pero tú estarás también mañana: нет."},
+        {"de": "Лена", "ru": "Ты то́лько сего́дня здесь?", "fonetica": "ty TOL'-ka si-VOD-nia zdies'", "es": "¿Estás aquí solo hoy?"},
+        {"de": "yo", "ru": "Нет, я здесь и за́втра.", "fonetica": "niet, ia zdies' i ZAF-tra", "es": "No, estoy aquí también mañana.", "opciones": [
+          {"ru": "Нет, я здесь и за́втра.", "fonetica": "niet, ia zdies' i ZAF-tra", "correcta": true, "porque": "¡Bien! нет porque no es «solo hoy»."},
+          {"ru": "Да, я здесь и за́втра.", "fonetica": "da, ia zdies' i ZAF-tra", "correcta": false, "porque": "да confirma «solo hoy», pero tú estarás también mañana: нет."},
           {"ru": "Нет, я там и за́втра.", "fonetica": "niet, ia tam i ZAF-tra", "correcta": false, "porque": "там es «allá»; dices que estás aquí: здесь."}
         ]},
         {"de": "Лена", "ru": "Почему́?", "fonetica": "pa-chi-MU", "es": "¿Por qué?"},
-        {"de": "yo", "ru": "Потому́ что здесь о́чень краси́во.", "fonetica": "pa-ta-MU shta zdies O-chin kra-SI-va", "es": "Porque aquí es muy bonito.", "opciones": [
-          {"ru": "Потому́ что здесь о́чень краси́во.", "fonetica": "pa-ta-MU shta zdies O-chin kra-SI-va", "correcta": true, "porque": "¡Perfecto! Para responder «por qué» se usa потому́ что."},
-          {"ru": "Заче́м здесь о́чень краси́во.", "fonetica": "za-CHIEM zdies O-chin kra-SI-va", "correcta": false, "porque": "заче́м es «para qué»; para responder «porque» se usa потому́ что."},
-          {"ru": "Почему́ здесь о́чень краси́во.", "fonetica": "pa-chi-MU zdies O-chin kra-SI-va", "correcta": false, "porque": "почему́ es la pregunta «por qué»; para responder: потому́ что."}
+        {"de": "yo", "ru": "Потому́ что здесь о́чень краси́во.", "fonetica": "pa-ta-MU shta zdies' O-chin' kra-SI-va", "es": "Porque aquí es muy bonito.", "opciones": [
+          {"ru": "Потому́ что здесь о́чень краси́во.", "fonetica": "pa-ta-MU shta zdies' O-chin' kra-SI-va", "correcta": true, "porque": "¡Perfecto! Para responder «por qué» se usa потому́ что."},
+          {"ru": "Заче́м здесь о́чень краси́во.", "fonetica": "za-CHIEM zdies' O-chin' kra-SI-va", "correcta": false, "porque": "заче́м es «para qué»; para responder «porque» se usa потому́ что."},
+          {"ru": "Почему́ здесь о́чень краси́во.", "fonetica": "pa-chi-MU zdies' O-chin' kra-SI-va", "correcta": false, "porque": "почему́ es la pregunta «por qué»; para responder: потому́ что."}
         ]},
         {"de": "Лена", "ru": "Да, коне́чно!", "fonetica": "da, ka-NIESH-na", "es": "¡Sí, claro!"}
       ]

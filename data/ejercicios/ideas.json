@@ -25,11 +25,11 @@
       "id": "ideas-d2",
       "titulo": "Mi sueño",
       "mensajes": [
-        {"de": "Лена", "ru": "У тебя́ есть мечта́?", "fonetica": "u ti-BIA iest mich-TA", "es": "¿Tienes un sueño (anhelo)?"},
-        {"de": "yo", "ru": "Да, у меня́ есть мечта́.", "fonetica": "da, u mi-NIA iest mich-TA", "es": "Sí, tengo un sueño.", "opciones": [
-          {"ru": "Да, у меня́ есть мечта́.", "fonetica": "da, u mi-NIA iest mich-TA", "correcta": true, "porque": "¡Bien! «Tengo» = у меня́ есть."},
-          {"ru": "Да, у меня́ есть сон.", "fonetica": "da, u mi-NIA iest son", "correcta": false, "porque": "сон es el sueño al dormir; el anhelo es мечта́."},
-          {"ru": "Да, я есть мечта́.", "fonetica": "da, ia iest mich-TA", "correcta": false, "porque": "Para decir «tengo» se usa у меня́ есть."}
+        {"de": "Лена", "ru": "У тебя́ есть мечта́?", "fonetica": "u ti-BIA iest' mich-TA", "es": "¿Tienes un sueño (anhelo)?"},
+        {"de": "yo", "ru": "Да, у меня́ есть мечта́.", "fonetica": "da, u mi-NIA iest' mich-TA", "es": "Sí, tengo un sueño.", "opciones": [
+          {"ru": "Да, у меня́ есть мечта́.", "fonetica": "da, u mi-NIA iest' mich-TA", "correcta": true, "porque": "¡Bien! «Tengo» = у меня́ есть."},
+          {"ru": "Да, у меня́ есть сон.", "fonetica": "da, u mi-NIA iest' son", "correcta": false, "porque": "сон es el sueño al dormir; el anhelo es мечта́."},
+          {"ru": "Да, я есть мечта́.", "fonetica": "da, ia iest' mich-TA", "correcta": false, "porque": "Para decir «tengo» se usa у меня́ есть."}
         ]},
         {"de": "Лена", "ru": "А что э́то?", "fonetica": "a shto E-ta", "es": "¿Y qué es?"},
         {"de": "yo", "ru": "Э́то дру́жба и ра́дость.", "fonetica": "E-ta DRUZH-ba i RA-dast'", "es": "Es amistad y alegría.", "opciones": [

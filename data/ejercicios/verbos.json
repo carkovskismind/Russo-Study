@@ -6,13 +6,13 @@
       "id": "verbos-d1",
       "titulo": "¿Qué haces?",
       "mensajes": [
-        {"de": "Лена", "ru": "Что ты де́лаешь?", "fonetica": "shto ty DIE-la-yesh", "es": "¿Qué haces?"},
+        {"de": "Лена", "ru": "Что ты де́лаешь?", "fonetica": "shto ty DIE-la-iesh", "es": "¿Qué haces?"},
         {"de": "yo", "ru": "Я чита́ю.", "fonetica": "ia chi-TA-iu", "es": "Leo.", "opciones": [
           {"ru": "Я чита́ю.", "fonetica": "ia chi-TA-iu", "correcta": true, "porque": "¡Bien! Con я el verbo termina en -ю."},
-          {"ru": "Я чита́ешь.", "fonetica": "ia chi-TA-yesh", "correcta": false, "porque": "-ешь es para ты; con я termina en -ю: чита́ю."},
+          {"ru": "Я чита́ешь.", "fonetica": "ia chi-TA-iesh", "correcta": false, "porque": "-ешь es para ты; con я termina en -ю: чита́ю."},
           {"ru": "Я чита́ет.", "fonetica": "ia chi-TA-iet", "correcta": false, "porque": "-ет es para él o ella; con я: чита́ю."}
         ]},
-        {"de": "Лена", "ru": "А что ты чита́ешь?", "fonetica": "a shto ty chi-TA-yesh", "es": "¿Y qué lees?"},
+        {"de": "Лена", "ru": "А что ты чита́ешь?", "fonetica": "a shto ty chi-TA-iesh", "es": "¿Y qué lees?"},
         {"de": "yo", "ru": "Я чита́ю кни́гу.", "fonetica": "ia chi-TA-iu KNI-gu", "es": "Leo un libro.", "opciones": [
           {"ru": "Я чита́ю кни́гу.", "fonetica": "ia chi-TA-iu KNI-gu", "correcta": true, "porque": "¡Eso! Después del verbo, кни́га cambia a кни́гу."},
           {"ru": "Я чита́ю кни́га.", "fonetica": "ia chi-TA-iu KNI-ga", "correcta": false, "porque": "Después del verbo la -а cambia a -у: кни́гу."},
@@ -31,7 +31,7 @@
           {"ru": "Я живёшь в Ме́хико.", "fonetica": "ia zhy-VIOSH v MIE-ji-ko", "correcta": false, "porque": "живёшь es para ты; con я es живу́."},
           {"ru": "Я живу́ Ме́хико.", "fonetica": "ia zhy-VU MIE-ji-ko", "correcta": false, "porque": "Falta в antes del lugar: в Ме́хико."}
         ]},
-        {"de": "Лена", "ru": "А где ты рабо́таешь?", "fonetica": "a gdie ty ra-BO-ta-yesh", "es": "¿Y dónde trabajas?"},
+        {"de": "Лена", "ru": "А где ты рабо́таешь?", "fonetica": "a gdie ty ra-BO-ta-iesh", "es": "¿Y dónde trabajas?"},
         {"de": "yo", "ru": "Я рабо́таю до́ма.", "fonetica": "ia ra-BO-ta-iu DO-ma", "es": "Trabajo en casa.", "opciones": [
           {"ru": "Я рабо́таю до́ма.", "fonetica": "ia ra-BO-ta-iu DO-ma", "correcta": true, "porque": "¡Eso! до́ма = en casa."},
           {"ru": "Я рабо́таю домо́й.", "fonetica": "ia ra-BO-ta-iu da-MOI", "correcta": false, "porque": "домо́й es «a casa» (movimiento); estar en casa es до́ма."},

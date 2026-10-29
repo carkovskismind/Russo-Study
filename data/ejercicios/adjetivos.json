@@ -13,10 +13,10 @@
           {"ru": "Моя́ брат у́мный и весёлый.", "fonetica": "ma-IA brat UM-nyi i vi-SIO-lyi", "correcta": false, "porque": "брат es masculino: мой."}
         ]},
         {"de": "Лена", "ru": "А сестра́?", "fonetica": "a sis-TRA", "es": "¿Y tu hermana?"},
-        {"de": "yo", "ru": "Моя́ сестра́ о́чень тво́рческая.", "fonetica": "ma-IA sis-TRA O-chin TVOR-chis-ka-ia", "es": "Mi hermana es muy creativa.", "opciones": [
-          {"ru": "Моя́ сестра́ о́чень тво́рческая.", "fonetica": "ma-IA sis-TRA O-chin TVOR-chis-ka-ia", "correcta": true, "porque": "¡Eso! сестра́ es femenina: тво́рческая."},
-          {"ru": "Моя́ сестра́ о́чень тво́рческий.", "fonetica": "ma-IA sis-TRA O-chin TVOR-chis-kii", "correcta": false, "porque": "сестра́ es femenina: тво́рческая."},
-          {"ru": "Моя́ сестра́ о́чень тво́рческое.", "fonetica": "ma-IA sis-TRA O-chin TVOR-chis-ka-ie", "correcta": false, "porque": "сестра́ es femenina; тво́рческое es neutro: тво́рческая."}
+        {"de": "yo", "ru": "Моя́ сестра́ о́чень тво́рческая.", "fonetica": "ma-IA sis-TRA O-chin' TVOR-chis-ka-ia", "es": "Mi hermana es muy creativa.", "opciones": [
+          {"ru": "Моя́ сестра́ о́чень тво́рческая.", "fonetica": "ma-IA sis-TRA O-chin' TVOR-chis-ka-ia", "correcta": true, "porque": "¡Eso! сестра́ es femenina: тво́рческая."},
+          {"ru": "Моя́ сестра́ о́чень тво́рческий.", "fonetica": "ma-IA sis-TRA O-chin' TVOR-chis-kii", "correcta": false, "porque": "сестра́ es femenina: тво́рческая."},
+          {"ru": "Моя́ сестра́ о́чень тво́рческое.", "fonetica": "ma-IA sis-TRA O-chin' TVOR-chis-ka-ie", "correcta": false, "porque": "сестра́ es femenina; тво́рческое es neutro: тво́рческая."}
         ]},
         {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-ti-RIES-na", "es": "¡Qué interesante!"}
       ]

@@ -7,16 +7,16 @@
       "titulo": "Mi número",
       "mensajes": [
         {"de": "Лена", "ru": "Како́й твой но́мер?", "fonetica": "ka-KOI tvoi NO-mir", "es": "¿Cuál es tu número?"},
-        {"de": "yo", "ru": "Мой но́мер во́семь пять три.", "fonetica": "moi NO-mir VO-siem piat tri", "es": "Mi número es ocho, cinco, tres.", "opciones": [
-          {"ru": "Мой но́мер во́семь пять три.", "fonetica": "moi NO-mir VO-siem piat tri", "correcta": true, "porque": "¡Bien! Los dígitos van en el orden en que se dicen."},
-          {"ru": "Мой но́мер во́семь три пять.", "fonetica": "moi NO-mir VO-siem tri piat", "correcta": false, "porque": "Los dígitos van en el mismo orden: 8-5-3, no 8-3-5."},
-          {"ru": "Моя́ но́мер во́семь пять три.", "fonetica": "ma-IA NO-mir VO-siem piat tri", "correcta": false, "porque": "но́мер es masculino: мой но́мер."}
+        {"de": "yo", "ru": "Мой но́мер во́семь пять три.", "fonetica": "moi NO-mir VO-sim' piat' tri", "es": "Mi número es ocho, cinco, tres.", "opciones": [
+          {"ru": "Мой но́мер во́семь пять три.", "fonetica": "moi NO-mir VO-sim' piat' tri", "correcta": true, "porque": "¡Bien! Los dígitos van en el orden en que se dicen."},
+          {"ru": "Мой но́мер во́семь три пять.", "fonetica": "moi NO-mir VO-sim' tri piat'", "correcta": false, "porque": "Los dígitos van en el mismo orden: 8-5-3, no 8-3-5."},
+          {"ru": "Моя́ но́мер во́семь пять три.", "fonetica": "ma-IA NO-mir VO-sim' piat' tri", "correcta": false, "porque": "но́мер es masculino: мой но́мер."}
         ]},
-        {"de": "Лена", "ru": "Во́семь пять три? Да?", "fonetica": "VO-siem piat tri? da", "es": "¿Ocho, cinco, tres? ¿Sí?"},
-        {"de": "yo", "ru": "Да, во́семь пять три.", "fonetica": "da, VO-siem piat tri", "es": "Sí, ocho, cinco, tres.", "opciones": [
-          {"ru": "Да, во́семь пять три.", "fonetica": "da, VO-siem piat tri", "correcta": true, "porque": "¡Eso! Confirmas con да."},
-          {"ru": "Нет, во́семь пять три.", "fonetica": "niet, VO-siem piat tri", "correcta": false, "porque": "Repites el mismo número, así que confirmas: да."},
-          {"ru": "Да, шесть пять три.", "fonetica": "da, shiest piat tri", "correcta": false, "porque": "Repites los mismos números: во́семь, no шесть."}
+        {"de": "Лена", "ru": "Во́семь пять три? Да?", "fonetica": "VO-sim' piat' tri? da", "es": "¿Ocho, cinco, tres? ¿Sí?"},
+        {"de": "yo", "ru": "Да, во́семь пять три.", "fonetica": "da, VO-sim' piat' tri", "es": "Sí, ocho, cinco, tres.", "opciones": [
+          {"ru": "Да, во́семь пять три.", "fonetica": "da, VO-sim' piat' tri", "correcta": true, "porque": "¡Eso! Confirmas con да."},
+          {"ru": "Нет, во́семь пять три.", "fonetica": "niet, VO-sim' piat' tri", "correcta": false, "porque": "Repites el mismo número, así que confirmas: да."},
+          {"ru": "Да, шесть пять три.", "fonetica": "da, shest' piat' tri", "correcta": false, "porque": "Repites los mismos números: во́семь, no шесть."}
         ]},
         {"de": "Лена", "ru": "Спаси́бо!", "fonetica": "spa-SI-ba", "es": "¡Gracias!"}
       ]
@@ -25,13 +25,13 @@
       "id": "numeros-d2",
       "titulo": "¿Cuántos?",
       "mensajes": [
-        {"de": "Лена", "ru": "Ско́лько вас?", "fonetica": "SKOL-ka vas", "es": "¿Cuántos son ustedes?"},
+        {"de": "Лена", "ru": "Ско́лько вас?", "fonetica": "SKOL'-ka vas", "es": "¿Cuántos son ustedes?"},
         {"de": "yo", "ru": "Нас четы́ре.", "fonetica": "nas chi-TY-rie", "es": "Somos cuatro.", "opciones": [
           {"ru": "Нас четы́ре.", "fonetica": "nas chi-TY-rie", "correcta": true, "porque": "¡Bien! Para decir cuántos son se usa нас."},
           {"ru": "Мы четы́ре.", "fonetica": "my chi-TY-rie", "correcta": false, "porque": "Para decir cuántos son se usa нас: нас четы́ре."},
           {"ru": "Нас два.", "fonetica": "nas dva", "correcta": false, "porque": "два es 2; son 4: четы́ре."}
         ]},
-        {"de": "Лена", "ru": "А ско́лько там?", "fonetica": "a SKOL-ka tam", "es": "¿Y cuántos hay allá?"},
+        {"de": "Лена", "ru": "А ско́лько там?", "fonetica": "a SKOL'-ka tam", "es": "¿Y cuántos hay allá?"},
         {"de": "yo", "ru": "Там две́сти.", "fonetica": "tam DVIES-ti", "es": "Allá hay doscientos.", "opciones": [
           {"ru": "Там две́сти.", "fonetica": "tam DVIES-ti", "correcta": true, "porque": "¡Exacto! 200 = две́сти."},
           {"ru": "Там два́дцать.", "fonetica": "tam DVAD-tsat'", "correcta": false, "porque": "два́дцать es 20; doscientos es две́сти."},

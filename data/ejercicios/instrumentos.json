@@ -6,7 +6,7 @@
       "id": "instrumentos-d1",
       "titulo": "¿Qué tocas?",
       "mensajes": [
-        {"de": "Лена", "ru": "Ты игра́ешь на гита́ре?", "fonetica": "ty ig-RA-yesh na gi-TA-rie", "es": "¿Tocas la guitarra?"},
+        {"de": "Лена", "ru": "Ты игра́ешь на гита́ре?", "fonetica": "ty ig-RA-iesh na gi-TA-rie", "es": "¿Tocas la guitarra?"},
         {"de": "yo", "ru": "Да, я игра́ю на гита́ре.", "fonetica": "da, ia ig-RA-iu na gi-TA-rie", "es": "Sí, toco la guitarra.", "opciones": [
           {"ru": "Да, я игра́ю на гита́ре.", "fonetica": "da, ia ig-RA-iu na gi-TA-rie", "correcta": true, "porque": "¡Bien! Con instrumentos se usa на."},
           {"ru": "Да, я игра́ю в гита́ру.", "fonetica": "da, ia ig-RA-iu v gi-TA-ru", "correcta": false, "porque": "Con instrumentos se usa на, no в."},

@@ -81,7 +81,7 @@
     {"ru": "знать", "fonetica": "znat'", "es": "saber, conocer", "pista": "Tener conocimiento de algo.", "tag": "Verbo · 1.ª conj. · saber", "nota": "зна́ю, зна́ешь… зна́ют"},
     {"ru": "узна́ть", "fonetica": "uz-NAT'", "es": "reconocer / enterarse", "pista": "Darte cuenta de algo o identificar a alguien.", "tag": "Verbo · 1.ª conj. · saber", "nota": "узна́ю, узна́ешь"},
     {"ru": "уме́ть", "fonetica": "u-MIET'", "es": "saber hacer", "pista": "Tener la habilidad, como nadar.", "tag": "Verbo · 1.ª conj. · saber", "nota": "уме́ю, уме́ешь"},
-    {"ru": "мочь", "fonetica": "moch'", "es": "poder", "pista": "Tener la posibilidad de hacer algo.", "tag": "Verbo · irregular · saber", "nota": "могу́, мо́жешь… мо́гут"},
+    {"ru": "мочь", "fonetica": "moch", "es": "poder", "pista": "Tener la posibilidad de hacer algo.", "tag": "Verbo · irregular · saber", "nota": "могу́, мо́жешь… мо́гут"},
     {"ru": "изуча́ть", "fonetica": "i-zu-CHAT'", "es": "estudiar (analizando un tema)", "pista": "Analizar un tema para conocerlo.", "tag": "Verbo · 1.ª conj. · estudiar", "nota": "Pide objeto: изуча́ть ру́сский язы́к."},
     {"ru": "занима́ться", "fonetica": "za-ni-MA-tsa", "es": "dedicarse a, practicar, estudiar", "pista": "Ocupar tu tiempo en una actividad.", "tag": "Verbo · 1.ª conj. · estudiar", "nota": "занима́ться спо́ртом = hacer deporte"},
     {"ru": "учи́ться", "fonetica": "u-CHI-tsa", "es": "estudiar (en una institución)", "pista": "Ser alumno de una escuela o universidad.", "tag": "Verbo · 2.ª conj. · estudiar", "nota": "учу́сь, у́чишься · Я учу́сь в университе́те."},

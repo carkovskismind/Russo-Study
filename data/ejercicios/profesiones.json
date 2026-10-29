@@ -7,9 +7,9 @@
       "titulo": "¿Quién es?",
       "mensajes": [
         {"de": "Лена", "ru": "Кто он? Он врач?", "fonetica": "kto on? on vrach", "es": "¿Quién es él? ¿Es médico?"},
-        {"de": "yo", "ru": "Нет, он не врач, он учи́тель.", "fonetica": "niet, on nie vrach, on u-CHI-til", "es": "No, no es médico, es maestro.", "opciones": [
-          {"ru": "Нет, он не врач, он учи́тель.", "fonetica": "niet, on nie vrach, on u-CHI-til", "correcta": true, "porque": "¡Bien! не niega врач y luego dices lo que sí es."},
-          {"ru": "Да, он не врач, он учи́тель.", "fonetica": "da, on nie vrach, on u-CHI-til", "correcta": false, "porque": "Si dices que no es médico, empiezas con нет."},
+        {"de": "yo", "ru": "Нет, он не врач, он учи́тель.", "fonetica": "niet, on nie vrach, on u-CHI-til'", "es": "No, no es médico, es maestro.", "opciones": [
+          {"ru": "Нет, он не врач, он учи́тель.", "fonetica": "niet, on nie vrach, on u-CHI-til'", "correcta": true, "porque": "¡Bien! не niega врач y luego dices lo que sí es."},
+          {"ru": "Да, он не врач, он учи́тель.", "fonetica": "da, on nie vrach, on u-CHI-til'", "correcta": false, "porque": "Si dices que no es médico, empiezas con нет."},
           {"ru": "Нет, он не врач, он студе́нтка.", "fonetica": "niet, on nie vrach, on stu-DIENT-ka", "correcta": false, "porque": "студе́нтка es mujer; hablas de él: студе́нт."}
         ]},
         {"de": "Лена", "ru": "А она́?", "fonetica": "a a-NA", "es": "¿Y ella?"},

@@ -6,15 +6,15 @@
       "id": "animales-d1",
       "titulo": "Mi mascota",
       "mensajes": [
-        {"de": "Лена", "ru": "У тебя́ есть живо́тное?", "fonetica": "u ti-BIA iest zhi-VOT-na-ie", "es": "¿Tienes algún animal?"},
-        {"de": "yo", "ru": "Да, у меня́ есть ко́шка.", "fonetica": "da, u mi-NIA iest KOSH-ka", "es": "Sí, tengo una gata.", "opciones": [
-          {"ru": "Да, у меня́ есть ко́шка.", "fonetica": "da, u mi-NIA iest KOSH-ka", "correcta": true, "porque": "¡Bien! ко́шка es la gata."},
-          {"ru": "Да, у меня́ есть кот.", "fonetica": "da, u mi-NIA iest kot", "correcta": false, "porque": "кот es un gato macho; tienes una gata: ко́шка."},
-          {"ru": "Да, я есть ко́шка.", "fonetica": "da, ia iest KOSH-ka", "correcta": false, "porque": "«Tengo» se dice у меня́ есть, no я есть."}
+        {"de": "Лена", "ru": "У тебя́ есть живо́тное?", "fonetica": "u ti-BIA iest' zhi-VOT-na-ie", "es": "¿Tienes algún animal?"},
+        {"de": "yo", "ru": "Да, у меня́ есть ко́шка.", "fonetica": "da, u mi-NIA iest' KOSH-ka", "es": "Sí, tengo una gata.", "opciones": [
+          {"ru": "Да, у меня́ есть ко́шка.", "fonetica": "da, u mi-NIA iest' KOSH-ka", "correcta": true, "porque": "¡Bien! ко́шка es la gata."},
+          {"ru": "Да, у меня́ есть кот.", "fonetica": "da, u mi-NIA iest' kot", "correcta": false, "porque": "кот es un gato macho; tienes una gata: ко́шка."},
+          {"ru": "Да, я есть ко́шка.", "fonetica": "da, ia iest' KOSH-ka", "correcta": false, "porque": "«Tengo» se dice у меня́ есть, no я есть."}
         ]},
-        {"de": "Лена", "ru": "Как её зову́т?", "fonetica": "kak i-YO za-VUT", "es": "¿Cómo se llama ella?"},
-        {"de": "yo", "ru": "Её зову́т Му́рка.", "fonetica": "i-YO za-VUT MUR-ka", "es": "Se llama Murka.", "opciones": [
-          {"ru": "Её зову́т Му́рка.", "fonetica": "i-YO za-VUT MUR-ka", "correcta": true, "porque": "¡Eso! Es una gata: её."},
+        {"de": "Лена", "ru": "Как её зову́т?", "fonetica": "kak i-IO za-VUT", "es": "¿Cómo se llama ella?"},
+        {"de": "yo", "ru": "Её зову́т Му́рка.", "fonetica": "i-IO za-VUT MUR-ka", "es": "Se llama Murka.", "opciones": [
+          {"ru": "Её зову́т Му́рка.", "fonetica": "i-IO za-VUT MUR-ka", "correcta": true, "porque": "¡Eso! Es una gata: её."},
           {"ru": "Его́ зову́т Му́рка.", "fonetica": "i-VO za-VUT MUR-ka", "correcta": false, "porque": "его́ es para un macho; tu gata es она́: её."},
           {"ru": "Она́ зову́т Му́рка.", "fonetica": "a-NA za-VUT MUR-ka", "correcta": false, "porque": "зову́т pide её («a ella la llaman»), no она́."}
         ]},

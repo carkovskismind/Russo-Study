@@ -31,11 +31,11 @@
           {"ru": "Да, э́то детекти́в.", "fonetica": "da, E-ta di-tik-TIF", "correcta": false, "porque": "Ella pregunta si es comedia; no lo es: нет."},
           {"ru": "Нет, э́то коме́дия.", "fonetica": "niet, E-ta ka-MIE-dia", "correcta": false, "porque": "Dices нет pero nombras la misma; es детекти́в."}
         ]},
-        {"de": "Лена", "ru": "А э́то фильм у́жасов?", "fonetica": "a E-ta film U-zha-sof", "es": "¿Y esto es una película de terror?"},
-        {"de": "yo", "ru": "Да, э́то фильм у́жасов.", "fonetica": "da, E-ta film U-zha-sof", "es": "Sí, es una película de terror.", "opciones": [
-          {"ru": "Да, э́то фильм у́жасов.", "fonetica": "da, E-ta film U-zha-sof", "correcta": true, "porque": "¡Eso! Confirmas con да."},
-          {"ru": "Нет, э́то фильм у́жасов.", "fonetica": "niet, E-ta film U-zha-sof", "correcta": false, "porque": "Dices нет pero lo confirmas: да."},
-          {"ru": "Да, э́то не фильм у́жасов.", "fonetica": "da, E-ta nie film U-zha-sof", "correcta": false, "porque": "Dices да pero luego lo niegas."}
+        {"de": "Лена", "ru": "А э́то фильм у́жасов?", "fonetica": "a E-ta fil'm U-zha-sof", "es": "¿Y esto es una película de terror?"},
+        {"de": "yo", "ru": "Да, э́то фильм у́жасов.", "fonetica": "da, E-ta fil'm U-zha-sof", "es": "Sí, es una película de terror.", "opciones": [
+          {"ru": "Да, э́то фильм у́жасов.", "fonetica": "da, E-ta fil'm U-zha-sof", "correcta": true, "porque": "¡Eso! Confirmas con да."},
+          {"ru": "Нет, э́то фильм у́жасов.", "fonetica": "niet, E-ta fil'm U-zha-sof", "correcta": false, "porque": "Dices нет pero lo confirmas: да."},
+          {"ru": "Да, э́то не фильм у́жасов.", "fonetica": "da, E-ta nie fil'm U-zha-sof", "correcta": false, "porque": "Dices да pero luego lo niegas."}
         ]},
         {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-ti-RIES-na", "es": "¡Qué interesante!"}
       ]
