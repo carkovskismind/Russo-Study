@@ -70,6 +70,13 @@
     {"ru": "пассажи́рка", "fonetica": "pa-sa-ZHYR-ka", "es": "pasajera", "pista": "Mujer que viaja en un transporte.", "tag": "Fem. · anim."},
     {"ru": "пенсионе́р", "fonetica": "pin-si-a-NIER", "es": "jubilado, pensionado", "pista": "Hombre que ya no trabaja y recibe pensión.", "tag": "Masc. · anim."},
     {"ru": "пенсионе́рка", "fonetica": "pin-si-a-NIER-ka", "es": "jubilada, pensionada", "pista": "Mujer que ya no trabaja y recibe pensión.", "tag": "Fem. · anim."},
-    {"ru": "аге́нт по недви́жимости", "fonetica": "a-GUIENT pa ni-DVI-zhy-mas-ti", "es": "agente inmobiliario", "pista": "Vende y renta casas.", "tag": "Masc. · anim.", "nota": "недви́жимость = bienes raíces"}
+    {"ru": "аге́нт по недви́жимости", "fonetica": "a-GUIENT pa ni-DVI-zhy-mas-ti", "es": "agente inmobiliario", "pista": "Vende y renta casas.", "tag": "Masc. · anim.", "nota": "недви́жимость = bienes raíces"},
+    {"ru": "исто́рик", "fonetica": "is-TO-rik", "es": "historiador(a)", "pista": "Estudia lo que pasó hace siglos.", "tag": "Masc. (también para mujer) · anim."},
+    {"ru": "преподава́тель", "fonetica": "pri-pa-da-VA-til'", "es": "profesor(a) (de universidad o de idiomas)", "pista": "Enseña en una universidad o en una escuela de idiomas.", "tag": "Masc. · anim.", "nota": "fem. преподава́тельница · Así se llama a tu maestro de CENLEX; учи́тель es el de la escuela."},
+    {"ru": "профе́ссор", "fonetica": "pra-FIE-sar", "es": "profesor (título académico)", "pista": "Título más alto de un docente universitario.", "tag": "Masc. (también para mujer) · anim.", "nota": "pl. профессора́"},
+    {"ru": "поэ́т", "fonetica": "pa-ET", "es": "poeta", "pista": "Escribe versos.", "tag": "Masc. · anim.", "nota": "fem. поэте́сса (muchas prefieren поэ́т)."},
+    {"ru": "компози́тор", "fonetica": "kam-pa-ZI-tar", "es": "compositor(a)", "pista": "Escribe música, como Chaikovski.", "tag": "Masc. (también para mujer) · anim."},
+    {"ru": "шофёр", "fonetica": "sha-FIOR", "es": "chofer", "pista": "Maneja un coche o un autobús por trabajo.", "tag": "Masc. · anim.", "nota": "Más formal: води́тель."},
+    {"ru": "капита́н", "fonetica": "ka-pi-TAN", "es": "capitán", "pista": "Manda en un barco o en un equipo.", "tag": "Masc. · anim."}
   ]
 }

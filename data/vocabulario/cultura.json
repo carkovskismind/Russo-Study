@@ -22,6 +22,9 @@
     {"ru": "бале́т", "fonetica": "ba-LIET", "es": "ballet", "pista": "Danza clásica en puntas.", "tag": "Masc. · inanim."},
     {"ru": "сувени́ры", "fonetica": "su-vi-NI-ry", "es": "recuerdos, souvenirs", "pista": "Objetos que compras de recuerdo.", "tag": "Plural · inanim."},
     {"ru": "флаг", "fonetica": "flak", "es": "bandera", "pista": "Tela con los colores de un país.", "tag": "Masc. · inanim.", "nota": "pl. фла́ги"},
-    {"ru": "зна́мя", "fonetica": "ZNA-mia", "es": "estandarte, bandera", "pista": "Tela solemne de un ejército (neutro en -мя).", "tag": "Neutro · inanim.", "nota": "Termina en -мя: es neutro. pl. знамёна"}
+    {"ru": "зна́мя", "fonetica": "ZNA-mia", "es": "estandarte, bandera", "pista": "Tela solemne de un ejército (neutro en -мя).", "tag": "Neutro · inanim.", "nota": "Termina en -мя: es neutro. pl. знамёна"},
+    {"ru": "тради́ция", "fonetica": "tra-DI-tsy-ia", "es": "tradición", "pista": "Costumbre que pasa de abuelos a nietos.", "tag": "Fem. · inanim.", "nota": "pl. тради́ции"},
+    {"ru": "матрёшка", "fonetica": "mat-RIOSH-ka", "es": "matrioska", "pista": "Muñeca de madera que guarda otras más pequeñas.", "tag": "Fem. · inanim.", "nota": "pl. матрёшки"},
+    {"ru": "Пу́шкин", "fonetica": "PUSH-kin", "es": "Pushkin (el gran poeta ruso)", "pista": "El poeta más famoso de Rusia; escribió «Eugenio Oneguin».", "tag": "Nombre propio · anim.", "nota": "Алекса́ндр Серге́евич Пу́шкин (1799-1837)."}
   ]
 }

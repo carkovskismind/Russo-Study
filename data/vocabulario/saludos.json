@@ -23,6 +23,22 @@
     {"ru": "как его́ зову́т?", "fonetica": "kak ie-VO za-VUT", "es": "¿cómo se llama él?", "pista": "Pregunta por el nombre de un hombre del que hablas.", "tag": "Frase", "nota": "Ella: как её зову́т? Ellos: как их зову́т?"},
     {"ru": "С Но́вым го́дом!", "fonetica": "s NO-vym GO-dam", "es": "¡Feliz Año Nuevo!", "pista": "Felicitación del 31 de diciembre al 1 de enero.", "tag": "Frase"},
     {"ru": "С пра́здником!", "fonetica": "s PRAZ-ni-kam", "es": "¡Felices fiestas!", "pista": "Felicitación general para cualquier celebración.", "tag": "Frase"},
-    {"ru": "Нет пробле́м!", "fonetica": "niet prab-LIEM", "es": "¡No hay problema!", "pista": "Respuesta para decir que algo no es ninguna molestia.", "tag": "Frase"}
+    {"ru": "Нет пробле́м!", "fonetica": "niet prab-LIEM", "es": "¡No hay problema!", "pista": "Respuesta para decir que algo no es ninguna molestia.", "tag": "Frase"},
+    {"ru": "как дела́?", "fonetica": "kak di-LA", "es": "¿cómo estás? / ¿qué tal?", "pista": "Pregunta por cómo le va a alguien.", "tag": "Frase", "nota": "Как твои́ дела́? (a un amigo) · Как ва́ши дела́? (de usted). Respuesta: Хорошо́, спаси́бо."},
+    {"ru": "до́брое у́тро", "fonetica": "DOB-ra-ie U-tra", "es": "buenos días (por la mañana)", "pista": "Saludo para las primeras horas del día.", "tag": "Frase", "nota": "Hasta el mediodía, más o menos. Después: до́брый день."},
+    {"ru": "до́брый день", "fonetica": "DOB-ryi dien'", "es": "buenas tardes / buen día", "pista": "Saludo formal para el mediodía y la tarde.", "tag": "Frase"},
+    {"ru": "до́брой но́чи", "fonetica": "DOB-rai NO-chi", "es": "buenas noches (al despedirse)", "pista": "Despedida antes de dormir; nunca sirve para saludar.", "tag": "Frase", "nota": "Igual que споко́йной но́чи: solo para despedirse."},
+    {"ru": "как тебя́ зову́т?", "fonetica": "kak ti-BIA za-VUT", "es": "¿cómo te llamas?", "pista": "Pregunta por el nombre a un amigo o a un niño.", "tag": "Frase", "nota": "De usted: Как вас зову́т?"},
+    {"ru": "нас зову́т…", "fonetica": "nas za-VUT", "es": "nos llamamos…", "pista": "Para decir el nombre de varias personas, contándote a ti.", "tag": "Frase", "nota": "Нас зову́т А́нна и Ка́рлос."},
+    {"ru": "о́чень прия́тно", "fonetica": "O-chin' pri-IAT-na", "es": "mucho gusto", "pista": "Se dice al conocer a alguien.", "tag": "Frase", "nota": "Respuesta: Мне то́же. (Igualmente.)"},
+    {"ru": "большо́е спаси́бо", "fonetica": "bal'-SHO-ie spa-SI-ba", "es": "muchas gracias", "pista": "Agradecimiento con más fuerza.", "tag": "Frase"},
+    {"ru": "как интере́сно!", "fonetica": "kak in-ti-RIES-na", "es": "¡qué interesante!", "pista": "Reacción cuando algo te llama la atención.", "tag": "Frase", "nota": "как + adverbio = ¡qué…!"},
+    {"ru": "как краси́во!", "fonetica": "kak kra-SI-va", "es": "¡qué bonito!", "pista": "Reacción ante algo hermoso.", "tag": "Frase", "nota": "как + adverbio = ¡qué…!"},
+    {"ru": "извини́", "fonetica": "iz-vi-NI", "es": "disculpa, perdón (de tú)", "pista": "Disculpa informal, a un amigo.", "tag": "Frase", "nota": "De usted o a varios: извини́те."},
+    {"ru": "прости́ / прости́те", "fonetica": "pras-TI / pras-TI-tie", "es": "perdóname / perdóneme", "pista": "Disculpa más personal, cuando de verdad te sientes mal por algo.", "tag": "Frase", "nota": "прости́ (tú) · прости́те (usted o varios)."},
+    {"ru": "до за́втра", "fonetica": "da ZAF-tra", "es": "hasta mañana", "pista": "Despedida si vas a ver a la persona al día siguiente.", "tag": "Frase"},
+    {"ru": "до встре́чи", "fonetica": "da FSTRIE-chi", "es": "nos vemos, hasta luego", "pista": "Despedida cuando ya quedaron de verse.", "tag": "Frase", "nota": "Más largo: до ско́рой встре́чи (hasta pronto) · coloquial: до ско́рого."},
+    {"ru": "уви́димся!", "fonetica": "u-VI-dim-sia", "es": "¡nos vemos!", "pista": "Despedida informal entre amigos.", "tag": "Frase"},
+    {"ru": "скажи́те…", "fonetica": "ska-ZHY-tie", "es": "dígame… / ¿me podría decir…?", "pista": "Para empezar una pregunta educada a un desconocido.", "tag": "Frase", "nota": "Скажи́те, пожа́луйста, где метро́? · De tú: скажи́…"}
   ]
 }

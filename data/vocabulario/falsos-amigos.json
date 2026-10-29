@@ -1,0 +1,31 @@
+{
+  "id": "falsos-amigos",
+  "titulo": "Falsos amigos",
+  "grupo": "Vocabulario",
+  "descripcion": "Palabras que se parecen al español pero significan otra cosa o se pronuncian distinto.",
+  "tarjetas": [
+    {"id": "falsos-amigos:карта", "ru": "ка́рта", "fonetica": "KAR-ta", "es": "mapa / tarjeta / carta de juego", "pista": "Se parece a «carta», pero sirve para orientarte.", "tag": "Fem. · inanim.", "nota": "La carta que se envía es письмо́."},
+    {"id": "falsos-amigos:фамилия", "ru": "фами́лия", "fonetica": "fa-MI-li-ia", "es": "apellido", "pista": "Parece «familia», pero es parte de tu nombre completo.", "tag": "Fem. · inanim.", "nota": "La familia es семья́."},
+    {"id": "falsos-amigos:класс", "ru": "класс", "fonetica": "klas", "es": "salón de clases / grupo, grado", "pista": "No es la lección: es el lugar o el grupo de alumnos.", "tag": "Masc. · inanim.", "nota": "La clase (lección) es уро́к. Coloquial: Класс! = ¡Genial!"},
+    {"id": "falsos-amigos:официант", "ru": "официа́нт", "fonetica": "a-fi-tsy-ANT", "es": "mesero", "pista": "Parece «oficial», pero trabaja en un restaurante.", "tag": "Masc. · anim.", "nota": "fem. официа́нтка"},
+    {"id": "falsos-amigos:кафе", "ru": "кафе́", "fonetica": "ka-FE", "es": "cafetería", "pista": "Es un lugar, no una bebida; acento al final.", "tag": "Neutro · inanim.", "nota": "No cambia nunca: в кафе́. La bebida es ко́фе."},
+    {"id": "falsos-amigos:кофе", "ru": "ко́фе", "fonetica": "KO-fie", "es": "café (la bebida)", "pista": "Es una bebida, no un lugar; acento al principio.", "tag": "Masc. · inanim.", "nota": "Es masculino aunque termina en -е: мой ко́фе."},
+    {"id": "falsos-amigos:магазин", "ru": "магази́н", "fonetica": "ma-ga-ZIN", "es": "tienda", "pista": "No es una revista: ahí compras cosas.", "tag": "Masc. · inanim.", "nota": "La revista es журна́л."},
+    {"id": "falsos-amigos:гость", "ru": "гость", "fonetica": "gost'", "es": "invitado, visita", "pista": "Persona que llega a tu casa por invitación.", "tag": "Masc. · anim.", "nota": "pl. го́сти · No tiene que ver con «gusto»."},
+    {"id": "falsos-amigos:их", "ru": "их", "fonetica": "ij", "es": "los, las / su (de ellos)", "pista": "Pronombre de ellos; la х suena como «j».", "tag": "Pron. personal / posesivo", "nota": "Я их зна́ю (los conozco) · их дом (su casa, de ellos)."},
+    {"ru": "карте́ль", "fonetica": "kar-TEL'", "es": "cártel (acuerdo entre empresas)", "pista": "Unión de empresas que se ponen de acuerdo en los precios.", "tag": "Masc. · inanim.", "nota": "En español es «cártel»; en ruso el acento va al final."},
+    {"ru": "коло́ния", "fonetica": "ka-LO-ni-ia", "es": "colonia penal, reclusorio / colonia (territorio)", "pista": "Lugar donde cumplen su condena los presos; también un territorio dominado por otro país.", "tag": "Fem. · inanim.", "nota": "Tu «colonia» de la ciudad es райо́н."},
+    {"ru": "ра́но", "fonetica": "RA-na", "es": "temprano", "pista": "Antes de la hora habitual.", "tag": "Adv.", "nota": "Lo contrario: по́здно (tarde). Suena a «rana», pero no es un animal."},
+    {"ru": "ра́на", "fonetica": "RA-na", "es": "herida", "pista": "Lo que queda en la piel después de un corte.", "tag": "Fem. · inanim.", "nota": "La rana (animal) es лягу́шка."},
+    {"ru": "идёт", "fonetica": "i-DIOT", "es": "va (a pie) / está en cartelera", "pista": "Forma de идти́ para он / она́.", "tag": "Verbo · идти́ (3.ª persona)", "nota": "Он идёт домо́й. · Фильм идёт = la película está en cartelera."},
+    {"ru": "ко́мпас", "fonetica": "KOM-pas", "es": "brújula", "pista": "Instrumento con aguja que señala el norte.", "tag": "Masc. · inanim.", "nota": "El compás para dibujar círculos es ци́ркуль."},
+    {"ru": "Ро́ма", "fonetica": "RO-ma", "es": "Román (nombre cariñoso)", "pista": "Nombre cariñoso de un muchacho; no es una ciudad.", "tag": "Masc. · anim.", "nota": "Nombre completo: Рома́н."},
+    {"ru": "Рим", "fonetica": "rim", "es": "Roma (la ciudad)", "pista": "Ciudad del Coliseo.", "tag": "Masc. · ciudad", "nota": "в Ри́ме · Ро́ма es un nombre de persona."},
+    {"ru": "серди́то", "fonetica": "sir-DI-ta", "es": "con enojo, enojado", "pista": "Así habla alguien de mal humor.", "tag": "Adv.", "nota": "No tiene nada que ver con un cerdito. Adjetivo: серди́тый."},
+    {"ru": "гигие́на", "fonetica": "gui-gui-IE-na", "es": "higiene", "pista": "Limpieza para cuidar la salud.", "tag": "Fem. · inanim.", "nota": "La г siempre suena como la «g» de «gato»."},
+    {"ru": "ха́ос", "fonetica": "JA-as", "es": "caos", "pista": "Desorden total.", "tag": "Masc. · inanim.", "nota": "La х suena «j» y el acento va en la primera sílaba."},
+    {"ru": "рука́", "fonetica": "ru-KA", "es": "mano / brazo", "pista": "Parte del cuerpo con la que escribes.", "tag": "Fem. · inanim.", "nota": "pl. ру́ки. Una sola palabra para mano y brazo."},
+    {"ru": "го́лос", "fonetica": "GO-las", "es": "voz", "pista": "Lo que sale de tu garganta al cantar.", "tag": "Masc. · inanim.", "nota": "pl. голоса́. No significa «goloso»."},
+    {"ru": "вид", "fonetica": "vit", "es": "vista, aspecto / tipo", "pista": "Lo que ves desde la ventana de un hotel.", "tag": "Masc. · inanim.", "nota": "вид на мо́ре = vista al mar. La vid (planta) es виногра́дная лоза́."}
+  ]
+}
