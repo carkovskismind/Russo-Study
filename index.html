@@ -80,35 +80,34 @@
 <!-- TEMA -->
 <main id="view-tema" class="view" hidden>
   <header class="row-between">
-    <button class="circle-btn" type="button" data-go="temas" aria-label="Volver a temas">
+    <button class="circle-btn" type="button" id="tema-back" aria-label="Volver">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
     </button>
-    <button class="circle-btn" type="button" id="tema-search-toggle" aria-label="Buscar palabra">
+    <button class="circle-btn" type="button" id="tema-search-toggle" aria-label="Buscar palabra" aria-expanded="false">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>
     </button>
   </header>
-  <h1 class="page-title" id="tema-title"></h1>
-  <div class="pill-tabs" role="tablist">
-    <button type="button" role="tab" id="tab-aprender" data-tab="aprender" aria-selected="true">Aprender</button>
-    <button type="button" role="tab" id="tab-practicar" data-tab="practicar" aria-selected="false">Practicar</button>
-  </div>
+  <section class="tema-head card-frame" id="tema-head"></section>
+  <div class="modes" id="tema-modes"></div>
 
-  <section id="tema-aprender">
+  <section id="tema-words">
+    <div class="row-between words-head">
+      <h2 class="words-title">Palabras del tema</h2>
+      <span class="num muted" id="tema-count"></span>
+    </div>
     <label class="search" id="tema-search-box" hidden>
       <span class="visually-hidden">Buscar en el tema</span>
       <input id="deck-search" type="search" placeholder="Buscar en ruso o en español" autocomplete="off">
     </label>
     <div id="tema-intro"></div>
     <div class="row-between select-tools">
-      <span class="label muted" id="tema-count"></span>
+      <span class="muted small-note">Toca una palabra para ver su ficha.</span>
       <button class="link-btn" id="select-toggle" type="button">Seleccionar varias</button>
     </div>
     <div id="deck-words"></div>
   </section>
-
-  <section id="tema-practicar" hidden>
-    <div class="rows" id="tema-practice"></div>
-  </section>
+  <div id="tema-dudas"></div>
+  <button class="btn btn-primary btn-wide" id="tema-cram" type="button">Repaso rápido · sin presión</button>
 
   <div class="select-bar" id="select-bar" hidden>
     <span id="select-count">0 palabras seleccionadas</span>

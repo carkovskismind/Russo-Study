@@ -265,23 +265,20 @@ svg { display: block; }
 .t-done i { width: 18px; height: 18px; border-radius: 50%; background: var(--ink); color: var(--soft); display: inline-flex; align-items: center; justify-content: center; font-style: normal; font-size: 11px; }
 
 /* Tema abierto: ocupa las dos columnas y se ve grande */
-.tile.open { grid-column: 1 / -1; height: 330px; border-radius: var(--r-big); padding: 16px 18px; cursor: default; }
+.tile.open { grid-column: 1 / -1; height: auto; min-height: 330px; border-radius: var(--r-big); padding: 16px 18px; cursor: default; }
 .tile .t-big { display: none; }
 .tile.open .t-body { display: none; }
-.tile.open .t-big { display: flex; position: relative; flex-direction: column; gap: 4px; height: 100%; }
+.tile.open .t-big { display: flex; position: relative; flex-direction: column; gap: 4px; }
 .t-big .t-top { display: flex; justify-content: space-between; align-items: center; }
 .t-big .t-tag { font-size: 12px; font-weight: 800; background: var(--ink); color: var(--soft); border-radius: 999px; padding: 4px 10px; }
 .t-big .pct { font-size: 30px; }
-.t-big .t-title { font-size: 26px; font-weight: 700; line-height: 1.1; margin-top: 10px; max-width: 62%; }
+.t-big .t-title { font-size: 26px; font-weight: 800; line-height: 1.1; margin-top: 10px; max-width: 62%; color: #111; }
 .t-big .t-ru { font-size: 17px; color: var(--ink); }
 .t-big .t-meta { font-size: 12px; font-weight: 600; margin-top: 4px; }
-.t-big .t-actions { margin-top: auto; display: flex; flex-direction: column; gap: 8px; width: 150px; position: relative; z-index: 1; }
-.t-act { border-radius: 999px; padding: 11px 0; font-size: 14px; font-weight: 800; text-align: center; border: 2px solid var(--ink); background: transparent; color: var(--ink); }
-.t-act.fill { background: var(--ink); color: var(--soft); }
-.tile.open .art-img { right: 4px; top: auto; bottom: -10px; height: 270px; }
-.tile.open .art-head { right: -10px; top: auto; bottom: -10px; height: 200px; }
-.tile.open .art-num { right: 18px; top: 120px; font-size: 104px; }
-.tile.open .art-svg { right: 22px; top: 110px; transform: scale(2); transform-origin: right top; }
+.tile.open .art-img { right: -6px; top: 30px; bottom: auto; height: 150px; }
+.tile.open .art-head { right: -6px; top: 50px; bottom: auto; height: 120px; }
+.tile.open .art-num { right: 16px; top: 54px; font-size: 70px; }
+.tile.open .art-svg { right: 22px; top: 64px; transform: scale(1.5); transform-origin: right top; }
 .tile .t-big { opacity: 1; }
 .tile.opening .t-big { animation: fadeUp .45s .12s both; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
@@ -619,3 +616,66 @@ body.sheet-on { overflow: hidden; }
 }
 .dic-add.on { background: var(--accent-soft); border-color: var(--accent-soft); }
 .dic-why { font-size: 12.5px; font-weight: 600; line-height: 1.4; padding: 8px 10px; border-radius: 12px; background: var(--pal-bl); color: var(--ink-bl); }
+
+/* ---------- 3.0 · Mosaico abierto: modos y dudas ---------- */
+.t-modes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; position: relative; z-index: 1; }
+.t-mode {
+  min-height: 52px; border-radius: 16px; border: 2px solid var(--ink); background: transparent; color: var(--ink);
+  font-weight: 800; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 4px;
+}
+.t-mode.fill { background: var(--ink); color: var(--soft); }
+.t-mode:disabled { opacity: .55; cursor: default; }
+.t-links { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 6px; position: relative; z-index: 1; }
+.t-link {
+  min-height: 44px; border: 0; background: transparent; color: var(--ink); font-weight: 800; font-size: 13px;
+  display: inline-flex; align-items: center; gap: 8px; padding: 0;
+}
+.t-link .q, .dudas-btn .q {
+  width: 26px; height: 26px; border-radius: 50%; border: 2px dashed var(--ink, currentColor); display: inline-flex;
+  align-items: center; justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0;
+}
+.dudas-body { position: relative; z-index: 1; margin-top: 4px; }
+.dudas {
+  background: rgba(255, 255, 255, .72); border-radius: 18px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px;
+  color: #111; font-size: 13.5px; line-height: 1.45;
+}
+.dudas-title { font-size: 15px; font-weight: 800; }
+.dudas ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
+.dudas-ex { display: flex; align-items: center; gap: 10px; border-top: 1px dashed rgba(17, 17, 17, .25); padding-top: 8px; }
+.dudas-ex > div { flex: 1; display: flex; flex-direction: column; gap: 1px; }
+.dudas-ex .ex-fon { color: var(--ink, #333); }
+.dudas-ojo { margin: 0; padding: 8px 10px; border-radius: 12px; background: var(--pal-pk); color: var(--ink-pk); font-weight: 600; }
+
+/* ---------- 3.0 · Pantalla de tema ---------- */
+.tema-head { border-radius: var(--r-big); padding: 18px; display: flex; flex-direction: column; gap: 8px; }
+.tema-head .t-tag { align-self: flex-start; font-size: 12px; font-weight: 800; background: var(--ink); color: var(--soft); border-radius: 999px; padding: 5px 12px; }
+.tema-title { margin: 0; font-size: 26px; font-weight: 800; line-height: 1.15; color: #111; }
+.tema-ru { font-size: 20px; font-weight: 700; color: var(--ink); }
+.tema-prog { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+.tema-prog .bar { flex: 1; height: 8px; }
+.tema-prog-n { font-size: 13px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+.tema-prog-n .num { font-size: 14px; }
+.modes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mode {
+  text-align: left; min-height: 150px; border-radius: 22px; padding: 14px; display: flex; flex-direction: column;
+  justify-content: space-between; gap: 8px; color: var(--ink);
+}
+.mode:disabled { opacity: .6; cursor: default; }
+.mode-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.mode-ic { width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, .75); display: flex; align-items: center; justify-content: center; }
+.mode-num { font-size: 15px; }
+.mode-name { font-size: 16px; font-weight: 800; color: #111; display: block; }
+.mode-sub { font-size: 12px; font-weight: 600; line-height: 1.35; display: block; }
+.words-head { margin-top: 6px; }
+.words-title { margin: 0; font-size: 18px; font-weight: 800; }
+.small-note { font-size: 12.5px; font-weight: 600; }
+.dudas-btn {
+  width: 100%; text-align: left; min-height: 56px; border: 1.5px dashed var(--line); border-radius: 18px; background: transparent;
+  color: var(--text); padding: 10px 14px; display: flex; align-items: center; gap: 12px;
+}
+.dudas-btn b { display: block; font-size: 15px; font-weight: 800; }
+.dudas-btn small { display: block; font-size: 12px; font-weight: 600; color: var(--muted); }
+#tema-dudas .dudas-body { margin-top: 8px; }
+#tema-dudas .dudas { background: var(--pal-bl); color: #111; --ink: var(--ink-bl); }
+#tema-words { display: flex; flex-direction: column; gap: 10px; }
+.t-big .t-top .pct { display: none; }

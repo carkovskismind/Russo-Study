@@ -1,4 +1,5 @@
 {
+  "ejercicios": ["paises", "casa", "ciudad"],
   "mazos": [
     "vocabulario/familia.json",
     "vocabulario/saludos.json",

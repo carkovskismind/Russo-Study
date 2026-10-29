@@ -12,8 +12,9 @@ const state = {
   decks: [],
   deckById: new Map(),
   currentDeck: null,
-  temaTab: "aprender",
   temaFilter: "Todos",
+  dudas: {},
+  ej: {},
   openTile: PILOT,
   selecting: false,
   selected: new Set(),
@@ -211,6 +212,19 @@ async function loadDecks() {
   state.decks = decks;
   state.deckById = new Map(decks.map((d) => [d.id, d]));
   rebuildMine();
+  // Dudas de gramática y ejercicios (diálogos y cajas): archivos opcionales.
+  try {
+    const r = await fetch("data/gramatica/dudas.json", { cache: "no-cache" });
+    if (r.ok) state.dudas = await r.json();
+  } catch (e) { console.warn("dudas", e); }
+  await Promise.all((manifest.ejercicios || []).map(async (id) => {
+    try {
+      const r = await fetch(`data/ejercicios/${id}.json`, { cache: "no-cache" });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const j = await r.json();
+      state.ej[id] = { dialogos: j.dialogos || [], cajas: j.cajas || [] };
+    } catch (e) { console.warn(`ejercicios/${id}`, e); }
+  }));
   if (broken.length) toast(`No se pudo leer: ${broken.join(", ")}`);
 }
 
@@ -393,13 +407,21 @@ function rowHtml(deck) {
 }
 
 // ---------- Temas ----------
+const EXPRESIONES = new Set(["expresiones", "falsos-amigos", "servilismo"]);
+const FILTROS = ["Todos", "Vocabulario", "Países y gentilicios", "Gramática", "Expresiones"];
+
+function groupOf(deck) {
+  if (EXPRESIONES.has(deck.id)) return "Expresiones";
+  return deck.group;
+}
+
 function renderTemas() {
-  const groups = ["Todos", ...new Set(state.decks.map((d) => d.group))];
+  const groups = FILTROS.filter((g) => g === "Todos" || state.decks.some((d) => groupOf(d) === g));
   if (!groups.includes(state.temaFilter)) state.temaFilter = "Todos";
   $("#temas-chips").innerHTML = groups
     .map((g) => `<button class="chip" type="button" role="tab" data-filter="${esc(g)}" aria-selected="${g === state.temaFilter}">${esc(g)}</button>`)
     .join("");
-  const list = state.decks.filter((d) => state.temaFilter === "Todos" || d.group === state.temaFilter);
+  const list = state.decks.filter((d) => state.temaFilter === "Todos" || groupOf(d) === state.temaFilter);
   const pilot = list.find((d) => d.id === PILOT);
   const ordered = pilot ? [pilot, ...list.filter((d) => d !== pilot)] : list;
   if (!ordered.some((d) => d.id === state.openTile)) state.openTile = ordered[0] ? ordered[0].id : null;
@@ -417,9 +439,7 @@ function tileHtml(deck) {
   const foot = done
     ? `<span class="t-done"><i>✓</i>Terminado</span>`
     : `<span class="bar"><span style="width:${s.pct}%"></span></span><span class="pct">${s.pct}%</span>`;
-  const learnLabel = deck.aprender ? "Aprender" : "Ver palabras";
-  const meta = `${s.learned} de ${s.total} ${deck.cards.some((c) => c.kind === "qa") ? "tarjetas" : "palabras"}` +
-    (deck.frases.length ? ` · ${deck.frases.length} frases` : "");
+  const meta = `${s.learned} de ${s.total} ${deck.cards.some((c) => c.kind === "qa") ? "tarjetas" : "palabras"}`;
   return `<article class="tile card-frame pal-${v.pal}${open ? " open" : ""}" data-tile="${esc(deck.id)}" tabindex="${open ? -1 : 0}" role="button" aria-expanded="${open}" aria-label="${esc(deck.title)}">
     ${artHtml(deck)}
     <div class="t-body">
@@ -433,13 +453,80 @@ function tileHtml(deck) {
       <span class="t-title">${esc(deck.title)}</span>
       ${ru ? `<span class="t-ru" lang="ru">${esc(ru)}</span>` : ""}
       <span class="t-meta">${meta}</span>
-      <div class="t-actions">
-        <button class="t-act fill" type="button" data-act="learn" data-deck="${esc(deck.id)}">${learnLabel}</button>
-        <button class="t-act" type="button" data-act="practice" data-deck="${esc(deck.id)}">Practicar</button>
+      <div class="t-modes">${modesHtml(deck)}</div>
+      <div class="t-links">
+        ${dudasFor(deck) ? `<button class="t-link" type="button" data-act="dudas" data-deck="${esc(deck.id)}" aria-expanded="false"><span class="q" aria-hidden="true">?</span>¿Dudas de gramática?</button>` : ""}
+        <button class="t-link" type="button" data-act="list" data-deck="${esc(deck.id)}">Ver palabras</button>
       </div>
+      <div class="dudas-body" hidden>${dudasFor(deck) ? dudasHtml(deck) : ""}</div>
     </div>
   </article>`;
 }
+
+// ----- Modos de un tema: Palabras · Frases · Diálogo · Cajas -----
+function ejOf(deck) {
+  return state.ej[deck.id] || { dialogos: [], cajas: [] };
+}
+
+function ejDone(list) {
+  return list.filter((x) => { const r = store.ejer(x.id); return r && r.ok > 0; }).length;
+}
+
+function modesList(deck) {
+  const s = deckStats(deck);
+  const ej = ejOf(deck);
+  const out = [];
+  if (deck.cards.length) out.push({ key: "words", label: "Palabras", num: String(s.due + s.fresh), sub: "Nuevas y repaso", pct: s.pct, off: s.due + s.fresh === 0 });
+  if (deck.frases.length) {
+    const done = deck.frases.filter((f) => store.frase(`${deck.id}:${f.id}`)).length;
+    out.push({ key: "frases", label: "Frases", num: `${done}/${deck.frases.length}`, sub: "Arma y traduce", pct: Math.round((done / deck.frases.length) * 100) });
+  }
+  if (ej.dialogos.length) {
+    const n = ejDone(ej.dialogos);
+    out.push({ key: "dialogo", label: "Diálogo", full: "Mini diálogo", num: `${n}/${ej.dialogos.length}`, sub: "Elige qué contestar", pct: Math.round((n / ej.dialogos.length) * 100) });
+  }
+  if (ej.cajas.length) {
+    const n = ejDone(ej.cajas);
+    out.push({ key: "cajas", label: "Cajas", num: `${n}/${ej.cajas.length}`, sub: "Acomoda por caja", pct: Math.round((n / ej.cajas.length) * 100) });
+  }
+  return out;
+}
+
+// Botones de modo del mosaico abierto (el primero va relleno).
+function modesHtml(deck) {
+  return modesList(deck).map((m, i) => {
+    const lead = i === 0;
+    return `<button class="t-mode${lead ? " fill" : ""}" type="button" data-mode="${m.key}" data-deck="${esc(deck.id)}"${m.off ? " disabled" : ""}>${m.label}${m.key === "words" ? ` · <span class="num">${m.num}</span>` : ""}</button>`;
+  }).join("");
+}
+
+function dudasFor(deck) {
+  return state.dudas[deck.id] || null;
+}
+
+function dudasHtml(deck) {
+  const d = dudasFor(deck);
+  if (!d) return "";
+  const canSpeak = "speechSynthesis" in window;
+  return `<div class="dudas">
+    <b class="dudas-title">${esc(d.titulo)}</b>
+    <ul>${(d.puntos || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+    ${(d.ejemplos || []).map((x) => `<div class="dudas-ex"><div><span class="ex-ru" lang="ru">${esc(x.ru)}</span>${x.fonetica ? `<span class="ex-fon">${esc(x.fonetica)}</span>` : ""}<span>${esc(x.es)}</span></div>${canSpeak ? `<button class="audio-btn sm" type="button" data-say="${esc(x.ru)}" aria-label="Escuchar el ejemplo">${SPEAKER}</button>` : ""}</div>`).join("")}
+    ${d.ojo ? `<p class="dudas-ojo"><b>Ojo:</b> ${esc(d.ojo)}</p>` : ""}
+  </div>`;
+}
+
+// Inicia un modo de práctica de un tema.
+function startMode(deck, key) {
+  state.currentDeck = deck;
+  if (key === "words") return startDeck(deck);
+  if (key === "frases") return startFrases(deck);
+  if (key === "dialogo") return startDialogo(deck);
+  if (key === "cajas") return startCajas(deck);
+}
+
+function startDialogo() { toast("Pronto"); }
+function startCajas() { toast("Pronto"); }
 
 // Abre un tema en la cuadrícula: el cuadrado crece y los demás se acomodan
 // deslizándose (técnica FLIP: solo se animan transform y clip-path).
@@ -485,15 +572,16 @@ function openTileAnimated(id) {
 }
 
 // ---------- Tema ----------
-function openTema(id, tab) {
+function openTema(id) {
   const deck = state.deckById.get(id);
   if (!deck) return;
   state.currentDeck = deck;
-  state.temaTab = tab || "aprender";
   state.selecting = false;
   state.selected = new Set();
   $("#deck-search").value = "";
   $("#tema-search-box").hidden = true;
+  $("#tema-search-toggle").setAttribute("aria-expanded", "false");
+  state.temaFrom = state.view === "mapa" ? "mapa" : state.view === "home" ? "home" : "temas";
   renderTema();
   show("tema");
 }
@@ -503,47 +591,47 @@ function renderTema() {
   if (!d) return;
   const s = deckStats(d);
   const v = visFor(d);
-  $("#tema-title").textContent = d.title;
-  $("#tab-aprender").textContent = d.aprender ? "Aprender" : "Palabras";
-  for (const b of $$(".pill-tabs [data-tab]")) b.setAttribute("aria-selected", b.dataset.tab === state.temaTab);
-  $("#tema-aprender").hidden = state.temaTab !== "aprender";
-  $("#tema-practicar").hidden = state.temaTab !== "practicar";
-  if (state.temaTab !== "aprender") $("#select-bar").hidden = true;
+  const ru = RU_NAME[d.id] || "";
+  const head = $("#tema-head");
+  head.className = `tema-head card-frame pal-${v.pal}`;
+  head.innerHTML = `<span class="t-tag">${deckNumber(d)}</span>
+    <h1 class="tema-title">${esc(d.title)}</h1>
+    ${ru ? `<span class="tema-ru" lang="ru">${esc(ru)}</span>` : ""}
+    <div class="tema-prog"><span class="bar"><span style="width:${s.pct}%"></span></span><span class="tema-prog-n"><span class="num">${s.learned}</span> de <span class="num">${s.total}</span> memorizadas</span></div>`;
+
+  const pals = { words: "kh", frases: "pe", dialogo: "bl", cajas: "pk" };
+  const ICON = {
+    words: `<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5"/>`,
+    frases: `<rect x="3" y="7" width="7" height="7" rx="1.5"/><rect x="14" y="7" width="7" height="7" rx="1.5"/>`,
+    dialogo: `<path d="M4 5h16v11H9l-5 4z"/>`,
+    cajas: `<rect x="3" y="9" width="8" height="11" rx="1.5"/><rect x="13" y="9" width="8" height="11" rx="1.5"/><path d="M7 5v4M17 5v4"/>`
+  };
+  $("#tema-modes").innerHTML = modesList(d).map((m) => `<button class="mode card-frame pal-${pals[m.key]}" type="button" data-mode="${m.key}"${m.off ? " disabled" : ""}>
+      <span class="mode-top"><span class="mode-ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[m.key]}</svg></span><span class="num mode-num">${m.key === "words" ? `${m.num} hoy` : m.num}</span></span>
+      <span class="mode-name">${m.full || m.label}</span><span class="mode-sub">${m.sub}</span>
+      <span class="bar"><span style="width:${m.pct}%"></span></span></button>`).join("");
 
   // Introducción, reglas y tip del tema
   const ap = d.aprender || {};
-  const isQA = d.cards.every((c) => c.kind === "qa");
-  let intro = `<div class="intro card-frame pal-${v.pal}">
+  let intro = "";
+  if (ap.intro || d.desc) {
+    intro = `<div class="intro card-frame pal-${v.pal}">
       <span class="label">De qué trata</span>
       <p>${esc(ap.intro || d.desc || "")}</p>
-      <div class="intro-stats"><span><span class="num">${d.cards.length}</span> ${isQA ? "tarjetas" : "palabras"}</span><span><span class="num">${s.learned}</span> aprendidas</span></div>
     </div>`;
+  }
   const rules = (ap.reglas || []).map((r) => `<div class="rule card-frame pal-bl"><span class="label">La regla</span><p>${esc(r)}</p></div>`);
   if (ap.tip) rules.push(`<div class="rule card-frame pal-li"><span class="label">Tip de memoria</span><p>${esc(ap.tip)}</p></div>`);
   if (rules.length % 2 === 1) rules[rules.length - 1] = rules[rules.length - 1].replace('class="rule ', 'class="rule wide ');
   if (rules.length) intro += `<div class="rules">${rules.join("")}</div>`;
   $("#tema-intro").innerHTML = intro;
-  $("#tema-count").textContent = `${d.cards.length} ${isQA ? "tarjetas" : "palabras"}`;
+  $("#tema-count").textContent = d.cards.length;
+  const dd = dudasFor(d);
+  $("#tema-dudas").innerHTML = dd
+    ? `<button class="dudas-btn" type="button" id="dudas-toggle" aria-expanded="false"><span class="q" aria-hidden="true">?</span><span><b>¿Dudas de gramática?</b><small>${esc(dd.titulo)}</small></span></button><div class="dudas-body" hidden>${dudasHtml(d)}</div>`
+    : "";
+  $("#tema-cram").hidden = !d.cards.length;
   renderWords();
-  renderPractice();
-}
-
-function renderPractice() {
-  const d = state.currentDeck;
-  const s = deckStats(d);
-  const done = d.frases.filter((f) => store.frase(`${d.id}:${f.id}`)).length;
-  let html = `<button class="practice-card card-frame pal-lav" type="button" data-practice="cards"${s.due + s.fresh === 0 ? " disabled" : ""}>
-      <span class="pc-main"><span class="label">Repaso espaciado</span><span class="pc-title">Repasar con tarjetas</span>
-      <span class="pc-sub">${s.due} para hoy · ${s.fresh} sin ver</span></span><span class="go">${ARROW}</span></button>`;
-  if (d.frases.length) {
-    html += `<button class="practice-card card-frame pal-red" type="button" data-practice="frases">
-      <span class="pc-main"><span class="label">Nuevo</span><span class="pc-title">Armar frases</span>
-      <span class="pc-sub">${d.frases.length} frases · ${done} hechas. Armas la idea y eliges qué dijiste.</span></span><span class="go">${ARROW}</span></button>`;
-  }
-  html += `<button class="practice-card card-frame pal-kh" type="button" data-practice="cram">
-      <span class="pc-main"><span class="label">Sin presión</span><span class="pc-title">Repaso rápido</span>
-      <span class="pc-sub">Preguntas al azar. No cambia tu calendario.</span></span><span class="go">${ARROW}</span></button>`;
-  $("#tema-practice").innerHTML = html;
 }
 
 function pickedCards() {
@@ -561,7 +649,7 @@ function renderSelectBar() {
   const bar = $("#select-bar");
   const n = state.selected.size;
   $("#select-toggle").textContent = state.selecting ? "Cancelar selección" : "Seleccionar varias";
-  bar.hidden = !state.selecting || state.temaTab !== "aprender";
+  bar.hidden = !state.selecting;
   $("#select-count").textContent = n === 1 ? "1 palabra" : `${n} palabras`;
   $("#select-add").disabled = n === 0;
 }
@@ -1121,7 +1209,7 @@ const AUTO_MS = 1000;
 function startFrases(deck) {
   if (!deck.frases.length) return;
   const queue = shuffle(deck.frases).map((f) => ({ f, failed: false }));
-  state.fr = { deck, queue, ok: 0, bad: 0, resolved: 0, results: [], total: queue.length, returnTo: state.view === "mapa" ? "mapa" : "tema", timer: null };
+  state.fr = { deck, queue, ok: 0, bad: 0, resolved: 0, results: [], total: queue.length, returnTo: state.view === "tema" ? "tema" : state.view, timer: null };
   show("frase");
   newFraseItem();
 }
@@ -1566,7 +1654,7 @@ function rebuildMine() {
   let deck = state.deckById.get(MINE);
   if (!deck) {
     deck = {
-      id: MINE, index: state.decks.length, title: "Mis palabras", group: "Mis palabras",
+      id: MINE, index: state.decks.length, title: "Mis palabras", group: "Vocabulario",
       desc: "Las palabras que guardaste con «+ Repasar» en el Diccionario de las frases. Entran a tu práctica diaria.",
       aprender: null, frases: [], cards: [], mine: true
     };
@@ -1681,12 +1769,22 @@ function bind() {
     renderTemas();
   });
   $("#temas-grid").addEventListener("click", (e) => {
+    const say = e.target.closest("[data-say]");
+    if (say) return speak(say.dataset.say);
+    const mode = e.target.closest("[data-mode]");
+    if (mode) return startMode(state.deckById.get(mode.dataset.deck), mode.dataset.mode);
     const act = e.target.closest("[data-act]");
     if (act) {
       const deck = state.deckById.get(act.dataset.deck);
-      if (act.dataset.act === "learn") return openTema(deck.id, "aprender");
-      if (deck.frases.length) return openTema(deck.id, "practicar");
-      return startDeck(deck);
+      if (act.dataset.act === "list") return openTema(deck.id);
+      if (act.dataset.act === "dudas") {
+        const body = act.closest(".t-big").querySelector(".dudas-body");
+        const on = body.hidden;
+        body.hidden = !on;
+        act.setAttribute("aria-expanded", String(on));
+        if (on) setTimeout(() => body.scrollIntoView({ block: "nearest", behavior: "smooth" }), 60);
+      }
+      return;
     }
     const tile = e.target.closest("[data-tile]");
     if (tile && !tile.classList.contains("open")) openTileAnimated(tile.dataset.tile);
@@ -1700,15 +1798,27 @@ function bind() {
   });
 
   // Tema
-  for (const b of $$(".pill-tabs [data-tab]")) {
-    b.addEventListener("click", () => { state.temaTab = b.dataset.tab; renderTema(); });
-  }
+  $("#tema-back").addEventListener("click", () => go(state.temaFrom === "mapa" ? "mapa" : state.temaFrom === "home" ? "home" : "temas"));
   $("#tema-search-toggle").addEventListener("click", () => {
-    if (state.temaTab !== "aprender") { state.temaTab = "aprender"; renderTema(); }
     const box = $("#tema-search-box");
     box.hidden = !box.hidden;
+    $("#tema-search-toggle").setAttribute("aria-expanded", String(!box.hidden));
     if (!box.hidden) $("#deck-search").focus();
   });
+  $("#tema-modes").addEventListener("click", (e) => {
+    const m = e.target.closest("[data-mode]");
+    if (m && !m.disabled) startMode(state.currentDeck, m.dataset.mode);
+  });
+  $("#tema-dudas").addEventListener("click", (e) => {
+    const say = e.target.closest("[data-say]");
+    if (say) return speak(say.dataset.say);
+    const t = e.target.closest("#dudas-toggle");
+    if (!t) return;
+    const body = $("#tema-dudas .dudas-body");
+    body.hidden = !body.hidden;
+    t.setAttribute("aria-expanded", String(!body.hidden));
+  });
+  $("#tema-cram").addEventListener("click", () => startCram(state.currentDeck));
   $("#deck-search").addEventListener("input", renderWords);
   $("#deck-words").addEventListener("click", (e) => {
     const p = e.target.closest("[data-pick]");
@@ -1757,14 +1867,6 @@ function bind() {
     state.selecting = false;
     state.selected = new Set();
     renderWords();
-  });
-  $("#tema-practice").addEventListener("click", (e) => {
-    const b = e.target.closest("[data-practice]");
-    if (!b || b.disabled) return;
-    const d = state.currentDeck;
-    if (b.dataset.practice === "cards") startDeck(d);
-    else if (b.dataset.practice === "cram") startCram(d);
-    else startFrases(d);
   });
 
   // Palabra
