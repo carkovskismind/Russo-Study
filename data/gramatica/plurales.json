@@ -3,6 +3,16 @@
   "titulo": "Plurales",
   "grupo": "Gramática",
   "descripcion": "Reglas del plural, plurales irregulares y palabras que solo existen en singular o en plural.",
+  "aprender": {
+    "intro": "Casi todos los plurales siguen 4 ideas sencillas. Aprende las ideas y las excepciones; no hace falta memorizar cada palabra.",
+    "reglas": [
+      "1. Lo normal es -ы: стол → столы́ («sta-LY»), ма́ма → ма́мы («MA-my»). En las femeninas, la -а cambia por -ы.",
+      "2. Se escribe -и (no -ы) después de к, г, х, ж, ш, ч, щ: кни́га → кни́ги, ча́шка → ча́шки, нож → ножи́. También si la palabra acaba en -ь o -й: слова́рь → словари́, музе́й → музе́и.",
+      "3. Muchos masculinos toman -а́ o -я́ con el acento al final: дом → дома́ («da-MA»), го́род → города́, учи́тель → учителя́.",
+      "4. Irregulares (son pocos y muy comunes): друг → друзья́ («dru-ZIA»), брат → бра́тья («BRAT'-ia»), челове́к → лю́ди («LIU-di»), ребёнок → де́ти («DIE-ti»)."
+    ],
+    "tip": "Si dudas entre -ы y -и, mira la letra anterior: k, g, j, sh, ch, shch o ь piden -и. Todo lo demás, -ы."
+  },
   "tarjetas": [
     {"pregunta": "¿Cómo se forma el plural de la mayoría de las palabras masculinas y femeninas?", "respuesta": "+ -ы (90 %):\nстол → столы́, ма́ма → ма́мы (la vocal final se cambia por -ы)."},
     {"pregunta": "Plural: ¿cuándo se usa -и en lugar de -ы?", "respuesta": "- Después de к, г, х («militares»): кни́га → кни́ги, уро́к → уро́ки.\n- Después de ж, ш, ч, щ («serpientes»): ча́шка → ча́шки, нож → ножи́.\n- Después de -ь, -я, -й («suaves»): слова́рь → словари́, семья́ → се́мьи, музе́й → музе́и."},
