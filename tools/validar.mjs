@@ -1,6 +1,6 @@
 // Revisa que los mazos estén bien escritos antes de publicarlos.
 // Uso: node tools/validar.mjs
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync } from "node:fs";
 
 const errores = [];
 const avisos = [];
@@ -172,9 +172,24 @@ if (ruta3) {
   for (const id of ids) if (!usados.has(id)) avisos.push(`ruta.json: el mazo "${id}" no está en la ruta (solo en Biblioteca)`);
 }
 
-for (const archivo of manifest.ejercicios || []) {
-  const ruta = `data/ejercicios/${archivo}.json`;
-  const e = leer(ruta);
+// Archivos de ejercicios que existen pero no están en data/mazos.json: la app no los carga.
+if (existsSync("data/ejercicios")) {
+  for (const f of readdirSync("data/ejercicios")) {
+    const id = f.replace(/\.json$/, "");
+    if (f.endsWith(".json") && !(manifest.ejercicios || []).includes(id)) errores.push(`data/ejercicios/${f}: no está en la lista "ejercicios" de data/mazos.json (la app no lo carga)`);
+  }
+}
+
+// Diálogos y cajas pueden ir dentro del mazo ("dialogos" / "cajas") o en data/ejercicios/<id>.json.
+const ejercicios = (manifest.ejercicios || []).map((a) => [a, `data/ejercicios/${a}.json`, leer(`data/ejercicios/${a}.json`)]);
+for (const archivo of manifest.mazos || []) {
+  const ruta = `data/${archivo}`;
+  if (!existsSync(ruta)) continue;
+  let mazo;
+  try { mazo = JSON.parse(readFileSync(ruta, "utf8")); } catch { continue; }
+  if (mazo.dialogos || mazo.cajas) ejercicios.push([mazo.id, ruta, mazo]);
+}
+for (const [archivo, ruta, e] of ejercicios) {
   if (!e) continue;
   if (!ids.has(archivo)) errores.push(`${ruta}: no hay un mazo "${archivo}"`);
   const idsEj = new Set();

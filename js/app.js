@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "3.0.1";
+const APP_VERSION = "3.0.2";
 const NEW_PER_DECK_SESSION = 20;
 const PILOT = "familia";
 
@@ -130,9 +130,51 @@ function show(view) {
   }
   document.body.classList.toggle("on-mapa", view === "mapa");
   window.scrollTo(0, 0);
+  syncHistory();
 }
 
+// ---------- Historial (botón y gestos de retroceso del celular) ----------
+// En el inicio no hay entrada extra: retroceder sale de la app. En cualquier otra
+// pantalla (o con una hoja abierta) hay una entrada "top": al retroceder se vuelve
+// a la pantalla anterior de la app y se vuelve a armar.
+let popIgnore = 0;
+const isArmed = () => !!(history.state && history.state.app === "top");
+
+function syncHistory() {
+  try {
+    const needs = state.view !== "home" || document.body.classList.contains("sheet-on");
+    if (needs && !isArmed()) history.pushState({ app: "top" }, "");
+    else if (!needs && isArmed()) { popIgnore++; history.back(); }
+  } catch (e) { /* sin historial disponible */ }
+}
+
+function appBack() {
+  if (document.body.classList.contains("sheet-on")) return closeSheet();
+  switch (state.view) {
+    case "study": return closeSession();
+    case "frase": return $("#frase-close").click();
+    case "dialogo": return $("#dialogo-close").click();
+    case "cajas": return $("#cajas-close").click();
+    case "done": return $("#done-home").click();
+    case "palabra": return $("#palabra-back").click();
+    case "tema": return $("#tema-back").click();
+    case "leer": return $("#leer-back").click();
+    case "temas": return go(state.temasFrom === "mapa" ? "mapa" : "home");
+    case "mapa":
+    case "settings": return go("home");
+  }
+}
+
+window.addEventListener("popstate", () => {
+  if (popIgnore > 0) { popIgnore--; return; }
+  // El usuario retrocedió: ya está en la entrada base. Se actúa y se vuelve a armar.
+  appBack();
+  syncHistory();
+});
+
 function go(view) {
+  if (view === "temas" && state.view === "mapa") state.temasFrom = "mapa";
+  else if (view === "temas" && (state.view === "home" || state.view === "settings")) state.temasFrom = null;
   if (view === "mapa") renderMapa();
   if (view === "home") renderHome();
   if (view === "temas") renderTemas();
@@ -212,6 +254,9 @@ async function loadDecks() {
       desc: json.descripcion || "",
       aprender: json.aprender || null,
       frases: Array.isArray(json.frases) ? json.frases : [],
+      // Diálogos y cajas pueden ir dentro del mazo o en data/ejercicios/<id>.json.
+      dialogos: Array.isArray(json.dialogos) ? json.dialogos : [],
+      cajas: Array.isArray(json.cajas) ? json.cajas : [],
       cards
     });
   }
@@ -500,8 +545,10 @@ function tileHtml(deck) {
 }
 
 // ----- Modos de un tema: Palabras · Frases · Diálogo · Cajas -----
+// Diálogos y cajas de un tema, de cualquier módulo: los del mazo más los del archivo de ejercicios.
 function ejOf(deck) {
-  return state.ej[deck.id] || { dialogos: [], cajas: [] };
+  const f = state.ej[deck.id] || {};
+  return { dialogos: [...(deck.dialogos || []), ...(f.dialogos || [])], cajas: [...(deck.cajas || []), ...(f.cajas || [])] };
 }
 
 function ejDone(list) {
@@ -1493,7 +1540,8 @@ function fraseClick(e) {
     cur.reported = false;
     playSound(cur.ok2);
     renderFrase();
-    if (cur.ok2) fr.timer = setTimeout(() => { if (state.fr === fr && fr.cur === cur && $("#sheet").hidden) finishFraseItem(); }, AUTO_MS);
+    // La última frase no avanza sola: terminas cuando toques Continuar.
+    if (cur.ok2 && fr.queue.length > 1) fr.timer = setTimeout(() => { if (state.fr === fr && fr.cur === cur && $("#sheet").hidden) finishFraseItem(); }, AUTO_MS);
     return;
   }
   const act = t.dataset.fr;
@@ -1580,6 +1628,7 @@ function openSheet(title, html, sub = "") {
   const wrap = $("#sheet");
   wrap.hidden = false;
   document.body.classList.add("sheet-on");
+  syncHistory();
   for (const el of $$(".view, #nav")) el.inert = true;
   requestAnimationFrame(() => wrap.classList.add("on"));
   $("#sheet-close").focus();
@@ -1596,6 +1645,7 @@ function closeSheet() {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce) done(); else setTimeout(done, 260);
   if (sheetReturn && document.contains(sheetReturn)) sheetReturn.focus();
+  syncHistory();
 }
 
 // ---------- Diccionario y «Mis palabras» ----------
@@ -1745,6 +1795,13 @@ function stepDialog() {
     return renderDialogo();
   }
   const mine = m.de === "yo";
+  if (mine) {
+    // Tu mensaje no se manda solo: esperas a tocarlo.
+    c.typing = false;
+    c.wait = { m, opts: [{ ru: m.ru, fonetica: m.fonetica, correcta: true, porque: m.es || "" }], send: true };
+    c.choice = null;
+    return renderDialogo();
+  }
   c.typing = !mine;
   renderDialogo();
   dl.timer = setTimeout(() => {
@@ -1796,7 +1853,9 @@ function renderDialogo() {
         <section class="fr-ok-note"><span class="label">La correcta</span><p>${esc(c.wait.opts.find((x) => x.correcta).porque || "")}</p></section>
         <button class="btn btn-primary btn-wide" type="button" data-dnext="1">Continuar</button>`;
     }
-    foot = `<div class="chat-foot"><span class="chat-q">¿Qué le contestas?</span>${opts}${why}</div>`;
+    foot = `<div class="chat-foot"><span class="chat-q">${c.wait.send ? "Toca tu mensaje para enviarlo" : "¿Qué le contestas?"}</span>${opts}${why}</div>`;
+  } else if (c.hold) {
+    foot = `<div class="chat-foot"><button class="btn btn-primary btn-wide" type="button" data-dnext="3">Continuar</button></div>`;
   } else if (c.finished) {
     const last = dl.di >= dl.list.length - 1;
     foot = `<div class="chat-foot"><p class="chat-end">${c.fail ? "Diálogo terminado. Lo repasas cuando quieras." : "¡Diálogo completo!"}</p><button class="btn btn-primary btn-wide" type="button" data-dnext="2">${last ? "Terminar" : "Siguiente diálogo"}</button></div>`;
@@ -1822,6 +1881,11 @@ function dialogoClick(e) {
       c.shown.push({ m: { ...c.wait.m, ru: opt.ru, fonetica: opt.fonetica }, mine: true });
       c.mi++;
       c.wait = null;
+      // Tu última respuesta no avanza sola: sigues cuando toques Continuar.
+      if (!c.d.mensajes.slice(c.mi).some((x) => x.de === "yo")) {
+        c.hold = true;
+        return renderDialogo();
+      }
       renderDialogo();
       dl.timer = setTimeout(() => { if (state.dl === dl && dl.cur === c) stepDialog(); }, 1000);
     } else {
@@ -1832,6 +1896,10 @@ function dialogoClick(e) {
   }
   const n = e.target.closest("[data-dnext]");
   if (!n) return;
+  if (n.dataset.dnext === "3") {
+    c.hold = false;
+    return stepDialog();
+  }
   if (n.dataset.dnext === "1") {
     // Después de un error: se muestra la respuesta correcta y sigue el chat.
     const right = c.wait.opts.find((x) => x.correcta);
@@ -2140,7 +2208,25 @@ function suggestedDeck() {
   return c ? c.deck : null;
 }
 
-// ----- Mini mapa del inicio -----
+// ----- Mini mapa del inicio (fiel a Main.dc.html) -----
+const MINI_ICON = {
+  ciudad: "M4 21V9h6v12M10 21V4h10v17M13 8h4M13 12h4",
+  juegos: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3.5 12h17M12 3v18",
+  paises: "M5 21V4M5 4h11l-2 4 2 4H5",
+  escuela: "M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5",
+  numeros: "M5 8l2-2v12M11 9a2 2 0 1 1 3 2l-3 5h4",
+  leer: "M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5",
+  casa: "M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z",
+  verbos: "M4 12h14M13 6l6 6-6 6",
+  instrumentos: "M9 18V5l11-2v13M9 18a3 3 0 1 1-3-3 3 3 0 0 1 3 3zM20 16a3 3 0 1 1-3-3 3 3 0 0 1 3 3z",
+  familia: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c1-4 4-6 8-6s7 2 8 6",
+  saludos: "M4 5h16v11H9l-5 4z",
+  colores: "M12 3a9 9 0 1 0 0 18c1.5 0 2-1 2-2s-1-1.5-1-3 1-2 2.5-2H18a3 3 0 0 0 3-3c0-5-4-8-9-8z",
+  _: "M12 4l2.4 5 5.6.7-4.1 3.8 1.1 5.5-5-2.8-5 2.8 1.1-5.5L4 9.7 9.6 9z"
+};
+// Casillas (i, j) de las 5 plataformas del boceto: dos hechas, la actual y dos siguientes.
+const MINI_SLOTS = [[-2, 0], [-1, 0], [0, 0], [0, 1], [1, 1]];
+
 function renderRutaMini() {
   const host = $("#ruta-mini");
   const mod = currentMod();
@@ -2149,32 +2235,35 @@ function renderRutaMini() {
   const T = modTemas(mod);
   const cur = modCurrent(mod);
   const ci = cur ? T.indexOf(cur) : T.length - 1;
-  const start = Math.max(0, Math.min(ci - 1, T.length - 4));
-  const list = T.slice(start, start + 4);
-  const w = modWords(mod);
-  let grid = "";
-  for (let r = 0; r < 9; r++) {
-    for (let c = -1; c < 5; c++) {
-      const x = c * 110 + (r % 2 ? 55 : 0) - 41;
-      const y = r * 32 - 42;
-      grid += `<polygon points="${x + 55},${y} ${x + 110},${y + 32} ${x + 55},${y + 64} ${x},${y + 32}" fill="${(r + c) % 2 ? "#121214" : "#18181B"}"/>`;
+  const mx = (i, j) => 179 + (i - j) * 55;
+  const my = (i, j) => 150 + (i + j) * 32;
+  let cells = "";
+  for (let s2 = -5; s2 <= 5; s2++) {
+    for (let d = -4; d <= 4; d++) {
+      if ((s2 + d) % 2 !== 0) continue;
+      const i = (s2 + d) / 2, j = (s2 - d) / 2;
+      cells += `<span class="rm-cell ${(i + j) % 2 === 0 ? "a" : "b"}" aria-hidden="true" style="left:${mx(i, j) - 55}px;top:${my(i, j) - 32}px"></span>`;
     }
   }
-  const plates = list.map((t, i) => {
-    const cx = 56 + i * 50, cy = 66 + i * 44;
-    const isCur = cur && t === cur;
-    const done = t.deck && isMemorized(t.deck);
-    const face = isCur ? "#4AF2D5" : done ? PALF[t.deck ? visFor(t.deck).pal : "aq"] : "#2A2A2F";
-    const ink = isCur ? "#0B0B0C" : done ? "#111" : "#A3A3AA";
-    const hw = 36, hh = 21;
-    const pts = (dy) => `${cx},${cy - hh + dy} ${cx + hw},${cy + dy} ${cx},${cy + hh + dy} ${cx - hw},${cy + dy}`;
+  let plates = "";
+  MINI_SLOTS.forEach(([i, j], k) => {
+    const t = T[ci - 2 + k];
+    if (!t) return;
+    const x = mx(i, j), y = my(i, j);
+    const isCur = !!cur && t === cur;
+    const done = !isCur && (t.leer ? leerDone() === (state.lectura ? state.lectura.pasos.length : 6) : t.deck && isMemorized(t.deck));
+    const pal = !t.leer && t.deck ? visFor(t.deck).pal : "aq";
+    const cls = isCur ? "now" : done ? "done" : "next";
+    const face = done ? `background:${PALF[pal] || PALF.aq};color:var(--ink-${pal})` : "";
     const name = t.leer ? "Aprende a leer" : t.deck.title.split(/[,y·]/)[0].trim();
-    return `<polygon points="${pts(7)}" fill="#6B675F"/><polygon points="${pts(0)}" fill="${face}"/>
-      ${done ? `<path d="M${cx - 7} ${cy} l5 5 l9 -10" fill="none" stroke="${ink}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>` : `<circle cx="${cx}" cy="${cy}" r="${isCur ? 6 : 4}" fill="${ink}"/>`}
-      <text x="${cx + 46}" y="${cy + 5}" fill="${isCur ? "#F3EFE6" : "#A3A3AA"}" font-size="12" font-weight="800" font-family="Manrope,sans-serif">${esc(name)}</text>`;
-  }).join("");
-  host.innerHTML = `<svg class="rm-svg" viewBox="0 0 358 250" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${grid}${plates}</svg>
-    <span class="rm-chip">${esc(mod.titulo)} · <span class="num">${w.learned}</span> de <span class="num">${w.total}</span> palabras</span>
+    const icon = MINI_ICON[t.id] || MINI_ICON._;
+    plates += `<span class="rm-side ${cls}" aria-hidden="true" style="left:${x - 48}px;top:${y - 26}px"></span>
+      <span class="rm-top ${cls}" aria-hidden="true" style="left:${x - 48}px;top:${y - 34}px;${face}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${icon}"/></svg></span>
+      <span class="rm-name ${cls}" style="left:${x - 48}px;top:${y + 26}px">${esc(name)}</span>`;
+  });
+  const w = modWords(mod);
+  host.innerHTML = `${cells}${plates}
+    <span class="rm-chip">${esc(mod.titulo.replace(/\d+/, ""))}<span class="num">${mod.n}</span> · <span class="num">${w.learned}</span> de <span class="num">${w.total}</span> palabras</span>
     ${cur && cur.deck ? `<span class="rm-today">Hoy: <span class="num">${todayWords(cur.deck)}</span></span>` : ""}`;
   host.setAttribute("aria-label", `Abrir el mapa de tu ruta. ${mod.titulo}${cur && cur.deck ? `, sigues en ${cur.deck.title}` : ""}`);
 }
