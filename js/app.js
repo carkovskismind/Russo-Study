@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "3.0.0";
+const APP_VERSION = "3.0.1";
 const NEW_PER_DECK_SESSION = 20;
 const PILOT = "familia";
 
@@ -964,7 +964,10 @@ function renderItem() {
       back.innerHTML = `<div class="qa-text answer">${esc(c.a)}</div>`;
     } else {
       front.innerHTML = `<span class="learn-label">Palabra nueva</span>${ruBlock(c.ru, c.fonetica)}`;
-      back.innerHTML = `<div class="big-es">${esc(c.es)}</div>` + extras(c);
+      const ej = c.ejemplo && c.ejemplo.ru
+        ? `<div class="learn-ex"><span class="learn-ex-label">Ejemplo</span><span class="ex-ru" lang="ru">${esc(c.ejemplo.ru)}</span><span class="ex-fon">${[c.ejemplo.fonetica, c.ejemplo.es].filter(Boolean).map(esc).join(" · ")}</span></div>`
+        : "";
+      back.innerHTML = `<div class="big-es">${esc(c.es)}</div>` + ej + extras(c);
       speakBtn.hidden = !("speechSynthesis" in window);
       if (store.settings.autoSpeak) speak(c.ru);
     }

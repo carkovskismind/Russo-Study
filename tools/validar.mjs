@@ -145,6 +145,113 @@ function revisarFrase3(f, donde, base) {
   }
 }
 
+// ---------- 3.0: ruta, ejercicios, lectura y dudas ----------
+const leer = (ruta) => {
+  if (!existsSync(ruta)) { errores.push(`${ruta}: no existe`); return null; }
+  try { return JSON.parse(readFileSync(ruta, "utf8")); } catch (e) { errores.push(`${ruta}: JSON inválido (${e.message})`); return null; }
+};
+
+const ruta3 = leer("data/ruta.json");
+if (ruta3) {
+  const mods = new Set();
+  const usados = new Map();
+  (ruta3.modulos || []).forEach((m) => {
+    if (!m.id || mods.has(m.id)) errores.push(`ruta.json: módulo sin id o repetido (${m.id})`);
+    mods.add(m.id);
+    if (!m.titulo) errores.push(`ruta.json ${m.id}: falta "titulo"`);
+    if (!Array.isArray(m.temas) || !m.temas.length) { errores.push(`ruta.json ${m.id}: falta la lista "temas"`); return; }
+    m.temas.forEach((t) => {
+      const d = `ruta.json ${m.id}/${t.id}`;
+      if (!t.es) errores.push(`${d}: falta "es"`);
+      if (t.leer) return;
+      if (!ids.has(t.id)) errores.push(`${d}: el tema no existe en data/mazos.json`);
+      if (usados.has(t.id)) errores.push(`${d}: ya está en ${usados.get(t.id)}`);
+      usados.set(t.id, m.id);
+    });
+  });
+  for (const id of ids) if (!usados.has(id)) avisos.push(`ruta.json: el mazo "${id}" no está en la ruta (solo en Biblioteca)`);
+}
+
+for (const archivo of manifest.ejercicios || []) {
+  const ruta = `data/ejercicios/${archivo}.json`;
+  const e = leer(ruta);
+  if (!e) continue;
+  if (!ids.has(archivo)) errores.push(`${ruta}: no hay un mazo "${archivo}"`);
+  const idsEj = new Set();
+  (e.dialogos || []).forEach((dl, i) => {
+    const d = `${ruta} diálogo ${i + 1}`;
+    if (!dl.id || idsEj.has(dl.id)) errores.push(`${d}: falta "id" o está repetido`);
+    idsEj.add(dl.id);
+    if (!dl.titulo || !Array.isArray(dl.mensajes) || !dl.mensajes.length) { errores.push(`${d}: necesita "titulo" y "mensajes"`); return; }
+    let hayOpciones = false;
+    dl.mensajes.forEach((m, j) => {
+      const dm = `${d} mensaje ${j + 1}`;
+      if (!m.de || !m.ru || !m.es) errores.push(`${dm}: necesita "de", "ru" y "es"`);
+      else revisarRuso(m.ru, dm);
+      if (m.opciones !== undefined) {
+        hayOpciones = true;
+        if (!Array.isArray(m.opciones) || m.opciones.length < 2) { errores.push(`${dm}: "opciones" necesita al menos 2`); return; }
+        const ok = m.opciones.filter((o) => o.correcta === true).length;
+        if (ok !== 1) errores.push(`${dm}: debe haber exactamente una opción "correcta" (hay ${ok})`);
+        m.opciones.forEach((o) => {
+          if (!o.ru || !o.porque) errores.push(`${dm}: cada opción necesita "ru" y "porque"`);
+          else revisarRuso(o.ru, dm);
+        });
+      }
+    });
+    if (!hayOpciones) avisos.push(`${d}: no tiene ningún mensaje con "opciones"`);
+  });
+  (e.cajas || []).forEach((c, i) => {
+    const d = `${ruta} cajas ${i + 1}`;
+    if (!c.id || idsEj.has(c.id)) errores.push(`${d}: falta "id" o está repetido`);
+    idsEj.add(c.id);
+    if (!c.pregunta || !Array.isArray(c.cajas) || c.cajas.length < 2 || !Array.isArray(c.items) || !c.items.length) {
+      errores.push(`${d}: necesita "pregunta", 2 o más "cajas" e "items"`);
+      return;
+    }
+    const usadas = new Set();
+    c.items.forEach((it, j) => {
+      const di = `${d} item ${j + 1}`;
+      if (!it.ru || !it.porque) errores.push(`${di}: necesita "ru" y "porque"`);
+      else revisarRuso(it.ru, di);
+      if (!c.cajas.includes(it.caja)) errores.push(`${di}: la caja «${it.caja}» no está en "cajas"`);
+      usadas.add(it.caja);
+    });
+    for (const k of c.cajas) if (!usadas.has(k)) avisos.push(`${d}: la caja «${k}» queda vacía`);
+  });
+}
+
+const lect = leer("data/lectura/lectura.json");
+if (lect) {
+  if (!Array.isArray(lect.pasos) || lect.pasos.length !== 6) errores.push(`lectura.json: debe tener 6 pasos (tiene ${(lect.pasos || []).length})`);
+  (lect.pasos || []).forEach((p, i) => {
+    const d = `lectura.json paso ${i + 1}`;
+    if (!p.id || !p.titulo || !p.intro) errores.push(`${d}: necesita "id", "titulo" e "intro"`);
+    if (!Array.isArray(p.letras) || !p.letras.length) errores.push(`${d}: falta la lista "letras"`);
+    else p.letras.forEach((l, j) => {
+      if (!l.letra || !l.sonido) errores.push(`${d} letra ${j + 1}: necesita "letra" y "sonido"`);
+      (l.ejemplos || []).forEach((x) => { if (x.ru) revisarRuso(x.ru, `${d} letra ${j + 1}`); });
+    });
+    if (!Array.isArray(p.practica) || !p.practica.length) errores.push(`${d}: falta la "practica"`);
+    else p.practica.forEach((x, j) => {
+      if (!x.ru || !x.es) errores.push(`${d} práctica ${j + 1}: necesita "ru" y "es"`);
+      else revisarRuso(x.ru, `${d} práctica ${j + 1}`);
+    });
+  });
+}
+
+const dudas = leer("data/gramatica/dudas.json");
+if (dudas) {
+  for (const [id, d] of Object.entries(dudas)) {
+    if (!ids.has(id)) errores.push(`dudas.json: el mazo "${id}" no existe`);
+    if (!d.titulo || !Array.isArray(d.puntos) || !d.puntos.length) errores.push(`dudas.json ${id}: necesita "titulo" y "puntos"`);
+    (d.ejemplos || []).forEach((x, j) => {
+      if (!x.ru || !x.es) errores.push(`dudas.json ${id} ejemplo ${j + 1}: necesita "ru" y "es"`);
+      else revisarRuso(x.ru, `dudas.json ${id} ejemplo ${j + 1}`);
+    });
+  }
+}
+
 for (const a of avisos) console.log("Aviso:", a);
 for (const e of errores) console.log("Error:", e);
 console.log(`\n${manifest.mazos.length} mazos · ${total} tarjetas · ${errores.length} errores · ${avisos.length} avisos`);

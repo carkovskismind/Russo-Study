@@ -878,3 +878,8 @@ body.on-mapa { background-color: #0b0b0c; --text: #f3efe6; --muted: #a3a3aa; --l
 .mapa-today > span:not(.mt-dot) { display: flex; gap: 4px; overflow: visible; }
 .mapa-today b { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .mapa-today .num { margin-right: 0; }
+
+/* ---------- 3.0 · Ejemplo en la tarjeta nueva ---------- */
+.learn-ex { width: 100%; margin: 12px 0 4px; padding: 10px 14px; border-radius: 16px; background: rgba(255, 255, 255, .6); color: var(--ink, #222); display: flex; flex-direction: column; gap: 2px; text-align: left; }
+.learn-ex-label { font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.learn-ex .ex-fon { font-weight: 600; }
