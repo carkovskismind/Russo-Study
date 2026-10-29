@@ -36,13 +36,16 @@ Responde siempre en español, claro y breve.
 
 ## Plan acordado (oct 2026)
 
-- **Ruta** de unidades en orden sugerido (todas abiertas, con «sigue aquí»), cada una con su vocabulario y su gramática.
-- Sección independiente **«Aprende a leer»** (alfabeto, acento, reducción de О, suaves/duras, Ь y Ъ).
-- **Biblioteca** con todos los mazos para práctica libre.
-- Palabras pequeñas (кто, что, где, куда́…) repartidas por unidad y aprendidas con su uso.
-- Ejercicios nuevos: **mini diálogos tipo chat** y **clasificar en cajas**.
-- Frases: bloques que van juntos + cualquier orden válido + explicación del error.
-- Botón **«Diccionario»** en las frases (forma de diccionario, significado, por qué cambió) y «+ Repasar» → mazo personal **«Mis palabras»**.
+- **Principio:** la app es para **memorizar vocabulario y aprenderlo por uso**. La gramática solo aparece **a pedido**: «¿Dudas de gramática?» (data/gramatica/dudas.json), la explicación cuando fallas y el Diccionario. Nada de lecciones obligatorias.
+- **El inicio actual se conserva** (semana, Tu avance + para hoy, Aprendidas, Racha, Seguir con). Se agrega una tarjeta «Tu ruta» con un mini mapa.
+- **Mapa del módulo** = los temas de vocabulario en el **orden de las clases de CENLEX** (M1 → M2 → M3), estilo ciudad isométrica del boceto de Carol. Aprobado: **propuesta D** (dibujos con contorno crema tipo sticker + calle ámbar #F2C14E, plataformas pastel en código, pin #4AF2D5, tarjeta negra con Cajas · Frases · Palabras · Mini diálogo). Maqueta: artefacto «Russo Study · Ruta 3.0», tablero 2D.
+- **Tus temas** sigue en mosaico de 2 columnas con filtros (Todos · Vocabulario · Países y gentilicios · Gramática · Expresiones); al tocar uno crece y muestra Palabras · Frases · Diálogo · Cajas.
+- Sección independiente **«Aprende a leer»** (data/lectura/lectura.json, 6 pasos).
+- Ejercicios nuevos: **mini diálogos tipo chat** y **clasificar en cajas** (data/ejercicios/).
+- Frases: `bloques`, `fijo`, cualquier orden válido en `validas`, `errores` con explicación, y `diccionario` (forma, significado, porqué) por ficha. Botón **«Diccionario»** + «+ Repasar» → mazo personal **«Mis palabras»**.
+- Al acertar en frases, avance automático (≈1 s).
+- Módulo 3: después; por ahora solo M1 y M2. Carol va empezando M3 en clase.
+- **Beta:** https://carkovskismind.github.io/Russo-Study/beta/ (rama `beta`), con su propio progreso en el dispositivo. La tabla `progress_beta` de Supabase queda para después. Todo cambio visible se prueba primero en `beta` y luego pasa a `main` por solicitud.
 
 ## Agentes del proyecto (`.claude/agents/`)
 
