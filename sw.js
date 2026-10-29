@@ -6,7 +6,7 @@
 // Cada una usa su propia caché y la app real no toca nada bajo /beta/.
 const IS_BETA = /\/beta\/sw\.js$/.test(location.pathname);
 const CACHE_FAMILY = IS_BETA ? "russo-beta-v" : "russo-v";
-const CACHE = CACHE_FAMILY + "8";
+const CACHE = CACHE_FAMILY + "9";
 const BETA_PATH = new URL("beta", self.registration.scope).pathname; // p. ej. /Russo-Study/beta
 const SHELL = [
   "./",

@@ -43,6 +43,9 @@ function emptyProgress() {
     frases: {},
     notes: {},
     picks: {},
+    mine: {},
+    ejer: {},
+    lectura: {},
     settings: { ...DEFAULT_SETTINGS, t: 0 },
     resetAt: 0
   };
@@ -77,6 +80,9 @@ function normalize(p) {
     frases: p.frases && typeof p.frases === "object" ? p.frases : {},
     notes: p.notes && typeof p.notes === "object" ? p.notes : {},
     picks: p.picks && typeof p.picks === "object" ? p.picks : {},
+    mine: p.mine && typeof p.mine === "object" ? p.mine : {},
+    ejer: p.ejer && typeof p.ejer === "object" ? p.ejer : {},
+    lectura: p.lectura && typeof p.lectura === "object" ? p.lectura : {},
     settings: { ...base.settings, ...(p.settings || {}) },
     resetAt: p.resetAt || 0
   };
@@ -130,6 +136,17 @@ export function merge(a, b) {
     for (const [id, n] of Object.entries(src.picks)) {
       const cur = out.picks[id];
       if (!cur || (n.t || 0) > (cur.t || 0)) out.picks[id] = n;
+    }
+  }
+  // «Mis palabras», diálogos y cajas, y pasos de «Aprende a leer»: gana el
+  // cambio más reciente. «Mis palabras» no se borra al reiniciar (como las notas).
+  for (const key of ["mine", "ejer", "lectura"]) {
+    for (const src of [a, b]) {
+      for (const [id, n] of Object.entries(src[key])) {
+        if (!n || (key !== "mine" && (n.t || 0) <= resetAt)) continue;
+        const cur = out[key][id];
+        if (!cur || (n.t || 0) > (cur.t || 0)) out[key][id] = n;
+      }
     }
   }
   out.settings = (b.settings.t || 0) > (a.settings.t || 0) ? b.settings : a.settings;
@@ -367,12 +384,50 @@ export class Store {
     this.save();
   }
 
+  // --- «Mis palabras» (mazo personal) ---
+  mineList() {
+    return Object.entries(this.p.mine).filter(([, w]) => w && w.on).map(([id, w]) => ({ id, ...w }));
+  }
+
+  inMine(id) {
+    const w = this.p.mine[id];
+    return !!(w && w.on);
+  }
+
+  setMine(id, word, on) {
+    this.p.mine[id] = { ...(this.p.mine[id] || {}), ...(word || {}), on, t: Date.now() };
+    this.save();
+  }
+
+  // --- Diálogos y cajas ---
+  ejer(id) {
+    return this.p.ejer[id] || null;
+  }
+
+  setEjer(id, ok) {
+    const prev = this.p.ejer[id] || { n: 0, ok: 0 };
+    this.p.ejer[id] = { n: prev.n + 1, ok: prev.ok + (ok ? 1 : 0), last: ok ? 1 : 0, t: Date.now() };
+    this.save();
+  }
+
+  // --- Aprende a leer ---
+  lectura(id) {
+    return this.p.lectura[id] || null;
+  }
+
+  setLectura(id) {
+    this.p.lectura[id] = { done: 1, t: Date.now() };
+    this.save();
+  }
+
   reset() {
     const now = Date.now();
     const settings = { ...this.p.settings, t: now };
     const notes = this.p.notes;
+    const mine = this.p.mine;
     this.p = emptyProgress();
     this.p.notes = notes;
+    this.p.mine = mine;
     this.p.settings = settings;
     this.p.resetAt = now;
     this.save();

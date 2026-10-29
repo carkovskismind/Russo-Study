@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "2.0.1";
+const APP_VERSION = "3.0.0";
 const NEW_PER_DECK_SESSION = 20;
 const PILOT = "familia";
 
@@ -29,6 +29,7 @@ const store = new Store((what) => {
   if (what === "status" || what === "auth") renderSync();
   if (what === "data" || what === "auth") {
     applyTheme();
+    if (state.decks.length) rebuildMine();
     if (state.view === "home") renderHome();
     if (state.view === "temas") renderTemas();
     if (state.view === "tema") renderTema();
@@ -43,13 +44,15 @@ const SVG = {
   palette: `<svg width="52" height="52" viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M32 8C16 8 6 20 6 32s10 22 22 22c5 0 6-4 4-7s-1-7 4-7h8c8 0 14-6 14-13C58 16 46 8 32 8z"/><circle cx="20" cy="26" r="4.5" fill="currentColor"/><circle cx="32" cy="18" r="4.5" stroke-width="2.5"/><circle cx="44" cy="24" r="4.5" fill="currentColor"/><circle cx="18" cy="39" r="4.5" stroke-width="2.5"/></svg>`,
   house: `<svg width="54" height="54" viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 32L32 12l24 20M15 28v26h34V28M28 54V40h9v14M44 16v9"/></svg>`
 };
+SVG.star = `<svg width="50" height="50" viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M32 8l7 15 16 2-12 11 3 16-14-8-14 8 3-16L9 25l16-2z"/></svg>`;
 const VIS = {
   familia: { pal: "lav", art: { type: "img", src: "img/familia.png" } },
   saludos: { pal: "pe", art: { type: "head", src: "img/saludos.png" } },
   numeros: { pal: "red", art: { type: "num", text: "123" } },
   basicas: { pal: "kh", art: { type: "svg", svg: SVG.book } },
   colores: { pal: "li", art: { type: "svg", svg: SVG.palette } },
-  casa: { pal: "pe", art: { type: "svg", svg: SVG.house } }
+  casa: { pal: "pe", art: { type: "svg", svg: SVG.house } },
+  "mis-palabras": { pal: "aq", art: { type: "svg", svg: SVG.star } }
 };
 const RU_NAME = {
   saludos: "Приве́т", basicas: "Слова́", familia: "Семья́", profesiones: "Профе́ссии", animales: "Живо́тные",
@@ -207,6 +210,7 @@ async function loadDecks() {
   }
   state.decks = decks;
   state.deckById = new Map(decks.map((d) => [d.id, d]));
+  rebuildMine();
   if (broken.length) toast(`No se pudo leer: ${broken.join(", ")}`);
 }
 
@@ -252,6 +256,7 @@ function deckStats(deck, now = Date.now()) {
 }
 
 function deckNumber(deck) {
+  if (deck.mine) return "Personal";
   return `Tema ${String(deck.index + 1).padStart(2, "0")}`;
 }
 
@@ -287,8 +292,10 @@ function renderHome() {
   let due = 0, learned = 0, total = 0, fresh = 0;
   for (const d of state.decks) {
     const s = deckStats(d, now);
-    learned += s.learned;
-    total += s.total;
+    if (!d.mine) {
+      learned += s.learned;
+      total += s.total;
+    }
     if (deckEnabled(d)) { due += s.due; fresh += s.fresh; }
   }
   const newLeft = Math.max(0, store.settings.newPerDay - store.newToday(today));
@@ -1104,13 +1111,17 @@ function backTo(where) {
 
 // ---------- Armar frases ----------
 // Paso 1: con la idea en español acomodas las fichas en ruso. Cuenta como
-// correcta cualquier frase de la lista "validas". Paso 2: eliges qué
-// significa la frase que armaste (y la puedes escuchar).
+// correcta cualquier frase de "validas" y, si la frase tiene "bloques" y no es
+// "fijo", cualquier orden de los bloques (sin separarlos). Al fallar se
+// explica por qué (ficha que sobra, bloque separado u orden). Paso 2: eliges
+// qué significa la frase que armaste. Al acertar se avanza solo (≈1 s).
+
+const AUTO_MS = 1000;
 
 function startFrases(deck) {
   if (!deck.frases.length) return;
   const queue = shuffle(deck.frases).map((f) => ({ f, failed: false }));
-  state.fr = { deck, queue, ok: 0, bad: 0, resolved: 0, results: [], total: queue.length, returnTo: "tema" };
+  state.fr = { deck, queue, ok: 0, bad: 0, resolved: 0, results: [], total: queue.length, returnTo: state.view === "mapa" ? "mapa" : "tema", timer: null };
   show("frase");
   newFraseItem();
 }
@@ -1121,14 +1132,15 @@ function fraseKey(fr, f) {
 
 function newFraseItem() {
   const fr = state.fr;
+  clearTimeout(fr.timer);
   const it = fr.queue[0];
   const f = it.f;
   const seenBefore = !!store.frase(fraseKey(fr, f));
-  let tokens = f.fichas.slice();
-  if (seenBefore || it.failed) tokens = tokens.concat((f.distractores || []).slice(0, 2));
+  let tokens = f.fichas.map((t) => ({ t, dist: false }));
+  if (seenBefore || it.failed) tokens = tokens.concat((f.distractores || []).slice(0, 2).map((t) => ({ t, dist: true })));
   let bank = shuffle(tokens);
-  for (let i = 0; i < 4 && bank.join(" ") === f.fichas.join(" "); i++) bank = shuffle(tokens);
-  fr.cur = { bank: bank.map((t) => ({ t, used: false })), placed: [], step: 1, hint: 0, checked: false, ok1: null, ok2: null, choice: null, rate: 0.9, reported: false };
+  for (let i = 0; i < 4 && bank.map((b) => b.t).join(" ") === f.fichas.join(" "); i++) bank = shuffle(tokens);
+  fr.cur = { bank: bank.map((b) => ({ ...b, used: false })), placed: [], step: 1, hint: 0, checked: false, ok1: null, ok2: null, choice: null, rate: 0.9, reported: false, err: null };
   fr.cur.options = shuffle(f.opciones);
   renderFrase();
 }
@@ -1146,8 +1158,77 @@ function fraseCounters() {
   $("#fr-segments").innerHTML = seg;
 }
 
+function builtTokens(cur) {
+  return cur.placed.map((i) => cur.bank[i].t);
+}
+
 function builtSentence(cur) {
-  return cur.placed.map((i) => cur.bank[i].t).join(" ");
+  return builtTokens(cur).join(" ");
+}
+
+function niceSentence(s) {
+  const t = String(s || "").trim();
+  const c = t.charAt(0).toUpperCase() + t.slice(1);
+  return /[.!?…]$/.test(c) ? c : `${c}.`;
+}
+
+// ¿La frase armada es válida? Primero contra "validas"; después, si hay
+// bloques y el orden es libre, cualquier orden de bloques completos.
+function fraseValid(f, tokens) {
+  const mine = normSentence(tokens.join(" "));
+  if (f.validas.some((v) => normSentence(v) === mine)) return true;
+  if (!Array.isArray(f.bloques) || !f.bloques.length || f.fijo) return false;
+  const toks = tokens.map(normSentence);
+  const blocks = f.bloques.map((b) => b.map(normSentence));
+  const used = blocks.map(() => false);
+  const rec = (i, n) => {
+    if (i === toks.length) return n === blocks.length;
+    for (let b = 0; b < blocks.length; b++) {
+      if (used[b]) continue;
+      const bl = blocks[b];
+      if (bl.every((t, k) => toks[i + k] === t)) {
+        used[b] = true;
+        if (rec(i + bl.length, n + 1)) return true;
+        used[b] = false;
+      }
+    }
+    return false;
+  };
+  return rec(0, 0);
+}
+
+function hasRun(tokens, run) {
+  for (let i = 0; i + run.length <= tokens.length; i++) {
+    if (run.every((t, k) => tokens[i + k] === t)) return true;
+  }
+  return false;
+}
+
+// Explicación del error: ficha que sobra, ficha que falta, bloque separado u orden.
+function fraseError(f, cur) {
+  const errs = Array.isArray(f.errores) ? f.errores : [];
+  const placed = cur.placed.map((i) => cur.bank[i]);
+  const extra = placed.find((b) => b.dist);
+  if (extra) {
+    const e = errs.find((x) => x.tipo === "distractor" && norm(x.ficha) === norm(extra.t));
+    return { title: `Casi. «${extra.t}» no va en esta frase.`, body: e ? e.explica : "Esa ficha sobra: con ella la frase dice otra cosa." };
+  }
+  const missing = cur.bank.filter((b) => !b.dist && !b.used).map((b) => b.t);
+  if (missing.length) {
+    return { title: missing.length === 1 ? "Casi. Te faltó una ficha." : "Casi. Te faltaron fichas.", body: `Falta: ${missing.join(", ")}. Todas las fichas de la idea se usan.` };
+  }
+  const toks = placed.map((b) => normSentence(b.t));
+  for (const e of errs.filter((x) => x.tipo === "bloque" && Array.isArray(x.fichas))) {
+    if (!hasRun(toks, e.fichas.map(normSentence))) return { title: "Casi. Estas fichas van juntas.", body: e.explica };
+  }
+  const o = errs.find((x) => x.tipo === "orden");
+  return { title: "Casi. Revisa el orden.", body: o ? o.explica : "Con estas fichas el orden no funciona así en ruso. Mira la respuesta de abajo." };
+}
+
+function otherValid(f) {
+  const main = normSentence(f.texto || f.validas[0]);
+  const alt = f.validas.find((v) => normSentence(v) !== main);
+  return alt ? niceSentence(alt) : "";
 }
 
 function displaySentence(fr, cur) {
@@ -1155,8 +1236,19 @@ function displaySentence(fr, cur) {
   if (!cur.ok1) return f.texto || f.validas[0];
   const mine = builtSentence(cur);
   if (normSentence(mine) === normSentence(f.texto || f.validas[0])) return f.texto || mine;
-  const t = mine.charAt(0).toUpperCase() + mine.slice(1);
-  return /[.!?]$/.test(t) ? t : `${t}.`;
+  return niceSentence(mine);
+}
+
+const BOOK = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg>`;
+
+function dicBtn(f) {
+  if (!Array.isArray(f.diccionario) || !f.diccionario.length) return "";
+  return `<button class="btn btn-line" type="button" data-fr="dic">${BOOK}Diccionario</button>`;
+}
+
+function frFoot(f, main, extra = "") {
+  const dic = dicBtn(f);
+  return `<div class="fr-foot">${extra}<div class="fr-actions${dic ? "" : " one"}">${dic}${main}</div></div>`;
 }
 
 function renderFrase() {
@@ -1167,28 +1259,41 @@ function renderFrase() {
   const body = $("#frase-body");
   if (cur.step === 1) {
     const zoneCls = cur.checked ? (cur.ok1 ? " ok" : " bad") : "";
-    const placed = cur.placed.map((i) => `<button class="tok" type="button" lang="ru" data-ans="${i}"${cur.checked ? " disabled" : ""}>${esc(cur.bank[i].t)}</button>`).join("");
+    const placed = cur.placed.map((i) => {
+      const b = cur.bank[i];
+      const bad = cur.checked && !cur.ok1 && b.dist;
+      return `<button class="tok${bad ? " bad" : ""}" type="button" lang="ru" data-ans="${i}"${cur.checked ? " disabled" : ""}>${esc(b.t)}</button>`;
+    }).join("");
     const bank = cur.bank.map((b, i) => b.used
       ? `<span class="tok ghost" aria-hidden="true">${esc(b.t)}</span>`
       : `<button class="tok" type="button" lang="ru" data-bank="${i}"${cur.checked ? " disabled" : ""}>${esc(b.t)}</button>`).join("");
     let foot;
+    let extra = "";
     if (!cur.checked) {
       foot = `<div class="fr-foot">
         ${cur.hint ? `<div class="hint-box"><span class="label">Pista</span><p class="hint-text">${esc(f.pista || "Fíjate en el orden de la idea en español.")}</p></div>` : ""}
         <button class="menu-item" type="button" data-fr="hint">${cur.hint ? "No sé, muéstrame la respuesta" : "No sé, dame una pista"}</button>
         <button class="btn btn-primary btn-wide" type="button" data-fr="check"${cur.placed.length ? "" : " disabled"}>Comprobar</button></div>`;
     } else if (cur.ok1) {
-      foot = `<div class="fr-foot"><button class="btn btn-primary btn-wide" type="button" data-fr="step2">Continuar</button></div>`;
+      foot = frFoot(f, `<button class="btn btn-primary" type="button" data-fr="step2">Continuar</button>`);
     } else {
-      foot = `<div class="solution card-frame pal-mint"><span class="label">Una respuesta correcta</span><div lang="ru">${esc(f.texto || f.validas[0])}</div>${f.fonetica ? `<span class="fon">${esc(f.fonetica)}</span>` : ""}</div>
-        <div class="fr-foot">
-          ${cur.placed.length && !cur.revealed ? `<button class="menu-item" type="button" data-fr="report1"${cur.reported ? " disabled" : ""}>${cur.reported ? "✓ Enviado, lo voy a revisar" : "Mi respuesta también es correcta"}</button>` : ""}
-          <button class="btn btn-primary btn-wide" type="button" data-fr="step2">Continuar</button></div>`;
+      if (cur.err) {
+        extra += `<section class="fr-error" role="status"><b>${esc(cur.err.title)}</b><p>${esc(cur.err.body)}</p></section>`;
+      }
+      const alt = otherValid(f);
+      extra += `<div class="solution card-frame pal-mint"><span class="label">Una respuesta correcta</span><div class="sol-ru" lang="ru">${esc(f.texto || niceSentence(f.validas[0]))}</div>${f.fonetica ? `<span class="fon">${esc(f.fonetica)}</span>` : ""}${alt ? `<span class="sol-alt">También vale: <span lang="ru">${esc(alt)}</span></span>` : ""}</div>`;
+      const report = cur.placed.length && !cur.revealed
+        ? `<button class="link-quiet" type="button" data-fr="report1"${cur.reported ? " disabled" : ""}>${cur.reported ? "✓ Enviado, lo voy a revisar" : "Mi respuesta también es correcta"}</button>`
+        : "";
+      foot = frFoot(f, `<button class="btn btn-primary" type="button" data-fr="step2">Continuar</button>`, report);
     }
-    body.innerHTML = `<div class="idea card-frame pal-lav"><div><span class="label">Arma la frase · paso 1 de 2</span><span class="idea-text">${esc(f.idea)}</span></div></div>
+    const msg = cur.checked
+      ? (cur.ok1 ? `<p class="fr-msg ok" role="status">¡Bien armada!</p>` : "")
+      : `<p class="fr-msg">Cualquier orden correcto cuenta. Toca una ficha para quitarla.</p>`;
+    body.innerHTML = `<div class="idea card-frame pal-lav"><div><span class="label">Arma la frase · paso <span class="num">1</span> de <span class="num">2</span></span><span class="idea-text">${esc(f.idea)}</span></div></div>
       <div class="answer-zone${zoneCls}" aria-label="Tu frase">${placed}</div>
-      <p class="muted" style="margin:-4px 0 0;font-size:13px">${cur.checked ? (cur.ok1 ? "¡Bien armada!" : "Así no quedó. Revisa la respuesta de abajo.") : "Cualquier orden correcto cuenta. Toca una ficha para quitarla."}</p>
-      <div class="bank">${bank}</div>${foot}`;
+      ${msg}${extra}
+      <div class="bank${cur.checked ? " spent" : ""}">${bank}</div>${foot}`;
     return;
   }
   // Paso 2
@@ -1204,17 +1309,34 @@ function renderFrase() {
     }
     return `<button class="${cls}" type="button" data-fopt="${i}"${cur.choice !== null ? " disabled" : ""}><span class="key">${key}</span><span class="opt-text"><span>${esc(o)}</span></span></button>`;
   }).join("");
+  let foot;
+  if (cur.choice === null) foot = dicBtn(f) ? `<div class="fr-foot"><div class="fr-actions one">${dicBtn(f)}</div></div>` : "";
+  else {
+    const report = !cur.ok2
+      ? `<button class="link-quiet" type="button" data-fr="report2"${cur.reported ? " disabled" : ""}>${cur.reported ? "✓ Enviado, lo voy a revisar" : "Mi respuesta también es correcta"}</button>`
+      : "";
+    foot = frFoot(f, `<button class="btn btn-primary" type="button" data-fr="next">Continuar</button>`, report);
+  }
   body.innerHTML = `<div class="sentence card-frame pal-bl">
-      <span class="label">¿Qué dijiste? · paso 2 de 2</span>
+      <span class="label">¿Qué dijiste? · paso <span class="num">2</span> de <span class="num">2</span></span>
       <div class="sentence-row"><div><span class="sentence-ru" lang="ru">${esc(sentence)}</span>${showFon ? `<span class="fon">${esc(f.fonetica)}</span>` : ""}</div>
       ${canSpeak ? `<button class="audio-btn" type="button" data-fr="say" aria-label="Escuchar la frase en ruso">${SPEAKER}</button>` : ""}</div>
       ${canSpeak ? `<div class="speed"><button type="button" data-rate="0.9" aria-pressed="${cur.rate === 0.9}">Normal</button><button type="button" data-rate="0.55" aria-pressed="${cur.rate === 0.55}">Lento</button></div>` : ""}
     </div>
-    <p class="muted" style="margin:0;font-size:14px">Elige la traducción de la frase que armaste:</p>
+    <p class="fr-msg">Elige la traducción de la frase que armaste:</p>
     <div class="options">${opts}</div>
-    ${cur.choice !== null ? `<div class="fr-foot">
-      ${!cur.ok2 ? `<button class="menu-item" type="button" data-fr="report2"${cur.reported ? " disabled" : ""}>${cur.reported ? "✓ Enviado, lo voy a revisar" : "Mi respuesta también es correcta"}</button>` : ""}
-      <button class="btn btn-primary btn-wide" type="button" data-fr="next">Continuar</button></div>` : ""}`;
+    ${foot}`;
+}
+
+function goStep2() {
+  const fr = state.fr;
+  if (!fr) return;
+  clearTimeout(fr.timer);
+  const cur = fr.cur;
+  cur.step = 2;
+  cur.reported = false;
+  renderFrase();
+  if (store.settings.autoSpeak) speak(displaySentence(fr, cur), cur.rate);
 }
 
 function fraseClick(e) {
@@ -1246,7 +1368,9 @@ function fraseClick(e) {
     cur.ok2 = cur.options[cur.choice] === f.es;
     cur.reported = false;
     playSound(cur.ok2);
-    return renderFrase();
+    renderFrase();
+    if (cur.ok2) fr.timer = setTimeout(() => { if (state.fr === fr && fr.cur === cur && $("#sheet").hidden) finishFraseItem(); }, AUTO_MS);
+    return;
   }
   const act = t.dataset.fr;
   if (act === "hint") {
@@ -1254,25 +1378,28 @@ function fraseClick(e) {
     cur.checked = true;
     cur.ok1 = false;
     cur.revealed = true;
+    cur.err = null;
     playSound(false);
     return renderFrase();
   }
   if (act === "check") {
-    const mine = normSentence(builtSentence(cur));
     cur.checked = true;
-    cur.ok1 = f.validas.some((v) => normSentence(v) === mine);
+    cur.ok1 = fraseValid(f, builtTokens(cur));
+    cur.err = cur.ok1 ? null : fraseError(f, cur);
     playSound(cur.ok1);
-    return renderFrase();
-  }
-  if (act === "step2") {
-    cur.step = 2;
-    cur.reported = false;
     renderFrase();
-    if (store.settings.autoSpeak) speak(displaySentence(fr, cur), cur.rate);
+    // Al acertar (sin pista) pasa solo al paso 2.
+    if (cur.ok1 && !cur.hint) fr.timer = setTimeout(() => { if (state.fr === fr && fr.cur === cur && cur.step === 1 && $("#sheet").hidden) goStep2(); }, AUTO_MS);
     return;
+  }
+  if (act === "step2") return goStep2();
+  if (act === "dic") {
+    clearTimeout(fr.timer);
+    return openDiccionario(fr.deck, f, cur.bank.map((b) => b.t));
   }
   if (act === "say") return speak(displaySentence(fr, cur), cur.rate);
   if (act === "report1" || act === "report2") {
+    clearTimeout(fr.timer);
     cur.reported = true;
     if (act === "report1") cur.reported1 = true;
     store.report({
@@ -1289,6 +1416,8 @@ function fraseClick(e) {
 
 function finishFraseItem() {
   const fr = state.fr;
+  if (!fr) return;
+  clearTimeout(fr.timer);
   const cur = fr.cur;
   const item = fr.queue.shift();
   // Si reportaste que tu respuesta también era correcta, no se repite.
@@ -1313,6 +1442,138 @@ function finishFraseItem() {
     state.fr = null;
     show("done");
   }
+}
+
+// ---------- Hoja inferior (Diccionario, dudas) ----------
+let sheetReturn = null;
+
+function openSheet(title, html, sub = "") {
+  sheetReturn = document.activeElement;
+  $("#sheet-title").textContent = title;
+  $("#sheet-sub").textContent = sub;
+  $("#sheet-sub").hidden = !sub;
+  $("#sheet-body").innerHTML = html;
+  const wrap = $("#sheet");
+  wrap.hidden = false;
+  document.body.classList.add("sheet-on");
+  for (const el of $$(".view, #nav")) el.inert = true;
+  requestAnimationFrame(() => wrap.classList.add("on"));
+  $("#sheet-close").focus();
+}
+
+function closeSheet() {
+  const wrap = $("#sheet");
+  if (wrap.hidden) return;
+  wrap.classList.remove("on");
+  document.body.classList.remove("sheet-on");
+  for (const el of $$(".view, #nav")) el.inert = false;
+  state.dic = null;
+  const done = () => { wrap.hidden = true; };
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) done(); else setTimeout(done, 260);
+  if (sheetReturn && document.contains(sheetReturn)) sheetReturn.focus();
+}
+
+// ---------- Diccionario y «Mis palabras» ----------
+const MINE = "mis-palabras";
+
+function mineId(forma) {
+  return norm(forma);
+}
+
+function openDiccionario(deck, f, tokens) {
+  const shown = new Set(tokens.map(norm));
+  const seen = new Set();
+  const entries = (f.diccionario || []).filter((d) => {
+    const k = norm(d.ficha);
+    if (!shown.has(k) || seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  });
+  state.dic = { deck, f, entries };
+  openSheet("Diccionario", dicHtml(), "Las palabras de esta frase, en su forma de diccionario.");
+}
+
+function dicHtml() {
+  const { entries } = state.dic;
+  const canSpeak = "speechSynthesis" in window;
+  return `<div class="dic-list">${entries.map((d, i) => {
+    const changed = norm(d.ficha) !== norm(d.forma);
+    const on = store.inMine(mineId(d.forma));
+    const porque = String(d.porque || "").trim();
+    const why = porque ? porque.charAt(0).toLowerCase() + porque.slice(1) : "";
+    return `<div class="dic-row">
+      <div class="dic-top">
+        ${canSpeak ? `<button class="dic-say" type="button" data-dsay="${i}" aria-label="Escuchar ${esc(d.forma)}">${SPEAKER}</button>` : ""}
+        <div class="dic-main">
+          <span class="dic-words">${changed ? `<span class="dic-from" lang="ru">${esc(d.ficha)} →</span>` : ""}<span class="dic-forma" lang="ru">${esc(d.forma)}</span></span>
+          <span class="dic-es">${esc(d.es)}${d.fonetica ? ` · <span class="dic-fon">${esc(d.fonetica)}</span>` : ""}</span>
+        </div>
+        <button class="dic-add${on ? " on" : ""}" type="button" data-dadd="${i}" aria-pressed="${on}">${on ? "En Mis palabras" : "+ Repasar"}</button>
+      </div>
+      ${why ? `<span class="dic-why"><b>Cambió:</b> ${esc(why)}</span>` : ""}
+    </div>`;
+  }).join("")}</div>`;
+}
+
+function dicClick(e) {
+  const dic = state.dic;
+  if (!dic) return;
+  const say = e.target.closest("[data-dsay]");
+  if (say) return speak(dic.entries[Number(say.dataset.dsay)].forma);
+  const add = e.target.closest("[data-dadd]");
+  if (!add) return;
+  const i = Number(add.dataset.dadd);
+  const d = dic.entries[i];
+  const id = mineId(d.forma);
+  const on = !store.inMine(id);
+  store.setMine(id, {
+    ru: d.forma, es: d.es, fonetica: d.fonetica || "", porque: d.porque || "", ficha: d.ficha,
+    deck: dic.deck.id, frase: dic.f.texto || "", fraseFon: dic.f.fonetica || "", fraseEs: dic.f.es || ""
+  }, on);
+  rebuildMine();
+  $("#sheet-body").innerHTML = dicHtml();
+  const again = $(`#sheet-body [data-dadd="${i}"]`);
+  if (again) again.focus();
+  toast(on ? "Agregada a Mis palabras" : "Quitada de Mis palabras");
+}
+
+// Mazo personal: las palabras guardadas con «+ Repasar». Entra a la práctica
+// diaria como cualquier otro tema.
+function mineCards() {
+  return store.mineList().map((w) => {
+    const from = state.deckById.get(w.deck);
+    return {
+      id: `${MINE}:${w.id}`,
+      deckId: MINE,
+      kind: "word",
+      ru: w.ru,
+      es: w.es,
+      tag: "",
+      nota: w.ficha && norm(w.ficha) !== norm(w.ru) ? `En la frase: ${w.ficha}` : "",
+      pista: `La guardaste de una frase${from ? ` de «${from.title}»` : ""}.`,
+      fonetica: w.fonetica || "",
+      seccion: "",
+      ejemplo: w.frase ? { ru: w.frase, fonetica: w.fraseFon || "", es: w.fraseEs || "" } : null,
+      tip: w.porque || "",
+      q: undefined,
+      a: undefined
+    };
+  });
+}
+
+function rebuildMine() {
+  let deck = state.deckById.get(MINE);
+  if (!deck) {
+    deck = {
+      id: MINE, index: state.decks.length, title: "Mis palabras", group: "Mis palabras",
+      desc: "Las palabras que guardaste con «+ Repasar» en el Diccionario de las frases. Entran a tu práctica diaria.",
+      aprender: null, frases: [], cards: [], mine: true
+    };
+    state.decks.push(deck);
+    state.deckById.set(MINE, deck);
+  }
+  deck.cards = mineCards();
 }
 
 // ---------- Ajustes y cuenta ----------
@@ -1552,8 +1813,19 @@ function bind() {
   $("#frase-body").addEventListener("click", fraseClick);
   $("#frase-close").addEventListener("click", () => {
     const fr = state.fr;
+    if (fr) clearTimeout(fr.timer);
+    closeSheet();
     state.fr = null;
     backTo(fr ? fr.returnTo : "home");
+  });
+
+  // Hoja inferior
+  $("#sheet").addEventListener("click", (e) => {
+    if (e.target.closest("[data-sheet-close]")) return closeSheet();
+    dicClick(e);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !$("#sheet").hidden) { e.preventDefault(); closeSheet(); }
   });
 
   document.addEventListener("keydown", (e) => {

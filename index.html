@@ -288,6 +288,21 @@
   </button>
 </nav>
 
+<div class="sheet-wrap" id="sheet" hidden>
+  <div class="sheet-backdrop" data-sheet-close></div>
+  <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+    <span class="sheet-grab" aria-hidden="true"></span>
+    <div class="row-between">
+      <h2 class="sheet-title" id="sheet-title">Diccionario</h2>
+      <button class="circle-btn" id="sheet-close" type="button" data-sheet-close aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <p class="sheet-sub" id="sheet-sub" hidden></p>
+    <div class="sheet-body" id="sheet-body"></div>
+  </section>
+</div>
+
 <div class="toast" id="toast" role="status" hidden></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
