@@ -1,7 +1,7 @@
-import { Store } from "./store.js";
+import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "2.0.0";
+const APP_VERSION = "2.0.1";
 const NEW_PER_DECK_SESSION = 20;
 const PILOT = "familia";
 
@@ -1383,7 +1383,7 @@ function renderSettings() {
   $(`#theme-${s.theme === "light" ? "light" : "dark"}`).checked = true;
   $("#reset-confirm").hidden = true;
   $("#reset-ask").hidden = false;
-  $("#app-version").textContent = `Russo Study ${APP_VERSION}`;
+  $("#app-version").textContent = `Russo Study ${APP_VERSION}${IS_BETA ? " · beta (progreso de prueba)" : ""}`;
   $("#deck-toggles").innerHTML = state.decks
     .map((d) => `<label class="deck-toggle" for="en-${esc(d.id)}"><span>${esc(d.title)}</span>
       <input class="switch" type="checkbox" id="en-${esc(d.id)}" data-toggle="${esc(d.id)}" ${deckEnabled(d) ? "checked" : ""}></label>`)
@@ -1656,6 +1656,7 @@ function bind() {
 function startVisitCounter() {
   const code = String((window.RUSSO_CONFIG || {}).goatcounter || "").trim();
   if (!code || !/^[a-z0-9-]+$/i.test(code) || location.protocol === "file:") return;
+  if (IS_BETA) return; // la beta no cuenta visitas para no mezclar estadísticas
   const s = document.createElement("script");
   s.async = true;
   s.src = "https://gc.zgo.at/count.js";
@@ -1664,7 +1665,20 @@ function startVisitCounter() {
 }
 
 // ---------- Arranque ----------
+// Etiqueta discreta para saber que estás en la beta.
+function markBeta() {
+  if (!IS_BETA) return;
+  document.documentElement.classList.add("is-beta");
+  document.title = "Russo Beta";
+  const tag = document.createElement("div");
+  tag.className = "beta-tag";
+  tag.textContent = "BETA";
+  tag.setAttribute("aria-label", "Versión beta: progreso de prueba");
+  document.body.appendChild(tag);
+}
+
 async function main() {
+  markBeta();
   applyTheme();
   bind();
   renderSync();
@@ -1681,7 +1695,7 @@ async function main() {
   startVisitCounter();
 
   if ("serviceWorker" in navigator && location.protocol !== "file:") {
-    navigator.serviceWorker.register("sw.js").catch((e) => console.warn("SW", e));
+    navigator.serviceWorker.register("sw.js", { scope: "./" }).catch((e) => console.warn("SW", e));
   }
 }
 

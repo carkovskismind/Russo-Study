@@ -547,3 +547,13 @@ svg { display: block; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+/* ---------- Versión beta ---------- */
+.beta-tag {
+  position: fixed; z-index: 999; pointer-events: none;
+  top: calc(env(safe-area-inset-top, 0px) + 6px); left: 50%; transform: translateX(-50%);
+  font-family: var(--f-ui); font-size: 10px; font-weight: 800; letter-spacing: 0.14em;
+  padding: 3px 9px; border-radius: 999px;
+  color: var(--accent-ink); background: var(--accent);
+  opacity: 0.9;
+}
