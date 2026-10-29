@@ -1,0 +1,61 @@
+{
+  "id": "calendario",
+  "titulo": "Calendario · ejercicios",
+  "dialogos": [
+    {
+      "id": "calendario-d1",
+      "titulo": "¿Qué día es hoy?",
+      "mensajes": [
+        {"de": "Лена", "ru": "Како́й сего́дня день?", "fonetica": "ka-KOI si-VOD-nia dien'", "es": "¿Qué día es hoy?"},
+        {"de": "yo", "ru": "Сего́дня вто́рник.", "fonetica": "si-VOD-nia FTOR-nik", "es": "Hoy es martes.", "opciones": [
+          {"ru": "Сего́дня вто́рник.", "fonetica": "si-VOD-nia FTOR-nik", "correcta": true, "porque": "¡Bien! вто́рник es un día de la semana."},
+          {"ru": "Сего́дня март.", "fonetica": "si-VOD-nia mart", "correcta": false, "porque": "март es marzo (un mes); el día de la semana es вто́рник."},
+          {"ru": "За́втра вто́рник.", "fonetica": "ZAF-tra FTOR-nik", "correcta": false, "porque": "за́втра es «mañana»; hoy es вто́рник."}
+        ]},
+        {"de": "Лена", "ru": "А како́й сейча́с ме́сяц?", "fonetica": "a ka-KOI si-CHAS MIE-siats", "es": "¿Y qué mes es?"},
+        {"de": "yo", "ru": "Сейча́с октя́брь.", "fonetica": "si-CHAS ak-TIABR'", "es": "Ahora es octubre.", "opciones": [
+          {"ru": "Сейча́с октя́брь.", "fonetica": "si-CHAS ak-TIABR'", "correcta": true, "porque": "¡Eso! октя́брь es un mes."},
+          {"ru": "Сейча́с о́сень.", "fonetica": "si-CHAS O-sien'", "correcta": false, "porque": "о́сень es la estación (otoño); el mes es октя́брь."},
+          {"ru": "Сейча́с ноя́брь.", "fonetica": "si-CHAS na-IABR'", "correcta": false, "porque": "ноя́брь es noviembre; octubre es октя́брь."}
+        ]},
+        {"de": "Лена", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
+      ]
+    },
+    {
+      "id": "calendario-d2",
+      "titulo": "Fiestas",
+      "mensajes": [
+        {"de": "Лена", "ru": "Когда́ Но́вый год?", "fonetica": "kag-DA NO-vyi got", "es": "¿Cuándo es Año Nuevo?"},
+        {"de": "yo", "ru": "Но́вый год в январе́.", "fonetica": "NO-vyi got v yan-va-RIE", "es": "Año Nuevo es en enero.", "opciones": [
+          {"ru": "Но́вый год в январе́.", "fonetica": "NO-vyi got v yan-va-RIE", "correcta": true, "porque": "¡Bien! Después de в el mes cambia: в январе́."},
+          {"ru": "Но́вый год в янва́рь.", "fonetica": "NO-vyi got v yan-VAR'", "correcta": false, "porque": "Después de в (cuándo) el mes cambia: в январе́."},
+          {"ru": "Но́вый год в ию́ле.", "fonetica": "NO-vyi got v i-IU-lie", "correcta": false, "porque": "ию́ле es julio; Año Nuevo es en enero."}
+        ]},
+        {"de": "Лена", "ru": "А День мёртвых?", "fonetica": "a dien' MIORT-vykh", "es": "¿Y el Día de Muertos?"},
+        {"de": "yo", "ru": "День мёртвых в ноябре́.", "fonetica": "dien' MIORT-vykh v na-iab-RIE", "es": "El Día de Muertos es en noviembre.", "opciones": [
+          {"ru": "День мёртвых в ноябре́.", "fonetica": "dien' MIORT-vykh v na-iab-RIE", "correcta": true, "porque": "¡Eso! в ноябре́ = en noviembre."},
+          {"ru": "День мёртвых в ноя́брь.", "fonetica": "dien' MIORT-vykh v na-IABR'", "correcta": false, "porque": "Después de в el mes cambia: в ноябре́."},
+          {"ru": "День мёртвых в январе́.", "fonetica": "dien' MIORT-vykh v yan-va-RIE", "correcta": false, "porque": "январе́ es enero; el Día de Muertos es en noviembre: ноябре́."}
+        ]},
+        {"de": "Лена", "ru": "Как краси́во!", "fonetica": "kak kra-SI-va", "es": "¡Qué bonito!"}
+      ]
+    }
+  ],
+  "cajas": [
+    {
+      "id": "calendario-c1",
+      "pregunta": "¿A qué estación pertenece cada mes?",
+      "cajas": ["зима́", "весна́", "ле́то", "о́сень"],
+      "items": [
+        {"ru": "дека́брь", "caja": "зима́", "porque": "Diciembre es invierno."},
+        {"ru": "янва́рь", "caja": "зима́", "porque": "Enero es invierno."},
+        {"ru": "март", "caja": "весна́", "porque": "Marzo es primavera."},
+        {"ru": "апре́ль", "caja": "весна́", "porque": "Abril es primavera."},
+        {"ru": "ию́нь", "caja": "ле́то", "porque": "Junio es verano."},
+        {"ru": "ию́ль", "caja": "ле́то", "porque": "Julio es verano."},
+        {"ru": "сентя́брь", "caja": "о́сень", "porque": "Septiembre es otoño."},
+        {"ru": "октя́брь", "caja": "о́сень", "porque": "Octubre es otoño."}
+      ]
+    }
+  ]
+}

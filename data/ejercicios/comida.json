@@ -1,0 +1,78 @@
+{
+  "id": "comida",
+  "titulo": "Comida · ejercicios",
+  "dialogos": [
+    {
+      "id": "comida-d1",
+      "titulo": "¿Qué quieres?",
+      "mensajes": [
+        {"de": "Лена", "ru": "Ты хо́чешь ко́фе и́ли чай?", "fonetica": "ty JO-chish KO-fie I-li chai", "es": "¿Quieres café o té?"},
+        {"de": "yo", "ru": "Я хочу́ чай.", "fonetica": "ia ja-CHU chai", "es": "Quiero té.", "opciones": [
+          {"ru": "Я хочу́ чай.", "fonetica": "ia ja-CHU chai", "correcta": true, "porque": "¡Bien! Con я: хочу́."},
+          {"ru": "Я хо́чешь чай.", "fonetica": "ia JO-chish chai", "correcta": false, "porque": "хо́чешь va con ты; con я es хочу́."},
+          {"ru": "Мы хоти́м чай.", "fonetica": "my ja-TIM chai", "correcta": false, "porque": "хоти́м es «queremos»; hablas de ti sola: я хочу́."}
+        ]},
+        {"de": "Лена", "ru": "А что ещё?", "fonetica": "a shto ish-CHO", "es": "¿Y qué más?"},
+        {"de": "yo", "ru": "Я хочу́ хлеб и мя́со.", "fonetica": "ia ja-CHU khlieb i MIA-sa", "es": "Quiero pan y carne.", "opciones": [
+          {"ru": "Я хочу́ хлеб и мя́со.", "fonetica": "ia ja-CHU khlieb i MIA-sa", "correcta": true, "porque": "¡Eso! и une las dos cosas."},
+          {"ru": "Я хочу́ хлеб и́ли мя́со.", "fonetica": "ia ja-CHU khlieb I-li MIA-sa", "correcta": false, "porque": "и́ли es «o»; quieres las dos cosas: и."},
+          {"ru": "Я хочу́ хлеб и мёд.", "fonetica": "ia ja-CHU khlieb i miot", "correcta": false, "porque": "мёд es miel; quieres carne: мя́со."}
+        ]},
+        {"de": "Лена", "ru": "Коне́чно!", "fonetica": "ka-NIESH-na", "es": "¡Claro!"}
+      ]
+    },
+    {
+      "id": "comida-d2",
+      "titulo": "En el restaurante",
+      "mensajes": [
+        {"de": "Лена", "ru": "Здра́вствуйте! Что вы хоти́те?", "fonetica": "ZDRAST-vui-tie! shto vy ja-TI-tie", "es": "¡Hola! ¿Qué desean?"},
+        {"de": "yo", "ru": "Мне пожа́луйста сок.", "fonetica": "mnie pa-ZHAL-sta sok", "es": "Para mí un jugo, por favor.", "opciones": [
+          {"ru": "Мне пожа́луйста сок.", "fonetica": "mnie pa-ZHAL-sta sok", "correcta": true, "porque": "¡Bien! Para pedir: мне + пожа́луйста."},
+          {"ru": "Я пожа́луйста сок.", "fonetica": "ia pa-ZHAL-sta sok", "correcta": false, "porque": "Para pedir se dice мне («para mí»), no я."},
+          {"ru": "Мне пожа́луйста молоко́.", "fonetica": "mnie pa-ZHAL-sta ma-la-KO", "correcta": false, "porque": "молоко́ es leche; quieres jugo: сок."}
+        ]},
+        {"de": "Лена", "ru": "Хорошо́. А что ещё?", "fonetica": "ja-ra-SHO. a shto ish-CHO", "es": "Bien. ¿Y qué más?"},
+        {"de": "yo", "ru": "Пи́ццу, пожа́луйста.", "fonetica": "PIT-tsu pa-ZHAL-sta", "es": "Una pizza, por favor.", "opciones": [
+          {"ru": "Пи́ццу, пожа́луйста.", "fonetica": "PIT-tsu pa-ZHAL-sta", "correcta": true, "porque": "¡Eso! Al pedir, пи́цца cambia a пи́ццу."},
+          {"ru": "Пи́цца, пожа́луйста.", "fonetica": "PIT-tsa pa-ZHAL-sta", "correcta": false, "porque": "Al pedir, пи́цца cambia a пи́ццу."},
+          {"ru": "Пи́ццу, спаси́бо.", "fonetica": "PIT-tsu spa-SI-ba", "correcta": false, "porque": "спаси́бо es «gracias»; al pedir se usa пожа́луйста."}
+        ]},
+        {"de": "Лена", "ru": "Хорошо́, спаси́бо!", "fonetica": "ja-ra-SHO, spa-SI-ba", "es": "Bien, ¡gracias!"}
+      ]
+    }
+  ],
+  "cajas": [
+    {
+      "id": "comida-c1",
+      "pregunta": "ем o пью: ¿se come o se bebe?",
+      "cajas": ["ем", "пью"],
+      "items": [
+        {"ru": "Я … хлеб.", "caja": "ем", "porque": "El pan se come: ем."},
+        {"ru": "Я … сок.", "caja": "пью", "porque": "El jugo se bebe: пью."},
+        {"ru": "Я … мя́со.", "caja": "ем", "porque": "La carne se come: ем."},
+        {"ru": "Я … молоко́.", "caja": "пью", "porque": "La leche se bebe: пью."},
+        {"ru": "Я … я́блоко.", "caja": "ем", "porque": "La manzana se come: ем."},
+        {"ru": "Я … чай.", "caja": "пью", "porque": "El té se bebe: пью."},
+        {"ru": "Я … сала́т.", "caja": "ем", "porque": "La ensalada se come: ем."},
+        {"ru": "Я … ко́фе.", "caja": "пью", "porque": "El café se bebe: пью."}
+      ]
+    },
+    {
+      "id": "comida-c2",
+      "pregunta": "¿Bebida, fruta o platillo? Elige la caja.",
+      "cajas": ["bebida", "fruta", "platillo"],
+      "items": [
+        {"ru": "сок", "caja": "bebida", "porque": "Se bebe."},
+        {"ru": "чай", "caja": "bebida", "porque": "Se bebe."},
+        {"ru": "молоко́", "caja": "bebida", "porque": "Se bebe."},
+        {"ru": "я́блоко", "caja": "fruta", "porque": "Es una fruta."},
+        {"ru": "апельси́н", "caja": "fruta", "porque": "Es una fruta."},
+        {"ru": "бана́н", "caja": "fruta", "porque": "Es una fruta."},
+        {"ru": "суп", "caja": "platillo", "porque": "Es un platillo."},
+        {"ru": "сала́т", "caja": "platillo", "porque": "Es un platillo."},
+        {"ru": "пи́цца", "caja": "platillo", "porque": "Es un platillo."},
+        {"ru": "та́кос", "caja": "platillo", "porque": "Es un platillo."}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "id": "basicas",
+  "titulo": "Palabras básicas · ejercicios",
+  "dialogos": [
+    {
+      "id": "basicas-d1",
+      "titulo": "¿Dónde estás?",
+      "mensajes": [
+        {"de": "Лена", "ru": "Ты сейча́с здесь?", "fonetica": "ty si-CHAS zdies", "es": "¿Estás aquí ahora?"},
+        {"de": "yo", "ru": "Да, я здесь.", "fonetica": "da, ia zdies", "es": "Sí, estoy aquí.", "opciones": [
+          {"ru": "Да, я здесь.", "fonetica": "da, ia zdies", "correcta": true, "porque": "¡Bien! здесь = aquí, donde estás."},
+          {"ru": "Да, я куда́.", "fonetica": "da, ia ku-DA", "correcta": false, "porque": "куда́ es «a dónde», una pregunta; para decir dónde estás se usa здесь o там."},
+          {"ru": "Нет, я здесь.", "fonetica": "niet, ia zdies", "correcta": false, "porque": "нет es «no»; tú quieres decir «sí»: да."}
+        ]},
+        {"de": "Лена", "ru": "А он где?", "fonetica": "a on gdie", "es": "¿Y él dónde?"},
+        {"de": "yo", "ru": "Он там.", "fonetica": "on tam", "es": "Él está allá.", "opciones": [
+          {"ru": "Он там.", "fonetica": "on tam", "correcta": true, "porque": "¡Eso! там = allá."},
+          {"ru": "Он куда́.", "fonetica": "on ku-DA", "correcta": false, "porque": "куда́ es una pregunta («a dónde»); para responder se usa там."},
+          {"ru": "Он никогда́.", "fonetica": "on ni-gda-DA", "correcta": false, "porque": "никогда́ es «nunca»; la pregunta es dónde: там."}
+        ]},
+        {"de": "Лена", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
+      ]
+    },
+    {
+      "id": "basicas-d2",
+      "titulo": "¿De quién es?",
+      "mensajes": [
+        {"de": "Лена", "ru": "Чья э́то?", "fonetica": "cha E-ta", "es": "¿De quién es esto? (algo femenino)"},
+        {"de": "yo", "ru": "Э́то моя́.", "fonetica": "E-ta ma-IA", "es": "Es mía.", "opciones": [
+          {"ru": "Э́то моя́.", "fonetica": "E-ta ma-IA", "correcta": true, "porque": "¡Muy bien! чья es femenino y la respuesta también: моя́."},
+          {"ru": "Э́то мой.", "fonetica": "E-ta moi", "correcta": false, "porque": "чья es femenino; la respuesta también: моя́, no мой."},
+          {"ru": "Э́то твоя́.", "fonetica": "E-ta tva-IA", "correcta": false, "porque": "Hablas de ti: моя́ (mía), no твоя́ (tuya)."}
+        ]},
+        {"de": "Лена", "ru": "А э́то чьё?", "fonetica": "a E-ta chio", "es": "¿Y esto de quién es? (algo neutro)"},
+        {"de": "yo", "ru": "Э́то твоё.", "fonetica": "E-ta tva-YO", "es": "Es tuyo.", "opciones": [
+          {"ru": "Э́то твоё.", "fonetica": "E-ta tva-YO", "correcta": true, "porque": "¡Exacto! чьё es neutro y la respuesta también: твоё."},
+          {"ru": "Э́то твой.", "fonetica": "E-ta tvoi", "correcta": false, "porque": "чьё es neutro; la respuesta también: твоё."},
+          {"ru": "Э́то наш.", "fonetica": "E-ta nash", "correcta": false, "porque": "наш es «nuestro» y masculino; aquí es de ella y neutro: твоё."}
+        ]},
+        {"de": "Лена", "ru": "Коне́чно!", "fonetica": "ka-NIESH-na", "es": "¡Claro!"}
+      ]
+    },
+    {
+      "id": "basicas-d3",
+      "titulo": "¿Por qué?",
+      "mensajes": [
+        {"de": "Лена", "ru": "Ты то́лько сего́дня здесь?", "fonetica": "ty TOL-ka si-VOD-nia zdies", "es": "¿Estás aquí solo hoy?"},
+        {"de": "yo", "ru": "Нет, я здесь и за́втра.", "fonetica": "niet, ia zdies i ZAF-tra", "es": "No, estoy aquí también mañana.", "opciones": [
+          {"ru": "Нет, я здесь и за́втра.", "fonetica": "niet, ia zdies i ZAF-tra", "correcta": true, "porque": "¡Bien! нет porque no es «solo hoy»."},
+          {"ru": "Да, я здесь и за́втра.", "fonetica": "da, ia zdies i ZAF-tra", "correcta": false, "porque": "да confirma «solo hoy», pero tú estarás también mañana: нет."},
+          {"ru": "Нет, я там и за́втра.", "fonetica": "niet, ia tam i ZAF-tra", "correcta": false, "porque": "там es «allá»; dices que estás aquí: здесь."}
+        ]},
+        {"de": "Лена", "ru": "Почему́?", "fonetica": "pa-chi-MU", "es": "¿Por qué?"},
+        {"de": "yo", "ru": "Потому́ что здесь о́чень краси́во.", "fonetica": "pa-ta-MU shta zdies O-chin kra-SI-va", "es": "Porque aquí es muy bonito.", "opciones": [
+          {"ru": "Потому́ что здесь о́чень краси́во.", "fonetica": "pa-ta-MU shta zdies O-chin kra-SI-va", "correcta": true, "porque": "¡Perfecto! Para responder «por qué» se usa потому́ что."},
+          {"ru": "Заче́м здесь о́чень краси́во.", "fonetica": "za-CHIEM zdies O-chin kra-SI-va", "correcta": false, "porque": "заче́м es «para qué»; para responder «porque» se usa потому́ что."},
+          {"ru": "Почему́ здесь о́чень краси́во.", "fonetica": "pa-chi-MU zdies O-chin kra-SI-va", "correcta": false, "porque": "почему́ es la pregunta «por qué»; para responder: потому́ что."}
+        ]},
+        {"de": "Лена", "ru": "Да, коне́чно!", "fonetica": "da, ka-NIESH-na", "es": "¡Sí, claro!"}
+      ]
+    }
+  ],
+  "cajas": [
+    {
+      "id": "basicas-c1",
+      "pregunta": "Elige la pregunta que va con cada respuesta.",
+      "cajas": ["кто", "где", "когда́", "как"],
+      "items": [
+        {"ru": "я", "caja": "кто", "porque": "Es una persona: кто."},
+        {"ru": "она́", "caja": "кто", "porque": "Es una persona: кто."},
+        {"ru": "здесь", "caja": "где", "porque": "Dice un lugar: где."},
+        {"ru": "там", "caja": "где", "porque": "Dice un lugar: где."},
+        {"ru": "сейча́с", "caja": "когда́", "porque": "Dice un momento: когда́."},
+        {"ru": "за́втра", "caja": "когда́", "porque": "Dice un momento: когда́."},
+        {"ru": "хорошо́", "caja": "как", "porque": "Dice cómo es o cómo está algo: как."},
+        {"ru": "краси́во", "caja": "как", "porque": "Dice cómo es algo: как."}
+      ]
+    },
+    {
+      "id": "basicas-c2",
+      "pregunta": "да, нет o не: completa la frase.",
+      "cajas": ["да", "нет", "не"],
+      "items": [
+        {"ru": "Ты здесь? — … , я здесь.", "caja": "да", "porque": "Confirmas lo que dice la pregunta: да."},
+        {"ru": "Ты здесь? — … , я там.", "caja": "нет", "porque": "Dices lo contrario: нет."},
+        {"ru": "Э́то … моё.", "caja": "не", "porque": "не niega la palabra que sigue: не моё."},
+        {"ru": "Он … здесь.", "caja": "не", "porque": "не va justo antes de lo que niegas: не здесь."},
+        {"ru": "… , коне́чно!", "caja": "да", "porque": "Es una afirmación: да."},
+        {"ru": "Э́то … твоё.", "caja": "не", "porque": "не niega la palabra que sigue: не твоё."}
+      ]
+    }
+  ]
+}

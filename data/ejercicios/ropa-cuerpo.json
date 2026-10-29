@@ -1,0 +1,77 @@
+{
+  "id": "ropa-cuerpo",
+  "titulo": "Ropa y cuerpo · ejercicios",
+  "dialogos": [
+    {
+      "id": "ropa-cuerpo-d1",
+      "titulo": "¿De quién es?",
+      "mensajes": [
+        {"de": "Лена", "ru": "Чьи э́то очки́?", "fonetica": "ch'i E-ta ach-KI", "es": "¿De quién son estos lentes?"},
+        {"de": "yo", "ru": "Э́то мои́ очки́.", "fonetica": "E-ta ma-I ach-KI", "es": "Son mis lentes.", "opciones": [
+          {"ru": "Э́то мои́ очки́.", "fonetica": "E-ta ma-I ach-KI", "correcta": true, "porque": "¡Bien! очки́ es plural: мои́."},
+          {"ru": "Э́то мой очки́.", "fonetica": "E-ta moi ach-KI", "correcta": false, "porque": "очки́ es plural: мои́."},
+          {"ru": "Э́то моя́ очки́.", "fonetica": "E-ta ma-IA ach-KI", "correcta": false, "porque": "очки́ es plural: мои́."}
+        ]},
+        {"de": "Лена", "ru": "А чья э́то футбо́лка?", "fonetica": "a cha E-ta fud-BOL-ka", "es": "¿Y de quién es esta playera?"},
+        {"de": "yo", "ru": "Э́то твоя́ футбо́лка.", "fonetica": "E-ta tva-IA fud-BOL-ka", "es": "Es tu playera.", "opciones": [
+          {"ru": "Э́то твоя́ футбо́лка.", "fonetica": "E-ta tva-IA fud-BOL-ka", "correcta": true, "porque": "¡Eso! футбо́лка es femenina: твоя́."},
+          {"ru": "Э́то твой футбо́лка.", "fonetica": "E-ta tvoi fud-BOL-ka", "correcta": false, "porque": "футбо́лка es femenina: твоя́."},
+          {"ru": "Э́то твои́ футбо́лка.", "fonetica": "E-ta tva-I fud-BOL-ka", "correcta": false, "porque": "твои́ es plural; футбо́лка es una sola: твоя́."}
+        ]},
+        {"de": "Лена", "ru": "Спаси́бо!", "fonetica": "spa-SI-ba", "es": "¡Gracias!"}
+      ]
+    },
+    {
+      "id": "ropa-cuerpo-d2",
+      "titulo": "¿Jeans o zapatos?",
+      "mensajes": [
+        {"de": "Лена", "ru": "Э́то твои́ джи́нсы?", "fonetica": "E-ta tva-I DZHIN-sy", "es": "¿Son tus jeans?"},
+        {"de": "yo", "ru": "Да, э́то мои́ джи́нсы.", "fonetica": "da, E-ta ma-I DZHIN-sy", "es": "Sí, son mis jeans.", "opciones": [
+          {"ru": "Да, э́то мои́ джи́нсы.", "fonetica": "da, E-ta ma-I DZHIN-sy", "correcta": true, "porque": "¡Bien! джи́нсы es plural: мои́."},
+          {"ru": "Да, э́то мой джи́нсы.", "fonetica": "da, E-ta moi DZHIN-sy", "correcta": false, "porque": "джи́нсы es plural: мои́."},
+          {"ru": "Нет, э́то мои́ джи́нсы.", "fonetica": "niet, E-ta ma-I DZHIN-sy", "correcta": false, "porque": "Dices нет pero son tuyos: да."}
+        ]},
+        {"de": "Лена", "ru": "А э́то боти́нки?", "fonetica": "a E-ta ba-TIN-ki", "es": "¿Y esto son botines?"},
+        {"de": "yo", "ru": "Нет, э́то ту́фли.", "fonetica": "niet, E-ta TUF-li", "es": "No, son zapatos de vestir.", "opciones": [
+          {"ru": "Нет, э́то ту́фли.", "fonetica": "niet, E-ta TUF-li", "correcta": true, "porque": "¡Exacto! Dices нет y nombras lo que son."},
+          {"ru": "Да, э́то ту́фли.", "fonetica": "da, E-ta TUF-li", "correcta": false, "porque": "Ella dice боти́нки; no son: нет."},
+          {"ru": "Нет, э́то боти́нки.", "fonetica": "niet, E-ta ba-TIN-ki", "correcta": false, "porque": "Dices нет pero nombras lo mismo; son ту́фли."}
+        ]},
+        {"de": "Лена", "ru": "Как краси́во!", "fonetica": "kak kra-SI-va", "es": "¡Qué bonito!"}
+      ]
+    }
+  ],
+  "cajas": [
+    {
+      "id": "ropa-cuerpo-c1",
+      "pregunta": "мой, моя́, моё o мои́: elige la forma.",
+      "cajas": ["мой", "моя́", "моё", "мои́"],
+      "items": [
+        {"ru": "… пальто́", "caja": "моё", "porque": "пальто́ es neutro: моё пальто́."},
+        {"ru": "… футбо́лка", "caja": "моя́", "porque": "футбо́лка es femenina: моя́ футбо́лка."},
+        {"ru": "… нос", "caja": "мой", "porque": "нос es masculino: мой нос."},
+        {"ru": "… глаз", "caja": "мой", "porque": "глаз es masculino: мой глаз."},
+        {"ru": "… джи́нсы", "caja": "мои́", "porque": "джи́нсы es plural: мои́ джи́нсы."},
+        {"ru": "… очки́", "caja": "мои́", "porque": "очки́ es plural: мои́ очки́."},
+        {"ru": "… часы́", "caja": "мои́", "porque": "часы́ es plural: мои́ часы́."},
+        {"ru": "… се́рдце", "caja": "моё", "porque": "се́рдце es neutro: моё се́рдце."},
+        {"ru": "… душа́", "caja": "моя́", "porque": "душа́ es femenina: моя́ душа́."}
+      ]
+    },
+    {
+      "id": "ropa-cuerpo-c2",
+      "pregunta": "¿Es ropa o parte del cuerpo? Elige la caja.",
+      "cajas": ["ropa", "cuerpo"],
+      "items": [
+        {"ru": "футбо́лка", "caja": "ropa", "porque": "Se usa para vestirse."},
+        {"ru": "ту́фли", "caja": "ropa", "porque": "Se usan en los pies, pero no son parte del cuerpo."},
+        {"ru": "шо́рты", "caja": "ropa", "porque": "Se usan para vestirse."},
+        {"ru": "пальто́", "caja": "ropa", "porque": "Se usa para vestirse."},
+        {"ru": "нос", "caja": "cuerpo", "porque": "Es parte de la cara."},
+        {"ru": "глаз", "caja": "cuerpo", "porque": "Es parte de la cara."},
+        {"ru": "плечо́", "caja": "cuerpo", "porque": "Es parte del cuerpo."},
+        {"ru": "во́лосы", "caja": "cuerpo", "porque": "Es parte del cuerpo."}
+      ]
+    }
+  ]
+}

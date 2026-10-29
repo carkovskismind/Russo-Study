@@ -1,0 +1,76 @@
+{
+  "id": "verbos",
+  "titulo": "Verbos · ejercicios",
+  "dialogos": [
+    {
+      "id": "verbos-d1",
+      "titulo": "¿Qué haces?",
+      "mensajes": [
+        {"de": "Лена", "ru": "Что ты де́лаешь?", "fonetica": "shto ty DIE-la-yesh", "es": "¿Qué haces?"},
+        {"de": "yo", "ru": "Я чита́ю.", "fonetica": "ia chi-TA-iu", "es": "Leo.", "opciones": [
+          {"ru": "Я чита́ю.", "fonetica": "ia chi-TA-iu", "correcta": true, "porque": "¡Bien! Con я el verbo termina en -ю."},
+          {"ru": "Я чита́ешь.", "fonetica": "ia chi-TA-yesh", "correcta": false, "porque": "-ешь es para ты; con я termina en -ю: чита́ю."},
+          {"ru": "Я чита́ет.", "fonetica": "ia chi-TA-iet", "correcta": false, "porque": "-ет es para él o ella; con я: чита́ю."}
+        ]},
+        {"de": "Лена", "ru": "А что ты чита́ешь?", "fonetica": "a shto ty chi-TA-yesh", "es": "¿Y qué lees?"},
+        {"de": "yo", "ru": "Я чита́ю кни́гу.", "fonetica": "ia chi-TA-iu KNI-gu", "es": "Leo un libro.", "opciones": [
+          {"ru": "Я чита́ю кни́гу.", "fonetica": "ia chi-TA-iu KNI-gu", "correcta": true, "porque": "¡Eso! Después del verbo, кни́га cambia a кни́гу."},
+          {"ru": "Я чита́ю кни́га.", "fonetica": "ia chi-TA-iu KNI-ga", "correcta": false, "porque": "Después del verbo la -а cambia a -у: кни́гу."},
+          {"ru": "Я чита́ть кни́гу.", "fonetica": "ia chi-TAT' KNI-gu", "correcta": false, "porque": "чита́ть es el infinitivo («leer»); con я: чита́ю."}
+        ]},
+        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-ti-RIES-na", "es": "¡Qué interesante!"}
+      ]
+    },
+    {
+      "id": "verbos-d2",
+      "titulo": "¿Dónde vives y trabajas?",
+      "mensajes": [
+        {"de": "Лена", "ru": "Где ты живёшь?", "fonetica": "gdie ty zhy-VIOSH", "es": "¿Dónde vives?"},
+        {"de": "yo", "ru": "Я живу́ в Ме́хико.", "fonetica": "ia zhy-VU v MIE-ji-ko", "es": "Vivo en la Ciudad de México.", "opciones": [
+          {"ru": "Я живу́ в Ме́хико.", "fonetica": "ia zhy-VU v MIE-ji-ko", "correcta": true, "porque": "¡Bien! Con я: живу́."},
+          {"ru": "Я живёшь в Ме́хико.", "fonetica": "ia zhy-VIOSH v MIE-ji-ko", "correcta": false, "porque": "живёшь es para ты; con я es живу́."},
+          {"ru": "Я живу́ Ме́хико.", "fonetica": "ia zhy-VU MIE-ji-ko", "correcta": false, "porque": "Falta в antes del lugar: в Ме́хико."}
+        ]},
+        {"de": "Лена", "ru": "А где ты рабо́таешь?", "fonetica": "a gdie ty ra-BO-ta-yesh", "es": "¿Y dónde trabajas?"},
+        {"de": "yo", "ru": "Я рабо́таю до́ма.", "fonetica": "ia ra-BO-ta-iu DO-ma", "es": "Trabajo en casa.", "opciones": [
+          {"ru": "Я рабо́таю до́ма.", "fonetica": "ia ra-BO-ta-iu DO-ma", "correcta": true, "porque": "¡Eso! до́ма = en casa."},
+          {"ru": "Я рабо́таю домо́й.", "fonetica": "ia ra-BO-ta-iu da-MOI", "correcta": false, "porque": "домо́й es «a casa» (movimiento); estar en casa es до́ма."},
+          {"ru": "Я рабо́тают до́ма.", "fonetica": "ia ra-BO-ta-iut DO-ma", "correcta": false, "porque": "-ют es para ellos; con я: рабо́таю."}
+        ]},
+        {"de": "Лена", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
+      ]
+    }
+  ],
+  "cajas": [
+    {
+      "id": "verbos-c1",
+      "pregunta": "¿Con quién va esta forma del verbo?",
+      "cajas": ["я", "ты", "он / она́", "мы"],
+      "items": [
+        {"ru": "рабо́таю", "caja": "я", "porque": "Termina en -ю: es la forma de я."},
+        {"ru": "понима́ю", "caja": "я", "porque": "Termina en -ю: es la forma de я."},
+        {"ru": "рабо́таешь", "caja": "ты", "porque": "Termina en -ешь: es la forma de ты."},
+        {"ru": "понима́ешь", "caja": "ты", "porque": "Termina en -ешь: es la forma de ты."},
+        {"ru": "рабо́тает", "caja": "он / она́", "porque": "Termina en -ет: es la forma de él o ella."},
+        {"ru": "понима́ет", "caja": "он / она́", "porque": "Termina en -ет: es la forma de él o ella."},
+        {"ru": "игра́ем", "caja": "мы", "porque": "Termina en -ем: es la forma de nosotros."},
+        {"ru": "рабо́таем", "caja": "мы", "porque": "Termina en -ем: es la forma de nosotros."}
+      ]
+    },
+    {
+      "id": "verbos-c2",
+      "pregunta": "стои́т, лежи́т, виси́т o сиди́т: elige el verbo.",
+      "cajas": ["стои́т", "лежи́т", "виси́т", "сиди́т"],
+      "items": [
+        {"ru": "Шкаф …", "caja": "стои́т", "porque": "Un clóset está de pie."},
+        {"ru": "Стул …", "caja": "стои́т", "porque": "Una silla está de pie."},
+        {"ru": "Кни́га на столе́ …", "caja": "лежи́т", "porque": "Un libro sobre la mesa está acostado."},
+        {"ru": "Ковёр на полу́ …", "caja": "лежи́т", "porque": "Una alfombra en el piso está acostada."},
+        {"ru": "Карти́на на стене́ …", "caja": "виси́т", "porque": "Un cuadro en la pared está colgado."},
+        {"ru": "Лю́стра …", "caja": "виси́т", "porque": "Un candil está colgado."},
+        {"ru": "Па́па на дива́не …", "caja": "сиди́т", "porque": "Una persona en el sofá está sentada."},
+        {"ru": "Ма́ма на кре́сле …", "caja": "сиди́т", "porque": "Una persona en el sillón está sentada."}
+      ]
+    }
+  ]
+}

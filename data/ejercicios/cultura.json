@@ -1,0 +1,78 @@
+{
+  "id": "cultura",
+  "titulo": "Gustos y cultura · ejercicios",
+  "dialogos": [
+    {
+      "id": "cultura-d1",
+      "titulo": "¿Qué música es?",
+      "mensajes": [
+        {"de": "Лена", "ru": "Э́то джаз?", "fonetica": "E-ta dzhaz", "es": "¿Es jazz?"},
+        {"de": "yo", "ru": "Нет, э́то не джаз, э́то рок.", "fonetica": "niet, E-ta nie dzhaz, E-ta rok", "es": "No, no es jazz, es rock.", "opciones": [
+          {"ru": "Нет, э́то не джаз, э́то рок.", "fonetica": "niet, E-ta nie dzhaz, E-ta rok", "correcta": true, "porque": "¡Bien! нет y luego lo que sí es."},
+          {"ru": "Да, э́то не джаз, э́то рок.", "fonetica": "da, E-ta nie dzhaz, E-ta rok", "correcta": false, "porque": "Si niegas el jazz, empiezas con нет."},
+          {"ru": "Нет, э́то нет джаз, э́то рок.", "fonetica": "niet, E-ta niet dzhaz, E-ta rok", "correcta": false, "porque": "Para negar una palabra se usa не: не джаз."}
+        ]},
+        {"de": "Лена", "ru": "А э́то? Реггето́н?", "fonetica": "a E-ta? reg-ge-TON", "es": "¿Y esto? ¿Reguetón?"},
+        {"de": "yo", "ru": "Да, э́то реггето́н.", "fonetica": "da, E-ta reg-ge-TON", "es": "Sí, es reguetón.", "opciones": [
+          {"ru": "Да, э́то реггето́н.", "fonetica": "da, E-ta reg-ge-TON", "correcta": true, "porque": "¡Eso! Confirmas con да."},
+          {"ru": "Нет, э́то реггето́н.", "fonetica": "niet, E-ta reg-ge-TON", "correcta": false, "porque": "Dices нет pero lo confirmas: да."},
+          {"ru": "Да, э́то бо́сса-но́ва.", "fonetica": "da, E-ta BOS-sa NO-va", "correcta": false, "porque": "Es reguetón; бо́сса-но́ва es otro estilo."}
+        ]},
+        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-ti-RIES-na", "es": "¡Qué interesante!"}
+      ]
+    },
+    {
+      "id": "cultura-d2",
+      "titulo": "Una película",
+      "mensajes": [
+        {"de": "Лена", "ru": "Э́то коме́дия?", "fonetica": "E-ta ka-MIE-dia", "es": "¿Es una comedia?"},
+        {"de": "yo", "ru": "Нет, э́то детекти́в.", "fonetica": "niet, E-ta di-tik-TIF", "es": "No, es una película policiaca.", "opciones": [
+          {"ru": "Нет, э́то детекти́в.", "fonetica": "niet, E-ta di-tik-TIF", "correcta": true, "porque": "¡Bien! Dices нет y nombras el género."},
+          {"ru": "Да, э́то детекти́в.", "fonetica": "da, E-ta di-tik-TIF", "correcta": false, "porque": "Ella pregunta si es comedia; no lo es: нет."},
+          {"ru": "Нет, э́то коме́дия.", "fonetica": "niet, E-ta ka-MIE-dia", "correcta": false, "porque": "Dices нет pero nombras la misma; es детекти́в."}
+        ]},
+        {"de": "Лена", "ru": "А э́то фильм у́жасов?", "fonetica": "a E-ta film U-zha-sof", "es": "¿Y esto es una película de terror?"},
+        {"de": "yo", "ru": "Да, э́то фильм у́жасов.", "fonetica": "da, E-ta film U-zha-sof", "es": "Sí, es una película de terror.", "opciones": [
+          {"ru": "Да, э́то фильм у́жасов.", "fonetica": "da, E-ta film U-zha-sof", "correcta": true, "porque": "¡Eso! Confirmas con да."},
+          {"ru": "Нет, э́то фильм у́жасов.", "fonetica": "niet, E-ta film U-zha-sof", "correcta": false, "porque": "Dices нет pero lo confirmas: да."},
+          {"ru": "Да, э́то не фильм у́жасов.", "fonetica": "da, E-ta nie film U-zha-sof", "correcta": false, "porque": "Dices да pero luego lo niegas."}
+        ]},
+        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-ti-RIES-na", "es": "¡Qué interesante!"}
+      ]
+    }
+  ],
+  "cajas": [
+    {
+      "id": "cultura-c1",
+      "pregunta": "¿Música o cine? Elige la caja.",
+      "cajas": ["му́зыка", "фильм"],
+      "items": [
+        {"ru": "рок", "caja": "му́зыка", "porque": "Es un estilo de música."},
+        {"ru": "джаз", "caja": "му́зыка", "porque": "Es un estilo de música."},
+        {"ru": "блюз", "caja": "му́зыка", "porque": "Es un estilo de música."},
+        {"ru": "бача́та", "caja": "му́зыка", "porque": "Es un estilo de música."},
+        {"ru": "реггето́н", "caja": "му́зыка", "porque": "Es un estilo de música."},
+        {"ru": "коме́дия", "caja": "фильм", "porque": "Es un género de cine."},
+        {"ru": "детекти́в", "caja": "фильм", "porque": "Es un género de cine."},
+        {"ru": "э́кшн", "caja": "фильм", "porque": "Es un género de cine."},
+        {"ru": "фильм у́жасов", "caja": "фильм", "porque": "Es un género de cine."},
+        {"ru": "документа́льный фильм", "caja": "фильм", "porque": "Es un género de cine."}
+      ]
+    },
+    {
+      "id": "cultura-c2",
+      "pregunta": "мой, моя́, моё o мои́: elige la forma.",
+      "cajas": ["мой", "моя́", "моё", "мои́"],
+      "items": [
+        {"ru": "… флаг", "caja": "мой", "porque": "флаг es masculino: мой флаг."},
+        {"ru": "… фильм", "caja": "мой", "porque": "фильм es masculino: мой фильм."},
+        {"ru": "… зна́мя", "caja": "моё", "porque": "зна́мя es neutro: моё зна́мя."},
+        {"ru": "… и́мя", "caja": "моё", "porque": "и́мя es neutro: моё и́мя."},
+        {"ru": "… тради́ция", "caja": "моя́", "porque": "тради́ция es femenina: моя́ тради́ция."},
+        {"ru": "… матрёшка", "caja": "моя́", "porque": "матрёшка es femenina: моя́ матрёшка."},
+        {"ru": "… му́зыка", "caja": "моя́", "porque": "му́зыка es femenina: моя́ му́зыка."},
+        {"ru": "… сувени́ры", "caja": "мои́", "porque": "сувени́ры es plural: мои́ сувени́ры."}
+      ]
+    }
+  ]
+}

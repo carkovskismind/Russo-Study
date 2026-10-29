@@ -1,0 +1,62 @@
+{
+  "id": "familia",
+  "titulo": "Familia y personas · ejercicios",
+  "dialogos": [
+    {
+      "id": "familia-d1",
+      "titulo": "Mi familia",
+      "mensajes": [
+        {"de": "Лена", "ru": "Э́то твоя́ семья́?", "fonetica": "E-ta tva-IA sim-IA", "es": "¿Esta es tu familia?"},
+        {"de": "yo", "ru": "Да, э́то моя́ семья́.", "fonetica": "da, E-ta ma-IA sim-IA", "es": "Sí, esta es mi familia.", "opciones": [
+          {"ru": "Да, э́то моя́ семья́.", "fonetica": "da, E-ta ma-IA sim-IA", "correcta": true, "porque": "¡Bien! семья́ es femenina: моя́."},
+          {"ru": "Да, э́то мой семья́.", "fonetica": "da, E-ta moi sim-IA", "correcta": false, "porque": "семья́ es femenina: моя́ семья́."},
+          {"ru": "Да, э́то мои́ семья́.", "fonetica": "da, E-ta ma-I sim-IA", "correcta": false, "porque": "мои́ es plural; семья́ es una sola: моя́."}
+        ]},
+        {"de": "Лена", "ru": "А э́то кто?", "fonetica": "a E-ta kto", "es": "¿Y quién es este?"},
+        {"de": "yo", "ru": "Э́то мой брат.", "fonetica": "E-ta moi brat", "es": "Es mi hermano.", "opciones": [
+          {"ru": "Э́то мой брат.", "fonetica": "E-ta moi brat", "correcta": true, "porque": "¡Eso! брат es masculino: мой."},
+          {"ru": "Э́то моя́ брат.", "fonetica": "E-ta ma-IA brat", "correcta": false, "porque": "брат es masculino: мой брат."},
+          {"ru": "Э́то моё брат.", "fonetica": "E-ta ma-YO brat", "correcta": false, "porque": "моё es neutro; брат es masculino: мой."}
+        ]},
+        {"de": "Лена", "ru": "Как краси́во!", "fonetica": "kak kra-SI-va", "es": "¡Qué bonito!"}
+      ]
+    },
+    {
+      "id": "familia-d2",
+      "titulo": "¿Tienes hermanos?",
+      "mensajes": [
+        {"de": "Лена", "ru": "У тебя́ есть брат?", "fonetica": "u ti-BIA iest brat", "es": "¿Tienes un hermano?"},
+        {"de": "yo", "ru": "Нет, у меня́ есть сестра́.", "fonetica": "niet, u mi-NIA iest sis-TRA", "es": "No, tengo una hermana.", "opciones": [
+          {"ru": "Нет, у меня́ есть сестра́.", "fonetica": "niet, u mi-NIA iest sis-TRA", "correcta": true, "porque": "¡Muy bien! «Tengo» = у меня́ есть."},
+          {"ru": "Да, у меня́ есть сестра́.", "fonetica": "da, u mi-NIA iest sis-TRA", "correcta": false, "porque": "Ella pregunta por un hermano y tú no tienes: нет."},
+          {"ru": "Нет, я есть сестра́.", "fonetica": "niet, ia iest sis-TRA", "correcta": false, "porque": "Para decir «tengo» se usa у меня́ есть, no я есть."}
+        ]},
+        {"de": "Лена", "ru": "Как её зову́т?", "fonetica": "kak i-YO za-VUT", "es": "¿Cómo se llama ella?"},
+        {"de": "yo", "ru": "Её зову́т Ма́ша.", "fonetica": "i-YO za-VUT MA-sha", "es": "Se llama Masha.", "opciones": [
+          {"ru": "Её зову́т Ма́ша.", "fonetica": "i-YO za-VUT MA-sha", "correcta": true, "porque": "¡Bien! Hablas de una chica: её."},
+          {"ru": "Его́ зову́т Ма́ша.", "fonetica": "i-VO za-VUT MA-sha", "correcta": false, "porque": "его́ es «de él / a él»; hablas de una chica: её."},
+          {"ru": "Меня́ зову́т Ма́ша.", "fonetica": "mi-NIA za-VUT MA-sha", "correcta": false, "porque": "меня́ es «a mí»; hablas de tu hermana, no de ti: её."}
+        ]},
+        {"de": "Лена", "ru": "Как краси́во!", "fonetica": "kak kra-SI-va", "es": "¡Qué bonito!"}
+      ]
+    }
+  ],
+  "cajas": [
+    {
+      "id": "familia-c1",
+      "pregunta": "мой o моя́: elige la forma que va con cada persona.",
+      "cajas": ["мой", "моя́"],
+      "items": [
+        {"ru": "… па́па", "caja": "мой", "porque": "па́па es masculino aunque termine en -а: мой па́па."},
+        {"ru": "… ма́ма", "caja": "моя́", "porque": "ма́ма es femenina: моя́ ма́ма."},
+        {"ru": "… брат", "caja": "мой", "porque": "брат es masculino: мой брат."},
+        {"ru": "… сестра́", "caja": "моя́", "porque": "сестра́ es femenina: моя́ сестра́."},
+        {"ru": "… друг", "caja": "мой", "porque": "друг es masculino: мой друг."},
+        {"ru": "… подру́га", "caja": "моя́", "porque": "подру́га es femenina: моя́ подру́га."},
+        {"ru": "… де́душка", "caja": "мой", "porque": "де́душка es masculino aunque termine en -а: мой де́душка."},
+        {"ru": "… ба́бушка", "caja": "моя́", "porque": "ба́бушка es femenina: моя́ ба́бушка."},
+        {"ru": "… семья́", "caja": "моя́", "porque": "семья́ es femenina: моя́ семья́."}
+      ]
+    }
+  ]
+}

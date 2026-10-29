@@ -1,0 +1,72 @@
+{
+  "id": "falsos-amigos",
+  "titulo": "Falsos amigos · ejercicios",
+  "dialogos": [
+    {
+      "id": "falsos-amigos-d1",
+      "titulo": "En la cafetería",
+      "mensajes": [
+        {"de": "Лена", "ru": "Где ты сейча́с?", "fonetica": "gdie ty si-CHAS", "es": "¿Dónde estás ahora?"},
+        {"de": "yo", "ru": "Я в кафе́.", "fonetica": "ia f ka-FE", "es": "Estoy en la cafetería.", "opciones": [
+          {"ru": "Я в кафе́.", "fonetica": "ia f ka-FE", "correcta": true, "porque": "¡Bien! кафе́ es el lugar y no cambia."},
+          {"ru": "Я в ко́фе.", "fonetica": "ia f KO-fie", "correcta": false, "porque": "ко́фе es la bebida (café); el lugar es кафе́."},
+          {"ru": "Я в магази́н.", "fonetica": "ia v ma-ga-ZIN", "correcta": false, "porque": "магази́н es tienda; la cafetería es кафе́."}
+        ]},
+        {"de": "Лена", "ru": "Там ко́фе?", "fonetica": "tam KO-fie", "es": "¿Hay café allá?"},
+        {"de": "yo", "ru": "Да, там ко́фе.", "fonetica": "da, tam KO-fie", "es": "Sí, allá hay café.", "opciones": [
+          {"ru": "Да, там ко́фе.", "fonetica": "da, tam KO-fie", "correcta": true, "porque": "¡Eso! ко́фе es la bebida."},
+          {"ru": "Да, там кафе́.", "fonetica": "da, tam ka-FE", "correcta": false, "porque": "Ella pregunta por la bebida: ко́фе; кафе́ es el lugar."},
+          {"ru": "Нет, там ко́фе.", "fonetica": "niet, tam KO-fie", "correcta": false, "porque": "Dices нет pero confirmas que hay café: да."}
+        ]},
+        {"de": "Лена", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
+      ]
+    },
+    {
+      "id": "falsos-amigos-d2",
+      "titulo": "Roma y Román",
+      "mensajes": [
+        {"de": "Лена", "ru": "Э́то Ро́ма?", "fonetica": "E-ta RO-ma", "es": "¿Esta es Roma?"},
+        {"de": "yo", "ru": "Нет, э́то Рим.", "fonetica": "niet, E-ta rim", "es": "No, esta es Roma (la ciudad).", "opciones": [
+          {"ru": "Нет, э́то Рим.", "fonetica": "niet, E-ta rim", "correcta": true, "porque": "¡Bien! La ciudad se llama Рим."},
+          {"ru": "Да, э́то Ро́ма.", "fonetica": "da, E-ta RO-ma", "correcta": false, "porque": "Ро́ма es Román (un nombre); la ciudad es Рим."},
+          {"ru": "Нет, э́то не Рим.", "fonetica": "niet, E-ta nie rim", "correcta": false, "porque": "Quieres decir que sí es la ciudad: э́то Рим."}
+        ]},
+        {"de": "Лена", "ru": "А э́то кто?", "fonetica": "a E-ta kto", "es": "¿Y quién es este?"},
+        {"de": "yo", "ru": "Э́то Ро́ма, мой друг.", "fonetica": "E-ta RO-ma, moi druk", "es": "Es Román, mi amigo.", "opciones": [
+          {"ru": "Э́то Ро́ма, мой друг.", "fonetica": "E-ta RO-ma, moi druk", "correcta": true, "porque": "¡Perfecto! Ро́ма es el nombre del amigo."},
+          {"ru": "Э́то Рим, мой друг.", "fonetica": "E-ta rim, moi druk", "correcta": false, "porque": "Рим es la ciudad; el amigo se llama Ро́ма."},
+          {"ru": "Э́то Ро́ма, моя́ друг.", "fonetica": "E-ta RO-ma, ma-IA druk", "correcta": false, "porque": "друг es masculino: мой друг."}
+        ]},
+        {"de": "Лена", "ru": "О́чень прия́тно!", "fonetica": "O-chin pri-IAT-na", "es": "¡Mucho gusto!"}
+      ]
+    }
+  ],
+  "cajas": [
+    {
+      "id": "falsos-amigos-c1",
+      "pregunta": "кафе́ o ко́фе: ¿es un lugar o una bebida?",
+      "cajas": ["lugar", "bebida"],
+      "items": [
+        {"ru": "кафе́", "caja": "lugar", "porque": "Es la cafetería, un lugar."},
+        {"ru": "ко́фе", "caja": "bebida", "porque": "Es el café que se bebe."},
+        {"ru": "Мы в кафе́.", "caja": "lugar", "porque": "в кафе́ = en la cafetería."},
+        {"ru": "Там ко́фе!", "caja": "bebida", "porque": "Hay café para beber."},
+        {"ru": "магази́н", "caja": "lugar", "porque": "Es un lugar: la tienda."},
+        {"ru": "Мой ко́фе.", "caja": "bebida", "porque": "Es mi café."}
+      ]
+    },
+    {
+      "id": "falsos-amigos-c2",
+      "pregunta": "ра́но o ра́на: ¿temprano o herida?",
+      "cajas": ["temprano", "herida"],
+      "items": [
+        {"ru": "ра́но", "caja": "temprano", "porque": "Se parece a «rana», pero significa temprano."},
+        {"ru": "ра́на", "caja": "herida", "porque": "Es una herida."},
+        {"ru": "Сейча́с ра́но.", "caja": "temprano", "porque": "Dice la hora: es temprano."},
+        {"ru": "Э́то ра́на.", "caja": "herida", "porque": "Es una herida."},
+        {"ru": "Здесь ра́но.", "caja": "temprano", "porque": "Dice que es temprano."},
+        {"ru": "Там ра́на.", "caja": "herida", "porque": "Dice que hay una herida."}
+      ]
+    }
+  ]
+}

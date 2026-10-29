@@ -1,0 +1,78 @@
+{
+  "id": "numeros",
+  "titulo": "Números · ejercicios",
+  "dialogos": [
+    {
+      "id": "numeros-d1",
+      "titulo": "Mi número",
+      "mensajes": [
+        {"de": "Лена", "ru": "Како́й твой но́мер?", "fonetica": "ka-KOI tvoi NO-mir", "es": "¿Cuál es tu número?"},
+        {"de": "yo", "ru": "Мой но́мер во́семь пять три.", "fonetica": "moi NO-mir VO-siem piat tri", "es": "Mi número es ocho, cinco, tres.", "opciones": [
+          {"ru": "Мой но́мер во́семь пять три.", "fonetica": "moi NO-mir VO-siem piat tri", "correcta": true, "porque": "¡Bien! Los dígitos van en el orden en que se dicen."},
+          {"ru": "Мой но́мер во́семь три пять.", "fonetica": "moi NO-mir VO-siem tri piat", "correcta": false, "porque": "Los dígitos van en el mismo orden: 8-5-3, no 8-3-5."},
+          {"ru": "Моя́ но́мер во́семь пять три.", "fonetica": "ma-IA NO-mir VO-siem piat tri", "correcta": false, "porque": "но́мер es masculino: мой но́мер."}
+        ]},
+        {"de": "Лена", "ru": "Во́семь пять три? Да?", "fonetica": "VO-siem piat tri? da", "es": "¿Ocho, cinco, tres? ¿Sí?"},
+        {"de": "yo", "ru": "Да, во́семь пять три.", "fonetica": "da, VO-siem piat tri", "es": "Sí, ocho, cinco, tres.", "opciones": [
+          {"ru": "Да, во́семь пять три.", "fonetica": "da, VO-siem piat tri", "correcta": true, "porque": "¡Eso! Confirmas con да."},
+          {"ru": "Нет, во́семь пять три.", "fonetica": "niet, VO-siem piat tri", "correcta": false, "porque": "Repites el mismo número, así que confirmas: да."},
+          {"ru": "Да, шесть пять три.", "fonetica": "da, shiest piat tri", "correcta": false, "porque": "Repites los mismos números: во́семь, no шесть."}
+        ]},
+        {"de": "Лена", "ru": "Спаси́бо!", "fonetica": "spa-SI-ba", "es": "¡Gracias!"}
+      ]
+    },
+    {
+      "id": "numeros-d2",
+      "titulo": "¿Cuántos?",
+      "mensajes": [
+        {"de": "Лена", "ru": "Ско́лько вас?", "fonetica": "SKOL-ka vas", "es": "¿Cuántos son ustedes?"},
+        {"de": "yo", "ru": "Нас четы́ре.", "fonetica": "nas chi-TY-rie", "es": "Somos cuatro.", "opciones": [
+          {"ru": "Нас четы́ре.", "fonetica": "nas chi-TY-rie", "correcta": true, "porque": "¡Bien! Para decir cuántos son se usa нас."},
+          {"ru": "Мы четы́ре.", "fonetica": "my chi-TY-rie", "correcta": false, "porque": "Para decir cuántos son se usa нас: нас четы́ре."},
+          {"ru": "Нас два.", "fonetica": "nas dva", "correcta": false, "porque": "два es 2; son 4: четы́ре."}
+        ]},
+        {"de": "Лена", "ru": "А ско́лько там?", "fonetica": "a SKOL-ka tam", "es": "¿Y cuántos hay allá?"},
+        {"de": "yo", "ru": "Там две́сти.", "fonetica": "tam DVIES-ti", "es": "Allá hay doscientos.", "opciones": [
+          {"ru": "Там две́сти.", "fonetica": "tam DVIES-ti", "correcta": true, "porque": "¡Exacto! 200 = две́сти."},
+          {"ru": "Там два́дцать.", "fonetica": "tam DVAD-tsat'", "correcta": false, "porque": "два́дцать es 20; doscientos es две́сти."},
+          {"ru": "Там три́ста.", "fonetica": "tam TRI-sta", "correcta": false, "porque": "три́ста es 300; son 200: две́сти."}
+        ]},
+        {"de": "Лена", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
+      ]
+    }
+  ],
+  "cajas": [
+    {
+      "id": "numeros-c1",
+      "pregunta": "оди́н o одна́: elige la forma que va con cada palabra.",
+      "cajas": ["оди́н", "одна́"],
+      "items": [
+        {"ru": "… брат", "caja": "оди́н", "porque": "брат es masculino: оди́н брат."},
+        {"ru": "… сестра́", "caja": "одна́", "porque": "сестра́ es femenina: одна́ сестра́."},
+        {"ru": "… кот", "caja": "оди́н", "porque": "кот es masculino: оди́н кот."},
+        {"ru": "… ко́шка", "caja": "одна́", "porque": "ко́шка es femenina: одна́ ко́шка."},
+        {"ru": "… друг", "caja": "оди́н", "porque": "друг es masculino: оди́н друг."},
+        {"ru": "… подру́га", "caja": "одна́", "porque": "подру́га es femenina: одна́ подру́га."},
+        {"ru": "… па́па", "caja": "оди́н", "porque": "па́па es masculino aunque termine en -а: оди́н па́па."},
+        {"ru": "… ма́ма", "caja": "одна́", "porque": "ма́ма es femenina: одна́ ма́ма."}
+      ]
+    },
+    {
+      "id": "numeros-c2",
+      "pregunta": "¿Par o impar? Elige la caja.",
+      "cajas": ["чётный", "нечётный"],
+      "items": [
+        {"ru": "два", "base": "2", "caja": "чётный", "porque": "2 es par."},
+        {"ru": "три", "base": "3", "caja": "нечётный", "porque": "3 es impar."},
+        {"ru": "четы́ре", "base": "4", "caja": "чётный", "porque": "4 es par."},
+        {"ru": "пять", "base": "5", "caja": "нечётный", "porque": "5 es impar."},
+        {"ru": "шесть", "base": "6", "caja": "чётный", "porque": "6 es par."},
+        {"ru": "семь", "base": "7", "caja": "нечётный", "porque": "7 es impar."},
+        {"ru": "во́семь", "base": "8", "caja": "чётный", "porque": "8 es par."},
+        {"ru": "де́вять", "base": "9", "caja": "нечётный", "porque": "9 es impar."},
+        {"ru": "де́сять", "base": "10", "caja": "чётный", "porque": "10 es par."},
+        {"ru": "двена́дцать", "base": "12", "caja": "чётный", "porque": "12 es par."}
+      ]
+    }
+  ]
+}
