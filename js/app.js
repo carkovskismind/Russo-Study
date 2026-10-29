@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "3.0.2";
+const APP_VERSION = "3.0.3";
 const NEW_PER_DECK_SESSION = 20;
 const PILOT = "familia";
 

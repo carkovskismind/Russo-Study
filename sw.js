@@ -6,7 +6,7 @@
 // Cada una usa su propia caché y la app real no toca nada bajo /beta/.
 const IS_BETA = /\/beta\/sw\.js$/.test(location.pathname);
 const CACHE_FAMILY = IS_BETA ? "russo-beta-v" : "russo-v";
-const CACHE = CACHE_FAMILY + "11";
+const CACHE = CACHE_FAMILY + "12";
 const BETA_PATH = new URL("beta", self.registration.scope).pathname; // p. ej. /Russo-Study/beta
 const SHELL = [
   "./",
@@ -26,14 +26,23 @@ const SHELL = [
   "data/ruta.json",
   "data/mazos.json",
   "data/gramatica/dudas.json",
-  "data/lectura/lectura.json",
-  "data/ejercicios/paises.json",
-  "data/ejercicios/casa.json",
-  "data/ejercicios/ciudad.json"
+  "data/lectura/lectura.json"
 ];
 
+// Los archivos de data/ejercicios se leen de la clave "ejercicios" de data/mazos.json,
+// así no hay que mantener la lista a mano. Si alguno falla no se rompe la instalación.
+async function precache() {
+  const c = await caches.open(CACHE);
+  await c.addAll(SHELL);
+  try {
+    const res = await fetch("data/mazos.json", { cache: "no-cache" });
+    const m = await res.json();
+    await Promise.all((m.ejercicios || []).map((id) => c.add(`data/ejercicios/${id}.json`).catch(() => {})));
+  } catch (err) { /* sin lista: se guardan al usarse */ }
+}
+
 self.addEventListener("install", (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
+  e.waitUntil(precache().then(() => self.skipWaiting()));
 });
 
 self.addEventListener("activate", (e) => {
