@@ -32,6 +32,7 @@
         { "id": "escuela", "es": "escuela" },
         { "id": "naturaleza", "es": "naturaleza" },
         { "id": "calendario", "es": "calendario" },
+        { "id": "fiestas", "es": "fiestas" },
         { "id": "colores", "es": "colores" },
         { "id": "adjetivos", "es": "carácter" },
         { "id": "ideas", "es": "ideas" }

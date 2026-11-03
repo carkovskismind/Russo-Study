@@ -32,6 +32,7 @@
     "gramatica/genero.json",
     "gramatica/plurales.json",
     "gramatica/posesion.json",
-    "gramatica/numerales.json"
+    "gramatica/numerales.json",
+    "vocabulario/fiestas.json"
   ]
 }
