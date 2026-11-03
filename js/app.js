@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "3.1.0";
+const APP_VERSION = "3.2.0";
 const NEW_PER_DECK_SESSION = 20;
 const PILOT = "familia";
 
@@ -13,6 +13,8 @@ const state = {
   deckById: new Map(),
   currentDeck: null,
   temaFilter: "Todos",
+  temasMod: null,
+  temasFrom: null,
   dudas: {},
   ej: {},
   lectura: null,
@@ -37,6 +39,7 @@ const store = new Store((what) => {
     if (state.decks.length) rebuildMine();
     if (state.view === "home") renderHome();
     if (state.view === "temas") renderTemas();
+    if (state.view === "modulos") renderModulos();
     if (state.view === "tema") renderTema();
   }
   if (what === "auth" && state.view === "settings") renderSettings();
@@ -116,8 +119,8 @@ function toast(msg) {
   toast.t = setTimeout(() => (el.hidden = true), 2600);
 }
 
-const VIEWS = ["home", "temas", "mapa", "tema", "palabra", "study", "frase", "dialogo", "cajas", "leer", "done", "settings"];
-const NAV_VIEWS = { home: "home", temas: "temas", settings: "settings" };
+const VIEWS = ["home", "modulos", "temas", "mapa", "tema", "palabra", "study", "frase", "dialogo", "cajas", "leer", "done", "settings"];
+const NAV_VIEWS = { home: "home", modulos: "modulos", temas: "modulos", settings: "settings" };
 
 function show(view) {
   state.view = view;
@@ -161,7 +164,8 @@ function appBack() {
     case "palabra": return $("#palabra-back").click();
     case "tema": return $("#tema-back").click();
     case "leer": return $("#leer-back").click();
-    case "temas": return go(state.temasFrom === "mapa" ? "mapa" : "home");
+    case "temas": return go(state.temasFrom === "mapa" ? "mapa" : "modulos");
+    case "modulos": return go("home");
     case "mapa":
     case "settings": return go("home");
   }
@@ -176,9 +180,11 @@ window.addEventListener("popstate", () => {
 
 function go(view) {
   if (view === "temas" && state.view === "mapa") state.temasFrom = "mapa";
-  else if (view === "temas" && (state.view === "home" || state.view === "settings")) state.temasFrom = null;
+  else if (view === "temas" && state.view === "modulos") state.temasFrom = null;
+  if (view === "modulos") state.temasFrom = null;
   if (view === "mapa") renderMapa();
   if (view === "home") renderHome();
+  if (view === "modulos") renderModulos();
   if (view === "temas") renderTemas();
   if (view === "settings") renderSettings();
   show(view);
@@ -369,6 +375,8 @@ function todayTopic() {
   const queue = buildQueue(state.decks.filter(deckEnabled), newLeft);
   const counts = new Map();
   for (const it of queue) counts.set(it.card.deckId, (counts.get(it.card.deckId) || 0) + 1);
+  const sug = suggestedDeck();
+  if (sug && counts.get(sug.id)) return sug;
   let best = null;
   for (const [id, n] of counts) if (!best || n > best.n) best = { id, n };
   return best ? state.deckById.get(best.id) : null;
@@ -376,9 +384,7 @@ function todayTopic() {
 
 // Tema siguiente al actual en la ruta (con mazo), o null.
 function nextRutaTema() {
-  const mod = currentMod();
-  if (!mod) return null;
-  const cur = modCurrent(mod);
+  const cur = currentTema();
   const all = rutaMods().filter((m) => !m.pronto).flatMap((m) => modTemas(m)).filter((t) => t.deck);
   const i = cur ? all.indexOf(cur) : -1;
   return all.slice(i + 1).find((t) => !isMemorized(t.deck)) || null;
@@ -485,20 +491,65 @@ function groupOf(deck) {
   return deck.group;
 }
 
+// Mazos de un módulo (en el orden de la ruta). «lib» = los que no están en la ruta.
+function modDecks(id) {
+  if (!id) return state.decks;
+  if (id === "lib") return rutaOrder(state.decks).filter((d) => !rutaPos(d.id));
+  const mod = rutaMods().find((m) => m.id === id);
+  return mod ? modTemas(mod).filter((t) => t.deck).map((t) => t.deck) : state.decks;
+}
+
+function modTitle(id) {
+  if (!id) return "Tus temas";
+  if (id === "lib") return "Biblioteca";
+  const mod = rutaMods().find((m) => m.id === id);
+  return mod ? mod.titulo : "Tus temas";
+}
+
+// Pantalla de módulos: Módulo 1, 2, 3 y la Biblioteca, cada uno con su avance.
+function renderModulos() {
+  const cur = currentMod();
+  const items = rutaMods().map((m, i) => {
+    const w = modWords(m);
+    const n = modTemas(m).filter((t) => t.deck).length;
+    return { id: m.id, n: String(m.n), title: m.titulo, pal: ["lav", "pe", "bl"][i % 3], learned: w.learned, total: w.total, temas: n, here: cur && cur.id === m.id };
+  });
+  const lib = modDecks("lib");
+  if (lib.length) {
+    let learned = 0, total = 0;
+    for (const d of lib) { const s = deckStats(d); learned += s.learned; total += s.total; }
+    items.push({ id: "lib", n: "", title: "Biblioteca", pal: "kh", learned, total, temas: lib.length, here: false });
+  }
+  $("#mods-list").innerHTML = items.map((m) => {
+    const pct = m.total ? Math.round((m.learned / m.total) * 100) : 0;
+    return `<button class="mod-card card-frame pal-${m.pal}" type="button" data-mod="${m.id}" aria-label="${esc(m.title)}, ${m.temas} temas, ${pct}% memorizado${m.here ? ", aquí vas" : ""}">
+      <span class="mod-n num" aria-hidden="true">${m.n || "B"}</span>
+      <span class="mod-body">
+        <span class="mod-top">${m.here ? "Estás aquí" : "&nbsp;"}</span>
+        <span class="mod-title">${esc(m.title)}</span>
+        <span class="mod-sub"><span class="num">${m.temas}</span> temas · <span class="num">${m.learned}</span> de <span class="num">${m.total}</span> palabras</span>
+        <span class="mod-foot"><span class="bar"><span style="width:${pct}%"></span></span><span class="pct">${pct}%</span></span>
+      </span>
+    </button>`;
+  }).join("");
+}
+
 function renderTemas() {
-  const groups = FILTROS.filter((g) => g === "Todos" || state.decks.some((d) => groupOf(d) === g));
+  $("#temas-title").textContent = modTitle(state.temasMod);
+  const scope = modDecks(state.temasMod);
+  const groups = FILTROS.filter((g) => g === "Todos" || scope.some((d) => groupOf(d) === g));
   if (!groups.includes(state.temaFilter)) state.temaFilter = "Todos";
   $("#temas-chips").innerHTML = groups
     .map((g) => `<button class="chip" type="button" role="tab" data-filter="${esc(g)}" aria-selected="${g === state.temaFilter}">${esc(g)}</button>`)
     .join("");
-  const list = state.decks.filter((d) => state.temaFilter === "Todos" || groupOf(d) === state.temaFilter);
-  const ordered = rutaOrder(list);
+  const list = scope.filter((d) => state.temaFilter === "Todos" || groupOf(d) === state.temaFilter);
+  const ordered = state.temasMod && state.temasMod !== "lib" ? list : rutaOrder(list);
   if (!ordered.some((d) => d.id === state.openTile) || !state.openSet) {
     const sug = suggestedDeck();
     state.openTile = sug && ordered.includes(sug) ? sug.id : ordered[0] ? ordered[0].id : null;
     state.openSet = true;
   }
-  const leer = state.temaFilter === "Todos" ? leerTileHtml() : "";
+  const leer = state.temaFilter === "Todos" && (!state.temasMod || state.temasMod === "m1") ? leerTileHtml() : "";
   $("#temas-grid").innerHTML = ordered.length
     ? leer + ordered.map(tileHtml).join("")
     : `<p class="loading">No hay temas en este grupo.</p>`;
@@ -576,6 +627,10 @@ function modesList(deck) {
     const n = ejDone(ej.cajas);
     out.push({ key: "cajas", label: "Cajas", num: `${n}/${ej.cajas.length}`, sub: "Acomoda por caja", pct: Math.round((n / ej.cajas.length) * 100) });
   }
+  if (deck.cards.some((c) => c.kind === "word")) {
+    const n = audioWords(deck).length;
+    out.push({ key: "audio", label: "Solo audio", num: String(n), sub: "Escucha y elige", pct: 0, off: n === 0 });
+  }
   return out;
 }
 
@@ -585,6 +640,19 @@ function modesHtml(deck) {
     const lead = i === 0;
     return `<button class="t-mode${lead ? " fill" : ""}" type="button" data-mode="${m.key}" data-deck="${esc(deck.id)}"${m.off ? " disabled" : ""}>${m.label}${m.key === "words" ? ` · <span class="num">${m.num}</span>` : ""}</button>`;
   }).join("");
+}
+
+// Palabras ya memorizadas (mismo criterio que el avance: acertadas al menos una vez).
+function audioWords(deck) {
+  return deck.cards.filter((c) => c.kind === "word" && keysFor(c).some((k) => { const st = store.card(k); return st && st.ivl >= 1; }));
+}
+
+function startAudio(deck) {
+  const words = shuffle(audioWords(deck)).slice(0, 20);
+  if (!words.length) return toast("Primero memoriza algunas palabras de este tema.");
+  const queue = words.map((card) => ({ card, key: `${card.id}|audio`, dir: "audio", phase: "quiz", failed: false, hint: 0 }));
+  startSession(queue, "Solo audio", true, state.view === "tema" ? "tema" : state.view);
+  state.session.audio = true;
 }
 
 function dudasFor(deck) {
@@ -603,13 +671,20 @@ function dudasHtml(deck) {
   </div>`;
 }
 
+// Guarda el tema que Carol está estudiando (para «Sigue con…» y el mapa).
+function markCurrent(deck) {
+  if (deck && !deck.mine) store.setCurrent(deck.id);
+}
+
 // Inicia un modo de práctica de un tema.
 function startMode(deck, key) {
   state.currentDeck = deck;
+  markCurrent(deck);
   if (key === "words") return startDeck(deck);
   if (key === "frases") return startFrases(deck);
   if (key === "dialogo") return startDialogo(deck);
   if (key === "cajas") return startCajas(deck);
+  if (key === "audio") return startAudio(deck);
 }
 
 // Abre un tema en la cuadrícula: el cuadrado crece y los demás se acomodan
@@ -628,13 +703,20 @@ function openTileAnimated(id) {
   }
   state.openTile = id;
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const opened = grid.querySelector(".tile.open");
+  const r0 = opened.getBoundingClientRect();
+  if (r0.top < 70 || r0.bottom > window.innerHeight - 100) {
+    window.scrollBy({ top: r0.top - 90, behavior: reduce ? "auto" : "smooth" });
+  }
   if (reduce || !Element.prototype.animate) return;
-  const opts = { duration: 520, easing: "cubic-bezier(.22,1,.36,1)" };
+  const opts = { duration: 260, easing: "cubic-bezier(.2,.9,.3,1)" };
   for (const t of tiles) {
     const a = first.get(t.dataset.tile);
     const b = t.getBoundingClientRect();
     const dx = a.left - b.left;
     const dy = a.top - b.top;
+    // Lo que queda fuera de la pantalla no se anima.
+    if (t.dataset.tile !== id && (a.bottom < 0 && b.bottom < 0 || a.top > innerHeight && b.top > innerHeight)) continue;
     if (t.dataset.tile === id) {
       const r = Math.max(0, b.width - a.width);
       const btm = Math.max(0, b.height - a.height);
@@ -646,13 +728,7 @@ function openTileAnimated(id) {
       t.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: "none" }], opts);
     }
   }
-  const opened = grid.querySelector(".tile.open");
-  setTimeout(() => {
-    const r = opened.getBoundingClientRect();
-    if (r.top < 70 || r.bottom > window.innerHeight - 100) {
-      window.scrollBy({ top: r.top - 90, behavior: reduce ? "auto" : "smooth" });
-    }
-  }, 300);
+
 }
 
 // ---------- Tema ----------
@@ -660,6 +736,7 @@ function openTema(id) {
   const deck = state.deckById.get(id);
   if (!deck) return;
   state.currentDeck = deck;
+  markCurrent(deck);
   state.selecting = false;
   state.selected = new Set();
   $("#deck-search").value = "";
@@ -683,12 +760,13 @@ function renderTema() {
     ${ru ? `<span class="tema-ru" lang="ru">${esc(ru)}</span>` : ""}
     <div class="tema-prog"><span class="bar"><span style="width:${s.pct}%"></span></span><span class="tema-prog-n"><span class="num">${s.learned}</span> de <span class="num">${s.total}</span> memorizadas</span></div>`;
 
-  const pals = { words: "kh", frases: "pe", dialogo: "bl", cajas: "pk" };
+  const pals = { words: "kh", frases: "pe", dialogo: "bl", cajas: "pk", audio: "aq" };
   const ICON = {
     words: `<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5"/>`,
     frases: `<rect x="3" y="7" width="7" height="7" rx="1.5"/><rect x="14" y="7" width="7" height="7" rx="1.5"/>`,
     dialogo: `<path d="M4 5h16v11H9l-5 4z"/>`,
-    cajas: `<rect x="3" y="9" width="8" height="11" rx="1.5"/><rect x="13" y="9" width="8" height="11" rx="1.5"/><path d="M7 5v4M17 5v4"/>`
+    cajas: `<rect x="3" y="9" width="8" height="11" rx="1.5"/><rect x="13" y="9" width="8" height="11" rx="1.5"/><path d="M7 5v4M17 5v4"/>`,
+    audio: `<path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/>`
   };
   $("#tema-modes").innerHTML = modesList(d).map((m) => `<button class="mode card-frame pal-${pals[m.key]}" type="button" data-mode="${m.key}"${m.off ? " disabled" : ""}>
       <span class="mode-top"><span class="mode-ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[m.key]}</svg></span><span class="num mode-num">${m.key === "words" ? `${m.num} hoy` : m.num}</span></span>
@@ -1035,7 +1113,11 @@ function renderItem() {
     return;
   }
 
-  if (it.dir === "es") {
+  if (it.dir === "audio") {
+    front.innerHTML = `<span class="learn-label">Solo audio</span><div class="audio-prompt"><span class="audio-ic" aria-hidden="true">${SPEAKER}</span><p>Escucha y elige el significado</p><button class="btn btn-ghost audio-repeat" id="audio-repeat" type="button">${SPEAKER}<span>Repetir palabra</span></button></div>`;
+    back.innerHTML = ruBlock(c.ru, c.fonetica) + `<div class="big-es">${esc(c.es)}</div>` + extras(c);
+    if ("speechSynthesis" in window) speak(c.ru);
+  } else if (it.dir === "es") {
     front.innerHTML = `<div class="big-es">${esc(c.es)}</div><div class="prompt-blank">___</div>`;
     back.innerHTML = ruBlock(c.ru, c.fonetica) + extras(c);
   } else {
@@ -1147,8 +1229,9 @@ function useHint() {
   if (s.answered || it.phase !== "quiz") return;
   if (it.hint === 0) {
     it.hint = 1;
-    $("#hint-text").textContent = hintText(it);
-    const mine = store.note(it.card.id);
+    $("#hint-text").textContent = it.dir === "audio" ? it.card.ru : hintText(it);
+    $("#hint-text").lang = it.dir === "audio" ? "ru" : "";
+    const mine = it.dir === "audio" ? "" : store.note(it.card.id);
     $("#hint-mine").hidden = !mine;
     $("#hint-mine-text").textContent = mine;
     $("#hint-box").hidden = false;
@@ -1261,10 +1344,10 @@ function next() {
 
 function finishSession() {
   const s = state.session;
-  $("#done-title").textContent = s.cram ? "Repaso rápido terminado" : "Práctica terminada";
+  $("#done-title").textContent = s.audio ? "Solo audio terminado" : s.cram ? "Repaso rápido terminado" : "Práctica terminada";
   $("#done-summary").textContent =
     `${s.ok} respuestas correctas y ${s.bad} errores. ` +
-    (s.cram ? "El repaso rápido no cambia tu calendario." : "Las palabras que fallaste volverán pronto para reforzarlas.");
+    (s.audio ? "Esta práctica no cambia tu calendario de repaso." : s.cram ? "El repaso rápido no cambia tu calendario." : "Las palabras que fallaste volverán pronto para reforzarlas.");
   state.doneReturn = s.returnTo;
   state.session = null;
   show("done");
@@ -2181,14 +2264,35 @@ function buildModTemas(mod) {
     .filter((t) => t.leer || t.deck);
 }
 
-function modCurrent(mod) {
+// Primer tema sin memorizar de un módulo (lo que sugiere la ruta).
+function modFirstOpen(mod) {
   if (mod.pronto) return null;
   return modTemas(mod).find((t) => t.deck && !isMemorized(t.deck)) || null;
 }
 
-function currentMod() {
+// Tema actual de Carol: el último mazo que abrió o practicó (si está en la ruta).
+// Sin historial, el que sugiere la ruta.
+function currentTema() {
+  const id = store.currentDeck();
+  const t = id ? rutaPos(id) : null;
+  if (t && !t.mod.pronto) return t;
   const mods = rutaMods().filter((m) => !m.pronto);
-  return mods.find((m) => modCurrent(m)) || mods[mods.length - 1] || null;
+  const m = mods.find((x) => modFirstOpen(x));
+  return m ? modFirstOpen(m) : null;
+}
+
+// En el módulo del tema actual es ese tema; en los demás, el primero sin memorizar.
+function modCurrent(mod) {
+  const c = currentTema();
+  if (c && c.mod === mod) return c;
+  return modFirstOpen(mod);
+}
+
+function currentMod() {
+  const c = currentTema();
+  if (c) return c.mod;
+  const mods = rutaMods().filter((m) => !m.pronto);
+  return mods[mods.length - 1] || null;
 }
 
 function modWords(mod) {
@@ -2216,16 +2320,19 @@ function rutaPos(deckId) {
   return null;
 }
 
+// «Tema actual»: el último mazo que abrió o practicó; si no hay, el de la ruta.
 function suggestedDeck() {
-  const m = currentMod();
-  const c = m && modCurrent(m);
+  const id = store.currentDeck();
+  const d = id ? state.deckById.get(id) : null;
+  if (d && !d.mine) return d;
+  const c = currentTema();
   return c ? c.deck : null;
 }
 
 // ----- Pantalla del mapa (diseño D) -----
 // Posiciones de las 8 plataformas en el arte (boceto de 940 px mostrado a 470).
 const MAPA_RAW = [[833, 750], [1055, 887], [774, 988], [650, 1131], [901, 1300], [1148, 1446], [915, 1583], [698, 1722]];
-const MS = 0.3005, MOX = -40, MOY = 130, MPAD = 8, MF = 0.26, MK = 0.55, MT = 9;
+const MS = 0.3005, MOX = -40, MOY = 70, MPAD = 8, MF = 0.26, MK = 0.55, MT = 9;
 const r1 = (x) => Math.round(x * 10) / 10;
 
 function plateShape(w, ox, oy) {
@@ -2272,7 +2379,8 @@ function mapaStatus(it, cur) {
   const { t, kind } = it;
   if (t.mod.pronto || kind === "mod") return "m3";
   if (t.leer) return leerDone() === (state.lectura ? state.lectura.pasos.length : 6) ? "done" : "next";
-  if (cur && t === cur) return "now";
+  const g = currentTema();
+  if (g && t === g) return "now";
   return t.deck && isMemorized(t.deck) ? "done" : "next";
 }
 
@@ -2322,9 +2430,9 @@ function mapaStageHtml() {
     const h = w * MK, sw = w + MPAD * 2, sh = h + MT + MPAD * 2;
     const sp = plateShape(w, sw / 2, h / 2 + MPAD);
     const m3 = st === "m3";
-    const face = m3 ? "#141417" : PALF[t.leer ? "aq" : visFor(t.deck).pal];
-    const side = m3 ? "#0B0B0C" : "#F3EFE6";
-    const line = m3 ? "#8E8A82" : "#111111";
+    const face = m3 ? "var(--mp-m3-face)" : PALF[t.leer ? "aq" : visFor(t.deck).pal];
+    const side = m3 ? "var(--mp-bg)" : "#F3EFE6";
+    const line = m3 ? "var(--mp-m3-line)" : "#111111";
     const dash = m3 ? "5 4" : "none";
     const selected = selIt === it;
     const len = [...ru.replace(/́/g, "")].length;
@@ -2333,11 +2441,11 @@ function mapaStageHtml() {
     const aria = `${ru}, ${es}${st === "done" ? ", memorizado" : st === "now" ? ", estás aquí" : m3 ? ", próximamente" : ""}`;
     plates += `<svg class="mp-plate" aria-hidden="true" width="${r1(sw)}" height="${r1(sh)}" viewBox="0 0 ${r1(sw)} ${r1(sh)}" style="left:${r1(x - sw / 2)}px;top:${r1(y - h / 2 - MPAD)}px">
       <path d="${sp.sil}" fill="${m3 ? "none" : "#F3EFE6"}" stroke="${m3 ? "none" : "#F3EFE6"}" stroke-width="7" stroke-linejoin="round"/>
-      <path d="${sp.sil}" fill="${side}" stroke="${line}" stroke-width="2" stroke-linejoin="round" stroke-dasharray="${dash}"/>
-      <path d="${sp.top}" fill="${face}" stroke="${selected && st !== "now" ? "#4AF2D5" : line}" stroke-width="${selected && st !== "now" ? 3.4 : 2}" stroke-linejoin="round" stroke-dasharray="${dash}"/></svg>
+      <path d="${sp.sil}" style="fill:${side};stroke:${line}" stroke="${line}" stroke-width="2" stroke-linejoin="round" stroke-dasharray="${dash}"/>
+      <path d="${sp.top}" style="fill:${face};stroke:${selected && st !== "now" ? "var(--mp-sel)" : line}" stroke-width="${selected && st !== "now" ? 3.4 : 2}" stroke-linejoin="round" stroke-dasharray="${dash}"/></svg>
       <button class="mp-label" type="button" data-mp="${i}" aria-label="${esc(aria)}" aria-pressed="${selected}" style="left:${r1(x - 46)}px;top:${r1(y - 22)}px">
-        <span class="ru" lang="ru" style="font-size:${fs}px;color:${m3 ? "#C9C5BC" : "#111"}">${esc(ru)}</span>
-        <span class="mp-es" style="color:${m3 ? "#A3A3AA" : "#3A3A40"}">${esc(es)}</span></button>`;
+        <span class="ru" lang="ru" style="font-size:${fs}px;color:${m3 ? "var(--mp-m3-t)" : "#111"}">${esc(ru)}</span>
+        <span class="mp-es" style="color:${m3 ? "var(--mp-muted)" : "#3A3A40"}">${esc(es)}</span></button>`;
     if (st === "done") plates += `<span class="mp-check" aria-hidden="true" style="left:${r1(x - w / 2 - 14)}px;top:${r1(y - 12)}px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#0B0B0C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>`;
     if (st === "now") pin = `<svg class="mp-pin" aria-hidden="true" width="64" height="83" viewBox="0 0 48 62" style="left:${r1(x + 18 - 32)}px;top:${r1(y - 12 - 83)}px"><path d="M24 2C12 2 3 11 3 23c0 15 21 37 21 37s21-22 21-37C45 11 36 2 24 2z" fill="#4AF2D5" stroke="#0B0B0C" stroke-width="2.5"/><circle cx="24" cy="23" r="11.5" fill="#F3EFE6"/><path d="M18.5 23.5l4 4 7.5-8" fill="none" stroke="#0B0B0C" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   });
@@ -2348,7 +2456,7 @@ function mapaStageHtml() {
   let card = "";
   if (t) {
     const ru = mapaRu(t);
-    const isNow = cur && t === cur;
+    const isNow = st === "now";
     const top = t.mod.pronto ? "Pronto" : isNow ? "Estás aquí" : st === "done" ? "Memorizado" : "Tema";
     let body = "";
     if (t.leer) {
@@ -2394,7 +2502,7 @@ function mapaStageHtml() {
     ? `<button class="mapa-pg" type="button" data-mpg="-1" style="left:96px" aria-label="Tramo anterior"${win.p === 0 ? " disabled" : ""}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
        <button class="mapa-pg" type="button" data-mpg="1" style="left:332px" aria-label="Tramo siguiente"${win.p >= win.pages - 1 ? " disabled" : ""}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>`
     : "";
-  return `<img class="mapa-art" src="img/mapa/m2.png" alt="">
+  return `<div class="mapa-art" aria-hidden="true"></div>
     ${bridges}${plates}${pin}${card}
     <h1 class="mapa-mod">Módulo <span class="num">${mod.n}</span></h1>${pager}
     <div class="mapa-today"><span class="mt-dot" aria-hidden="true"></span>${today}</div>
@@ -2475,7 +2583,8 @@ function mapaClick(e) {
   const go2 = e.target.closest("[data-mgo]");
   if (go2) {
     const a = go2.dataset.mgo;
-    if (a === "home" || a === "temas") return go(a);
+    if (a === "temas") { state.temasMod = m.mod; state.openSet = false; state.temaFilter = "Todos"; return go("temas"); }
+    if (a === "home") return go(a);
     if (a.startsWith("mod:")) {
       const mod = rutaMods().find((x) => x.id === a.slice(4));
       const cur = modCurrent(mod);
@@ -2573,7 +2682,15 @@ function bind() {
     if (g) return go(g.dataset.go);
     const t = e.target.closest("[data-open-tema]");
     if (t) return openTema(t.dataset.openTema);
+    const mo = e.target.closest("[data-mod]");
+    if (mo) {
+      state.temasMod = mo.dataset.mod;
+      state.openSet = false;
+      state.temaFilter = "Todos";
+      return go("temas");
+    }
   });
+  $("#temas-back").addEventListener("click", () => go(state.temasFrom === "mapa" ? "mapa" : "modulos"));
 
   // Portada
   const startIfAny = () => {
@@ -2584,8 +2701,8 @@ function bind() {
   $("#start-card").addEventListener("click", startIfAny);
   $("#h-sigue").addEventListener("click", (e) => {
     const deck = state.deckById.get(e.currentTarget.dataset.deck || "");
-    if (deck) { state.currentDeck = deck; return startDeck(deck); }
-    go("temas");
+    if (deck) { state.currentDeck = deck; markCurrent(deck); return startDeck(deck); }
+    go("modulos");
   });
   $("#h-next").addEventListener("click", (e) => {
     const deck = state.deckById.get(e.currentTarget.dataset.deck || "");
@@ -2745,6 +2862,9 @@ function bind() {
   $("#options").addEventListener("click", (e) => {
     const b = e.target.closest("[data-opt]");
     if (b) choose(Number(b.dataset.opt));
+  });
+  $("#card-front").addEventListener("click", (e) => {
+    if (e.target.closest("#audio-repeat") && state.session) speak(state.session.queue[0].card.ru);
   });
   $("#card-speak").addEventListener("click", () => {
     const s = state.session;

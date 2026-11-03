@@ -46,6 +46,7 @@ function emptyProgress() {
     mine: {},
     ejer: {},
     lectura: {},
+    current: null,
     settings: { ...DEFAULT_SETTINGS, t: 0 },
     resetAt: 0
   };
@@ -83,6 +84,7 @@ function normalize(p) {
     mine: p.mine && typeof p.mine === "object" ? p.mine : {},
     ejer: p.ejer && typeof p.ejer === "object" ? p.ejer : {},
     lectura: p.lectura && typeof p.lectura === "object" ? p.lectura : {},
+    current: p.current && typeof p.current === "object" && p.current.deck ? p.current : null,
     settings: { ...base.settings, ...(p.settings || {}) },
     resetAt: p.resetAt || 0
   };
@@ -149,6 +151,8 @@ export function merge(a, b) {
       }
     }
   }
+  // Tema actual: gana el más reciente.
+  out.current = [a.current, b.current].filter(Boolean).sort((x, y) => (y.t || 0) - (x.t || 0))[0] || null;
   out.settings = (b.settings.t || 0) > (a.settings.t || 0) ? b.settings : a.settings;
   return out;
 }
@@ -417,6 +421,17 @@ export class Store {
 
   setLectura(id) {
     this.p.lectura[id] = { done: 1, t: Date.now() };
+    this.save();
+  }
+
+  // --- Tema actual (el último mazo que abrió o practicó) ---
+  currentDeck() {
+    return this.p.current ? this.p.current.deck : null;
+  }
+
+  setCurrent(deckId) {
+    if (!deckId || (this.p.current && this.p.current.deck === deckId)) return;
+    this.p.current = { deck: deckId, t: Date.now() };
     this.save();
   }
 

@@ -31,8 +31,6 @@
         { "id": "paises", "es": "países" },
         { "id": "escuela", "es": "escuela" },
         { "id": "naturaleza", "es": "naturaleza" },
-        { "id": "calendario", "es": "calendario" },
-        { "id": "fiestas", "es": "fiestas" },
         { "id": "colores", "es": "colores" },
         { "id": "adjetivos", "es": "carácter" },
         { "id": "ideas", "es": "ideas" }
@@ -42,8 +40,9 @@
       "id": "m3",
       "n": 3,
       "titulo": "Módulo 3",
-      "pronto": true,
       "temas": [
+        { "id": "calendario", "es": "meses y estaciones" },
+        { "id": "fiestas", "es": "fiestas" },
         { "id": "ropa-cuerpo", "es": "ropa" },
         { "id": "comida", "es": "comida" }
       ]

@@ -57,7 +57,7 @@
       </div>
     </div>
     <div class="h-right">
-      <button class="h-globo" id="h-temas" type="button" data-go="temas"><span class="h-globo-t">Cuando tú quieras, repasa</span><b class="h-globo-b">Tus temas</b></button>
+      <button class="h-globo" id="h-temas" type="button" data-go="modulos"><span class="h-globo-t">Cuando tú quieras, repasa</span><b class="h-globo-b">Tus temas</b></button>
       <button class="pill pill-go" id="start-today" type="button">Empezar →</button>
     </div>
   </div>
@@ -73,10 +73,22 @@
   <div class="mapa-box"><div class="mapa-stage" id="mapa-stage"></div></div>
 </main>
 
-<!-- TEMAS -->
-<main id="view-temas" class="view has-nav" hidden>
+<!-- MÓDULOS -->
+<main id="view-modulos" class="view has-nav" hidden>
   <header class="row-between">
     <h1 class="page-title">Tus temas</h1>
+    <button class="link-btn" type="button" data-go="mapa">Ver mapa</button>
+  </header>
+  <div class="mods" id="mods-list"></div>
+</main>
+
+<!-- TEMAS (los mazos de un módulo) -->
+<main id="view-temas" class="view has-nav" hidden>
+  <header class="row-between">
+    <div class="th-left">
+      <button class="circle-btn" type="button" id="temas-back" aria-label="Volver a los módulos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <h1 class="page-title" id="temas-title">Tus temas</h1>
+    </div>
     <button class="link-btn" type="button" data-go="mapa">Ver mapa</button>
   </header>
   <div class="chips" id="temas-chips" role="tablist" aria-label="Filtrar temas"></div>
@@ -321,7 +333,7 @@
   <button type="button" data-go="home" aria-label="Inicio">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
   </button>
-  <button type="button" data-go="temas" aria-label="Temas">
+  <button type="button" data-go="modulos" aria-label="Temas">
     <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>
   </button>
   <button type="button" data-go="settings" aria-label="Ajustes">

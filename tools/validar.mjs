@@ -172,6 +172,13 @@ if (ruta3) {
       usados.set(t.id, m.id);
     });
   });
+  // Calendario (meses, días y estaciones) y fiestas abren el Módulo 3, en ese orden.
+  const m3 = (ruta3.modulos || []).find((m) => m.id === "m3");
+  const cal = m3 && m3.temas.findIndex((t) => t.id === "calendario");
+  const fie = m3 && m3.temas.findIndex((t) => t.id === "fiestas");
+  if (!m3 || cal !== 0 || fie !== 1) errores.push('ruta.json: "calendario" y "fiestas" deben ser los dos primeros temas del Módulo 3');
+  const resumen = (ruta3.modulos || []).map((m) => `${m.id}: ${m.temas.filter((t) => !t.leer).length} temas`).join(" · ");
+  console.log(`Ruta: ${resumen}`);
   for (const id of ids) if (!usados.has(id)) avisos.push(`ruta.json: el mazo "${id}" no está en la ruta (solo en Biblioteca)`);
 }
 
