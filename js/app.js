@@ -1,7 +1,24 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "3.2.1";
+const APP_VERSION = "3.3.0";
+// Botón «Reportar falla». Está activo en la beta; para activarlo también en la versión real, cambia a true.
+const REPORT_BUTTON = IS_BETA || false;
+
+// Últimos errores de la app (texto corto, sin direcciones con datos ni correos) para los reportes.
+const recentErrors = [];
+function noteError(msg) {
+  const clean = String(msg || "")
+    .replace(/[\w.+-]+@[\w-]+\.[\w.]+/g, "[correo]")
+    .replace(/(token|bearer|apikey|password|contrase\w*)[^\s,;]*/gi, "[oculto]")
+    .replace(/\?[^\s)]*/g, "")
+    .slice(0, 160);
+  if (!clean) return;
+  recentErrors.push(clean);
+  if (recentErrors.length > 5) recentErrors.shift();
+}
+window.addEventListener("error", (e) => noteError(e.message));
+window.addEventListener("unhandledrejection", (e) => noteError(e.reason && e.reason.message ? e.reason.message : e.reason));
 const NEW_PER_DECK_SESSION = 20;
 const PILOT = "familia";
 
@@ -2513,7 +2530,8 @@ function mapaStageHtml() {
 }
 
 function fitMapa() {
-  const ms = Math.min(1, window.innerWidth / 390);
+  // Con el botón «Reportar» se deja libre la franja de abajo para que no tape los botones.
+  const ms = Math.min(1, window.innerWidth / 390, (window.innerHeight - (REPORT_BUTTON ? 64 : 0)) / 810);
   $("#view-mapa").style.setProperty("--ms", ms);
 }
 
@@ -2675,8 +2693,84 @@ function setDeckEnabled(ids, on) {
   store.setSetting("disabled", disabled);
 }
 
+// ---------- Reportar falla ----------
+const REPORT_MAX = 2000;
+const REPORT_GAP_MS = 10000;
+let lastReportAt = 0;
+
+// Dónde estaba Carol: vista, tema y modo (solo ids y nombres de pantalla).
+function screenInfo() {
+  const v = state.view;
+  const deck = state.currentDeck && ["tema", "study", "frase", "dialogo", "cajas", "palabra", "done"].includes(v) ? state.currentDeck.id : "";
+  let mode = "";
+  if (v === "study" && state.session) mode = state.session.audio ? "audio" : state.session.cram ? "repaso" : "palabras";
+  else if (["frase", "dialogo", "cajas"].includes(v)) mode = v;
+  if (v === "temas" && state.temasMod) mode = state.temasMod;
+  return [v, deck, mode].filter(Boolean).join("/");
+}
+
+function reportEnv() {
+  const c = navigator.connection || {};
+  const cur = suggestedDeck();
+  return {
+    userAgent: String(navigator.userAgent || "").slice(0, 200),
+    viewport: `${innerWidth}x${innerHeight}`,
+    tema: document.documentElement.dataset.theme === "light" ? "claro" : "oscuro",
+    idioma: navigator.language || "",
+    conexion: `${navigator.onLine ? "en línea" : "sin conexión"}${c.effectiveType ? " " + c.effectiveType : ""}${c.saveData ? " ahorro" : ""}`,
+    tema_actual: cur ? cur.id : null,
+    errores: recentErrors.slice()
+  };
+}
+
+function openReport() {
+  const pantalla = screenInfo();
+  state.report = { pantalla };
+  openSheet("Reportar falla", `<form class="rep-form" id="rep-form" novalidate>
+      <label class="rep-label" for="rep-text">¿Qué pasó?</label>
+      <textarea id="rep-text" rows="5" maxlength="${REPORT_MAX}" placeholder="Cuéntanos qué viste y qué esperabas ver" aria-describedby="rep-count rep-msg"></textarea>
+      <div class="rep-meta"><span class="rep-msg" id="rep-msg" role="status"></span><span class="rep-count" id="rep-count"><span class="num">0</span>/<span class="num">${REPORT_MAX}</span></span></div>
+      <div class="rep-actions">
+        <button class="btn btn-primary" type="submit">Enviar</button>
+        <button class="btn btn-ghost" type="button" data-sheet-close>Cancelar</button>
+      </div>
+    </form>`, "Con tu mensaje enviamos la pantalla y la versión en que estás.");
+  requestAnimationFrame(() => $("#rep-text") && $("#rep-text").focus());
+}
+
+async function submitReport() {
+  const ta = $("#rep-text");
+  const msg = $("#rep-msg");
+  const text = ta.value.trim();
+  if (!text) { msg.textContent = "Escribe unas palabras para que podamos ayudarte."; ta.focus(); return; }
+  if (Date.now() - lastReportAt < REPORT_GAP_MS) { msg.textContent = "Espera unos segundos para enviar otro reporte."; return; }
+  lastReportAt = Date.now();
+  const entry = {
+    pantalla: (state.report && state.report.pantalla) || screenInfo(),
+    version: APP_VERSION,
+    descripcion: text.slice(0, REPORT_MAX),
+    entorno: reportEnv()
+  };
+  closeSheet();
+  toast("¡Gracias! Recibimos tu reporte");
+  try { await store.reportFalla(entry); } catch (e) { console.warn("reporte", e); }
+}
+
 // ---------- Eventos ----------
 function bind() {
+  const chip = $("#rep-chip");
+  chip.hidden = !REPORT_BUTTON;
+  chip.addEventListener("click", openReport);
+  $("#sheet-body").addEventListener("input", (e) => {
+    if (e.target.id !== "rep-text") return;
+    $("#rep-count .num").textContent = e.target.value.length;
+    $("#rep-msg").textContent = "";
+  });
+  $("#sheet-body").addEventListener("submit", (e) => {
+    if (e.target.id !== "rep-form") return;
+    e.preventDefault();
+    submitReport();
+  });
   document.addEventListener("click", (e) => {
     const g = e.target.closest("[data-go]");
     if (g) return go(g.dataset.go);

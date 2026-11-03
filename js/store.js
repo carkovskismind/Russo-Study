@@ -208,10 +208,10 @@ export class Store {
     else this.setStatus("local");
     this.flushReports();
 
-    window.addEventListener("online", () => this.pull());
+    window.addEventListener("online", () => { this.pull(); this.flushReports(); });
     document.addEventListener("visibilitychange", () => {
       if (document.visibilityState === "hidden" && this.dirty) this.push();
-      if (document.visibilityState === "visible") this.pull();
+      if (document.visibilityState === "visible") { this.pull(); this.flushReports(); }
     });
   }
 
@@ -349,17 +349,36 @@ export class Store {
     return this.flushReports();
   }
 
+  // «Reportar falla» (botón de la beta). Sin conexión se queda en la cola de pendientes.
+  async reportFalla(entry) {
+    const row = { ...entry, tipo: "falla", user_id: this.user ? this.user.id : null, created_at: new Date().toISOString() };
+    const pending = readPending();
+    pending.push(row);
+    writePending(pending.slice(-50));
+    this.flushReports();
+    return true;
+  }
+
   async flushReports() {
     const pending = readPending();
-    if (!pending.length || !this.sb) return false;
+    if (!pending.length || !this.sb || this._flushing) return false;
+    this._flushing = true;
+    // Todas las filas con las mismas columnas (los reportes viejos no traen las nuevas).
+    const rows = pending.map((r) => ({
+      tipo: "respuesta", pantalla: null, version: null, descripcion: null, entorno: null,
+      mazo: null, frase_id: null, paso: null, respuesta: null, esperada: null, ...r
+    }));
     try {
-      const { error } = await this.sb.from(REPORTS).insert(pending);
+      const { error } = await this.sb.from(REPORTS).insert(rows);
       if (error) throw error;
-      writePending([]);
+      // Solo se quitan los enviados; lo que llegó mientras tanto se conserva.
+      writePending(readPending().slice(pending.length));
       return true;
     } catch (e) {
       console.warn("No se pudo enviar el reporte", e);
       return false;
+    } finally {
+      this._flushing = false;
     }
   }
 
