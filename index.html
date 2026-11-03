@@ -19,61 +19,53 @@
 </head>
 <body>
 
-<!-- INICIO -->
-<main id="view-home" class="view has-nav">
-  <header class="row-between">
-    <button class="sync-chip" id="sync-chip" type="button" data-state="local">Solo aquí</button>
-    <button class="avatar" type="button" data-go="settings" aria-label="Tu perfil y ajustes"><img src="img/perfil.png" alt=""></button>
+<!-- INICIO (portada 3.1) -->
+<main id="view-home" class="view has-nav home3">
+  <header class="h-top">
+    <h1 class="h-greet"><span class="h-hi" lang="ru">Приве́т!</span><span class="h-name" id="greet-name">Carol!</span></h1>
+    <button class="avatar h-avatar" type="button" data-go="settings" aria-label="Tu perfil y ajustes"><img src="img/perfil.png" alt=""></button>
   </header>
 
-  <div class="greet">
-    <span class="greet-hi" lang="ru">Приве́т!</span>
-    <span class="greet-name" id="greet-name">Bienvenida</span>
+  <div class="h-streak" id="h-streak" role="group" aria-label="Tu racha">
+    <svg class="h-flame" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5c.8 3.6 5 5.7 5 10.6a5 5 0 0 1-10 0c0-2 .9-3.3 2.2-4.4.2 1.7.9 2.6 1.9 3 .4-3.2-.1-6.2.9-9.2z"/></svg>
+    <span class="h-streak-t" aria-hidden="true">Racha <span class="num" id="h-streak-n">0</span> <span id="h-streak-u">días</span></span>
+    <span class="h-dots" id="h-dots" aria-hidden="true"></span>
   </div>
 
-  <div class="week" id="week" aria-label="Tu semana"></div>
+  <section class="h-stage" aria-label="Tu práctica de hoy">
+    <div class="h-monito" id="h-monito" aria-hidden="true"><span class="h-eye h-eye-l"></span><span class="h-eye h-eye-r"></span></div>
+    <button class="h-card" id="start-card" type="button">
+      <span class="h-card-in">
+        <span class="h-card-hi" aria-hidden="true">Hoy nos toca…</span>
+        <span class="h-card-tema" id="h-tema" aria-hidden="true">…</span>
+        <span class="h-card-n" aria-hidden="true"><span class="h-ring num" id="h-count">0</span><span class="h-card-sub">palabras<br>tu fila del día</span></span>
+      </span>
+    </button>
+  </section>
 
-  <button class="hero card-frame pal-mint" id="start-today" type="button">
-    <span class="hero-main">
-      <span class="label">Tu avance del curso</span>
-      <span class="num hero-pct" id="stat-pct">0%</span>
-      <span class="hero-sub"><span id="stat-learned">0</span> de <span id="stat-total">0</span> palabras</span>
-      <span class="bar bar-hero"><span id="stat-bar" style="width:0%"></span></span>
-    </span>
-    <span class="hero-today">
-      <span class="hero-today-label">para hoy</span>
-      <span class="num hero-today-num" id="stat-today">0</span>
-    </span>
-    <svg class="hero-wave" id="hero-wave" viewBox="0 0 132 60" preserveAspectRatio="none" aria-hidden="true"><path d=""/></svg>
-  </button>
-  <p class="today-note" id="today-note"></p>
+  <button class="pill h-sigue" id="h-sigue" type="button">Sigue con…</button>
 
-  <div class="duo">
-    <div class="stat-card card-frame pal-kh">
-      <span class="label">Aprendidas</span>
-      <span class="num stat-big" id="stat-learned2">0</span>
-      <span class="stat-foot" id="stat-week">+0 esta semana</span>
+  <div class="h-grid">
+    <div class="h-left">
+      <div class="h-block" id="h-next-block">
+        <p class="h-small">O continúa en…</p>
+        <button class="pill" id="h-next" type="button">Familia</button>
+      </div>
+      <div class="h-block">
+        <p class="h-ask">Consulta tu ruta de aprendizaje</p>
+        <button class="pill" id="h-mapa" type="button">Abrir mapa</button>
+      </div>
     </div>
-    <div class="stat-card card-frame pal-pk">
-      <span class="label">Racha</span>
-      <span class="num stat-big" id="stat-streak">0 días</span>
-      <span class="stat-foot" id="stat-streak-foot">¡empieza hoy!</span>
+    <div class="h-right">
+      <button class="h-globo" id="h-temas" type="button" data-go="temas"><span class="h-globo-t">Cuando tú quieras, repasa</span><b class="h-globo-b">Tus temas</b></button>
+      <button class="pill pill-go" id="start-today" type="button">Empezar →</button>
     </div>
   </div>
 
-  <div id="ruta-block">
-    <div class="row-between section-head">
-      <h2>Tu ruta</h2>
-      <button class="link-btn" type="button" data-go="mapa">Ver mapa</button>
-    </div>
-    <button class="ruta-mini" id="ruta-mini" type="button" data-go="mapa" aria-label="Abrir el mapa de tu ruta"></button>
+  <div class="h-keys">
+    <button class="h-key h-azul" id="h-leer" type="button"><span class="h-key-t">Aprende a leer</span><span class="h-alt" aria-hidden="true">alt</span></button>
+    <button class="h-key h-naranja" id="h-gram" type="button"><span class="h-key-t">Aprende un poco de gramática</span><span class="h-alt" aria-hidden="true">supr</span></button>
   </div>
-
-  <div class="row-between section-head">
-    <h2>Seguir con</h2>
-    <button class="link-btn" type="button" data-go="temas">Ver todos</button>
-  </div>
-  <div class="rows" id="continue-list"></div>
 </main>
 
 <!-- MAPA -->

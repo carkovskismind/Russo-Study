@@ -6,7 +6,7 @@
 // Cada una usa su propia caché y la app real no toca nada bajo /beta/.
 const IS_BETA = /\/beta\/sw\.js$/.test(location.pathname);
 const CACHE_FAMILY = IS_BETA ? "russo-beta-v" : "russo-v";
-const CACHE = CACHE_FAMILY + "13";
+const CACHE = CACHE_FAMILY + "14";
 const BETA_PATH = new URL("beta", self.registration.scope).pathname; // p. ej. /Russo-Study/beta
 const SHELL = [
   "./",
@@ -23,6 +23,16 @@ const SHELL = [
   "img/saludos.png",
   "img/perfil.png",
   "img/mapa/m2.png",
+  "img/home/monito-oscuro.png",
+  "img/home/monito-claro.png",
+  "img/home/carta-oscuro.svg",
+  "img/home/carta-claro.svg",
+  "img/home/globo-oscuro.png",
+  "img/home/globo-claro.png",
+  "img/home/azul-oscuro.png",
+  "img/home/azul-claro.png",
+  "img/home/naranja-oscuro.png",
+  "img/home/naranja-claro.png",
   "data/ruta.json",
   "data/mazos.json",
   "data/gramatica/dudas.json",

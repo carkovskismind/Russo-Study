@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "3.0.4";
+const APP_VERSION = "3.1.0";
 const NEW_PER_DECK_SESSION = 20;
 const PILOT = "familia";
 
@@ -132,6 +132,7 @@ function show(view) {
   window.scrollTo(0, 0);
   syncHistory();
   if (view === "home" && state.updatePending) setTimeout(() => location.reload(), 300);
+  if (view === "home") startBlink(); else stopBlink();
 }
 
 // ---------- Historial (botón y gestos de retroceso del celular) ----------
@@ -360,117 +361,119 @@ function logActivity() {
   activityCache = null;
 }
 
-// ---------- Inicio ----------
-const WEEK_LETTERS = ["L", "M", "M", "J", "V", "S", "D"];
+// ---------- Inicio (portada 3.1) ----------
+// Tema del que más tarjetas trae la fila de hoy (la que arma «Empezar»).
+function todayTopic() {
+  const today = dateKey(Date.now());
+  const newLeft = Math.max(0, store.settings.newPerDay - store.newToday(today));
+  const queue = buildQueue(state.decks.filter(deckEnabled), newLeft);
+  const counts = new Map();
+  for (const it of queue) counts.set(it.card.deckId, (counts.get(it.card.deckId) || 0) + 1);
+  let best = null;
+  for (const [id, n] of counts) if (!best || n > best.n) best = { id, n };
+  return best ? state.deckById.get(best.id) : null;
+}
+
+// Tema siguiente al actual en la ruta (con mazo), o null.
+function nextRutaTema() {
+  const mod = currentMod();
+  if (!mod) return null;
+  const cur = modCurrent(mod);
+  const all = rutaMods().filter((m) => !m.pronto).flatMap((m) => modTemas(m)).filter((t) => t.deck);
+  const i = cur ? all.indexOf(cur) : -1;
+  return all.slice(i + 1).find((t) => !isMemorized(t.deck)) || null;
+}
+
+function cap(s) {
+  return s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+}
+
+// Tema con «dudas de gramática»: el actual y, si no tiene, el primero de la ruta que sí.
+function gramaticaDeck() {
+  const cur = suggestedDeck();
+  if (cur && dudasFor(cur)) return cur;
+  return rutaOrder(state.decks).find((d) => dudasFor(d)) || null;
+}
 
 function renderHome() {
   activityCache = null;
   const now = Date.now();
   const today = dateKey(now);
   const act = activityByDay();
-  let due = 0, learned = 0, total = 0, fresh = 0;
+  let due = 0, fresh = 0;
   for (const d of state.decks) {
+    if (!deckEnabled(d)) continue;
     const s = deckStats(d, now);
-    if (!d.mine) {
-      learned += s.learned;
-      total += s.total;
-    }
-    if (deckEnabled(d)) { due += s.due; fresh += s.fresh; }
+    due += s.due;
+    fresh += s.fresh;
   }
   const newLeft = Math.max(0, store.settings.newPerDay - store.newToday(today));
-  const newCount = Math.min(newLeft, fresh);
-  const picks = pickedCards().length;
-  const forToday = due + newCount + picks;
-  const pct = total ? Math.round((learned / total) * 100) : 0;
+  const forToday = due + Math.min(newLeft, fresh) + pickedCards().length;
 
-  $("#greet-name").textContent = (store.settings.name || "").trim() || "¡Hola!";
-  $("#stat-pct").textContent = `${pct}%`;
-  $("#stat-learned").textContent = learned.toLocaleString("es-MX");
-  $("#stat-total").textContent = total.toLocaleString("es-MX");
-  $("#stat-bar").style.width = `${Math.max(pct, learned ? 2 : 0)}%`;
-  $("#stat-today").textContent = forToday;
-  $("#start-today").disabled = forToday === 0;
-  $("#start-today").setAttribute("aria-label", forToday ? `Practicar ahora: ${forToday} para hoy` : "No hay práctica pendiente hoy");
-  const note = $("#today-note");
-  if (forToday === 0) {
-    note.textContent = fresh === 0
-      ? "Terminaste todos los temas activos. Activa otro en Ajustes o usa el repaso rápido de un tema."
-      : "Todo al día. Vuelve mañana o sube el límite de nuevas en Ajustes.";
-  } else note.textContent = picks ? `Incluye ${picks} ${picks === 1 ? "palabra que elegiste" : "palabras que elegiste"}.` : "";
+  const name = (store.settings.name || "").trim().replace(/!+$/, "");
+  $("#greet-name").textContent = name ? `${name}!` : "¡Hola!";
 
-  // Semana (lunes a domingo)
-  const d0 = new Date(startOfDay(now));
-  const dow = (d0.getDay() + 6) % 7;
-  const monday = startOfDay(now) - dow * DAY;
-  let weekHtml = "";
-  for (let i = 0; i < 7; i++) {
-    const ts = monday + i * DAY + DAY / 2;
-    const k = dateKey(ts);
-    const cls = [k === today ? "today" : "", act[k] ? "done" : "", ts > now && k !== today ? "future" : ""].join(" ");
-    weekHtml += `<div class="day ${cls}"><small>${WEEK_LETTERS[i]}</small><b>${new Date(ts).getDate()}</b><i></i></div>`;
-  }
-  $("#week").innerHTML = weekHtml;
-
-  // Onda con la actividad de los últimos 7 días
-  const counts = [];
-  for (let i = 6; i >= 0; i--) counts.push(act[dateKey(now - i * DAY)] || 0);
-  $("#hero-wave path").setAttribute("d", wavePath(counts));
-
-  // Aprendidas esta semana y racha
-  let week = 0;
-  for (const st of Object.values(store.p.cards)) {
-    if (st && st.ivl >= 1 && st.reps === 1 && (st.t || 0) >= monday) week++;
-  }
-  $("#stat-learned2").textContent = learned.toLocaleString("es-MX");
-  $("#stat-week").textContent = `+${week} esta semana`;
+  // Racha y últimos 7 días (el último es hoy; vacío hasta que practiques)
   let streak = 0;
   let day = act[today] ? now : now - DAY;
   while (act[dateKey(day)]) { streak++; day -= DAY; }
-  $("#stat-streak").textContent = `${streak} ${streak === 1 ? "día" : "días"}`;
-  $("#stat-streak-foot").textContent = streak ? (act[today] ? "¡no la rompas!" : "practica hoy para seguir") : "¡empieza hoy!";
-
-  // Seguir con
-  const recent = state.decks
-    .map((d) => ({ d, s: deckStats(d, now) }))
-    .filter((x) => x.s.last)
-    .sort((a, b) => b.s.last - a.s.last)
-    .slice(0, 2)
-    .map((x) => x.d);
-  const pilot = suggestedDeck() || state.deckById.get(PILOT);
-  if (pilot && !recent.includes(pilot) && recent.length < 2) recent.unshift(pilot);
-  for (const d of state.decks) { if (recent.length >= 2) break; if (!recent.includes(d)) recent.push(d); }
-  $("#continue-list").innerHTML = recent.map((d) => rowHtml(d)).join("");
-  if (state.ruta) renderRutaMini();
-  else $("#ruta-block").hidden = true;
-}
-
-function wavePath(counts) {
-  const max = Math.max(...counts);
-  const pts = counts.map((c, i) => {
-    const x = (i / (counts.length - 1)) * 132;
-    const y = max ? 54 - (c / max) * 50 : 30 + Math.sin(i * 1.3) * 18;
-    return [x, y];
-  });
-  let d = `M${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
-  for (let i = 1; i < pts.length; i++) {
-    const [x0, y0] = pts[i - 1];
-    const [x1, y1] = pts[i];
-    const cx = (x0 + x1) / 2;
-    d += ` C${cx.toFixed(1)} ${y0.toFixed(1)} ${cx.toFixed(1)} ${y1.toFixed(1)} ${x1.toFixed(1)} ${y1.toFixed(1)}`;
+  $("#h-streak-n").textContent = streak;
+  $("#h-streak-u").textContent = streak === 1 ? "día" : "días";
+  let dots = "";
+  let hits = 0;
+  for (let i = 6; i >= 0; i--) {
+    const on = !!act[dateKey(now - i * DAY)];
+    if (on) hits++;
+    dots += `<i class="${on ? "on" : ""}"></i>`;
   }
-  return d;
+  $("#h-dots").innerHTML = dots;
+  $("#h-streak").setAttribute("aria-label", `Racha de ${streak} ${streak === 1 ? "día" : "días"}. Practicaste ${hits} de los últimos 7 días.`);
+
+  // Tarjeta roja: tema del día y N real
+  const td = todayTopic();
+  const tema = td ? td.title : forToday ? "Tu práctica" : "Todo al día";
+  $("#h-tema").textContent = tema;
+  $("#h-count").textContent = forToday;
+  const card = $("#start-card");
+  card.setAttribute("aria-label", forToday
+    ? `Hoy nos toca: ${tema}, ${forToday} ${forToday === 1 ? "palabra" : "palabras"}, tu fila del día`
+    : "Hoy no hay práctica pendiente. Todo al día");
+  card.setAttribute("aria-disabled", String(forToday === 0));
+  $("#start-today").setAttribute("aria-disabled", String(forToday === 0));
+  $("#start-today").setAttribute("aria-label", forToday ? `Empezar la práctica de hoy: ${forToday} palabras` : "Hoy no hay práctica pendiente");
+
+  // Sigue con… / O continúa en…
+  const cur = suggestedDeck();
+  const sigue = $("#h-sigue");
+  if (cur) { sigue.textContent = `Sigue con ${cur.title}`; sigue.dataset.deck = cur.id; }
+  else { sigue.textContent = "Mira todos tus temas"; sigue.dataset.deck = ""; }
+  const nx = nextRutaTema();
+  $("#h-next-block").hidden = !nx;
+  if (nx) {
+    const b = $("#h-next");
+    b.textContent = cap(nx.es);
+    b.dataset.deck = nx.deck.id;
+    b.setAttribute("aria-label", `Continúa en ${nx.deck.title}`);
+  }
+  $("#h-gram").hidden = !gramaticaDeck();
 }
 
-function rowHtml(deck) {
-  const s = deckStats(deck);
-  const v = visFor(deck);
-  const ru = RU_NAME[deck.id];
-  return `<button class="trow card-frame pal-${v.pal}" type="button" data-open-tema="${esc(deck.id)}">
-    ${artHtml(deck)}
-    <span class="t-n">${deckNumber(deck)}${deckTag(deck)}</span>
-    <span class="t-title">${esc(deck.title)} ${ru ? `<span lang="ru">${esc(ru)}</span>` : ""}</span>
-    <span class="t-foot"><span class="bar"><span style="width:${s.pct}%"></span></span><span class="pct">${s.pct}%</span></span>
-  </button>`;
+// Parpadeo del monito: cada 3 a 5 s, solo en el inicio y sin movimiento reducido.
+let blinkTimer = null;
+const NO_MOTION = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function stopBlink() {
+  clearTimeout(blinkTimer);
+  blinkTimer = null;
+}
+function startBlink() {
+  stopBlink();
+  if (state.view !== "home" || document.hidden || NO_MOTION()) return;
+  blinkTimer = setTimeout(() => {
+    const m = $("#h-monito");
+    if (state.view !== "home" || !m) return stopBlink();
+    m.classList.add("blink");
+    setTimeout(() => { m.classList.remove("blink"); startBlink(); }, 260);
+  }, 3000 + Math.random() * 2000);
 }
 
 // ---------- Temas ----------
@@ -2076,7 +2079,7 @@ function leerTileHtml() {
 
 function openLeer() {
   if (!state.lectura) return toast("No se pudo cargar la lectura.");
-  state.leerFrom = state.view === "mapa" ? "mapa" : "temas";
+  state.leerFrom = state.view === "mapa" || state.view === "home" ? state.view : "temas";
   const pasos = state.lectura.pasos;
   const first = pasos.findIndex((p) => !store.lectura(p.id));
   state.leer = { step: first < 0 ? 0 : first, sel: 0 };
@@ -2138,7 +2141,7 @@ function leerClick(e) {
     store.setLectura(pasos[state.leer.step].id);
     if (state.leer.step >= pasos.length - 1) {
       toast("¡Terminaste Aprende a leer!");
-      return go(state.leerFrom === "mapa" ? "mapa" : "temas");
+      return go(state.leerFrom || "temas");
     }
     state.leer = { step: state.leer.step + 1, sel: 0 };
     renderLeer();
@@ -2217,66 +2220,6 @@ function suggestedDeck() {
   const m = currentMod();
   const c = m && modCurrent(m);
   return c ? c.deck : null;
-}
-
-// ----- Mini mapa del inicio (fiel a Main.dc.html) -----
-const MINI_ICON = {
-  ciudad: "M4 21V9h6v12M10 21V4h10v17M13 8h4M13 12h4",
-  juegos: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3.5 12h17M12 3v18",
-  paises: "M5 21V4M5 4h11l-2 4 2 4H5",
-  escuela: "M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5",
-  numeros: "M5 8l2-2v12M11 9a2 2 0 1 1 3 2l-3 5h4",
-  leer: "M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5",
-  casa: "M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z",
-  verbos: "M4 12h14M13 6l6 6-6 6",
-  instrumentos: "M9 18V5l11-2v13M9 18a3 3 0 1 1-3-3 3 3 0 0 1 3 3zM20 16a3 3 0 1 1-3-3 3 3 0 0 1 3 3z",
-  familia: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c1-4 4-6 8-6s7 2 8 6",
-  saludos: "M4 5h16v11H9l-5 4z",
-  colores: "M12 3a9 9 0 1 0 0 18c1.5 0 2-1 2-2s-1-1.5-1-3 1-2 2.5-2H18a3 3 0 0 0 3-3c0-5-4-8-9-8z",
-  _: "M12 4l2.4 5 5.6.7-4.1 3.8 1.1 5.5-5-2.8-5 2.8 1.1-5.5L4 9.7 9.6 9z"
-};
-// Casillas (i, j) de las 5 plataformas del boceto: dos hechas, la actual y dos siguientes.
-const MINI_SLOTS = [[-2, 0], [-1, 0], [0, 0], [0, 1], [1, 1]];
-
-function renderRutaMini() {
-  const host = $("#ruta-mini");
-  const mod = currentMod();
-  if (!mod) { $("#ruta-block").hidden = true; return; }
-  $("#ruta-block").hidden = false;
-  const T = modTemas(mod);
-  const cur = modCurrent(mod);
-  const ci = cur ? T.indexOf(cur) : T.length - 1;
-  const mx = (i, j) => 179 + (i - j) * 55;
-  const my = (i, j) => 150 + (i + j) * 32;
-  let cells = "";
-  for (let s2 = -5; s2 <= 5; s2++) {
-    for (let d = -4; d <= 4; d++) {
-      if ((s2 + d) % 2 !== 0) continue;
-      const i = (s2 + d) / 2, j = (s2 - d) / 2;
-      cells += `<span class="rm-cell ${(i + j) % 2 === 0 ? "a" : "b"}" aria-hidden="true" style="left:${mx(i, j) - 55}px;top:${my(i, j) - 32}px"></span>`;
-    }
-  }
-  let plates = "";
-  MINI_SLOTS.forEach(([i, j], k) => {
-    const t = T[ci - 2 + k];
-    if (!t) return;
-    const x = mx(i, j), y = my(i, j);
-    const isCur = !!cur && t === cur;
-    const done = !isCur && (t.leer ? leerDone() === (state.lectura ? state.lectura.pasos.length : 6) : t.deck && isMemorized(t.deck));
-    const pal = !t.leer && t.deck ? visFor(t.deck).pal : "aq";
-    const cls = isCur ? "now" : done ? "done" : "next";
-    const face = done ? `background:${PALF[pal] || PALF.aq};color:var(--ink-${pal})` : "";
-    const name = t.leer ? "Aprende a leer" : t.deck.title.split(/[,y·]/)[0].trim();
-    const icon = MINI_ICON[t.id] || MINI_ICON._;
-    plates += `<span class="rm-side ${cls}" aria-hidden="true" style="left:${x - 48}px;top:${y - 26}px"></span>
-      <span class="rm-top ${cls}" aria-hidden="true" style="left:${x - 48}px;top:${y - 34}px;${face}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${icon}"/></svg></span>
-      <span class="rm-name ${cls}" style="left:${x - 48}px;top:${y + 26}px">${esc(name)}</span>`;
-  });
-  const w = modWords(mod);
-  host.innerHTML = `${cells}${plates}
-    <span class="rm-chip">${esc(mod.titulo.replace(/\d+/, ""))}<span class="num">${mod.n}</span> · <span class="num">${w.learned}</span> de <span class="num">${w.total}</span> palabras</span>
-    ${cur && cur.deck ? `<span class="rm-today">Hoy: <span class="num">${todayWords(cur.deck)}</span></span>` : ""}`;
-  host.setAttribute("aria-label", `Abrir el mapa de tu ruta. ${mod.titulo}${cur && cur.deck ? `, sigues en ${cur.deck.title}` : ""}`);
 }
 
 // ----- Pantalla del mapa (diseño D) -----
@@ -2549,16 +2492,7 @@ function mapaClick(e) {
 
 // ---------- Ajustes y cuenta ----------
 function renderSync() {
-  const chip = $("#sync-chip");
-  let st = store.status;
-  let label = "Solo aquí";
-  if (store.syncConfigured && !store.user) { st = "local"; label = "Iniciar sesión"; }
-  else if (st === "saving") label = "Guardando…";
-  else if (st === "ok") label = "Sincronizado";
-  else if (st === "error") label = "Error al sincronizar";
-  else if (st === "offline") label = "Sin conexión";
-  chip.dataset.state = st;
-  chip.textContent = label;
+  // La portada 3.1 no muestra el chip de sincronización; el estado vive en Ajustes.
   if (state.view === "settings") renderAccount();
 }
 
@@ -2641,8 +2575,28 @@ function bind() {
     if (t) return openTema(t.dataset.openTema);
   });
 
-  $("#start-today").addEventListener("click", startToday);
-  $("#sync-chip").addEventListener("click", () => go("settings"));
+  // Portada
+  const startIfAny = () => {
+    if ($("#start-today").getAttribute("aria-disabled") === "true") return toast("Hoy no hay práctica pendiente. ¡Todo al día!");
+    startToday();
+  };
+  $("#start-today").addEventListener("click", startIfAny);
+  $("#start-card").addEventListener("click", startIfAny);
+  $("#h-sigue").addEventListener("click", (e) => {
+    const deck = state.deckById.get(e.currentTarget.dataset.deck || "");
+    if (deck) { state.currentDeck = deck; return startDeck(deck); }
+    go("temas");
+  });
+  $("#h-next").addEventListener("click", (e) => {
+    const deck = state.deckById.get(e.currentTarget.dataset.deck || "");
+    if (deck) openTema(deck.id);
+  });
+  $("#h-mapa").addEventListener("click", openMapa);
+  $("#h-leer").addEventListener("click", openLeer);
+  $("#h-gram").addEventListener("click", () => {
+    const d = gramaticaDeck();
+    if (d) openSheet("Dudas de gramática", dudasHtml(d), d.title);
+  });
 
   // Temas
   $("#temas-chips").addEventListener("click", (e) => {
@@ -2805,7 +2759,7 @@ function bind() {
   window.addEventListener("resize", () => { if (state.view === "mapa") fitMapa(); });
 
   // Aprende a leer
-  $("#leer-back").addEventListener("click", () => go(state.leerFrom === "mapa" ? "mapa" : "temas"));
+  $("#leer-back").addEventListener("click", () => go(state.leerFrom || "temas"));
   $("#leer-steps").addEventListener("click", (e) => {
     const b = e.target.closest("[data-step]");
     if (b) { state.leer = { step: Number(b.dataset.step), sel: 0 }; renderLeer(); window.scrollTo(0, 0); }
@@ -2846,8 +2800,11 @@ function bind() {
   // Hoja inferior
   $("#sheet").addEventListener("click", (e) => {
     if (e.target.closest("[data-sheet-close]")) return closeSheet();
+    const say = e.target.closest("[data-say]");
+    if (say) return speak(say.dataset.say);
     dicClick(e);
   });
+  document.addEventListener("visibilitychange", () => { if (state.view === "home") startBlink(); else stopBlink(); });
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !$("#sheet").hidden) { e.preventDefault(); closeSheet(); }
   });
@@ -2983,7 +2940,7 @@ async function main() {
     await loadDecks();
   } catch (e) {
     console.error(e);
-    $("#continue-list").innerHTML = `<p class="loading">No se pudieron cargar los temas: ${esc(e.message)}</p>`;
+    $("#h-sigue").textContent = "No se pudieron cargar los temas";
   }
   renderHome();
   store.init().then(renderSync).catch((e) => console.warn(e));
