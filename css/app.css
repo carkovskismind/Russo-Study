@@ -866,8 +866,8 @@ body.sheet-on { overflow: hidden; }
   --h-azul: url("../img/home/azul-oscuro.png");
   --h-naranja: url("../img/home/naranja-oscuro.png");
   --h-focus: #4af2d5;
-  --h-azul-ar: 193 / 150;
-  --h-naranja-ar: 356 / 165;
+  --h-azul-ar: 213 / 179;
+  --h-naranja-ar: 396 / 197;
   gap: 14px;
   padding-bottom: calc(96px + env(safe-area-inset-bottom));
 }
@@ -951,7 +951,7 @@ body.sheet-on { overflow: hidden; }
 
 .h-keys { display: flex; gap: 10px; align-items: flex-end; margin-top: 6px; }
 .h-key {
-  position: relative; border: 0; padding: 0; cursor: pointer; background-position: center; background-repeat: no-repeat; background-size: 100% 100%;
+  position: relative; border: 0; padding: 0; cursor: pointer; background-color: transparent; background-position: center; background-repeat: no-repeat; background-size: 100% 100%;
   text-align: left; font-family: inherit; display: block; min-height: 44px; border-radius: 10px;
 }
 .h-azul { flex: 0 0 38%; aspect-ratio: var(--h-azul-ar); background-image: var(--h-azul); color: #fff; }
