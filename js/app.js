@@ -131,6 +131,7 @@ function show(view) {
   document.body.classList.toggle("on-mapa", view === "mapa");
   window.scrollTo(0, 0);
   syncHistory();
+  if (view === "home" && state.updatePending) setTimeout(() => location.reload(), 300);
 }
 
 // ---------- Historial (botón y gestos de retroceso del celular) ----------
@@ -1957,6 +1958,16 @@ function beginCaja() {
   renderCajas();
 }
 
+// Tamaño del nombre de la caja según su palabra más larga, para que nunca se salga ni se corte.
+function boxSize(name) {
+  const longest = String(name).replace(/́/g, "").split(/\s+/).reduce((m, w) => Math.max(m, w.length), 0);
+  const total = String(name).length;
+  if (longest <= 5 && total <= 8) return "s1";
+  if (longest <= 8 && total <= 12) return "s2";
+  if (longest <= 10) return "s3";
+  return "s4";
+}
+
 function renderCajas() {
   const cj = state.cj;
   const c = cj.cur;
@@ -1967,7 +1978,7 @@ function renderCajas() {
   const boxes = c.e.cajas.map((name, k) => {
     const chips = c.boxes[k].map((x) => `<span class="cx-chip${x.bad ? " bad" : ""}" lang="ru">${esc(x.ru)}</span>`).join("");
     const active = c.sel !== null && !c.err;
-    return `<button class="cbox card-frame pal-${BOX_PALS[k % BOX_PALS.length]}${active ? " ready" : ""}" type="button" data-box="${k}" aria-label="Caja ${esc(name)}"${active ? "" : " disabled"}><span class="cbox-name" lang="ru">${esc(name)}</span>${chips}</button>`;
+    return `<button class="cbox card-frame pal-${BOX_PALS[k % BOX_PALS.length]}${active ? " ready" : ""}" type="button" data-box="${k}" aria-label="Caja ${esc(name)}"${active ? "" : " disabled"}><span class="cbox-name ${boxSize(name)}"${/[а-яё]/i.test(name) ? ' lang="ru"' : ""}>${esc(name)}</span>${chips}</button>`;
   }).join("");
   let msg = "";
   if (c.err) {
@@ -2980,6 +2991,15 @@ async function main() {
   startVisitCounter();
 
   if ("serviceWorker" in navigator && location.protocol !== "file:") {
+    // Si ya había una versión abierta y llega una nueva, se recarga sola (en el inicio)
+    // para no quedarse con pantallas de la versión anterior.
+    const hadController = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (!hadController || state.updatePending) return;
+      state.updatePending = true;
+      if (state.view === "home") location.reload();
+      else toast("Hay una versión nueva; se aplica al volver al inicio");
+    });
     navigator.serviceWorker.register("sw.js", { scope: "./" }).catch((e) => console.warn("SW", e));
   }
 }

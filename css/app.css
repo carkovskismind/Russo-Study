@@ -737,13 +737,19 @@ body.sheet-on { overflow: hidden; }
 .cx-hint { margin: 0; font-size: 14px; font-weight: 600; color: var(--muted); }
 .cboxes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .cbox {
+  min-width: 0; overflow: hidden;
   min-height: 250px; border-radius: 22px; padding: 12px; display: flex; flex-direction: column; align-items: stretch; gap: 8px;
   text-align: left; align-content: flex-start;
 }
 .cbox:disabled { color: var(--tile-ink); cursor: default; }
 .cbox.ready { outline: 3px solid var(--accent); outline-offset: 2px; cursor: pointer; }
-.cbox-name { font-family: var(--f-ru); font-size: 34px; font-weight: 700; line-height: 1; color: var(--ink); overflow-wrap: anywhere; }
-.cx-chip { padding: 7px 10px; border-radius: 10px; background: #fff; color: #111; font-family: var(--f-ru); font-size: 16px; font-weight: 700; animation: pop .25s ease both; }
+.cbox-name { font-family: var(--f-ru); font-size: 22px; font-weight: 700; line-height: 1.1; color: var(--ink); overflow-wrap: break-word; word-break: normal; hyphens: manual; min-width: 0; max-width: 100%; }
+.cbox-name.s1 { font-size: 24px; }
+.cbox-name.s2 { font-size: 20px; }
+.cbox-name.s3 { font-size: 17px; }
+.cbox-name.s4 { font-size: 15px; }
+@media (max-width: 374px) { .cbox-name.s1 { font-size: 21px; } .cbox-name.s2 { font-size: 18px; } .cbox-name.s3 { font-size: 15px; } .cbox-name.s4 { font-size: 14px; } .cboxes .cx-chip { font-size: 15px; padding: 7px 9px; } }
+.cx-chip { overflow-wrap: anywhere; max-width: 100%; padding: 7px 10px; border-radius: 10px; background: #fff; color: #111; font-family: var(--f-ru); font-size: 16px; font-weight: 700; animation: pop .25s ease both; }
 .cx-chip.bad { background: var(--bad); text-decoration: line-through; }
 .cx-bank { display: flex; flex-direction: column; gap: 8px; }
 .cx-picks { display: flex; flex-wrap: wrap; gap: 8px; }
