@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "3.5.1";
+const APP_VERSION = "3.5.2";
 // Botón «Reportar falla». Está activo en la beta; para activarlo también en la versión real, cambia a true.
 const REPORT_BUTTON = IS_BETA || false;
 

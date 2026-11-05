@@ -779,8 +779,11 @@ body:not(.no-rep) .view-mapa { padding-bottom: calc(76px + env(safe-area-inset-b
 .mp-dot { position: absolute; z-index: 5; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: #fff; border: 3.5px solid #0b0b0c; box-sizing: border-box; pointer-events: none; }
 .mp-dot.done { background: #4af2d5; }
 .mp-dot.done::after { content: ""; position: absolute; left: 3px; top: 0; width: 3px; height: 6px; border: solid #0b0b0c; border-width: 0 2px 2px 0; transform: rotate(45deg); }
-/* El aro de selección va alrededor del anillo, no de la píldora */
-.mp-dot.sel { outline: 3px solid var(--mp-sel); outline-offset: 2px; }
+/* Selección DENTRO del anillo (sin aro por fuera): punto turquesa en el centro.
+   Memorizado = turquesa con ✓; seleccionado y memorizado = turquesa con ✓ y borde más grueso. */
+.mp-dot.sel { background: radial-gradient(circle, #4af2d5 0 3.4px, #fff 3.9px); }
+.mp-dot.sel.done { background: #4af2d5; border-width: 4.5px; }
+.mp-dot.sel.done::after { left: 1.5px; top: -1px; width: 2.5px; height: 5px; border-width: 0 2px 2px 0; }
 .mp-lead { position: absolute; z-index: 2; height: 2.5px; margin-top: -1px; background: #0b0b0c; pointer-events: none; }
 .mp-stop2 {
   position: absolute; z-index: 4; transform: translateY(-50%); display: inline-flex; align-items: center; justify-content: center;
