@@ -776,16 +776,30 @@ body:not(.no-rep) .view-mapa { padding-bottom: calc(76px + env(safe-area-inset-b
 :root[data-theme="light"] .mapa-map .t-o { display: none; }
 :root[data-theme="light"] .mapa-map .t-c { display: block; }
 :root[data-theme="light"] .mapa-map .t-solo-o { display: none; }
-.mp-pt { z-index: 2; }
-.mp-piece { z-index: 2; }
-.mp-stop {
-  position: absolute; z-index: 3; padding: 0; border: 0; background: transparent; border-radius: 999px; cursor: pointer;
+.mp-dot { position: absolute; z-index: 5; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: #fff; border: 3.5px solid #0b0b0c; box-sizing: border-box; pointer-events: none; }
+.mp-dot.done { background: #4af2d5; }
+.mp-dot.done::after { content: ""; position: absolute; left: 3px; top: 0; width: 3px; height: 6px; border: solid #0b0b0c; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+/* El aro de selección va alrededor del anillo, no de la píldora */
+.mp-dot.sel { outline: 3px solid var(--mp-sel); outline-offset: 2px; }
+.mp-lead { position: absolute; z-index: 2; height: 2.5px; margin-top: -1px; background: #0b0b0c; pointer-events: none; }
+.mp-stop2 {
+  position: absolute; z-index: 4; transform: translateY(-50%); display: inline-flex; align-items: center; justify-content: center;
+  height: 30px; min-width: 44px; padding: 0 11px; border: 2px solid var(--frame); border-radius: 999px; color: #fff; white-space: nowrap;
+  cursor: pointer; font-family: var(--f-ui); line-height: 1.08; -webkit-tap-highlight-color: transparent;
 }
-.mp-hit { position: absolute; left: -6px; right: -6px; top: 50%; height: 44px; transform: translateY(-50%); }
-.mp-stop[aria-pressed="true"] { outline: 2.5px solid var(--mp-sel); outline-offset: 2px; }
-.mp-stop:focus-visible { outline: 3px solid var(--mp-sel); outline-offset: 3px; }
-.mp-pin { position: absolute; z-index: 5; display: block; pointer-events: none; aspect-ratio: 40 / 52; transition: left .7s cubic-bezier(.4, .1, .2, 1), top .7s cubic-bezier(.4, .1, .2, 1); }
-.mp-pin img { position: static; width: 100%; }
+.mp-stop2.R-side { padding-left: 13px; }
+.mp-stop2.L-side { padding-right: 13px; }
+/* Zona táctil ≥ 44 px (recortada a la mitad entre vecinas); del lado del anillo llega hasta él */
+.mp-stop2::after { content: ""; position: absolute; left: -4px; right: -4px; top: calc(-1 * var(--hu, 22px) + 13px); bottom: calc(-1 * var(--hd, 22px) + 13px); }
+.mp-stop2.R-side::after { left: -12px; }
+.mp-stop2.L-side::after { right: -12px; }
+.mp-ru { font-family: var(--f-ru); font-weight: 700; font-size: 13px; line-height: 14px; }
+.c-lav { background: var(--ink-lav); } .c-kh { background: var(--ink-kh); } .c-bl { background: var(--ink-bl); }
+.c-li { background: var(--ink-li); } .c-pk { background: var(--ink-pk); } .c-aq { background: var(--ink-aq); }
+.mp-stop2:focus-visible { outline: 3px solid var(--mp-sel); outline-offset: 3px; }
+.mp-pin2 { position: absolute; z-index: 6; display: block; pointer-events: none; aspect-ratio: 40 / 52; transition: left .7s cubic-bezier(.4, .1, .2, 1), top .7s cubic-bezier(.4, .1, .2, 1); }
+.mapa-map .mp-pin2 img { position: static; width: 100%; height: auto; }
+:root:not([data-theme="light"]) .mp-pin2 { filter: drop-shadow(0 0 1px rgba(243, 239, 230, .95)) drop-shadow(0 0 1px rgba(243, 239, 230, .7)); }
 .mp-cruz { z-index: 6; }
 .mp-casa { z-index: 3; }
 .mapa-card {
@@ -797,6 +811,7 @@ body:not(.no-rep) .view-mapa { padding-bottom: calc(76px + env(safe-area-inset-b
 .mc-title .num { font-size: 18px; }
 .mc-title .ru { font-weight: 700; font-size: 20px; margin-left: 4px; }
 .mc-sub { font-size: 13px; font-weight: 600; color: var(--mp-muted); }
+.mc-btn.mc-wide { grid-column: 1 / -1; }
 .mc-soon { margin: 8px 0 0; font-size: 13px; font-weight: 600; }
 .mc-grid { padding-top: 8px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 8px; }
 .mc-btn {
@@ -812,7 +827,7 @@ body:not(.no-rep) .view-mapa { padding-bottom: calc(76px + env(safe-area-inset-b
 .mapa-bar { display: flex; gap: 10px; }
 .mapa-list { width: 60px; height: 52px; flex-shrink: 0; border-radius: 18px; border: 1.5px solid var(--mp-line); background: transparent; color: var(--mp-ink); display: flex; align-items: center; justify-content: center; }
 .mapa-go { flex: 1; min-width: 0; height: 52px; border-radius: 18px; border: 0; background: #4af2d5; color: #0b0b0c; font-size: 17px; font-weight: 800; }
-@media (prefers-reduced-motion: reduce) { .mp-pin { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .mp-pin2 { transition: none; } }
 
 /* ---------- 3.0 · Ejemplo en la tarjeta nueva ---------- */
 .learn-ex { width: 100%; margin: 12px 0 4px; padding: 10px 14px; border-radius: 16px; background: rgba(255, 255, 255, .6); color: var(--ink, #222); display: flex; flex-direction: column; gap: 2px; text-align: left; }

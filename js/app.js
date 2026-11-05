@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "3.4.0";
+const APP_VERSION = "3.5.0";
 // Botón «Reportar falla». Está activo en la beta; para activarlo también en la versión real, cambia a true.
 const REPORT_BUTTON = IS_BETA || false;
 
@@ -205,6 +205,7 @@ function go(view) {
   if (view === "temas") renderTemas();
   if (view === "settings") renderSettings();
   show(view);
+  if (view === "mapa") mapaHits();
 }
 
 function shuffle(arr) {
@@ -2346,53 +2347,74 @@ function suggestedDeck() {
   return c ? c.deck : null;
 }
 
-// ----- Pantalla del mapa (diseño Figma, 3.4) -----
-// El arte (m3-claro / m3-oscuro) mide 345×522. Las piezas se colocan en % de ese
-// tamaño, así que todo escala junto. Cada «parada» es la etiqueta de un tema con
-// su punto sobre el camino; el pin se coloca en la parada del tema actual.
+// ----- Pantalla del mapa (etiquetas vivas, 3.5) -----
+// El fondo (img/mapa/m3-claro.png / m3-oscuro.png) mide 345×522 y se estira al
+// 100 % del mapa; si se cambia por una versión 3x o SVG con la misma proporción
+// no hace falta tocar nada más. Las paradas se colocan en % de ese tamaño.
+// Cada parada: anillo (x, y en %) sobre el camino + píldora de texto vivo (ru) a
+// su lado (side: R = a la derecha del anillo, L = a la izquierda; dy = ajuste vertical en px;
+// lead = línea guía en % del ancho; c = color de la paleta).
 const MAP_W = 345, MAP_H = 522;
-const MAPA_STOPS = [
-  { id: "paises", x: 93, y: 48, w: 71, h: 23, dot: [86, 57], pt: { x: 79, y: 50, w: 14 } },
-  { id: "juegos", x: 269, y: 96, w: 68, h: 31, dot: [277, 119] },
-  { id: "numeros", x: 78, y: 184, w: 84, h: 23, dot: [86, 196] },
-  { id: "escuela", x: 223, y: 167, w: 86, h: 27, dot: [301, 186] },
-  { id: "profesiones", x: 135, y: 265, w: 93, h: 25, dot: [134, 277], pt: { x: 126, y: 269, w: 16 } },
-];
-const PIN_W = 40, PIN_H = 52;
+const MAPA_STOPS = {
+  m1: [
+    { id: "leer", ru: "Чита́ть", c: "lav", side: "R", x: 24.638, y: 10.345, dy: -12 },
+    { id: "basicas", ru: "Слова́", c: "kh", side: "R", x: 18.551, y: 18.199, dy: -6 },
+    { id: "saludos", ru: "Приве́т", c: "pk", side: "L", x: 24.348, y: 36.973, dy: 0 },
+    { id: "familia", ru: "Семья́", c: "lav", side: "L", x: 23.188, y: 50.383, dy: 0 },
+    { id: "animales", ru: "Живо́тные", c: "li", side: "R", x: 40.29, y: 50.766, dy: 6 },
+    { id: "profesiones", ru: "Профе́ссии", c: "bl", side: "L", x: 55.362, y: 37.931, dy: 0 },
+    { id: "numeros", ru: "Чи́сла", c: "kh", side: "L", x: 62.029, y: 45.211, dy: 0 },
+    { id: "falsos-amigos", ru: "Ло́жные друзья́", c: "aq", side: "L", x: 89.275, y: 26.628, dy: -6, lead: 5.217 },
+    { id: "textos", ru: "Те́ксты", c: "bl", side: "L", x: 88.986, y: 34.1, dy: 0 },
+    { id: "cultura", ru: "Культу́ра", c: "li", side: "L", x: 90.435, y: 45.211, dy: -12 }
+  ],
+  m2: [
+    { id: "casa", ru: "Дом", c: "pk", side: "R", x: 24.638, y: 10.345, dy: 0 },
+    { id: "ciudad", ru: "Го́род", c: "bl", side: "R", x: 6.957, y: 19.157, dy: -12 },
+    { id: "verbos", ru: "Глаго́лы", c: "pk", side: "L", x: 24.348, y: 36.973, dy: 0 },
+    { id: "juegos", ru: "И́гры", c: "bl", side: "L", x: 23.188, y: 49.234, dy: 0 },
+    { id: "instrumentos", ru: "Му́зыка", c: "aq", side: "R", x: 40.29, y: 50.575, dy: 6 },
+    { id: "paises", ru: "Стра́ны", c: "lav", side: "L", x: 56.232, y: 39.272, dy: -12 },
+    { id: "escuela", ru: "Шко́ла", c: "kh", side: "L", x: 63.188, y: 45.402, dy: 0 },
+    { id: "naturaleza", ru: "Приро́да", c: "aq", side: "L", x: 72.464, y: 30.268, dy: -12 },
+    { id: "colores", ru: "Цвета́", c: "li", side: "R", x: 80.58, y: 22.797, dy: 0 },
+    { id: "adjetivos", ru: "Хара́ктер", c: "bl", side: "L", x: 87.536, y: 36.782, dy: -12 },
+    { id: "ideas", ru: "Иде́и", c: "li", side: "L", x: 90.435, y: 45.211, dy: -12 }
+  ],
+  m3: [
+    { id: "calendario", ru: "Календа́рь", c: "lav", side: "R", x: 21.159, y: 17.241, dy: 0 },
+    { id: "fiestas", ru: "Пра́здники", c: "lav", side: "R", x: 24.638, y: 46.552, dy: 0 },
+    { id: "ropa-cuerpo", ru: "Оде́жда", c: "pk", side: "R", x: 44.348, y: 36.398, dy: 0 },
+    { id: "comida", ru: "Еда́", c: "lav", side: "L", x: 85.507, y: 23.563, dy: 0 }
+  ]
+};
+// Pin al 80 %: 32×42 px, con la punta en el anillo (left = x − 16, top = y − 40).
+const PIN_W = 32, PIN_DX = 16, PIN_DY = 40;
+const r1 = (x) => Math.round(x * 1000) / 1000;
 const pctX = (v) => r1(v / MAP_W * 100) + "%";
 const pctY = (v) => r1(v / MAP_H * 100) + "%";
-const r1 = (x) => Math.round(x * 10) / 10;
-let lastPin = null; // última posición del pin, para que se deslice al volver al mapa
+let lastPin = null; // {mod, to:[x,y]} última posición del pin, para que se deslice al volver
 
-// Todos los temas (sin «Aprende a leer») en el orden de la ruta.
-function mapaOrder() {
-  return rutaMods().flatMap((m) => modTemas(m)).filter((t) => t.deck);
-}
-
-// Parada donde va el pin: la del tema actual; si ese tema no tiene etiqueta en el
-// arte, la más cercana en el orden de la ruta (empate: la anterior).
-function mapaPinStop(cur) {
-  if (!cur) return null;
-  const order = mapaOrder();
-  const idx = (id) => order.findIndex((t) => t.deck.id === id);
-  const ci = idx(cur.deck.id);
-  let best = null;
-  for (const s of MAPA_STOPS) {
-    const si = idx(s.id);
-    if (si < 0) continue;
-    const d = Math.abs(si - ci);
-    if (!best || d < best.d || (d === best.d && si < best.si)) best = { s, d, si };
-  }
-  return best ? best.s : null;
+// Posición (px sobre el mapa 345×522) de la punta del pin para el tema actual.
+function mapaPinTo(glob, mod) {
+  if (!glob || glob.mod !== mod || !glob.deck) return null;
+  const s = (MAPA_STOPS[mod.id] || []).find((x) => x.id === glob.deck.id);
+  return s ? [s.x / 100 * MAP_W - PIN_DX, s.y / 100 * MAP_H - PIN_DY] : null;
 }
 
 function mapaRu(t) {
   return t.leer ? t.ru || "Чита́ть" : RU_NAME[t.deck.id] || t.deck.title;
 }
 
-function mapaImg(name, cls, x, y, w, h) {
+function leerListo() {
+  const l = state.lectura;
+  return !!(l && l.pasos.length && l.pasos.every((p) => store.lectura(p.id)));
+}
+
+function mapaImg(name, cls, x, y, w) {
   const pos = `left:${pctX(x)};top:${pctY(y)};width:${r1(w / MAP_W * 100)}%`;
-  return `<img class="${cls} t-o" src="img/mapa/${name}-o.png" alt="" aria-hidden="true" draggable="false" style="${pos}"><img class="${cls} t-c" src="img/mapa/${name}-c.png" alt="" aria-hidden="true" draggable="false" style="${pos}">`;
+  const solo = cls.includes("t-solo-o"); // la casa solo existe en oscuro
+  return `<img class="${cls} t-o" src="img/mapa/${name}-o.png" alt="" aria-hidden="true" draggable="false" style="${pos}">` + (solo ? "" : `<img class="${cls} t-c" src="img/mapa/${name}-c.png" alt="" aria-hidden="true" draggable="false" style="${pos}">`);
 }
 
 function mapaStageHtml() {
@@ -2402,36 +2424,36 @@ function mapaStageHtml() {
   const cur = modCurrent(mod);
   const glob = currentTema();
   const T = modTemas(mod).filter((t) => t.deck);
-  const all = mods.flatMap((x) => modTemas(x)).filter((t) => t.deck);
+  const all = mods.flatMap((x) => modTemas(x));
 
   // Tema seleccionado: el tocado; si no hay, el actual del módulo
   let sel = m.sel && all.find((t) => t.id === m.sel.id && t.mod.id === m.sel.mod);
+  if (!sel || sel.mod !== mod) sel = null;
   if (!sel) sel = cur || T[0] || null;
   m.sel = sel ? { id: sel.id, mod: sel.mod.id } : null;
 
-  // Paradas con etiqueta
+  // Paradas: anillo sobre el camino + píldora con el ruso (texto vivo)
   let stops = "";
-  for (const s of MAPA_STOPS) {
-    const t = all.find((x) => x.deck.id === s.id);
+  for (const s of MAPA_STOPS[mod.id] || []) {
+    const t = modTemas(mod).find((x) => (x.leer ? "leer" : x.deck.id) === s.id);
     if (!t) continue;
-    const ru = mapaRu(t);
-    const isSel = sel && sel === t;
-    const isNow = glob && glob === t;
-    const done = isMemorized(t.deck);
-    const aria = `${ru}, ${t.es}, tema ${t.label}${isNow ? ", estás aquí" : done ? ", memorizado" : ""}`;
-    stops += (s.pt ? mapaImg(s.id + "-pt", "mp-pt", s.pt.x, s.pt.y, s.pt.w, s.pt.w) : "") +
-      `<button class="mp-stop" type="button" data-mp="${esc(s.id)}" aria-label="${esc(aria)}" aria-pressed="${!!isSel}" style="left:${pctX(s.x)};top:${pctY(s.y)};width:${r1(s.w / MAP_W * 100)}%;height:${r1(s.h / MAP_H * 100)}%">` +
-      `<span class="mp-hit" aria-hidden="true"></span></button>` +
-      mapaImg(s.id, "mp-piece", s.x, s.y, s.w, s.h);
+    const isSel = sel === t;
+    const isNow = glob === t;
+    const done = t.leer ? leerListo() : isMemorized(t.deck);
+    const aria = `${s.ru.normalize("NFC")}, ${t.es}, tema ${t.label}${isNow ? ", estás aquí" : done ? ", memorizado" : ""}`;
+    const x = s.x / 100 * MAP_W, y = s.y / 100 * MAP_H;
+    if (s.lead) stops += `<span class="mp-lead" style="left:${r1(s.x - s.lead)}%;top:${r1(s.y)}%;width:${r1(s.lead)}%" aria-hidden="true"></span>`;
+    stops += `<span class="mp-dot${done ? " done" : ""}${isSel ? " sel" : ""}" style="left:${r1(s.x)}%;top:${r1(s.y)}%" aria-hidden="true"></span>`;
+    const pos = s.side === "R" ? `left:calc(${r1(s.x)}% - 3px)` : `right:calc(${r1(100 - s.x)}% - 3px)`;
+    stops += `<button class="mp-stop2 c-${s.c} ${s.side === "R" ? "R-side" : "L-side"}" type="button" data-mp="${esc(s.id)}" aria-label="${esc(aria)}" aria-pressed="${isSel}" style="${pos};top:calc(${r1(s.y)}% + ${s.dy}px)"><span class="mp-ru" lang="ru">${esc(s.ru)}</span></button>`;
   }
 
-  // Pin en la parada del tema actual (se desliza desde donde estaba)
-  const ps = mapaPinStop(glob);
+  // Pin en el anillo del tema actual (solo si el módulo mostrado es el suyo)
+  const to = mapaPinTo(glob, mod);
   let pin = "";
-  if (ps) {
-    const to = [ps.dot[0] - PIN_W / 2, ps.dot[1] - PIN_H + 2];
-    const from = lastPin || to;
-    pin = `<span class="mp-pin" data-to="${to[0]},${to[1]}" style="left:${pctX(from[0])};top:${pctY(from[1])};width:${r1(PIN_W / MAP_W * 100)}%">${mapaImg("pin", "mp-pin-img", 0, 0, PIN_W, PIN_H).replace(/left:0%;top:0%;width:[\d.]+%/g, "")}</span>`;
+  if (to) {
+    const from = lastPin && lastPin.mod === mod.id ? lastPin.to : to;
+    pin = `<span class="mp-pin2" data-to="${to[0]},${to[1]}" style="left:${pctX(from[0])};top:${pctY(from[1])};width:${r1(PIN_W / MAP_W * 100)}%">${mapaImg("pin", "mp-pin-img", 0, 0, PIN_W).replace(/ style="[^"]*"/g, "")}</span>`;
     m.pinTo = to;
   } else m.pinTo = null;
 
@@ -2440,9 +2462,10 @@ function mapaStageHtml() {
   if (sel) {
     const ru = mapaRu(sel);
     const isNow = glob && sel === glob;
-    const top = isNow ? "Estás aquí" : isMemorized(sel.deck) ? "Memorizado" : "Tema";
+    const top = isNow ? "Estás aquí" : (sel.leer ? leerListo() : isMemorized(sel.deck)) ? "Memorizado" : "Tema";
     let body;
     if (mod.pronto) body = `<p class="mc-soon">Este módulo llega pronto.</p>`;
+    else if (sel.leer) body = `<div class="mc-grid"><button class="mc-btn fill mc-wide" type="button" data-mc="leer">Aprende a leer</button></div>`;
     else {
       const ej = ejOf(sel.deck);
       const btns = [];
@@ -2455,7 +2478,7 @@ function mapaStageHtml() {
     card = `<section class="mapa-card" aria-label="Tema seleccionado">
       <span class="mc-top${isNow ? " now" : ""}">${top}</span>
       <span class="mc-title">Tema <span class="num">${sel.label}</span>: <span class="ru" lang="ru">${esc(ru)}</span></span>
-      <span class="mc-sub">${esc(sel.deck.title)}</span>
+      <span class="mc-sub">${esc(sel.leer ? "Alfabeto, acento y sonidos" : sel.deck.title)}</span>
       ${body}</section>`;
   }
 
@@ -2486,7 +2509,7 @@ function mapaStageHtml() {
     </header>
     <div class="mapa-modbar">${check}<b class="mb-name">Módulo <span class="num">${mod.n}</span></b><span class="mb-state">${status}</span></div>
     <div class="mapa-map" role="group" aria-label="Mapa de temas">
-      ${stops}${pin}${mapaImg("cruz", "mp-deco mp-cruz", 22, 448, 49, 74)}${mapaImg("casa", "mp-deco mp-casa t-solo-o", 172, 446, 152, 92)}${card}
+      ${stops}${pin}${mapaImg("cruz", "mp-deco mp-cruz", 22, 448, 49)}${mapaImg("casa", "mp-deco mp-casa t-solo-o", 172, 446, 152)}${card}
     </div>
     <div class="mapa-today"><span class="mt-dot" aria-hidden="true"></span>${today}</div>
     <div class="mapa-bar"><button class="mapa-list" type="button" data-mgo="temas" aria-label="Ver lista de temas"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg></button>${goBtn}</div>`;
@@ -2499,29 +2522,50 @@ function renderMapa() {
   }
   const stage = $("#mapa-stage");
   stage.innerHTML = mapaStageHtml();
-  const pin = stage.querySelector(".mp-pin");
+  const pin = stage.querySelector(".mp-pin2");
   const m = state.mapa;
   if (pin && m.pinTo) {
     const to = m.pinTo;
-    if (lastPin && (lastPin[0] !== to[0] || lastPin[1] !== to[1])) {
+    const prev = lastPin && lastPin.mod === m.mod ? lastPin.to : to;
+    if (prev[0] !== to[0] || prev[1] !== to[1]) {
       void pin.offsetWidth;
       requestAnimationFrame(() => requestAnimationFrame(() => {
         pin.style.left = pctX(to[0]);
         pin.style.top = pctY(to[1]);
       }));
     }
-    lastPin = to;
+    lastPin = { mod: m.mod, to };
   }
+  mapaHits();
+}
+
+// Zona táctil de 44 px por etiqueta; si dos vecinas se pisan, se corta a la mitad.
+function mapaHits() {
+  const stage = $("#mapa-stage");
+  const bs = [...stage.querySelectorAll(".mp-stop2")];
+  const rs = bs.map((b) => b.getBoundingClientRect());
+  if (!rs.length || !rs[0].width) return;
+  bs.forEach((b, i) => {
+    const r = rs[i], cy = r.top + r.height / 2;
+    let up = 22, dn = 22;
+    rs.forEach((o, j) => {
+      if (j === i || o.right < r.left - 4 || o.left > r.right + 4) return;
+      const d = o.top + o.height / 2 - cy;
+      if (d > 0) dn = Math.min(dn, d / 2);
+      else if (d < 0) up = Math.min(up, -d / 2);
+    });
+    b.style.setProperty("--hu", up + "px");
+    b.style.setProperty("--hd", dn + "px");
+  });
 }
 
 function openMapa() {
-  state.mapa = null;
-  renderMapa();
-  go("mapa");
+  state.mapa = null; // se abre en el módulo del tema actual
+  go("mapa"); // go() dibuja el mapa una sola vez, así el pin se desliza de verdad
 }
 
 function mapaSelect(mod, deckId) {
-  const t = modTemas(mod).find((x) => x.deck && x.deck.id === deckId);
+  const t = modTemas(mod).find((x) => (x.leer ? "leer" : x.deck && x.deck.id) === deckId);
   state.mapa.sel = t ? { id: t.id, mod: mod.id } : null;
 }
 
@@ -2540,7 +2584,7 @@ function mapaClick(e) {
   const st = e.target.closest("[data-mp]");
   if (st) {
     const id = st.dataset.mp;
-    const mod = mods.find((x) => modTemas(x).some((t) => t.deck && t.deck.id === id));
+    const mod = mods.find((x) => x.id === m.mod);
     if (!mod) return;
     state.mapa = { mod: mod.id, sel: null };
     mapaSelect(mod, id);
@@ -2553,6 +2597,7 @@ function mapaClick(e) {
   if (mc) {
     const mod = mods.find((x) => x.id === m.mod);
     const t = modTemas(mod).find((x) => m.sel && x.id === m.sel.id);
+    if (t && t.leer) return openLeer();
     if (!t || !t.deck) return;
     return startMode(t.deck, mc.dataset.mc);
   }
@@ -2926,6 +2971,7 @@ function bind() {
 
   // Mapa
   $("#mapa-stage").addEventListener("click", mapaClick);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (state.view === "mapa") mapaHits(); });
 
   // Aprende a leer
   $("#leer-back").addEventListener("click", () => go(state.leerFrom || "temas"));
