@@ -2348,7 +2348,7 @@ function suggestedDeck() {
 }
 
 // ----- Pantalla del mapa (etiquetas vivas, 3.5) -----
-// El fondo (img/mapa/m3-claro.png / m3-oscuro.png) mide 345×522 y se estira al
+// El fondo (img/mapa/mapa-claro.svg / m3-oscuro.png) mide 345×522 y se estira al
 // 100 % del mapa; si se cambia por una versión 3x o SVG con la misma proporción
 // no hace falta tocar nada más. Las paradas se colocan en % de ese tamaño.
 // Cada parada: anillo (x, y en %) sobre el camino + píldora de texto vivo (ru) a
