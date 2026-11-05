@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "3.5.0";
+const APP_VERSION = "3.5.1";
 // Botón «Reportar falla». Está activo en la beta; para activarlo también en la versión real, cambia a true.
 const REPORT_BUTTON = IS_BETA || false;
 
@@ -2348,7 +2348,7 @@ function suggestedDeck() {
 }
 
 // ----- Pantalla del mapa (etiquetas vivas, 3.5) -----
-// El fondo (img/mapa/mapa-claro.svg / m3-oscuro.png) mide 345×522 y se estira al
+// El fondo (img/mapa/mapa-claro.svg / mapa-oscuro.svg) mide 345×522 y se estira al
 // 100 % del mapa; si se cambia por una versión 3x o SVG con la misma proporción
 // no hace falta tocar nada más. Las paradas se colocan en % de ese tamaño.
 // Cada parada: anillo (x, y en %) sobre el camino + píldora de texto vivo (ru) a
@@ -2397,8 +2397,8 @@ let lastPin = null; // {mod, to:[x,y]} última posición del pin, para que se de
 
 // Posición (px sobre el mapa 345×522) de la punta del pin para el tema actual.
 function mapaPinTo(glob, mod) {
-  if (!glob || glob.mod !== mod || !glob.deck) return null;
-  const s = (MAPA_STOPS[mod.id] || []).find((x) => x.id === glob.deck.id);
+  if (!glob || glob.mod !== mod) return null;
+  const s = (MAPA_STOPS[mod.id] || []).find((x) => x.id === (glob.leer ? "leer" : glob.deck.id));
   return s ? [s.x / 100 * MAP_W - PIN_DX, s.y / 100 * MAP_H - PIN_DY] : null;
 }
 
@@ -2414,7 +2414,7 @@ function leerListo() {
 function mapaImg(name, cls, x, y, w) {
   const pos = `left:${pctX(x)};top:${pctY(y)};width:${r1(w / MAP_W * 100)}%`;
   const solo = cls.includes("t-solo-o"); // la casa solo existe en oscuro
-  return `<img class="${cls} t-o" src="img/mapa/${name}-o.png" alt="" aria-hidden="true" draggable="false" style="${pos}">` + (solo ? "" : `<img class="${cls} t-c" src="img/mapa/${name}-c.png" alt="" aria-hidden="true" draggable="false" style="${pos}">`);
+  return `<img class="${cls} t-o" src="img/mapa/${solo ? name + "-oscuro.svg" : name + "-o.png"}" alt="" aria-hidden="true" draggable="false" style="${pos}">` + (solo ? "" : `<img class="${cls} t-c" src="img/mapa/${name}-c.png" alt="" aria-hidden="true" draggable="false" style="${pos}">`);
 }
 
 function mapaStageHtml() {
@@ -2438,7 +2438,7 @@ function mapaStageHtml() {
     const t = modTemas(mod).find((x) => (x.leer ? "leer" : x.deck.id) === s.id);
     if (!t) continue;
     const isSel = sel === t;
-    const isNow = glob === t;
+    const isNow = sel === t;
     const done = t.leer ? leerListo() : isMemorized(t.deck);
     const aria = `${s.ru.normalize("NFC")}, ${t.es}, tema ${t.label}${isNow ? ", estás aquí" : done ? ", memorizado" : ""}`;
     const x = s.x / 100 * MAP_W, y = s.y / 100 * MAP_H;
@@ -2449,7 +2449,7 @@ function mapaStageHtml() {
   }
 
   // Pin en el anillo del tema actual (solo si el módulo mostrado es el suyo)
-  const to = mapaPinTo(glob, mod);
+  const to = mapaPinTo(sel, mod); // el pin va con el tema seleccionado
   let pin = "";
   if (to) {
     const from = lastPin && lastPin.mod === mod.id ? lastPin.to : to;
@@ -2461,8 +2461,8 @@ function mapaStageHtml() {
   let card = "";
   if (sel) {
     const ru = mapaRu(sel);
-    const isNow = glob && sel === glob;
-    const top = isNow ? "Estás aquí" : (sel.leer ? leerListo() : isMemorized(sel.deck)) ? "Memorizado" : "Tema";
+    const isNow = true; // la tarjeta siempre es la del pin
+    const top = "Estás aquí";
     let body;
     if (mod.pronto) body = `<p class="mc-soon">Este módulo llega pronto.</p>`;
     else if (sel.leer) body = `<div class="mc-grid"><button class="mc-btn fill mc-wide" type="button" data-mc="leer">Aprende a leer</button></div>`;
@@ -2588,6 +2588,8 @@ function mapaClick(e) {
     if (!mod) return;
     state.mapa = { mod: mod.id, sel: null };
     mapaSelect(mod, id);
+    const ts = modTemas(mod).find((x) => (x.leer ? "leer" : x.deck && x.deck.id) === id);
+    if (ts && ts.deck) markCurrent(ts.deck); // el pin y «Seguir con» van con el tema tocado
     renderMapa();
     const b = $(`#mapa-stage [data-mp="${id}"]`);
     if (b) b.focus();

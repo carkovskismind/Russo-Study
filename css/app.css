@@ -768,7 +768,7 @@ body:not(.no-rep) .view-mapa { padding-bottom: calc(76px + env(safe-area-inset-b
 
 .mapa-map {
   position: relative; width: 100%; max-width: 345px; margin: 0 auto; aspect-ratio: 345 / 522; overflow: hidden; border-radius: 28px;
-  background: var(--mp-art-bg) url("../img/mapa/m3-oscuro.png") 0 0 / 100% 100% no-repeat; isolation: isolate;
+  background: var(--mp-art-bg) url("../img/mapa/mapa-oscuro.svg") 0 0 / 100% 100% no-repeat; isolation: isolate;
 }
 :root[data-theme="light"] .mapa-map { background-image: url("../img/mapa/mapa-claro.svg"); }
 .mapa-map img { position: absolute; display: block; height: auto; pointer-events: none; user-select: none; -webkit-user-drag: none; }
