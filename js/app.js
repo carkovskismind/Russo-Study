@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "3.5.2";
+const APP_VERSION = "3.6.0";
 // Botón «Reportar falla». Está activo en la beta; para activarlo también en la versión real, cambia a true.
 const REPORT_BUTTON = IS_BETA || false;
 
@@ -680,11 +680,11 @@ function dudasFor(deck) {
 function dudasHtml(deck) {
   const d = dudasFor(deck);
   if (!d) return "";
-  const canSpeak = "speechSynthesis" in window;
+  const speakOk = canSpeak();
   return `<div class="dudas">
     <b class="dudas-title">${esc(d.titulo)}</b>
     <ul>${(d.puntos || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
-    ${(d.ejemplos || []).map((x) => `<div class="dudas-ex"><div><span class="ex-ru" lang="ru">${esc(x.ru)}</span>${x.fonetica ? `<span class="ex-fon">${esc(x.fonetica)}</span>` : ""}<span>${esc(x.es)}</span></div>${canSpeak ? `<button class="audio-btn sm" type="button" data-say="${esc(x.ru)}" aria-label="Escuchar el ejemplo">${SPEAKER}</button>` : ""}</div>`).join("")}
+    ${(d.ejemplos || []).map((x) => `<div class="dudas-ex"><div><span class="ex-ru" lang="ru">${esc(x.ru)}</span>${x.fonetica ? `<span class="ex-fon">${esc(x.fonetica)}</span>` : ""}<span>${esc(x.es)}</span></div>${speakOk ? `<button class="audio-btn sm" type="button" data-say="${esc(x.ru)}" aria-label="Escuchar el ejemplo">${SPEAKER}</button>` : ""}</div>`).join("")}
     ${d.ojo ? `<p class="dudas-ojo"><b>Ojo:</b> ${esc(d.ojo)}</p>` : ""}
   </div>`;
 }
@@ -905,7 +905,7 @@ function renderPalabra(editingNote = false) {
   $("#palabra-crumb").textContent = [deck ? deck.title : "", c.seccion].filter(Boolean).join(" › ");
   const on = store.picked(c.id);
   const note = store.note(c.id);
-  const canSpeak = "speechSynthesis" in window;
+  const speakOk = canSpeak();
   let html;
   if (c.kind === "qa") {
     html = `<div class="word-card card-frame pal-li"><span class="label">Pregunta</span><p class="qa-text">${esc(c.q)}</p></div>
@@ -914,7 +914,7 @@ function renderPalabra(editingNote = false) {
     const tags = [...(c.tag ? c.tag.split("·").map((t) => t.trim()) : []), ...(c.nota && c.nota.length < 22 ? [c.nota] : [])];
     html = `<div class="word-card card-frame pal-aq">
       <div class="word-top"><div><div class="word-ru" lang="ru">${esc(c.ru)}</div>${c.fonetica ? `<div class="word-fon">${esc(c.fonetica)}</div>` : ""}</div>
-      ${canSpeak ? `<button class="audio-btn" type="button" data-say="${esc(c.ru)}" aria-label="Escuchar en ruso">${SPEAKER}</button>` : ""}</div>
+      ${speakOk ? `<button class="audio-btn" type="button" data-say="${esc(c.ru)}" aria-label="Escuchar en ruso">${SPEAKER}</button>` : ""}</div>
       <div class="word-es"><b>${esc(c.es)}</b>${tags.length ? `<span class="word-tags">${tags.map((t) => `<span>${esc(t)}</span>`).join("")}</span>` : ""}</div>
     </div>`;
     if (c.pista || (c.nota && c.nota.length >= 22)) {
@@ -923,7 +923,7 @@ function renderPalabra(editingNote = false) {
     if (c.ejemplo) {
       html += `<div class="info card-frame pal-bl"><div class="info-row"><div><span class="label">Ejemplo</span>
         <span class="ex-ru" lang="ru">${esc(c.ejemplo.ru)}</span>${c.ejemplo.fonetica ? `<span class="ex-fon">${esc(c.ejemplo.fonetica)}</span>` : ""}<span>${esc(c.ejemplo.es)}</span></div>
-        ${canSpeak ? `<button class="audio-btn sm" type="button" data-say="${esc(c.ejemplo.ru)}" aria-label="Escuchar el ejemplo">${SPEAKER}</button>` : ""}</div></div>`;
+        ${speakOk ? `<button class="audio-btn sm" type="button" data-say="${esc(c.ejemplo.ru)}" aria-label="Escuchar el ejemplo">${SPEAKER}</button>` : ""}</div></div>`;
     }
     if (c.tip) html += `<div class="info card-frame pal-kh"><span class="label">Tip de memoria</span><p>${esc(c.tip)}</p></div>`;
   }
@@ -1011,10 +1011,27 @@ function startSession(queue, title, cram, returnTo) {
   renderItem();
 }
 
-function speak(text, rate = 0.9) {
+// Audio ruso: grabaciones pregeneradas (voz RHVoice Elena) en audio/ru/;
+// si no hay grabación, se usa la voz del dispositivo (speechSynthesis).
+let audioIndex = null;
+let audioIndexTried = false;
+let currentAudio = null;
+
+function loadAudioIndex() {
+  if (audioIndexTried) return;
+  audioIndexTried = true;
+  fetch("audio/ru/index.json")
+    .then((r) => (r.ok ? r.json() : null))
+    .then((j) => { if (j && typeof j === "object") audioIndex = j; })
+    .catch(() => {});
+}
+
+function canSpeak() {
+  return "speechSynthesis" in window || typeof Audio !== "undefined";
+}
+
+function speakFallback(clean, rate) {
   if (!("speechSynthesis" in window)) return;
-  const clean = plain(text).replace(/\(.*?\)/g, "").replace(/[/·]/g, ",").replace(/—/g, ",").trim();
-  if (!clean) return;
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(clean);
   u.lang = "ru-RU";
@@ -1023,6 +1040,41 @@ function speak(text, rate = 0.9) {
   u.rate = rate;
   window.speechSynthesis.speak(u);
 }
+
+function speak(text, rate = 0.9) {
+  if (!canSpeak()) return;
+  const clean = plain(text).replace(/\(.*?\)/g, "").replace(/[/·]/g, ",").replace(/—/g, ",").trim();
+  if (!clean) return;
+  loadAudioIndex();
+  if (currentAudio) { try { currentAudio.pause(); } catch (e) { /* nada */ } currentAudio = null; }
+  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  const id = audioIndex && Object.prototype.hasOwnProperty.call(audioIndex, clean) ? audioIndex[clean] : null;
+  if (!id || typeof Audio === "undefined") { speakFallback(clean, rate); return; }
+  try {
+    const a = new Audio(`audio/ru/${id}.mp3`);
+    a.playbackRate = Math.min(1.25, Math.max(0.5, rate / 0.9));
+    a.preservesPitch = true;
+    if ("webkitPreservesPitch" in a) a.webkitPreservesPitch = true;
+    currentAudio = a;
+    a.addEventListener("ended", () => { if (currentAudio === a) currentAudio = null; });
+    a.addEventListener("error", () => { if (currentAudio === a) { currentAudio = null; speakFallback(clean, rate); } });
+    const pr = a.play();
+    if (pr && pr.catch) {
+      pr.catch((err) => {
+        if (currentAudio !== a) return;
+        currentAudio = null;
+        // Autoplay bloqueado (sin gesto): en silencio, sin ruido.
+        if (err && err.name === "NotAllowedError") return;
+        speakFallback(clean, rate);
+      });
+    }
+  } catch (err) {
+    currentAudio = null;
+    speakFallback(clean, rate);
+  }
+}
+
+loadAudioIndex();
 
 function ruBlock(text, fon) {
   const cursive = store.settings.cursive
@@ -1115,7 +1167,7 @@ function renderItem() {
         ? `<div class="learn-ex"><span class="learn-ex-label">Ejemplo</span><span class="ex-ru" lang="ru">${esc(c.ejemplo.ru)}</span><span class="ex-fon">${[c.ejemplo.fonetica, c.ejemplo.es].filter(Boolean).map(esc).join(" · ")}</span></div>`
         : "";
       back.innerHTML = `<div class="big-es">${esc(c.es)}</div>` + ej + extras(c);
-      speakBtn.hidden = !("speechSynthesis" in window);
+      speakBtn.hidden = !canSpeak();
       if (store.settings.autoSpeak) speak(c.ru);
     }
     back.hidden = false;
@@ -1134,14 +1186,14 @@ function renderItem() {
   if (it.dir === "audio") {
     front.innerHTML = `<span class="learn-label">Solo audio</span><div class="audio-prompt"><span class="audio-ic" aria-hidden="true">${SPEAKER}</span><p>Escucha y elige el significado</p><button class="btn btn-ghost audio-repeat" id="audio-repeat" type="button">${SPEAKER}<span>Repetir palabra</span></button></div>`;
     back.innerHTML = ruBlock(c.ru, c.fonetica) + `<div class="big-es">${esc(c.es)}</div>` + extras(c);
-    if ("speechSynthesis" in window) speak(c.ru);
+    if (canSpeak()) speak(c.ru);
   } else if (it.dir === "es") {
     front.innerHTML = `<div class="big-es">${esc(c.es)}</div><div class="prompt-blank">___</div>`;
     back.innerHTML = ruBlock(c.ru, c.fonetica) + extras(c);
   } else {
     front.innerHTML = ruBlock(c.ru, c.fonetica) + `<div class="prompt-blank">___</div>`;
     back.innerHTML = `<div class="big-es">${esc(c.es)}</div>` + extras(c);
-    speakBtn.hidden = !("speechSynthesis" in window);
+    speakBtn.hidden = !canSpeak();
     if (store.settings.autoSpeak) speak(c.ru);
   }
 
@@ -1224,7 +1276,7 @@ function revealAfterAnswer(it) {
   $("#card-back").hidden = false;
   $("#btn-hint").hidden = true;
   $("#btn-next").hidden = false;
-  if (it.dir === "es") $("#card-speak").hidden = !("speechSynthesis" in window);
+  if (it.dir === "es") $("#card-speak").hidden = !canSpeak();
   renderNoteBox();
 }
 
@@ -1575,7 +1627,7 @@ function renderFrase() {
   // Paso 2
   const sentence = displaySentence(fr, cur);
   const showFon = f.fonetica && normSentence(sentence) === normSentence(f.texto || f.validas[0]);
-  const canSpeak = "speechSynthesis" in window;
+  const speakOk = canSpeak();
   const opts = cur.options.map((o, i) => {
     let cls = "option";
     let key = i + 1;
@@ -1596,8 +1648,8 @@ function renderFrase() {
   body.innerHTML = `<div class="sentence card-frame pal-bl">
       <span class="label">¿Qué dijiste? · paso <span class="num">2</span> de <span class="num">2</span></span>
       <div class="sentence-row"><div><span class="sentence-ru" lang="ru">${esc(sentence)}</span>${showFon ? `<span class="fon">${esc(f.fonetica)}</span>` : ""}</div>
-      ${canSpeak ? `<button class="audio-btn" type="button" data-fr="say" aria-label="Escuchar la frase en ruso">${SPEAKER}</button>` : ""}</div>
-      ${canSpeak ? `<div class="speed"><button type="button" data-rate="0.9" aria-pressed="${cur.rate === 0.9}">Normal</button><button type="button" data-rate="0.55" aria-pressed="${cur.rate === 0.55}">Lento</button></div>` : ""}
+      ${speakOk ? `<button class="audio-btn" type="button" data-fr="say" aria-label="Escuchar la frase en ruso">${SPEAKER}</button>` : ""}</div>
+      ${speakOk ? `<div class="speed"><button type="button" data-rate="0.9" aria-pressed="${cur.rate === 0.9}">Normal</button><button type="button" data-rate="0.55" aria-pressed="${cur.rate === 0.55}">Lento</button></div>` : ""}
     </div>
     <p class="fr-msg">Elige la traducción de la frase que armaste:</p>
     <div class="options">${opts}</div>
@@ -1775,7 +1827,7 @@ function openDiccionario(deck, f, tokens) {
 
 function dicHtml() {
   const { entries } = state.dic;
-  const canSpeak = "speechSynthesis" in window;
+  const speakOk = canSpeak();
   return `<div class="dic-list">${entries.map((d, i) => {
     const changed = norm(d.ficha) !== norm(d.forma);
     const on = store.inMine(mineId(d.forma));
@@ -1783,7 +1835,7 @@ function dicHtml() {
     const why = porque ? porque.charAt(0).toLowerCase() + porque.slice(1) : "";
     return `<div class="dic-row">
       <div class="dic-top">
-        ${canSpeak ? `<button class="dic-say" type="button" data-dsay="${i}" aria-label="Escuchar ${esc(d.forma)}">${SPEAKER}</button>` : ""}
+        ${speakOk ? `<button class="dic-say" type="button" data-dsay="${i}" aria-label="Escuchar ${esc(d.forma)}">${SPEAKER}</button>` : ""}
         <div class="dic-main">
           <span class="dic-words">${changed ? `<span class="dic-from" lang="ru">${esc(d.ficha)} →</span>` : ""}<span class="dic-forma" lang="ru">${esc(d.forma)}</span></span>
           <span class="dic-es">${esc(d.es)}${d.fonetica ? ` · <span class="dic-fon">${esc(d.fonetica)}</span>` : ""}</span>
@@ -1922,12 +1974,12 @@ function stepDialog() {
 
 function bubbleHtml(b, dl, first) {
   const m = b.m;
-  const canSpeak = "speechSynthesis" in window;
+  const speakOk = canSpeak();
   const es = dl.es && m.es ? `<span class="b-es">${esc(m.es)}</span>` : "";
   if (b.mine) {
     return `<div class="b-row mine"><div class="bubble out${b.late ? " late" : ""}"><div class="b-main"><span class="b-ru" lang="ru">${esc(m.ru)}</span>${CHECK}</div>${m.fonetica ? `<span class="b-fon">${esc(m.fonetica)}</span>` : ""}${es}</div></div>`;
   }
-  return `<div class="b-row">${first ? `<span class="b-name">${esc(m.de)}</span>` : ""}<div class="bubble in"><div class="b-main"><span class="b-ru" lang="ru">${esc(m.ru)}</span>${canSpeak ? `<button class="b-say" type="button" data-bsay="${esc(m.ru)}" aria-label="Escuchar el mensaje de ${esc(m.de)}">${SPEAKER}</button>` : ""}</div>${m.fonetica ? `<span class="b-fon">${esc(m.fonetica)}</span>` : ""}${es}</div></div>`;
+  return `<div class="b-row">${first ? `<span class="b-name">${esc(m.de)}</span>` : ""}<div class="bubble in"><div class="b-main"><span class="b-ru" lang="ru">${esc(m.ru)}</span>${speakOk ? `<button class="b-say" type="button" data-bsay="${esc(m.ru)}" aria-label="Escuchar el mensaje de ${esc(m.de)}">${SPEAKER}</button>` : ""}</div>${m.fonetica ? `<span class="b-fon">${esc(m.fonetica)}</span>` : ""}${es}</div></div>`;
 }
 
 function renderDialogo() {
@@ -2200,7 +2252,7 @@ function renderLeer() {
   }).join("");
   const pal = LEER_PAL[step % LEER_PAL.length];
   const L = p.letras[sel] || p.letras[0];
-  const canSpeak = "speechSynthesis" in window;
+  const speakOk = canSpeak();
   const wide = L.letra.length > 7;
   const hasSound = L.sonido && L.sonido !== "—";
   const big = `<section class="leer-big card-frame pal-${pal}">
@@ -2209,14 +2261,14 @@ function renderLeer() {
       <span class="leer-letra${wide ? " wide" : ""}" lang="ru">${esc(L.letra)}</span>
       <div class="leer-txt"><b>${esc(L.tip)}</b><span>${esc(L.como_suena)}</span>${hasSound ? `<span class="leer-son">Suena: <b>${esc(L.sonido)}</b></span>` : ""}</div>
     </div>
-    ${(L.ejemplos || []).map((x) => `<div class="leer-ex"><div><span class="leer-ex-ru" lang="ru">${esc(x.ru)}</span><span class="leer-ex-fon">${esc(x.fonetica)} · ${esc(x.es)}</span></div>${canSpeak ? `<button class="audio-btn" type="button" data-lsay="${esc(x.ru)}" aria-label="Escuchar ${esc(x.ru)}">${SPEAKER}</button>` : ""}</div>`).join("")}
+    ${(L.ejemplos || []).map((x) => `<div class="leer-ex"><div><span class="leer-ex-ru" lang="ru">${esc(x.ru)}</span><span class="leer-ex-fon">${esc(x.fonetica)} · ${esc(x.es)}</span></div>${speakOk ? `<button class="audio-btn" type="button" data-lsay="${esc(x.ru)}" aria-label="Escuchar ${esc(x.ru)}">${SPEAKER}</button>` : ""}</div>`).join("")}
   </section>`;
   const tiles = p.letras.map((l, i) => {
     const snd = l.sonido && l.sonido !== "—";
     const w = l.letra.length > 7;
     return `<button class="ltile card-frame pal-${pal}${i === sel ? " on" : ""}${w ? " wide" : ""}" type="button" data-lsel="${i}" aria-pressed="${i === sel}" aria-label="${esc(l.letra)}${snd ? ", suena " + esc(l.sonido) : ""}"><span class="ltile-l" lang="ru">${esc(l.letra)}</span>${snd && !w ? `<span class="ltile-s">${esc(l.sonido)}</span>` : ""}</button>`;
   }).join("");
-  const practica = (p.practica || []).map((x) => `<div class="lprac"><div><span class="lprac-ru" lang="ru">${esc(x.ru)}</span><span class="lprac-fon">${esc(x.fonetica)} · ${esc(x.es)}</span></div>${canSpeak ? `<button class="dic-say" type="button" data-lsay="${esc(x.ru)}" aria-label="Escuchar ${esc(x.ru)}">${SPEAKER}</button>` : ""}</div>`).join("");
+  const practica = (p.practica || []).map((x) => `<div class="lprac"><div><span class="lprac-ru" lang="ru">${esc(x.ru)}</span><span class="lprac-fon">${esc(x.fonetica)} · ${esc(x.es)}</span></div>${speakOk ? `<button class="dic-say" type="button" data-lsay="${esc(x.ru)}" aria-label="Escuchar ${esc(x.ru)}">${SPEAKER}</button>` : ""}</div>`).join("");
   const last = step >= pasos.length - 1;
   $("#leer-body").innerHTML = `<p class="leer-intro">${esc(p.intro)}</p>
     ${big}

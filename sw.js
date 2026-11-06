@@ -6,7 +6,7 @@
 // Cada una usa su propia caché y la app real no toca nada bajo /beta/.
 const IS_BETA = /\/beta\/sw\.js$/.test(location.pathname);
 const CACHE_FAMILY = IS_BETA ? "russo-beta-v" : "russo-v";
-const CACHE = CACHE_FAMILY + "22";
+const CACHE = CACHE_FAMILY + "23";
 const BETA_PATH = new URL("beta", self.registration.scope).pathname; // p. ej. /Russo-Study/beta
 const SHELL = [
   "./",
@@ -38,7 +38,8 @@ const SHELL = [
   "data/ruta.json",
   "data/mazos.json",
   "data/gramatica/dudas.json",
-  "data/lectura/lectura.json"
+  "data/lectura/lectura.json",
+  "audio/ru/index.json"
 ];
 
 // Los archivos de data/ejercicios se leen de la clave "ejercicios" de data/mazos.json,
@@ -78,6 +79,17 @@ async function networkFirst(req) {
   }
 }
 
+// Audios en ruso (varios MB): no se instalan de golpe; se guardan al oírse
+// y desde entonces suenan sin conexión.
+async function cacheFirst(req) {
+  const cache = await caches.open(CACHE);
+  const hit = await cache.match(req, { ignoreSearch: true });
+  if (hit) return hit;
+  const res = await fetch(req);
+  if (res.ok && res.status === 200) cache.put(req, res.clone());
+  return res;
+}
+
 async function staleWhileRevalidate(req) {
   const cache = await caches.open(CACHE);
   const hit = await cache.match(req);
@@ -104,6 +116,14 @@ self.addEventListener("fetch", (e) => {
   // Archivos de la app y mazos: siempre la versión más nueva si hay
   // internet; la copia guardada solo se usa sin conexión.
   if (url.origin === location.origin) {
+    if (/\/audio\/ru\/[^/]+\.mp3$/.test(url.pathname)) {
+      e.respondWith(cacheFirst(req));
+      return;
+    }
+    if (/\/audio\/ru\/index\.json$/.test(url.pathname)) {
+      e.respondWith(staleWhileRevalidate(req));
+      return;
+    }
     e.respondWith(networkFirst(req));
     return;
   }
