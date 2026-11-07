@@ -1,0 +1,24 @@
+{
+  "appId": "com.carkovskismind.russostudy.beta",
+  "appName": "Russo Study Beta",
+  "webDir": "www",
+  "backgroundColor": "#0B0B0C",
+  "server": {
+    "url": "https://carkovskismind.github.io/Russo-Study/beta/",
+    "androidScheme": "https",
+    "cleartext": false,
+    "allowNavigation": ["carkovskismind.github.io", "*.supabase.co"],
+    "errorPath": "index.html"
+  },
+  "android": {
+    "backgroundColor": "#0B0B0C",
+    "allowMixedContent": false
+  },
+  "plugins": {
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#0B0B0C",
+      "overlaysWebView": false
+    }
+  }
+}
