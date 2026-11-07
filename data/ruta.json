@@ -1,12 +1,11 @@
 {
-  "nota": "Orden sugerido de los temas según las clases de CENLEX. Cada tema aparece una sola vez. «pronto» = módulo que todavía no está listo. «leer» = el punto de Aprende a leer (no es un mazo).",
+  "nota": "Orden sugerido de los temas según las clases de CENLEX. Cada tema aparece una sola vez. «pronto» = módulo que todavía no está listo. Aprende a leer va aparte, como Módulo 0.",
   "modulos": [
     {
       "id": "m1",
       "n": 1,
       "titulo": "Módulo 1",
       "temas": [
-        { "id": "leer", "leer": true, "es": "leer", "ru": "Чита́ть" },
         { "id": "basicas", "es": "básicas" },
         { "id": "saludos", "es": "saludos" },
         { "id": "familia", "es": "familia" },

@@ -433,6 +433,19 @@ export class Store {
     this.save();
   }
 
+  // --- Retos de gramática: aciertos seguidos sin pista por tarjeta ---
+  // Se guarda en «ejer» (con la clave «limpio:…») para sincronizarse igual.
+  limpio(key) {
+    const r = this.p.ejer[`limpio:${key}`];
+    return r ? r.c || 0 : 0;
+  }
+
+  setLimpio(key, ok) {
+    const c = ok ? this.limpio(key) + 1 : 0;
+    this.p.ejer[`limpio:${key}`] = { c, t: Date.now() };
+    this.save();
+  }
+
   // --- Aprende a leer ---
   lectura(id) {
     return this.p.lectura[id] || null;
