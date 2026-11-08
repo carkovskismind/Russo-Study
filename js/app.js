@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "3.7.0";
+const APP_VERSION = "3.8.0";
 // Botón «Reportar falla». Está activo en la beta; para activarlo también en la versión real, cambia a true.
 const REPORT_BUTTON = IS_BETA || false;
 
@@ -136,7 +136,7 @@ function toast(msg) {
   toast.t = setTimeout(() => (el.hidden = true), 2600);
 }
 
-const VIEWS = ["home", "modulos", "temas", "mapa", "tema", "palabra", "study", "frase", "dialogo", "cajas", "leer", "done", "settings"];
+const VIEWS = ["home", "modulos", "temas", "mapa", "tema", "palabra", "study", "frase", "dialogo", "cajas", "reto", "leer", "done", "settings"];
 const NAV_VIEWS = { home: "home", modulos: "modulos", temas: "modulos", settings: "settings" };
 
 function show(view) {
@@ -177,6 +177,7 @@ function appBack() {
     case "frase": return $("#frase-close").click();
     case "dialogo": return $("#dialogo-close").click();
     case "cajas": return $("#cajas-close").click();
+    case "reto": return retoBack();
     case "done": return $("#done-home").click();
     case "palabra": return $("#palabra-back").click();
     case "tema": return $("#tema-back").click();
@@ -283,6 +284,8 @@ async function loadDecks() {
       // Diálogos y cajas pueden ir dentro del mazo o en data/ejercicios/<id>.json.
       dialogos: Array.isArray(json.dialogos) ? json.dialogos : [],
       cajas: Array.isArray(json.cajas) ? json.cajas : [],
+      // Retos de gramática por bloques (piloto: Saludos).
+      retos: Array.isArray(json.retos) ? json.retos : [],
       cards
     });
   }
@@ -538,7 +541,7 @@ function renderModulos() {
     for (const d of lib) { const s = deckStats(d); learned += s.learned; total += s.total; }
     items.push({ id: "lib", n: "", title: "Biblioteca", pal: "kh", learned, total, temas: lib.length, here: false });
   }
-  $("#mods-list").innerHTML = items.map((m) => {
+  $("#mods-list").innerHTML = leerModHtml() + items.map((m) => {
     const pct = m.total ? Math.round((m.learned / m.total) * 100) : 0;
     return `<button class="mod-card card-frame pal-${m.pal}" type="button" data-mod="${m.id}" aria-label="${esc(m.title)}, ${m.temas} temas, ${pct}% memorizado${m.here ? ", aquí vas" : ""}">
       <span class="mod-n num" aria-hidden="true">${m.n || "B"}</span>
@@ -550,6 +553,23 @@ function renderModulos() {
       </span>
     </button>`;
   }).join("");
+}
+
+// Módulo 0: «Aprende a leer» va aparte, antes del Módulo 1, y abre la lectura.
+function leerModHtml() {
+  if (!state.lectura) return "";
+  const n = state.lectura.pasos.length;
+  const d = leerDone();
+  const pct = Math.round((d / n) * 100);
+  return `<button class="mod-card card-frame pal-aq" type="button" data-leer-mod="1" aria-label="Módulo 0, Aprende a leer, ${d} de ${n} pasos">
+      <span class="mod-n num" aria-hidden="true">0</span>
+      <span class="mod-body">
+        <span class="mod-top">Desde cero</span>
+        <span class="mod-title">Aprende a leer</span>
+        <span class="mod-sub">Alfabeto, acento y sonidos · <span class="num">${d}</span> de <span class="num">${n}</span> pasos</span>
+        <span class="mod-foot"><span class="bar"><span style="width:${pct}%"></span></span><span class="pct">${pct}%</span></span>
+      </span>
+    </button>`;
 }
 
 function renderTemas() {
@@ -567,9 +587,8 @@ function renderTemas() {
     state.openTile = sug && ordered.includes(sug) ? sug.id : ordered[0] ? ordered[0].id : null;
     state.openSet = true;
   }
-  const leer = state.temaFilter === "Todos" && (!state.temasMod || state.temasMod === "m1") ? leerTileHtml() : "";
   $("#temas-grid").innerHTML = ordered.length
-    ? leer + ordered.map(tileHtml).join("")
+    ? ordered.map(tileHtml).join("")
     : `<p class="loading">No hay temas en este grupo.</p>`;
 }
 
@@ -637,6 +656,10 @@ function modesList(deck) {
     const done = deck.frases.filter((f) => store.frase(`${deck.id}:${f.id}`)).length;
     out.push({ key: "frases", label: "Frases", num: `${done}/${deck.frases.length}`, sub: "Arma y traduce", pct: Math.round((done / deck.frases.length) * 100) });
   }
+  if (deck.retos.length) {
+    const n = deck.retos.filter((r) => retoState(deck, r).done).length;
+    out.push({ key: "reto", label: "Reto", full: "Reto de gramática", num: `${n}/${deck.retos.length}`, sub: "Descubre la regla", pct: Math.round((n / deck.retos.length) * 100) });
+  }
   if (ej.dialogos.length) {
     const n = ejDone(ej.dialogos);
     out.push({ key: "dialogo", label: "Diálogo", full: "Mini diálogo", num: `${n}/${ej.dialogos.length}`, sub: "Elige qué contestar", pct: Math.round((n / ej.dialogos.length) * 100) });
@@ -702,6 +725,7 @@ function startMode(deck, key) {
   if (key === "frases") return startFrases(deck);
   if (key === "dialogo") return startDialogo(deck);
   if (key === "cajas") return startCajas(deck);
+  if (key === "reto") return openReto(deck);
   if (key === "audio") return startAudio(deck);
 }
 
@@ -778,13 +802,14 @@ function renderTema() {
     ${ru ? `<span class="tema-ru" lang="ru">${esc(ru)}</span>` : ""}
     <div class="tema-prog"><span class="bar"><span style="width:${s.pct}%"></span></span><span class="tema-prog-n"><span class="num">${s.learned}</span> de <span class="num">${s.total}</span> memorizadas</span></div>`;
 
-  const pals = { words: "kh", frases: "pe", dialogo: "bl", cajas: "pk", audio: "aq" };
+  const pals = { words: "kh", frases: "pe", reto: "li", dialogo: "bl", cajas: "pk", audio: "aq" };
   const ICON = {
     words: `<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5"/>`,
     frases: `<rect x="3" y="7" width="7" height="7" rx="1.5"/><rect x="14" y="7" width="7" height="7" rx="1.5"/>`,
     dialogo: `<path d="M4 5h16v11H9l-5 4z"/>`,
     cajas: `<rect x="3" y="9" width="8" height="11" rx="1.5"/><rect x="13" y="9" width="8" height="11" rx="1.5"/><path d="M7 5v4M17 5v4"/>`,
-    audio: `<path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/>`
+    audio: `<path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/>`,
+    reto: `<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>`
   };
   $("#tema-modes").innerHTML = modesList(d).map((m) => `<button class="mode card-frame pal-${pals[m.key]}" type="button" data-mode="${m.key}"${m.off ? " disabled" : ""}>
       <span class="mode-top"><span class="mode-ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[m.key]}</svg></span><span class="num mode-num">${m.key === "words" ? `${m.num} hoy` : m.num}</span></span>
@@ -1390,6 +1415,8 @@ function settle(ok) {
     logActivity();
     store.setCard(it.key, schedule(prev, rating, now));
   }
+  // Aciertos seguidos sin pista (para abrir los retos de gramática).
+  if (it.dir !== "audio" && it.dir !== "qa") store.setLimpio(it.key, ok);
   if (!ok) {
     it.failed = true;
     it.hint = 0;
@@ -1431,7 +1458,10 @@ function closeSession() {
 }
 
 function backTo(where) {
-  if (where === "tema" && state.currentDeck) {
+  if (where === "reto" && state.reto) {
+    renderReto();
+    show("reto");
+  } else if (where === "tema" && state.currentDeck) {
     renderTema();
     show("tema");
   } else go(where === "temas" || where === "mapa" ? where : "home");
@@ -2204,6 +2234,179 @@ function cajasClick(e) {
   state.cj = null;
 }
 
+// ---------- Retos de gramática por bloques (piloto: Saludos) ----------
+// Cada bloque junta varias tarjetas del tema. El reto se abre cuando cada
+// tarjeta lleva 3 aciertos seguidos sin pista (en la práctica o al practicar el
+// bloque) o el repaso espaciado ya la acertó 2 veces seguidas, lo que pase
+// primero. Se elige entre 2 explicaciones; si fallas, se enseña la regla y
+// repasas el bloque una vez antes de intentarlo de nuevo.
+const RETO_LIMPIO = 3;
+const RETO_REPS = 2;
+const RETO_PALS = ["lav", "pe", "bl", "li"];
+
+function retoCards(deck, r) {
+  return r.tarjetas.map((ru) => deck.cards.find((c) => c.ru === ru)).filter(Boolean);
+}
+
+function cardReady(c) {
+  return keysFor(c).every((k) => {
+    const st = store.card(k);
+    return store.limpio(k) >= RETO_LIMPIO || (st && st.reps >= RETO_REPS);
+  });
+}
+
+function retoState(deck, r) {
+  const cards = retoCards(deck, r);
+  const ready = cards.filter(cardReady).length;
+  const res = store.ejer(`reto:${deck.id}:${r.id}`);
+  return { cards, ready, total: cards.length, open: cards.length > 0 && ready === cards.length, done: !!(res && res.ok > 0) };
+}
+
+function openReto(deck) {
+  if (!deck.retos.length) return;
+  state.reto = { deckId: deck.id, block: null, from: state.view === "tema" ? "tema" : state.view, order: null, pick: null };
+  renderReto();
+  show("reto");
+}
+
+function retoDeck() {
+  return state.reto ? state.deckById.get(state.reto.deckId) : null;
+}
+
+function renderReto() {
+  const deck = retoDeck();
+  if (!deck) return;
+  const R = state.reto;
+  const r = R.block && deck.retos.find((x) => x.id === R.block);
+  $("#reto-sub").textContent = deck.title;
+  const body = $("#reto-body");
+  if (!r) {
+    $("#reto-title").textContent = "Reto de gramática";
+    body.innerHTML = `<p class="cx-hint">Practica las palabras de cada bloque. Cuando te las sepas, descubre qué tienen en común.</p>
+      ${deck.retos.map((b, i) => {
+        const s = retoState(deck, b);
+        const pct = s.total ? Math.round((s.ready / s.total) * 100) : 0;
+        const status = s.done ? "Superado" : s.open ? "Listo para el reto" : `<span class="num">${s.ready}</span> de <span class="num">${s.total}</span> palabras listas`;
+        return `<button class="reto-blk card-frame pal-${RETO_PALS[i % RETO_PALS.length]}" type="button" data-blk="${esc(b.id)}">
+          <span class="reto-n num" aria-hidden="true">${i + 1}</span>
+          <span class="reto-blk-body">
+            <span class="reto-blk-title">${esc(b.titulo)}</span>
+            <span class="reto-blk-sub">${s.done ? `<i aria-hidden="true">✓</i> ` : ""}${status}</span>
+            ${s.done ? "" : `<span class="bar"><span style="width:${pct}%"></span></span>`}
+          </span>
+        </button>`;
+      }).join("")}`;
+    return;
+  }
+
+  const i = deck.retos.indexOf(r);
+  const s = retoState(deck, r);
+  $("#reto-title").textContent = `Bloque ${i + 1}`;
+  const pal = RETO_PALS[i % RETO_PALS.length];
+  const chunks = r.muestra.map((m) => `<div class="reto-chunk card-frame pal-${pal}">
+      <div><span class="reto-ru" lang="ru">${esc(m.ru)}</span><span class="reto-es">${esc(m.es)}</span></div>
+      ${s.open ? `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>` : ""}
+    </div>`).join("");
+  const head = `<p class="label">${esc(r.titulo)}</p>${chunks}`;
+
+  if (!s.open) {
+    body.innerHTML = `${head}
+      <div class="fr-ok-note reto-lock"><p>Para abrir el reto, acierta cada palabra <span class="num">3</span> veces seguidas sin pista. Llevas <span class="num">${s.ready}</span> de <span class="num">${s.total}</span> listas.</p></div>
+      <button class="btn btn-primary btn-wide reto-cta" type="button" data-reto-act="practicar">Practicar el bloque</button>`;
+    return;
+  }
+
+  if (!R.order) R.order = Math.random() < 0.5 ? [0, 1] : [1, 0];
+  const texts = [r.correcta, r.incorrecta];
+  const picked = R.pick;
+  const opts = R.order.map((k, j) => {
+    let cls = "option";
+    if (picked !== null) cls += k === 0 ? " correct" : picked === k ? " wrong" : "";
+    return `<button class="${cls}" type="button" data-reto-opt="${k}"${picked !== null ? " disabled" : ""}><span class="key num">${j + 1}</span><span class="opt-text"><span>${esc(texts[k])}</span></span></button>`;
+  }).join("");
+  let result = "";
+  if (picked === 0) {
+    const last = i >= deck.retos.length - 1;
+    result = `<div class="fr-ok-note"><p><b>¡Eso!</b> ${esc(r.bien)}</p>${r.nombre ? `<p class="reto-nombre">${esc(r.nombre)}</p>` : ""}</div>
+      <button class="btn btn-primary btn-wide reto-cta" type="button" data-reto-act="${last ? "lista" : "siguiente"}">${last ? "Volver a los bloques" : "Siguiente bloque"}</button>`;
+  } else if (picked === 1) {
+    result = `<div class="fr-error"><p><b>Casi.</b> ${esc(r.mal)}</p>${r.nombre ? `<p class="reto-nombre">${esc(r.nombre)}</p>` : ""}<p>Fíjate en eso al repasar.</p></div>
+      <button class="btn btn-primary btn-wide reto-cta" type="button" data-reto-act="repasar">Repasar el bloque una vez más</button>`;
+  }
+  body.innerHTML = `${head}
+    <p class="reto-q">${esc(r.pregunta)}</p>
+    <div class="options">${opts}</div>
+    ${result}`;
+}
+
+function retoBlockSession(deck, r, again) {
+  const items = [];
+  for (const card of retoCards(deck, r)) {
+    for (const key of keysFor(card)) {
+      items.push({ card, key, dir: key.split("|").pop(), phase: store.card(key) ? "quiz" : "learn", failed: false, hint: 0 });
+    }
+  }
+  // Sin cambiar el calendario de repaso: cuenta para los aciertos sin pista.
+  startSession(shuffle(items), again ? `Repaso · ${r.titulo}` : r.titulo, true, "reto");
+}
+
+function retoClick(e) {
+  const deck = retoDeck();
+  if (!deck) return;
+  const R = state.reto;
+  const blk = e.target.closest("[data-blk]");
+  if (blk) {
+    R.block = blk.dataset.blk;
+    R.order = null;
+    R.pick = null;
+    renderReto();
+    window.scrollTo(0, 0);
+    return;
+  }
+  const r = R.block && deck.retos.find((x) => x.id === R.block);
+  if (!r) return;
+  const opt = e.target.closest("[data-reto-opt]");
+  if (opt && R.pick === null) {
+    R.pick = Number(opt.dataset.retoOpt);
+    const ok = R.pick === 0;
+    playSound(ok);
+    store.setEjer(`reto:${deck.id}:${r.id}`, ok);
+    logActivity();
+    renderReto();
+    return;
+  }
+  const act = e.target.closest("[data-reto-act]");
+  if (!act) return;
+  const a = act.dataset.retoAct;
+  if (a === "practicar") return retoBlockSession(deck, r, false);
+  if (a === "repasar") {
+    R.order = null;
+    R.pick = null;
+    return retoBlockSession(deck, r, true);
+  }
+  if (a === "siguiente") {
+    const i = deck.retos.indexOf(r);
+    R.block = deck.retos[i + 1].id;
+  } else R.block = null;
+  R.order = null;
+  R.pick = null;
+  renderReto();
+  window.scrollTo(0, 0);
+}
+
+function retoBack() {
+  const R = state.reto;
+  if (R && R.block) {
+    R.block = null;
+    R.order = null;
+    R.pick = null;
+    renderReto();
+    window.scrollTo(0, 0);
+    return;
+  }
+  backTo(R ? R.from : "home");
+}
+
 // ---------- Aprende a leer ----------
 const LEER_PAL = ["mint", "pe", "bl", "li", "pk", "kh"];
 const LEER_KIND = ["Letra amiga", "Falsa amiga", "Letra nueva", "Acento", "Suaves y duras", "Se lee distinto"];
@@ -2214,25 +2417,9 @@ function leerDone() {
   return pasos.filter((p) => store.lectura(p.id)).length;
 }
 
-function leerTileHtml() {
-  if (!state.lectura) return "";
-  const n = state.lectura.pasos.length;
-  const d = leerDone();
-  const pct = Math.round((d / n) * 100);
-  return `<article class="tile card-frame pal-aq" data-leer="1" tabindex="0" role="button" aria-label="Aprende a leer, ${d} de ${n} pasos">
-    <span class="art art-svg ink" aria-hidden="true">${SVG.book}</span>
-    <div class="t-body">
-      <span class="t-n">Desde cero</span>
-      <span class="t-title">Aprende a leer</span>
-      <span class="t-ru" lang="ru">Чита́ть</span>
-      <span class="t-foot"><span class="bar"><span style="width:${pct}%"></span></span><span class="pct">${d}/${n}</span></span>
-    </div>
-  </article>`;
-}
-
 function openLeer() {
   if (!state.lectura) return toast("No se pudo cargar la lectura.");
-  state.leerFrom = state.view === "mapa" || state.view === "home" ? state.view : "temas";
+  state.leerFrom = ["mapa", "home", "modulos"].includes(state.view) ? state.view : "temas";
   const pasos = state.lectura.pasos;
   const first = pasos.findIndex((p) => !store.lectura(p.id));
   state.leer = { step: first < 0 ? 0 : first, sel: 0 };
@@ -2831,6 +3018,7 @@ function bind() {
     if (g) return go(g.dataset.go);
     const t = e.target.closest("[data-open-tema]");
     if (t) return openTema(t.dataset.openTema);
+    if (e.target.closest("[data-leer-mod]")) return openLeer();
     const mo = e.target.closest("[data-mod]");
     if (mo) {
       state.temasMod = mo.dataset.mod;
@@ -3029,6 +3217,9 @@ function bind() {
 
   // Aprende a leer
   $("#leer-back").addEventListener("click", () => go(state.leerFrom || "temas"));
+  // Reto de gramática
+  $("#reto-close").addEventListener("click", retoBack);
+  $("#reto-body").addEventListener("click", retoClick);
   $("#leer-steps").addEventListener("click", (e) => {
     const b = e.target.closest("[data-step]");
     if (b) { state.leer = { step: Number(b.dataset.step), sel: 0 }; renderLeer(); window.scrollTo(0, 0); }
