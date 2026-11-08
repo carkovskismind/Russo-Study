@@ -1,4 +1,4 @@
-# Russo Study
+# Ruso de bolsillo (antes Russo Study)
 
 Tarjetas de estudio de ruso con repaso espaciado. Es una app web que se instala en el celular y guarda tu progreso en la nube para verlo en cualquier dispositivo.
 

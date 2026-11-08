@@ -1,17 +1,32 @@
 {
-  "name": "Russo Study",
-  "short_name": "Russo",
-  "description": "Tarjetas de estudio de ruso con repaso espaciado",
-  "lang": "es",
+  "id": "./",
+  "name": "Ruso de bolsillo",
+  "short_name": "Ruso",
+  "description": "Aprende vocabulario ruso por uso: palabras, frases, mini diálogos, cajas, audio y un mapa de temas, con repaso espaciado.",
+  "lang": "es-MX",
+  "dir": "ltr",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0b0c0d",
-  "theme_color": "#0b0c0d",
+  "background_color": "#0B0B0C",
+  "theme_color": "#0B0B0C",
+  "categories": ["education"],
   "icons": [
-    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
     { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [
+    { "src": "img/capturas/inicio.png", "sizes": "780x1688", "type": "image/png", "form_factor": "narrow", "label": "Inicio: tu práctica de hoy y tu avance" },
+    { "src": "img/capturas/mapa.png", "sizes": "780x1688", "type": "image/png", "form_factor": "narrow", "label": "Mapa de temas en el orden de tus clases" },
+    { "src": "img/capturas/palabra.png", "sizes": "780x1688", "type": "image/png", "form_factor": "narrow", "label": "Palabra nueva con fonética y audio" },
+    { "src": "img/capturas/frases.png", "sizes": "780x1688", "type": "image/png", "form_factor": "narrow", "label": "Armar frases con fichas en ruso" }
+  ],
+  "shortcuts": [
+    { "name": "Hoy", "short_name": "Hoy", "description": "Tu práctica de hoy", "url": "./?ir=hoy", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Tus temas", "short_name": "Temas", "description": "Todos los temas de vocabulario", "url": "./?ir=temas", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Mapa", "short_name": "Mapa", "description": "Mapa de temas", "url": "./?ir=mapa", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Aprende a leer", "short_name": "Leer", "description": "Alfabeto, acento y lectura", "url": "./?ir=leer", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] }
   ]
 }

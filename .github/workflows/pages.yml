@@ -68,14 +68,14 @@ jobs:
           if [ -d src-beta ]; then
             mkdir -p _site/beta
             rsync -a "${EXCLUDE[@]}" --exclude='beta' src-beta/ _site/beta/
-            # Nombre «Russo Beta» al instalarla en el celular.
+            # Nombre «Ruso de bolsillo (beta)» al instalarla en el celular.
             node -e '
               const fs = require("fs"); const f = "_site/beta/manifest.webmanifest";
               const m = JSON.parse(fs.readFileSync(f, "utf8"));
-              m.name = "Russo Beta"; m.short_name = "Russo Beta";
+              m.name = "Ruso de bolsillo (beta)"; m.short_name = "Ruso beta";
               fs.writeFileSync(f, JSON.stringify(m, null, 2));
             '
-            sed -i 's|<meta name="apple-mobile-web-app-title" content="[^"]*">|<meta name="apple-mobile-web-app-title" content="Russo Beta">|; s|<title>[^<]*</title>|<title>Russo Beta</title>|' _site/beta/index.html
+            sed -i 's|<meta name="apple-mobile-web-app-title" content="[^"]*">|<meta name="apple-mobile-web-app-title" content="Ruso de bolsillo (beta)">|; s|<title>[^<]*</title>|<title>Ruso de bolsillo (beta)</title>|' _site/beta/index.html
           fi
           touch _site/.nojekyll
           find _site -maxdepth 2 | sort

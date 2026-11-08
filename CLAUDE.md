@@ -1,4 +1,4 @@
-# Russo Study · reglas para Claude
+# Ruso de bolsillo · reglas para Claude (antes Russo Study)
 
 App para estudiar ruso de Carol (CENLEX, Básico 1-2, México). GitHub: carkovskismind.
 Responde siempre en español, claro y breve.

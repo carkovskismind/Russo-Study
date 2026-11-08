@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "3.6.0";
+const APP_VERSION = "3.7.0";
 // Botón «Reportar falla». Está activo en la beta; para activarlo también en la versión real, cambia a true.
 const REPORT_BUTTON = IS_BETA || false;
 
@@ -2731,7 +2731,7 @@ function renderSettings() {
   $(`#theme-${s.theme === "light" ? "light" : "dark"}`).checked = true;
   $("#reset-confirm").hidden = true;
   $("#reset-ask").hidden = false;
-  $("#app-version").textContent = `Russo Study ${APP_VERSION}${IS_BETA ? " · beta (progreso de prueba)" : ""}`;
+  $("#app-version").textContent = `Ruso de bolsillo ${APP_VERSION}${IS_BETA ? " · beta (progreso de prueba)" : ""}`;
   $("#deck-toggles").innerHTML = state.decks
     .map((d) => `<label class="deck-toggle" for="en-${esc(d.id)}"><span>${esc(d.title)}</span>
       <input class="switch" type="checkbox" id="en-${esc(d.id)}" data-toggle="${esc(d.id)}" ${deckEnabled(d) ? "checked" : ""}></label>`)
@@ -3191,12 +3191,28 @@ function startVisitCounter() {
 function markBeta() {
   if (!IS_BETA) return;
   document.documentElement.classList.add("is-beta");
-  document.title = "Russo Beta";
+  document.title = "Ruso de bolsillo · beta";
   const tag = document.createElement("div");
   tag.className = "beta-tag";
   tag.textContent = "BETA";
   tag.setAttribute("aria-label", "Versión beta: progreso de prueba");
   document.body.appendChild(tag);
+}
+
+// Atajos de la app instalada (manifest.webmanifest): ./?ir=hoy|temas|mapa|leer
+function openShortcut() {
+  let ir = "";
+  try {
+    const u = new URL(location.href);
+    if (!u.searchParams.has("ir")) return;
+    ir = (u.searchParams.get("ir") || "").toLowerCase();
+    u.searchParams.delete("ir");
+    history.replaceState(null, "", u.pathname + u.search + u.hash); // limpia la URL
+  } catch (e) { return; }
+  if (ir === "hoy") go("home");
+  else if (ir === "temas") { state.temasMod = null; state.openSet = false; go("modulos"); }
+  else if (ir === "mapa") openMapa();
+  else if (ir === "leer") openLeer();
 }
 
 async function main() {
@@ -3212,6 +3228,7 @@ async function main() {
     $("#h-sigue").textContent = "No se pudieron cargar los temas";
   }
   renderHome();
+  openShortcut();
   store.init().then(renderSync).catch((e) => console.warn(e));
 
   startVisitCounter();
