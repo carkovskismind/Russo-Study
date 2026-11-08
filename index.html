@@ -144,6 +144,7 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
     </button>
     <span class="muted" id="palabra-crumb"></span>
+    <span class="beta-inline" id="palabra-beta" hidden>BETA</span>
   </header>
   <div id="palabra-body"></div>
 </main>
@@ -269,6 +270,12 @@
     <h1 id="done-title">Sesión terminada</h1>
     <p id="done-summary"></p>
     <button class="btn btn-primary btn-wide" id="done-home" type="button">Volver</button>
+    <div class="done-login" id="done-login" hidden>
+      <h2>Inicia sesión para guardar tu progreso</h2>
+      <button class="btn btn-primary btn-wide" id="done-signin" type="button">Iniciar sesión</button>
+      <button class="btn btn-line btn-wide" id="done-later" type="button">Ahora no</button>
+      <p>Con «Ahora no», tu avance se queda solo en este dispositivo. Puedes iniciar sesión después desde tu perfil.</p>
+    </div>
   </div>
 </main>
 
@@ -306,6 +313,11 @@
       <span>Tarjetas nuevas por día</span>
       <input type="number" id="new-per-day" min="0" max="200" step="5" inputmode="numeric">
     </label>
+    <label class="field field-row switch-row" for="opt-fon">
+      <span>Mostrar fonética<small>Pronunciación bajo el ruso, con la sílaba fuerte en MAYÚSCULAS. En «Aprende a leer» siempre se ve.</small></span>
+      <input type="checkbox" id="opt-fon" class="switch">
+    </label>
+    <div class="fon-preview" aria-hidden="true"><span lang="ru">собака</span><span class="fon">sa-BA-ka</span></div>
     <label class="field field-row switch-row" for="opt-cursive">
       <span>Mostrar también en cursiva rusa</span>
       <input type="checkbox" id="opt-cursive" class="switch">
@@ -370,6 +382,15 @@
     </div>
     <p class="sheet-sub" id="sheet-sub" hidden></p>
     <div class="sheet-body" id="sheet-body"></div>
+  </section>
+</div>
+
+<div class="dlg-wrap" id="dlg" hidden>
+  <section class="dlg" role="alertdialog" aria-modal="true" aria-labelledby="dlg-title" aria-describedby="dlg-text">
+    <h2 id="dlg-title"></h2>
+    <p id="dlg-text"></p>
+    <button class="btn btn-primary btn-wide" id="dlg-stay" type="button"></button>
+    <button class="btn btn-line btn-wide" id="dlg-leave" type="button"></button>
   </section>
 </div>
 

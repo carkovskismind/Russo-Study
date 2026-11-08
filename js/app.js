@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "3.8.0";
+const APP_VERSION = "3.9.0";
 // Botón «Reportar falla». Está activo en la beta; para activarlo también en la versión real, cambia a true.
 const REPORT_BUTTON = IS_BETA || false;
 
@@ -53,6 +53,7 @@ const store = new Store((what) => {
   if (what === "status" || what === "auth") renderSync();
   if (what === "data" || what === "auth") {
     applyTheme();
+    applyFon();
     if (state.decks.length) rebuildMine();
     if (state.view === "home") renderHome();
     if (state.view === "temas") renderTemas();
@@ -149,6 +150,8 @@ function show(view) {
     else b.removeAttribute("aria-current");
   }
   document.body.classList.toggle("on-mapa", view === "mapa");
+  document.body.classList.toggle("on-palabra", view === "palabra");
+  if (view === "done") renderDoneLogin();
   window.scrollTo(0, 0);
   syncHistory();
   if (view === "home" && state.updatePending) setTimeout(() => location.reload(), 300);
@@ -156,29 +159,91 @@ function show(view) {
 }
 
 // ---------- Historial (botón y gestos de retroceso del celular) ----------
-// En el inicio no hay entrada extra: retroceder sale de la app. En cualquier otra
-// pantalla (o con una hoja abierta) hay una entrada "top": al retroceder se vuelve
-// a la pantalla anterior de la app y se vuelve a armar.
-let popIgnore = 0;
+// Siempre hay una entrada "top" encima de la entrada base de la app. Al retroceder
+// (gesto o botón) se sube un nivel igual que la flecha de la app (tema → módulo →
+// inicio) y se vuelve a armar. En Inicio, o en un repaso, retroceder abre una
+// ventana de confirmación. La entrada se arma con el primer toque (Chrome ignora
+// las entradas que una página agrega sin que la persona haya tocado nada).
+let userActive = false;
+let exiting = false;
 const isArmed = () => !!(history.state && history.state.app === "top");
 
 function syncHistory() {
+  if (!userActive || exiting) return;
   try {
-    const needs = state.view !== "home" || document.body.classList.contains("sheet-on");
-    if (needs && !isArmed()) history.pushState({ app: "top" }, "");
-    else if (!needs && isArmed()) { popIgnore++; history.back(); }
+    if (!isArmed()) {
+      if (!history.state || history.state.app !== "base") history.replaceState({ app: "base" }, "");
+      history.pushState({ app: "top" }, "");
+    }
   } catch (e) { /* sin historial disponible */ }
 }
 
+// Ventana de confirmación: «Quedarme/Seguir» (turquesa) y «Salir» (contorno).
+let dlgOnLeave = null;
+const dlgOpen = () => !$("#dlg").hidden;
+
+function openDlg(kind) {
+  if (dlgOpen()) return;
+  const app = kind === "app";
+  $("#dlg-title").textContent = app ? "¿Salir de Ruso de bolsillo?" : "¿Salir del repaso?";
+  $("#dlg-text").textContent = app ? "Tu avance ya está guardado." : "Tu avance de hoy se guarda.";
+  $("#dlg-stay").textContent = app ? "Quedarme" : "Seguir";
+  $("#dlg-leave").textContent = "Salir";
+  dlgOnLeave = app ? exitApp : closeSession;
+  dlgReturn = document.activeElement;
+  $("#dlg").hidden = false;
+  for (const el of $$(".view, #nav, #sheet")) el.inert = true;
+  $("#dlg-stay").focus();
+}
+let dlgReturn = null;
+
+function closeDlg() {
+  if (!dlgOpen()) return;
+  $("#dlg").hidden = true;
+  for (const el of $$(".view, #nav, #sheet")) el.inert = false;
+  if (dlgReturn && document.contains(dlgReturn) && !dlgReturn.closest("[hidden]")) dlgReturn.focus();
+}
+
+// Salir de la app de verdad: se retrocede por encima de las dos entradas de la app
+// (hacia la página anterior). Si no hay página anterior (app instalada, primera
+// entrada), se intenta cerrar la ventana; y si el navegador no deja, se avisa.
+// Nunca se vuelve a armar el historial durante la salida, así que no hay bucle.
+function exitApp() {
+  closeDlg();
+  exiting = true;
+  let left = false;
+  const hide = () => { left = true; };
+  window.addEventListener("pagehide", hide, { once: true });
+  try {
+    if (history.length > 2) history.go(-2);
+    else window.close();
+  } catch (e) { /* nada */ }
+  setTimeout(() => {
+    if (left) return;
+    try { window.close(); } catch (e) { /* nada */ }
+    setTimeout(() => {
+      if (left) return;
+      exiting = false;
+      window.removeEventListener("pagehide", hide);
+      toast("Ya puedes cerrar la app desde tu celular");
+      syncHistory();
+    }, 350);
+  }, 350);
+}
+
+window.addEventListener("pageshow", (e) => { if (e.persisted) { exiting = false; syncHistory(); } });
+
 function appBack() {
+  if (dlgOpen()) return closeDlg();
   if (document.body.classList.contains("sheet-on")) return closeSheet();
   switch (state.view) {
-    case "study": return closeSession();
+    case "home": return openDlg("app");
+    case "study": return openDlg("repaso");
     case "frase": return $("#frase-close").click();
     case "dialogo": return $("#dialogo-close").click();
     case "cajas": return $("#cajas-close").click();
     case "reto": return retoBack();
-    case "done": return $("#done-home").click();
+    case "done": return doneContinue();
     case "palabra": return $("#palabra-back").click();
     case "tema": return $("#tema-back").click();
     case "leer": return $("#leer-back").click();
@@ -190,11 +255,17 @@ function appBack() {
 }
 
 window.addEventListener("popstate", () => {
-  if (popIgnore > 0) { popIgnore--; return; }
-  // El usuario retrocedió: ya está en la entrada base. Se actúa y se vuelve a armar.
+  if (exiting) return;
+  // La persona retrocedió: ya está en la entrada base. Se actúa y se vuelve a armar.
+  userActive = true;
   appBack();
   syncHistory();
 });
+
+// Arma el historial con el primer toque o tecla.
+for (const ev of ["pointerdown", "keydown", "touchstart"]) {
+  window.addEventListener(ev, () => { if (!userActive) { userActive = true; syncHistory(); } }, { capture: true, passive: true });
+}
 
 function go(view) {
   if (view === "temas" && state.view === "mapa") state.temasFrom = "mapa";
@@ -1189,7 +1260,7 @@ function renderItem() {
     } else {
       front.innerHTML = `<span class="learn-label">Palabra nueva</span>${ruBlock(c.ru, c.fonetica)}`;
       const ej = c.ejemplo && c.ejemplo.ru
-        ? `<div class="learn-ex"><span class="learn-ex-label">Ejemplo</span><span class="ex-ru" lang="ru">${esc(c.ejemplo.ru)}</span><span class="ex-fon">${[c.ejemplo.fonetica, c.ejemplo.es].filter(Boolean).map(esc).join(" · ")}</span></div>`
+        ? `<div class="learn-ex"><span class="learn-ex-label">Ejemplo</span><span class="ex-ru" lang="ru">${esc(c.ejemplo.ru)}</span><span class="ex-fon keep">${[fonOn() ? c.ejemplo.fonetica : "", c.ejemplo.es].filter(Boolean).map(esc).join(" · ")}</span></div>`
         : "";
       back.innerHTML = `<div class="big-es">${esc(c.es)}</div>` + ej + extras(c);
       speakBtn.hidden = !canSpeak();
@@ -1268,6 +1339,11 @@ function playSound(ok) {
   } catch {
     /* sin audio disponible */
   }
+}
+
+const fonOn = () => store.settings.fonetica !== false;
+function applyFon() {
+  document.body.classList.toggle("no-fon", !fonOn());
 }
 
 function applyTheme() {
@@ -1455,6 +1531,18 @@ function closeSession() {
   if (s) clearTimeout(s.timer);
   state.session = null;
   backTo(s ? s.returnTo : "home");
+}
+
+function doneContinue() {
+  backTo(state.doneReturn || "home");
+}
+
+// Sin sesión iniciada: invita a guardar el progreso en la nube. Con «Ahora no»
+// el avance sigue guardado en este dispositivo (Store.save siempre escribe en localStorage).
+function renderDoneLogin() {
+  const ask = store.syncConfigured && !store.user;
+  $("#done-login").hidden = !ask;
+  $("#done-home").hidden = ask;
 }
 
 function backTo(where) {
@@ -1868,7 +1956,7 @@ function dicHtml() {
         ${speakOk ? `<button class="dic-say" type="button" data-dsay="${i}" aria-label="Escuchar ${esc(d.forma)}">${SPEAKER}</button>` : ""}
         <div class="dic-main">
           <span class="dic-words">${changed ? `<span class="dic-from" lang="ru">${esc(d.ficha)} →</span>` : ""}<span class="dic-forma" lang="ru">${esc(d.forma)}</span></span>
-          <span class="dic-es">${esc(d.es)}${d.fonetica ? ` · <span class="dic-fon">${esc(d.fonetica)}</span>` : ""}</span>
+          <span class="dic-es">${esc(d.es)}${d.fonetica && fonOn() ? ` · <span class="dic-fon">${esc(d.fonetica)}</span>` : ""}</span>
         </div>
         <button class="dic-add${on ? " on" : ""}" type="button" data-dadd="${i}" aria-pressed="${on}">${on ? "En Mis palabras" : "+ Repasar"}</button>
       </div>
@@ -2914,6 +3002,7 @@ function renderSettings() {
   $("#opt-cursive").checked = !!s.cursive;
   $("#opt-autospeak").checked = !!s.autoSpeak;
   $("#opt-sound").checked = s.sound !== false;
+  $("#opt-fon").checked = s.fonetica !== false;
   $("#opt-name").value = s.name || "";
   $(`#theme-${s.theme === "light" ? "light" : "dark"}`).checked = true;
   $("#reset-confirm").hidden = true;
@@ -3209,7 +3298,21 @@ function bind() {
   });
   $("#study-close").addEventListener("click", closeSession);
   $("#study-exit").addEventListener("click", closeSession);
-  $("#done-home").addEventListener("click", () => backTo(state.doneReturn || "home"));
+  $("#done-home").addEventListener("click", doneContinue);
+  $("#done-later").addEventListener("click", doneContinue);
+  $("#done-signin").addEventListener("click", () => {
+    state.loginStep = "signin";
+    go("settings");
+    const em = $("#login-email");
+    if (em) em.focus();
+  });
+  $("#dlg-stay").addEventListener("click", closeDlg);
+  $("#dlg-leave").addEventListener("click", () => { const f = dlgOnLeave; closeDlg(); if (f) f(); });
+  document.addEventListener("keydown", (e) => {
+    if (!dlgOpen()) return;
+    e.stopPropagation();
+    if (e.key === "Escape") { e.preventDefault(); closeDlg(); }
+  }, true);
 
   // Mapa
   $("#mapa-stage").addEventListener("click", mapaClick);
@@ -3304,6 +3407,7 @@ function bind() {
   $("#opt-name").addEventListener("change", (e) => store.setSetting("name", e.target.value.trim().slice(0, 24)));
   $("#opt-cursive").addEventListener("change", (e) => store.setSetting("cursive", e.target.checked));
   $("#opt-autospeak").addEventListener("change", (e) => store.setSetting("autoSpeak", e.target.checked));
+  $("#opt-fon").addEventListener("change", (e) => { store.setSetting("fonetica", e.target.checked); applyFon(); });
   $("#opt-sound").addEventListener("change", (e) => {
     store.setSetting("sound", e.target.checked);
     if (e.target.checked) playSound(true);
@@ -3388,6 +3492,7 @@ function markBeta() {
   tag.textContent = "BETA";
   tag.setAttribute("aria-label", "Versión beta: progreso de prueba");
   document.body.appendChild(tag);
+  $("#palabra-beta").hidden = false;
 }
 
 // Atajos de la app instalada (manifest.webmanifest): ./?ir=hoy|temas|mapa|leer
@@ -3409,6 +3514,7 @@ function openShortcut() {
 async function main() {
   markBeta();
   applyTheme();
+  applyFon();
   bind();
   renderSync();
   show("home");

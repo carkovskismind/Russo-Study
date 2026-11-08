@@ -29,6 +29,7 @@ export const DEFAULT_SETTINGS = {
   cursive: false,
   autoSpeak: false,
   sound: true,
+  fonetica: true,
   theme: "dark",
   name: "",
   disabled: {}
