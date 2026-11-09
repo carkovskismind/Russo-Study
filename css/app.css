@@ -457,7 +457,7 @@ svg { display: block; }
 
 /* ---------- Barra inferior ---------- */
 .nav {
-  position: fixed; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom)); transform: translateX(-50%);
+  position: fixed; left: calc(12px + env(safe-area-inset-left)); bottom: calc(14px + env(safe-area-inset-bottom));
   display: flex; gap: 6px; padding: 5px; border-radius: 999px; z-index: 20;
   background: var(--nav-bg); border: 2px solid var(--nav-bg); box-shadow: 0 6px 20px rgba(0, 0, 0, .3);
 }

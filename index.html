@@ -62,9 +62,9 @@ document.documentElement.setAttribute("data-theme",t);var m=document.querySelect
 <script>
 (function(){var t0=performance.now(),s=document.getElementById("splash"),done=false;
 window.hideSplash=function(){if(done||!s)return;done=true;
-var w=Math.max(0,1000-(performance.now()-t0));
+var w=Math.max(0,5000-(performance.now()-t0));
 setTimeout(function(){s.classList.add("out");setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s)},270)},w)};
-setTimeout(window.hideSplash,8000)})();
+setTimeout(window.hideSplash,10000)})();
 </script>
 
 <!-- INICIO (portada 3.1) -->
