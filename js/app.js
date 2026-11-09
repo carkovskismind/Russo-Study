@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "3.9.6";
+const APP_VERSION = "3.9.7";
 // Botón «Reportar falla». Está activo en la beta; para activarlo también en la versión real, cambia a true.
 const REPORT_BUTTON = IS_BETA || false;
 
@@ -159,23 +159,44 @@ function show(view) {
 }
 
 // ---------- Historial (botón y gestos de retroceso del celular) ----------
-// Siempre hay una entrada "top" encima de la entrada base de la app. Al retroceder
-// (gesto o botón) se sube un nivel igual que la flecha de la app (tema → módulo →
-// inicio) y se vuelve a armar. En Inicio, o en un repaso, retroceder abre una
-// ventana de confirmación. La entrada se arma con el primer toque (Chrome ignora
-// las entradas que una página agrega sin que la persona haya tocado nada).
+// Pila deseada: base + top(n:1) + top(n:2). Al retroceder (gesto o botón) se sube un
+// nivel igual que la flecha de la app (tema → módulo → inicio). En Inicio, o en un
+// repaso, retroceder abre una ventana de confirmación. Chrome Android marca como
+// "saltables" las entradas que la página agrega SIN activación de usuario (pushState
+// dentro de popstate, touchstart o pointerdown táctil no cuentan; click, pointerup,
+// touchend y keydown sí). Por eso la pila se arma en eventos que sí dan activación
+// (y de respaldo en los otros), se repone hasta tener 2 entradas "top" en cada toque
+// real, y la segunda entrada cubre dos gestos seguidos sin tocar entre medio.
 let userActive = false;
 let exiting = false;
-const isArmed = () => !!(history.state && history.state.app === "top");
+let needArm = false;
+let inPop = false;
+let lastArm = "—";
+const topN = () => (history.state && history.state.app === "top" ? history.state.n || 1 : 0);
 
-function syncHistory() {
+function showHistDiag() {
+  const el = document.getElementById("hist-diag");
+  if (!el) return;
+  const st = history.state;
+  el.textContent = `Historial: ${history.length} · estado: ${st ? st.app : "—"}/${st && st.n ? st.n : "—"} · armado por: ${lastArm}`;
+}
+
+function syncHistory(src) {
   if (!userActive || exiting) return;
+  if (inPop && src !== "popstate") return; // dentro de popstate no hay activación: se repone en el siguiente toque
   try {
-    if (!isArmed()) {
+    const n = topN();
+    if (n >= 2) { /* completa */ }
+    else if (n === 1) { history.pushState({ app: "top", n: 2 }, ""); lastArm = src || "show"; }
+    else {
       if (!history.state || history.state.app !== "base") history.replaceState({ app: "base" }, "");
-      history.pushState({ app: "top" }, "");
+      history.pushState({ app: "top", n: 1 }, "");
+      history.pushState({ app: "top", n: 2 }, "");
+      lastArm = src || "show";
     }
+    if (n < 2 && src && src !== "popstate") needArm = false;
   } catch (e) { /* sin historial disponible */ }
+  showHistDiag();
 }
 
 // Ventana de confirmación: «Quedarme/Seguir» (turquesa) y «Salir» (contorno).
@@ -215,7 +236,8 @@ function exitApp() {
   const hide = () => { left = true; };
   window.addEventListener("pagehide", hide, { once: true });
   try {
-    if (history.length > 2) history.go(-2);
+    const back = 1 + topN(); // entradas "top" + la base
+    if (history.length > back) history.go(-back);
     else window.close();
   } catch (e) { /* nada */ }
   setTimeout(() => {
@@ -231,7 +253,8 @@ function exitApp() {
   }, 350);
 }
 
-window.addEventListener("pageshow", (e) => { if (e.persisted) { exiting = false; syncHistory(); } });
+window.addEventListener("pageshow", (e) => { if (e.persisted) exiting = false; if (userActive) syncHistory("pageshow"); });
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && userActive) syncHistory("visible"); });
 
 function appBack() {
   if (dlgOpen()) return closeDlg();
@@ -256,15 +279,25 @@ function appBack() {
 
 window.addEventListener("popstate", () => {
   if (exiting) return;
-  // La persona retrocedió: ya está en la entrada base. Se actúa y se vuelve a armar.
+  // La persona retrocedió. Se actúa; la reposición real va en el siguiente toque.
   userActive = true;
-  appBack();
-  syncHistory();
+  inPop = true;
+  try { appBack(); } finally { inPop = false; }
+  needArm = true;
+  lastArm = "popstate";
+  // Respaldo: si ya no quedan entradas "top", se arman aquí para no cerrar la app.
+  if (topN() === 0) syncHistory("popstate");
+  else showHistDiag();
 });
 
-// Arma el historial con el primer toque o tecla.
-for (const ev of ["pointerdown", "keydown", "touchstart"]) {
-  window.addEventListener(ev, () => { if (!userActive) { userActive = true; syncHistory(); } }, { capture: true, passive: true });
+// Arma el historial con eventos que SÍ dan activación de usuario; los de respaldo
+// (pointerdown, touchstart) solo sirven si el navegador los cuenta.
+for (const ev of ["click", "pointerup", "touchend", "keydown", "pointerdown", "touchstart"]) {
+  window.addEventListener(ev, () => {
+    if (exiting) return;
+    if (!userActive) userActive = true;
+    if (topN() < 2) syncHistory(ev);
+  }, { capture: true, passive: true });
 }
 
 function go(view) {
@@ -3008,6 +3041,11 @@ function renderSettings() {
   $("#reset-confirm").hidden = true;
   $("#reset-ask").hidden = false;
   $("#app-version").textContent = `Ruso de bolsillo ${APP_VERSION}${IS_BETA ? " · beta (progreso de prueba)" : ""}`;
+  let hd = document.getElementById("hist-diag");
+  if (IS_BETA) {
+    if (!hd) { hd = document.createElement("p"); hd.id = "hist-diag"; hd.className = "version muted"; $("#app-version").after(hd); }
+    showHistDiag();
+  } else if (hd) hd.remove();
   $("#deck-toggles").innerHTML = state.decks
     .map((d) => `<label class="deck-toggle" for="en-${esc(d.id)}"><span>${esc(d.title)}</span>
       <input class="switch" type="checkbox" id="en-${esc(d.id)}" data-toggle="${esc(d.id)}" ${deckEnabled(d) ? "checked" : ""}></label>`)
