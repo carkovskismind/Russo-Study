@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "3.9.0";
+const APP_VERSION = "3.9.1";
 // Botón «Reportar falla». Está activo en la beta; para activarlo también en la versión real, cambia a true.
 const REPORT_BUTTON = IS_BETA || false;
 
@@ -3526,6 +3526,8 @@ async function main() {
   }
   renderHome();
   openShortcut();
+  // Pantalla de carga: se quita cuando la primera pantalla ya está pintada (mín. 1 s, máx. 8 s)
+  requestAnimationFrame(() => requestAnimationFrame(() => { if (window.hideSplash) window.hideSplash(); }));
   store.init().then(renderSync).catch((e) => console.warn(e));
 
   startVisitCounter();
