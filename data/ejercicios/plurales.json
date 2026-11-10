@@ -1,0 +1,88 @@
+{
+  "id": "plurales",
+  "titulo": "Plurales · ejercicios",
+  "cajas": [
+    {
+      "id": "plurales-c1",
+      "pregunta": "¿Su plural lleva -ы o -и? Mira la última letra de la palabra.",
+      "cajas": [
+        "-ы",
+        "-и"
+      ],
+      "items": [
+        {
+          "ru": "стол",
+          "base": "стол",
+          "caja": "-ы",
+          "porque": "Termina en consonante dura (л): stol → столы́."
+        },
+        {
+          "ru": "ма́ма",
+          "base": "ма́ма",
+          "caja": "-ы",
+          "porque": "Femenina en -а, después de м: ма́мы."
+        },
+        {
+          "ru": "сестра́",
+          "base": "сестра́",
+          "caja": "-ы",
+          "porque": "Femenina en -а, después de р: сёстры."
+        },
+        {
+          "ru": "шко́ла",
+          "base": "шко́ла",
+          "caja": "-ы",
+          "porque": "Después de л va -ы: шко́лы."
+        },
+        {
+          "ru": "кни́га",
+          "base": "кни́га",
+          "caja": "-и",
+          "porque": "Después de г va -и: кни́ги."
+        },
+        {
+          "ru": "уро́к",
+          "base": "уро́к",
+          "caja": "-и",
+          "porque": "Después de к va -и: уро́ки."
+        },
+        {
+          "ru": "ча́шка",
+          "base": "ча́шка",
+          "caja": "-и",
+          "porque": "Después de ш y к va -и: ча́шки."
+        },
+        {
+          "ru": "ко́шка",
+          "base": "ко́шка",
+          "caja": "-и",
+          "porque": "Después de к va -и: ко́шки."
+        },
+        {
+          "ru": "нож",
+          "base": "нож",
+          "caja": "-и",
+          "porque": "Después de ж va -и: ножи́."
+        },
+        {
+          "ru": "слова́рь",
+          "base": "слова́рь",
+          "caja": "-и",
+          "porque": "Termina en -ь: словари́."
+        },
+        {
+          "ru": "музе́й",
+          "base": "музе́й",
+          "caja": "-и",
+          "porque": "Termina en -й: музе́и."
+        },
+        {
+          "ru": "семья́",
+          "base": "семья́",
+          "caja": "-и",
+          "porque": "Termina en -я: се́мьи."
+        }
+      ]
+    }
+  ]
+}

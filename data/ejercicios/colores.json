@@ -1,0 +1,77 @@
+{
+  "id": "colores",
+  "titulo": "Colores · ejercicios",
+  "dialogos": [
+    {
+      "id": "colores-d1",
+      "titulo": "¿De qué color?",
+      "mensajes": [
+        {"de": "Лена", "ru": "Како́го цве́та твоя́ ко́шка?", "fonetica": "ka-KO-va TSVIE-ta tva-IA KOSH-ka", "es": "¿De qué color es tu gata?"},
+        {"de": "yo", "ru": "Моя́ ко́шка чёрная.", "fonetica": "ma-IA KOSH-ka CHOR-na-ia", "es": "Mi gata es negra.", "opciones": [
+          {"ru": "Моя́ ко́шка чёрная.", "fonetica": "ma-IA KOSH-ka CHOR-na-ia", "correcta": true, "porque": "¡Bien! ко́шка es femenina: чёрная."},
+          {"ru": "Моя́ ко́шка чёрный.", "fonetica": "ma-IA KOSH-ka CHOR-nyi", "correcta": false, "porque": "ко́шка es femenina: чёрная."},
+          {"ru": "Моя́ ко́шка чёрное.", "fonetica": "ma-IA KOSH-ka CHOR-na-ie", "correcta": false, "porque": "ко́шка es femenina; чёрное es neutro: чёрная."}
+        ]},
+        {"de": "Лена", "ru": "А соба́ка?", "fonetica": "a sa-BA-ka", "es": "¿Y tu perra?"},
+        {"de": "yo", "ru": "Моя́ соба́ка бе́лая.", "fonetica": "ma-IA sa-BA-ka BIE-la-ia", "es": "Mi perra es blanca.", "opciones": [
+          {"ru": "Моя́ соба́ка бе́лая.", "fonetica": "ma-IA sa-BA-ka BIE-la-ia", "correcta": true, "porque": "¡Eso! соба́ка es femenina: бе́лая."},
+          {"ru": "Моя́ соба́ка бе́лый.", "fonetica": "ma-IA sa-BA-ka BIE-lyi", "correcta": false, "porque": "соба́ка es femenina: бе́лая."},
+          {"ru": "Мой соба́ка бе́лая.", "fonetica": "moi sa-BA-ka BIE-la-ia", "correcta": false, "porque": "соба́ка es femenina: моя́."}
+        ]},
+        {"de": "Лена", "ru": "Как краси́во!", "fonetica": "kak kra-SI-va", "es": "¡Qué bonito!"}
+      ]
+    },
+    {
+      "id": "colores-d2",
+      "titulo": "La bandera y el cielo",
+      "mensajes": [
+        {"de": "Лена", "ru": "Како́го цве́та ваш флаг?", "fonetica": "ka-KO-va TSVIE-ta vash flak", "es": "¿De qué color es su bandera?"},
+        {"de": "yo", "ru": "Наш флаг зелёный, бе́лый и кра́сный.", "fonetica": "nash flak zi-LIO-nyi BIE-lyi i KRAS-nyi", "es": "Nuestra bandera es verde, blanca y roja.", "opciones": [
+          {"ru": "Наш флаг зелёный, бе́лый и кра́сный.", "fonetica": "nash flak zi-LIO-nyi BIE-lyi i KRAS-nyi", "correcta": true, "porque": "¡Bien! флаг es masculino."},
+          {"ru": "Наш флаг зелёная, бе́лая и кра́сная.", "fonetica": "nash flak zi-LIO-na-ia BIE-la-ia i KRAS-na-ia", "correcta": false, "porque": "флаг es masculino: зелёный, бе́лый, кра́сный."},
+          {"ru": "На́ша флаг зелёный, бе́лый и кра́сный.", "fonetica": "NA-sha flak zi-LIO-nyi BIE-lyi i KRAS-nyi", "correcta": false, "porque": "флаг es masculino: наш."}
+        ]},
+        {"de": "Лена", "ru": "А не́бо?", "fonetica": "a NIE-ba", "es": "¿Y el cielo?"},
+        {"de": "yo", "ru": "Не́бо голубо́е.", "fonetica": "NIE-ba ga-lu-BO-ie", "es": "El cielo es azul claro.", "opciones": [
+          {"ru": "Не́бо голубо́е.", "fonetica": "NIE-ba ga-lu-BO-ie", "correcta": true, "porque": "¡Eso! не́бо es neutro: голубо́е."},
+          {"ru": "Не́бо голубо́й.", "fonetica": "NIE-ba ga-lu-BOI", "correcta": false, "porque": "не́бо es neutro: голубо́е."},
+          {"ru": "Не́бо голуба́я.", "fonetica": "NIE-ba ga-lu-BA-ia", "correcta": false, "porque": "не́бо es neutro: голубо́е."}
+        ]},
+        {"de": "Лена", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
+      ]
+    }
+  ],
+  "cajas": [
+    {
+      "id": "colores-c1",
+      "pregunta": "¿Masculino, femenino o neutro? Mira la terminación del color.",
+      "cajas": ["masculino", "femenino", "neutro"],
+      "items": [
+        {"ru": "чёрный кот", "base": "чёрный", "caja": "masculino", "porque": "Termina en -ый: va con una palabra masculina."},
+        {"ru": "зелёный флаг", "base": "зелёный", "caja": "masculino", "porque": "Termina en -ый: va con una palabra masculina."},
+        {"ru": "си́ний дива́н", "base": "си́ний", "caja": "masculino", "porque": "Termina en -ий: va con una palabra masculina."},
+        {"ru": "бе́лая соба́ка", "base": "бе́лая", "caja": "femenino", "porque": "Termina en -ая: va con una palabra femenina."},
+        {"ru": "кра́сная ча́шка", "base": "кра́сная", "caja": "femenino", "porque": "Termina en -ая: va con una palabra femenina."},
+        {"ru": "голубо́е не́бо", "base": "голубо́е", "caja": "neutro", "porque": "Termina en -ое: va con una palabra neutra."},
+        {"ru": "жёлтое со́лнце", "base": "жёлтое", "caja": "neutro", "porque": "Termina en -ое: va con una palabra neutra."},
+        {"ru": "се́рое мо́ре", "base": "се́рое", "caja": "neutro", "porque": "Termina en -ое: va con una palabra neutra."}
+      ]
+    },
+    {
+      "id": "colores-c2",
+      "pregunta": "¿Es un color claro o oscuro?",
+      "cajas": ["claro", "oscuro"],
+      "items": [
+        {"ru": "бе́лый", "caja": "claro", "porque": "Es muy claro."},
+        {"ru": "жёлтый", "caja": "claro", "porque": "Es un color claro."},
+        {"ru": "голубо́й", "caja": "claro", "porque": "Es azul claro."},
+        {"ru": "све́тло-зелёный", "caja": "claro", "porque": "све́тло- significa «claro»."},
+        {"ru": "бе́жевый", "caja": "claro", "porque": "Es un color claro."},
+        {"ru": "чёрный", "caja": "oscuro", "porque": "Es el más oscuro."},
+        {"ru": "си́ний", "caja": "oscuro", "porque": "Es azul oscuro."},
+        {"ru": "тёмно-зелёный", "caja": "oscuro", "porque": "тёмно- significa «oscuro»."},
+        {"ru": "кори́чневый", "caja": "oscuro", "porque": "Es un color oscuro."}
+      ]
+    }
+  ]
+}

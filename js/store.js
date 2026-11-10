@@ -29,6 +29,7 @@ export const DEFAULT_SETTINGS = {
   cursive: false,
   autoSpeak: false,
   sound: true,
+  fonetica: true,
   theme: "dark",
   name: "",
   disabled: {}
@@ -43,6 +44,10 @@ function emptyProgress() {
     frases: {},
     notes: {},
     picks: {},
+    mine: {},
+    ejer: {},
+    lectura: {},
+    current: null,
     settings: { ...DEFAULT_SETTINGS, t: 0 },
     resetAt: 0
   };
@@ -77,6 +82,10 @@ function normalize(p) {
     frases: p.frases && typeof p.frases === "object" ? p.frases : {},
     notes: p.notes && typeof p.notes === "object" ? p.notes : {},
     picks: p.picks && typeof p.picks === "object" ? p.picks : {},
+    mine: p.mine && typeof p.mine === "object" ? p.mine : {},
+    ejer: p.ejer && typeof p.ejer === "object" ? p.ejer : {},
+    lectura: p.lectura && typeof p.lectura === "object" ? p.lectura : {},
+    current: p.current && typeof p.current === "object" && p.current.deck ? p.current : null,
     settings: { ...base.settings, ...(p.settings || {}) },
     resetAt: p.resetAt || 0
   };
@@ -132,6 +141,19 @@ export function merge(a, b) {
       if (!cur || (n.t || 0) > (cur.t || 0)) out.picks[id] = n;
     }
   }
+  // «Mis palabras», diálogos y cajas, y pasos de «Aprende a leer»: gana el
+  // cambio más reciente. «Mis palabras» no se borra al reiniciar (como las notas).
+  for (const key of ["mine", "ejer", "lectura"]) {
+    for (const src of [a, b]) {
+      for (const [id, n] of Object.entries(src[key])) {
+        if (!n || (key !== "mine" && (n.t || 0) <= resetAt)) continue;
+        const cur = out[key][id];
+        if (!cur || (n.t || 0) > (cur.t || 0)) out[key][id] = n;
+      }
+    }
+  }
+  // Tema actual: gana el más reciente.
+  out.current = [a.current, b.current].filter(Boolean).sort((x, y) => (y.t || 0) - (x.t || 0))[0] || null;
   out.settings = (b.settings.t || 0) > (a.settings.t || 0) ? b.settings : a.settings;
   return out;
 }
@@ -187,10 +209,10 @@ export class Store {
     else this.setStatus("local");
     this.flushReports();
 
-    window.addEventListener("online", () => this.pull());
+    window.addEventListener("online", () => { this.pull(); this.flushReports(); });
     document.addEventListener("visibilitychange", () => {
       if (document.visibilityState === "hidden" && this.dirty) this.push();
-      if (document.visibilityState === "visible") this.pull();
+      if (document.visibilityState === "visible") { this.pull(); this.flushReports(); }
     });
   }
 
@@ -328,17 +350,36 @@ export class Store {
     return this.flushReports();
   }
 
+  // «Reportar falla» (botón de la beta). Sin conexión se queda en la cola de pendientes.
+  async reportFalla(entry) {
+    const row = { ...entry, tipo: "falla", user_id: this.user ? this.user.id : null, created_at: new Date().toISOString() };
+    const pending = readPending();
+    pending.push(row);
+    writePending(pending.slice(-50));
+    this.flushReports();
+    return true;
+  }
+
   async flushReports() {
     const pending = readPending();
-    if (!pending.length || !this.sb) return false;
+    if (!pending.length || !this.sb || this._flushing) return false;
+    this._flushing = true;
+    // Todas las filas con las mismas columnas (los reportes viejos no traen las nuevas).
+    const rows = pending.map((r) => ({
+      tipo: "respuesta", pantalla: null, version: null, descripcion: null, entorno: null,
+      mazo: null, frase_id: null, paso: null, respuesta: null, esperada: null, ...r
+    }));
     try {
-      const { error } = await this.sb.from(REPORTS).insert(pending);
+      const { error } = await this.sb.from(REPORTS).insert(rows);
       if (error) throw error;
-      writePending([]);
+      // Solo se quitan los enviados; lo que llegó mientras tanto se conserva.
+      writePending(readPending().slice(pending.length));
       return true;
     } catch (e) {
       console.warn("No se pudo enviar el reporte", e);
       return false;
+    } finally {
+      this._flushing = false;
     }
   }
 
@@ -367,12 +408,74 @@ export class Store {
     this.save();
   }
 
+  // --- «Mis palabras» (mazo personal) ---
+  mineList() {
+    return Object.entries(this.p.mine).filter(([, w]) => w && w.on).map(([id, w]) => ({ id, ...w }));
+  }
+
+  inMine(id) {
+    const w = this.p.mine[id];
+    return !!(w && w.on);
+  }
+
+  setMine(id, word, on) {
+    this.p.mine[id] = { ...(this.p.mine[id] || {}), ...(word || {}), on, t: Date.now() };
+    this.save();
+  }
+
+  // --- Diálogos y cajas ---
+  ejer(id) {
+    return this.p.ejer[id] || null;
+  }
+
+  setEjer(id, ok) {
+    const prev = this.p.ejer[id] || { n: 0, ok: 0 };
+    this.p.ejer[id] = { n: prev.n + 1, ok: prev.ok + (ok ? 1 : 0), last: ok ? 1 : 0, t: Date.now() };
+    this.save();
+  }
+
+  // --- Retos de gramática: aciertos seguidos sin pista por tarjeta ---
+  // Se guarda en «ejer» (con la clave «limpio:…») para sincronizarse igual.
+  limpio(key) {
+    const r = this.p.ejer[`limpio:${key}`];
+    return r ? r.c || 0 : 0;
+  }
+
+  setLimpio(key, ok) {
+    const c = ok ? this.limpio(key) + 1 : 0;
+    this.p.ejer[`limpio:${key}`] = { c, t: Date.now() };
+    this.save();
+  }
+
+  // --- Aprende a leer ---
+  lectura(id) {
+    return this.p.lectura[id] || null;
+  }
+
+  setLectura(id) {
+    this.p.lectura[id] = { done: 1, t: Date.now() };
+    this.save();
+  }
+
+  // --- Tema actual (el último mazo que abrió o practicó) ---
+  currentDeck() {
+    return this.p.current ? this.p.current.deck : null;
+  }
+
+  setCurrent(deckId) {
+    if (!deckId || (this.p.current && this.p.current.deck === deckId)) return;
+    this.p.current = { deck: deckId, t: Date.now() };
+    this.save();
+  }
+
   reset() {
     const now = Date.now();
     const settings = { ...this.p.settings, t: now };
     const notes = this.p.notes;
+    const mine = this.p.mine;
     this.p = emptyProgress();
     this.p.notes = notes;
+    this.p.mine = mine;
     this.p.settings = settings;
     this.p.resetAt = now;
     this.save();

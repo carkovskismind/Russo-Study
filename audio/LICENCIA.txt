@@ -1,0 +1,11 @@
+Voz en ruso de Ruso de bolsillo: RHVoice «Elena»
+Licencia GPL-3 · https://rhvoice.org · código fuente: https://github.com/RHVoice
+
+Las grabaciones de la carpeta audio/ru/ fueron generadas con el sintetizador
+RHVoice y la voz Elena.
+
+Autores de RHVoice: Artem Plaksin, Sergey Parshakov, Zvonimir Stanecic,
+Dmitry Kaslin, Elena Soboleva.
+
+RHVoice es software libre distribuido bajo la licencia GNU GPL versión 3
+(https://www.gnu.org/licenses/gpl-3.0.html).

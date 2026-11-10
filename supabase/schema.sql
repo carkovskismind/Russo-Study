@@ -36,6 +36,23 @@ create table if not exists public.reportes (
   created_at timestamptz not null default now()
 );
 
+-- Reportes de falla (botón «Reportar falla» de la beta): columnas nuevas.
+alter table public.reportes add column if not exists tipo text not null default 'respuesta';
+alter table public.reportes add column if not exists pantalla text;
+alter table public.reportes add column if not exists version text;
+alter table public.reportes add column if not exists descripcion text;
+alter table public.reportes add column if not exists entorno jsonb;
+alter table public.reportes alter column mazo drop not null;
+alter table public.reportes alter column frase_id drop not null;
+alter table public.reportes alter column paso drop not null;
+alter table public.reportes alter column respuesta drop not null;
+do $$
+begin
+  if not exists (select 1 from pg_constraint where conname = 'reportes_descripcion_max') then
+    alter table public.reportes add constraint reportes_descripcion_max check (descripcion is null or char_length(descripcion) <= 2000);
+  end if;
+end $$;
+
 alter table public.reportes enable row level security;
 
 drop policy if exists "enviar reportes" on public.reportes;

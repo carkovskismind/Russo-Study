@@ -28,7 +28,7 @@
       "titulo": "Una familia de dos países",
       "mensajes": [
         {"de": "Лена", "ru": "Э́то мой друг Ма́рко. Он италья́нец.", "fonetica": "E-ta moi druk MAR-ka. on i-ta-LIA-nits", "es": "Este es mi amigo Marco. Es italiano."},
-        {"de": "Лена", "ru": "Его́ жена́ из Испа́нии. Кто она́ по национа́льности?", "fonetica": "ie-VO zhy-NA iz is-PA-ni-i. kto a-NA pa na-tsy-a-NAL'-nas-ti?", "es": "Su esposa es de España. ¿Cuál es su nacionalidad?"},
+        {"de": "Лена", "ru": "Его́ жена́ из Испа́нии. Кто она́ по национа́льности?", "fonetica": "i-VO zhy-NA iz is-PA-ni-i. kto a-NA pa na-tsy-a-NAL'-nas-ti?", "es": "Su esposa es de España. ¿Cuál es su nacionalidad?"},
         {"de": "yo", "ru": "Она́ испа́нка.", "fonetica": "a-NA is-PAN-ka", "es": "Es española.", "opciones": [
           {"ru": "Она́ испа́нка.", "fonetica": "a-NA is-PAN-ka", "correcta": true, "porque": "¡Perfecto! Mujer de España = испа́нка."},
           {"ru": "Она́ испа́нец.", "fonetica": "a-NA is-PA-nits", "correcta": false, "porque": "испа́нец es para un hombre; para una mujer se dice испа́нка."},
