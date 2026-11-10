@@ -1,4 +1,4 @@
-Voz en ruso de Russo Study: RHVoice «Elena»
+Voz en ruso de Ruso de bolsillo: RHVoice «Elena»
 Licencia GPL-3 · https://rhvoice.org · código fuente: https://github.com/RHVoice
 
 Las grabaciones de la carpeta audio/ru/ fueron generadas con el sintetizador

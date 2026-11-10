@@ -1,4 +1,4 @@
-# Russo Study · reglas para Claude
+# Ruso de bolsillo · reglas para Claude (antes Russo Study)
 
 App para estudiar ruso de Carol (CENLEX, Básico 1-2, México). GitHub: carkovskismind.
 Responde siempre en español, claro y breve.
@@ -56,3 +56,12 @@ Responde siempre en español, claro y breve.
 | `diseno-ux` | Maquetas fieles a los bocetos de Carol, coherentes con el diseño aprobado en oscuro y claro. |
 
 Orden de trabajo en un mismo archivo: primero `mazos`, después `gramatica`. Nunca dos agentes a la vez sobre el mismo archivo.
+
+## Documentación en Notion (acordado con Carol, nov 2026)
+
+- Los pendientes, mejoras y bugs viven en Notion: página «Ruso de bolsillo · pendientes» y su base de datos «Bugs y mejoras · Ruso de bolsillo» (columnas: Título, Tipo, Estado, Prioridad, Pantalla, Dispositivo, Versión donde aparece, Versión donde se arregló, Pasos para repetirlo, Notas, Enlace).
+- Cuando surja un pendiente, una mejora o una duda abierta, agrégalo directo a Notion y avisa a Carol en una línea, sin pedir permiso cada vez.
+- Cuando Carol anote un bug en Notion: primero verifícalo (reproduce o revisa el código y di qué encontraste), después corrige con el flujo normal (maqueta si cambia el diseño; programador; validar), y al terminar márcalo «Arreglado» con la versión en «Versión donde se arregló». Si no se puede reproducir, márcalo «No se reproduce» y explica por qué.
+- Si el conector de Notion no está activo en la sesión, dilo y deja los pendientes en el chat para pasarlos después.
+- Subir a Netlify (conector o zip) y a GitHub SOLO cuando Carol lo indique. No se generan zips de Netlify por iniciativa propia.
+- **Entorno:** todo lo que se trabaja y documenta es la BETA (https://ruso-de-bolsillo.netlify.app/beta/, ruta /beta/ con IS_BETA). La app real (GitHub Pages) no se toca sin indicación de Carol. Cada registro de la base de bugs lleva la columna «Entorno» (Beta por defecto).

@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "3.7.0";
+const APP_VERSION = "3.9.7";
 // Botón «Reportar falla». Está activo en la beta; para activarlo también en la versión real, cambia a true.
 const REPORT_BUTTON = IS_BETA || false;
 
@@ -53,6 +53,7 @@ const store = new Store((what) => {
   if (what === "status" || what === "auth") renderSync();
   if (what === "data" || what === "auth") {
     applyTheme();
+    applyFon();
     if (state.decks.length) rebuildMine();
     if (state.view === "home") renderHome();
     if (state.view === "temas") renderTemas();
@@ -149,6 +150,8 @@ function show(view) {
     else b.removeAttribute("aria-current");
   }
   document.body.classList.toggle("on-mapa", view === "mapa");
+  document.body.classList.toggle("on-palabra", view === "palabra");
+  if (view === "done") renderDoneLogin();
   window.scrollTo(0, 0);
   syncHistory();
   if (view === "home" && state.updatePending) setTimeout(() => location.reload(), 300);
@@ -156,29 +159,114 @@ function show(view) {
 }
 
 // ---------- Historial (botón y gestos de retroceso del celular) ----------
-// En el inicio no hay entrada extra: retroceder sale de la app. En cualquier otra
-// pantalla (o con una hoja abierta) hay una entrada "top": al retroceder se vuelve
-// a la pantalla anterior de la app y se vuelve a armar.
-let popIgnore = 0;
-const isArmed = () => !!(history.state && history.state.app === "top");
+// Pila deseada: base + top(n:1) + top(n:2). Al retroceder (gesto o botón) se sube un
+// nivel igual que la flecha de la app (tema → módulo → inicio). En Inicio, o en un
+// repaso, retroceder abre una ventana de confirmación. Chrome Android marca como
+// "saltables" las entradas que la página agrega SIN activación de usuario (pushState
+// dentro de popstate, touchstart o pointerdown táctil no cuentan; click, pointerup,
+// touchend y keydown sí). Por eso la pila se arma en eventos que sí dan activación
+// (y de respaldo en los otros), se repone hasta tener 2 entradas "top" en cada toque
+// real, y la segunda entrada cubre dos gestos seguidos sin tocar entre medio.
+let userActive = false;
+let exiting = false;
+let needArm = false;
+let inPop = false;
+let lastArm = "—";
+const topN = () => (history.state && history.state.app === "top" ? history.state.n || 1 : 0);
 
-function syncHistory() {
-  try {
-    const needs = state.view !== "home" || document.body.classList.contains("sheet-on");
-    if (needs && !isArmed()) history.pushState({ app: "top" }, "");
-    else if (!needs && isArmed()) { popIgnore++; history.back(); }
-  } catch (e) { /* sin historial disponible */ }
+function showHistDiag() {
+  const el = document.getElementById("hist-diag");
+  if (!el) return;
+  const st = history.state;
+  el.textContent = `Historial: ${history.length} · estado: ${st ? st.app : "—"}/${st && st.n ? st.n : "—"} · armado por: ${lastArm}`;
 }
 
+function syncHistory(src) {
+  if (!userActive || exiting) return;
+  if (inPop && src !== "popstate") return; // dentro de popstate no hay activación: se repone en el siguiente toque
+  try {
+    const n = topN();
+    if (n >= 2) { /* completa */ }
+    else if (n === 1) { history.pushState({ app: "top", n: 2 }, ""); lastArm = src || "show"; }
+    else {
+      if (!history.state || history.state.app !== "base") history.replaceState({ app: "base" }, "");
+      history.pushState({ app: "top", n: 1 }, "");
+      history.pushState({ app: "top", n: 2 }, "");
+      lastArm = src || "show";
+    }
+    if (n < 2 && src && src !== "popstate") needArm = false;
+  } catch (e) { /* sin historial disponible */ }
+  showHistDiag();
+}
+
+// Ventana de confirmación: «Quedarme/Seguir» (turquesa) y «Salir» (contorno).
+let dlgOnLeave = null;
+const dlgOpen = () => !$("#dlg").hidden;
+
+function openDlg(kind) {
+  if (dlgOpen()) return;
+  const app = kind === "app";
+  $("#dlg-title").textContent = app ? "¿Salir de Ruso de bolsillo?" : "¿Salir del repaso?";
+  $("#dlg-text").textContent = app ? "Tu avance ya está guardado." : "Tu avance de hoy se guarda.";
+  $("#dlg-stay").textContent = app ? "Quedarme" : "Seguir";
+  $("#dlg-leave").textContent = "Salir";
+  dlgOnLeave = app ? exitApp : closeSession;
+  dlgReturn = document.activeElement;
+  $("#dlg").hidden = false;
+  for (const el of $$(".view, #nav, #sheet")) el.inert = true;
+  $("#dlg-stay").focus();
+}
+let dlgReturn = null;
+
+function closeDlg() {
+  if (!dlgOpen()) return;
+  $("#dlg").hidden = true;
+  for (const el of $$(".view, #nav, #sheet")) el.inert = false;
+  if (dlgReturn && document.contains(dlgReturn) && !dlgReturn.closest("[hidden]")) dlgReturn.focus();
+}
+
+// Salir de la app de verdad: se retrocede por encima de las dos entradas de la app
+// (hacia la página anterior). Si no hay página anterior (app instalada, primera
+// entrada), se intenta cerrar la ventana; y si el navegador no deja, se avisa.
+// Nunca se vuelve a armar el historial durante la salida, así que no hay bucle.
+function exitApp() {
+  closeDlg();
+  exiting = true;
+  let left = false;
+  const hide = () => { left = true; };
+  window.addEventListener("pagehide", hide, { once: true });
+  try {
+    const back = 1 + topN(); // entradas "top" + la base
+    if (history.length > back) history.go(-back);
+    else window.close();
+  } catch (e) { /* nada */ }
+  setTimeout(() => {
+    if (left) return;
+    try { window.close(); } catch (e) { /* nada */ }
+    setTimeout(() => {
+      if (left) return;
+      exiting = false;
+      window.removeEventListener("pagehide", hide);
+      toast("Ya puedes cerrar la app desde tu celular");
+      syncHistory();
+    }, 350);
+  }, 350);
+}
+
+window.addEventListener("pageshow", (e) => { if (e.persisted) exiting = false; if (userActive) syncHistory("pageshow"); });
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && userActive) syncHistory("visible"); });
+
 function appBack() {
+  if (dlgOpen()) return closeDlg();
   if (document.body.classList.contains("sheet-on")) return closeSheet();
   switch (state.view) {
-    case "study": return closeSession();
+    case "home": return openDlg("app");
+    case "study": return openDlg("repaso");
     case "frase": return $("#frase-close").click();
     case "dialogo": return $("#dialogo-close").click();
     case "cajas": return $("#cajas-close").click();
     case "reto": return retoBack();
-    case "done": return $("#done-home").click();
+    case "done": return doneContinue();
     case "palabra": return $("#palabra-back").click();
     case "tema": return $("#tema-back").click();
     case "leer": return $("#leer-back").click();
@@ -190,11 +278,27 @@ function appBack() {
 }
 
 window.addEventListener("popstate", () => {
-  if (popIgnore > 0) { popIgnore--; return; }
-  // El usuario retrocedió: ya está en la entrada base. Se actúa y se vuelve a armar.
-  appBack();
-  syncHistory();
+  if (exiting) return;
+  // La persona retrocedió. Se actúa; la reposición real va en el siguiente toque.
+  userActive = true;
+  inPop = true;
+  try { appBack(); } finally { inPop = false; }
+  needArm = true;
+  lastArm = "popstate";
+  // Respaldo: si ya no quedan entradas "top", se arman aquí para no cerrar la app.
+  if (topN() === 0) syncHistory("popstate");
+  else showHistDiag();
 });
+
+// Arma el historial con eventos que SÍ dan activación de usuario; los de respaldo
+// (pointerdown, touchstart) solo sirven si el navegador los cuenta.
+for (const ev of ["click", "pointerup", "touchend", "keydown", "pointerdown", "touchstart"]) {
+  window.addEventListener(ev, () => {
+    if (exiting) return;
+    if (!userActive) userActive = true;
+    if (topN() < 2) syncHistory(ev);
+  }, { capture: true, passive: true });
+}
 
 function go(view) {
   if (view === "temas" && state.view === "mapa") state.temasFrom = "mapa";
@@ -1189,7 +1293,7 @@ function renderItem() {
     } else {
       front.innerHTML = `<span class="learn-label">Palabra nueva</span>${ruBlock(c.ru, c.fonetica)}`;
       const ej = c.ejemplo && c.ejemplo.ru
-        ? `<div class="learn-ex"><span class="learn-ex-label">Ejemplo</span><span class="ex-ru" lang="ru">${esc(c.ejemplo.ru)}</span><span class="ex-fon">${[c.ejemplo.fonetica, c.ejemplo.es].filter(Boolean).map(esc).join(" · ")}</span></div>`
+        ? `<div class="learn-ex"><span class="learn-ex-label">Ejemplo</span><span class="ex-ru" lang="ru">${esc(c.ejemplo.ru)}</span><span class="ex-fon keep">${[fonOn() ? c.ejemplo.fonetica : "", c.ejemplo.es].filter(Boolean).map(esc).join(" · ")}</span></div>`
         : "";
       back.innerHTML = `<div class="big-es">${esc(c.es)}</div>` + ej + extras(c);
       speakBtn.hidden = !canSpeak();
@@ -1268,6 +1372,11 @@ function playSound(ok) {
   } catch {
     /* sin audio disponible */
   }
+}
+
+const fonOn = () => store.settings.fonetica !== false;
+function applyFon() {
+  document.body.classList.toggle("no-fon", !fonOn());
 }
 
 function applyTheme() {
@@ -1455,6 +1564,18 @@ function closeSession() {
   if (s) clearTimeout(s.timer);
   state.session = null;
   backTo(s ? s.returnTo : "home");
+}
+
+function doneContinue() {
+  backTo(state.doneReturn || "home");
+}
+
+// Sin sesión iniciada: invita a guardar el progreso en la nube. Con «Ahora no»
+// el avance sigue guardado en este dispositivo (Store.save siempre escribe en localStorage).
+function renderDoneLogin() {
+  const ask = store.syncConfigured && !store.user;
+  $("#done-login").hidden = !ask;
+  $("#done-home").hidden = ask;
 }
 
 function backTo(where) {
@@ -1868,7 +1989,7 @@ function dicHtml() {
         ${speakOk ? `<button class="dic-say" type="button" data-dsay="${i}" aria-label="Escuchar ${esc(d.forma)}">${SPEAKER}</button>` : ""}
         <div class="dic-main">
           <span class="dic-words">${changed ? `<span class="dic-from" lang="ru">${esc(d.ficha)} →</span>` : ""}<span class="dic-forma" lang="ru">${esc(d.forma)}</span></span>
-          <span class="dic-es">${esc(d.es)}${d.fonetica ? ` · <span class="dic-fon">${esc(d.fonetica)}</span>` : ""}</span>
+          <span class="dic-es">${esc(d.es)}${d.fonetica && fonOn() ? ` · <span class="dic-fon">${esc(d.fonetica)}</span>` : ""}</span>
         </div>
         <button class="dic-add${on ? " on" : ""}" type="button" data-dadd="${i}" aria-pressed="${on}">${on ? "En Mis palabras" : "+ Repasar"}</button>
       </div>
@@ -2914,11 +3035,17 @@ function renderSettings() {
   $("#opt-cursive").checked = !!s.cursive;
   $("#opt-autospeak").checked = !!s.autoSpeak;
   $("#opt-sound").checked = s.sound !== false;
+  $("#opt-fon").checked = s.fonetica !== false;
   $("#opt-name").value = s.name || "";
   $(`#theme-${s.theme === "light" ? "light" : "dark"}`).checked = true;
   $("#reset-confirm").hidden = true;
   $("#reset-ask").hidden = false;
-  $("#app-version").textContent = `Russo Study ${APP_VERSION}${IS_BETA ? " · beta (progreso de prueba)" : ""}`;
+  $("#app-version").textContent = `Ruso de bolsillo ${APP_VERSION}${IS_BETA ? " · beta (progreso de prueba)" : ""}`;
+  let hd = document.getElementById("hist-diag");
+  if (IS_BETA) {
+    if (!hd) { hd = document.createElement("p"); hd.id = "hist-diag"; hd.className = "version muted"; $("#app-version").after(hd); }
+    showHistDiag();
+  } else if (hd) hd.remove();
   $("#deck-toggles").innerHTML = state.decks
     .map((d) => `<label class="deck-toggle" for="en-${esc(d.id)}"><span>${esc(d.title)}</span>
       <input class="switch" type="checkbox" id="en-${esc(d.id)}" data-toggle="${esc(d.id)}" ${deckEnabled(d) ? "checked" : ""}></label>`)
@@ -3209,7 +3336,21 @@ function bind() {
   });
   $("#study-close").addEventListener("click", closeSession);
   $("#study-exit").addEventListener("click", closeSession);
-  $("#done-home").addEventListener("click", () => backTo(state.doneReturn || "home"));
+  $("#done-home").addEventListener("click", doneContinue);
+  $("#done-later").addEventListener("click", doneContinue);
+  $("#done-signin").addEventListener("click", () => {
+    state.loginStep = "signin";
+    go("settings");
+    const em = $("#login-email");
+    if (em) em.focus();
+  });
+  $("#dlg-stay").addEventListener("click", closeDlg);
+  $("#dlg-leave").addEventListener("click", () => { const f = dlgOnLeave; closeDlg(); if (f) f(); });
+  document.addEventListener("keydown", (e) => {
+    if (!dlgOpen()) return;
+    e.stopPropagation();
+    if (e.key === "Escape") { e.preventDefault(); closeDlg(); }
+  }, true);
 
   // Mapa
   $("#mapa-stage").addEventListener("click", mapaClick);
@@ -3304,6 +3445,7 @@ function bind() {
   $("#opt-name").addEventListener("change", (e) => store.setSetting("name", e.target.value.trim().slice(0, 24)));
   $("#opt-cursive").addEventListener("change", (e) => store.setSetting("cursive", e.target.checked));
   $("#opt-autospeak").addEventListener("change", (e) => store.setSetting("autoSpeak", e.target.checked));
+  $("#opt-fon").addEventListener("change", (e) => { store.setSetting("fonetica", e.target.checked); applyFon(); });
   $("#opt-sound").addEventListener("change", (e) => {
     store.setSetting("sound", e.target.checked);
     if (e.target.checked) playSound(true);
@@ -3382,17 +3524,35 @@ function startVisitCounter() {
 function markBeta() {
   if (!IS_BETA) return;
   document.documentElement.classList.add("is-beta");
-  document.title = "Russo Beta";
+  document.title = "Ruso de bolsillo · beta";
   const tag = document.createElement("div");
   tag.className = "beta-tag";
   tag.textContent = "BETA";
   tag.setAttribute("aria-label", "Versión beta: progreso de prueba");
   document.body.appendChild(tag);
+  $("#palabra-beta").hidden = false;
+}
+
+// Atajos de la app instalada (manifest.webmanifest): ./?ir=hoy|temas|mapa|leer
+function openShortcut() {
+  let ir = "";
+  try {
+    const u = new URL(location.href);
+    if (!u.searchParams.has("ir")) return;
+    ir = (u.searchParams.get("ir") || "").toLowerCase();
+    u.searchParams.delete("ir");
+    history.replaceState(null, "", u.pathname + u.search + u.hash); // limpia la URL
+  } catch (e) { return; }
+  if (ir === "hoy") go("home");
+  else if (ir === "temas") { state.temasMod = null; state.openSet = false; go("modulos"); }
+  else if (ir === "mapa") openMapa();
+  else if (ir === "leer") openLeer();
 }
 
 async function main() {
   markBeta();
   applyTheme();
+  applyFon();
   bind();
   renderSync();
   show("home");
@@ -3403,6 +3563,9 @@ async function main() {
     $("#h-sigue").textContent = "No se pudieron cargar los temas";
   }
   renderHome();
+  openShortcut();
+  // Pantalla de carga: se quita cuando la primera pantalla ya está pintada (mín. 1 s, máx. 8 s)
+  requestAnimationFrame(() => requestAnimationFrame(() => { if (window.hideSplash) window.hideSplash(); }));
   store.init().then(renderSync).catch((e) => console.warn(e));
 
   startVisitCounter();
