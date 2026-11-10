@@ -64,3 +64,4 @@ Orden de trabajo en un mismo archivo: primero `mazos`, después `gramatica`. Nun
 - Cuando Carol anote un bug en Notion: primero verifícalo (reproduce o revisa el código y di qué encontraste), después corrige con el flujo normal (maqueta si cambia el diseño; programador; validar), y al terminar márcalo «Arreglado» con la versión en «Versión donde se arregló». Si no se puede reproducir, márcalo «No se reproduce» y explica por qué.
 - Si el conector de Notion no está activo en la sesión, dilo y deja los pendientes en el chat para pasarlos después.
 - Subir a Netlify (conector o zip) y a GitHub SOLO cuando Carol lo indique. No se generan zips de Netlify por iniciativa propia.
+- **Entorno:** todo lo que se trabaja y documenta es la BETA (https://ruso-de-bolsillo.netlify.app/beta/, ruta /beta/ con IS_BETA). La app real (GitHub Pages) no se toca sin indicación de Carol. Cada registro de la base de bugs lleva la columna «Entorno» (Beta por defecto).
