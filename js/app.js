@@ -322,6 +322,7 @@ function shuffle(arr) {
   return a;
 }
 
+const TURTLE = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 16c0-5 3.6-8.5 8-8.5s8 3.5 8 8.5z"/><path d="M11.5 7.5V16M7.5 16c0-3.2 1.6-6.3 4-8.2M15.5 16c0-3.2-1.6-6.3-4-8.2" stroke-width="1.5"/><path d="M19.5 13.5c.9-1.6 2.7-1.7 3.2-.4.4 1.2-.8 2.4-3.2 2.9"/><path d="M7 16v2.5M16 16v2.5M3.5 16l-1.7 1.6"/><circle cx="21.6" cy="13" r=".6" fill="currentColor" stroke="none"/></svg>`;
 const SPEAKER = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>`;
 const ARROW = `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>`;
 
@@ -811,7 +812,7 @@ function dudasHtml(deck) {
   return `<div class="dudas">
     <b class="dudas-title">${esc(d.titulo)}</b>
     <ul>${(d.puntos || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
-    ${(d.ejemplos || []).map((x) => `<div class="dudas-ex"><div><span class="ex-ru" lang="ru">${esc(x.ru)}</span>${x.fonetica ? `<span class="ex-fon">${esc(x.fonetica)}</span>` : ""}<span>${esc(x.es)}</span></div>${speakOk ? `<button class="audio-btn sm" type="button" data-say="${esc(x.ru)}" aria-label="Escuchar el ejemplo">${SPEAKER}</button>` : ""}</div>`).join("")}
+    ${(d.ejemplos || []).map((x) => `<div class="dudas-ex"><div><span class="ex-ru" lang="ru">${esc(x.ru)}</span>${x.fonetica ? `<span class="ex-fon">${esc(x.fonetica)}</span>` : ""}<span>${esc(x.es)}</span></div>${speakOk ? `<span class="pair"><button class="audio-btn sm" type="button" data-say="${esc(x.ru)}" aria-label="Escuchar el ejemplo">${SPEAKER}</button>${slowBtn(x.ru)}</span>` : ""}</div>`).join("")}
     ${d.ojo ? `<p class="dudas-ojo"><b>Ojo:</b> ${esc(d.ojo)}</p>` : ""}
   </div>`;
 }
@@ -1052,7 +1053,7 @@ function renderPalabra(editingNote = false) {
     if (c.ejemplo) {
       html += `<div class="info card-frame pal-bl"><div class="info-row"><div><span class="label">Ejemplo</span>
         <span class="ex-ru" lang="ru">${esc(c.ejemplo.ru)}</span>${c.ejemplo.fonetica ? `<span class="ex-fon">${esc(c.ejemplo.fonetica)}</span>` : ""}<span>${esc(c.ejemplo.es)}</span></div>
-        ${speakOk ? `<button class="audio-btn sm" type="button" data-say="${esc(c.ejemplo.ru)}" aria-label="Escuchar el ejemplo">${SPEAKER}</button>` : ""}</div></div>`;
+        ${speakOk ? `<span class="pair"><button class="audio-btn sm" type="button" data-say="${esc(c.ejemplo.ru)}" aria-label="Escuchar el ejemplo">${SPEAKER}</button>${slowBtn(c.ejemplo.ru)}</span>` : ""}</div></div>`;
     }
     if (c.tip) html += `<div class="info card-frame pal-kh"><span class="label">Tip de memoria</span><p>${esc(c.tip)}</p></div>`;
   }
@@ -1145,6 +1146,25 @@ function startSession(queue, title, cram, returnTo) {
 let audioIndex = null;
 let audioIndexTried = false;
 let currentAudio = null;
+// Botón (dentro de un .pair) que se pulsó para reproducir: se marca «reproduciendo» hasta que termina.
+let clickedBtn = null;
+let playingBtn = null;
+let playingTimer = null;
+
+function setPlaying(btn) {
+  clearPlaying();
+  if (!btn || !btn.isConnected) return;
+  playingBtn = btn;
+  btn.classList.add("playing");
+  clearTimeout(playingTimer);
+  playingTimer = setTimeout(clearPlaying, 20000);
+}
+
+function clearPlaying() {
+  clearTimeout(playingTimer);
+  if (playingBtn) playingBtn.classList.remove("playing");
+  playingBtn = null;
+}
 
 function loadAudioIndex() {
   if (audioIndexTried) return;
@@ -1159,7 +1179,7 @@ function canSpeak() {
   return "speechSynthesis" in window || typeof Audio !== "undefined";
 }
 
-function speakFallback(clean, rate) {
+function speakFallback(clean, rate, btn) {
   if (!("speechSynthesis" in window)) return;
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(clean);
@@ -1167,6 +1187,12 @@ function speakFallback(clean, rate) {
   const voice = window.speechSynthesis.getVoices().find((v) => v.lang && v.lang.toLowerCase().startsWith("ru"));
   if (voice) u.voice = voice;
   u.rate = rate;
+  if (btn) {
+    setPlaying(btn);
+    const done = () => { if (playingBtn === btn) clearPlaying(); };
+    u.onend = done;
+    u.onerror = done;
+  }
   window.speechSynthesis.speak(u);
 }
 
@@ -1175,35 +1201,53 @@ function speak(text, rate = 0.9) {
   const clean = plain(text).replace(/\(.*?\)/g, "").replace(/[/·]/g, ",").replace(/—/g, ",").trim();
   if (!clean) return;
   loadAudioIndex();
+  const btn = clickedBtn;
+  clickedBtn = null;
+  clearPlaying();
   if (currentAudio) { try { currentAudio.pause(); } catch (e) { /* nada */ } currentAudio = null; }
   if ("speechSynthesis" in window) window.speechSynthesis.cancel();
   const id = audioIndex && Object.prototype.hasOwnProperty.call(audioIndex, clean) ? audioIndex[clean] : null;
-  if (!id || typeof Audio === "undefined") { speakFallback(clean, rate); return; }
+  if (!id || typeof Audio === "undefined") { speakFallback(clean, rate, btn); return; }
   try {
     const a = new Audio(`audio/ru/${id}.mp3`);
     a.playbackRate = Math.min(1.25, Math.max(0.5, rate / 0.9));
     a.preservesPitch = true;
     if ("webkitPreservesPitch" in a) a.webkitPreservesPitch = true;
     currentAudio = a;
-    a.addEventListener("ended", () => { if (currentAudio === a) currentAudio = null; });
-    a.addEventListener("error", () => { if (currentAudio === a) { currentAudio = null; speakFallback(clean, rate); } });
+    setPlaying(btn);
+    a.addEventListener("ended", () => { if (currentAudio === a) { currentAudio = null; if (playingBtn === btn) clearPlaying(); } });
+    a.addEventListener("error", () => { if (currentAudio === a) { currentAudio = null; speakFallback(clean, rate, btn); } });
     const pr = a.play();
     if (pr && pr.catch) {
       pr.catch((err) => {
         if (currentAudio !== a) return;
         currentAudio = null;
         // Autoplay bloqueado (sin gesto): en silencio, sin ruido.
-        if (err && err.name === "NotAllowedError") return;
-        speakFallback(clean, rate);
+        if (err && err.name === "NotAllowedError") { if (playingBtn === btn) clearPlaying(); return; }
+        speakFallback(clean, rate, btn);
       });
     }
   } catch (err) {
     currentAudio = null;
-    speakFallback(clean, rate);
+    speakFallback(clean, rate, btn);
   }
 }
 
+// Marca el botón pulsado (solo los de un par altavoz + tortuga) y atiende la tortuga.
+document.addEventListener("click", (e) => {
+  const b = e.target.closest && e.target.closest("button");
+  clickedBtn = b && b.closest(".pair") ? b : null;
+  const slow = e.target.closest && e.target.closest("[data-slow]");
+  if (slow) speak(slow.dataset.slow, 0.55);
+  clickedBtn = null;
+}, true);
+
 loadAudioIndex();
+
+// Botón de tortuga (audio lento) para frases completas. Con data-slow lleva el texto.
+function slowBtn(text, cls = "") {
+  return `<button class="slow-btn${cls ? " " + cls : ""}" type="button" data-slow="${esc(text)}" aria-label="Escuchar más lento">${TURTLE}</button>`;
+}
 
 function ruBlock(text, fon) {
   const cursive = store.settings.cursive
@@ -1760,7 +1804,8 @@ function renderFrase() {
         extra += `<section class="fr-error" role="status"><b>${esc(cur.err.title)}</b><p>${esc(cur.err.body)}</p></section>`;
       }
       const alt = otherValid(f);
-      extra += `<div class="solution card-frame pal-mint"><span class="label">Una respuesta correcta</span><div class="sol-ru" lang="ru">${esc(f.texto || niceSentence(f.validas[0]))}</div>${f.fonetica ? `<span class="fon">${esc(f.fonetica)}</span>` : ""}${alt ? `<span class="sol-alt">También vale: <span lang="ru">${esc(alt)}</span></span>` : ""}</div>`;
+      const solText = f.texto || niceSentence(f.validas[0]);
+      extra += `<div class="solution card-frame pal-mint"><span class="label">Una respuesta correcta</span><div class="sol-line"><div class="sol-txt"><div class="sol-ru" lang="ru">${esc(solText)}</div>${f.fonetica ? `<span class="fon">${esc(f.fonetica)}</span>` : ""}</div>${canSpeak() ? `<span class="pair"><button class="audio-btn sm" type="button" data-say="${esc(solText)}" aria-label="Escuchar en ruso">${SPEAKER}</button>${slowBtn(solText)}</span>` : ""}</div>${alt ? `<span class="sol-alt">También vale: <span lang="ru">${esc(alt)}</span></span>` : ""}</div>`;
       const report = cur.placed.length && !cur.revealed
         ? `<button class="link-quiet" type="button" data-fr="report1"${cur.reported ? " disabled" : ""}>${cur.reported ? "✓ Enviado, lo voy a revisar" : "Mi respuesta también es correcta"}</button>`
         : "";
@@ -1799,8 +1844,7 @@ function renderFrase() {
   body.innerHTML = `<div class="sentence card-frame pal-bl">
       <span class="label">¿Qué dijiste? · paso <span class="num">2</span> de <span class="num">2</span></span>
       <div class="sentence-row"><div><span class="sentence-ru" lang="ru">${esc(sentence)}</span>${showFon ? `<span class="fon">${esc(f.fonetica)}</span>` : ""}</div>
-      ${speakOk ? `<button class="audio-btn" type="button" data-fr="say" aria-label="Escuchar la frase en ruso">${SPEAKER}</button>` : ""}</div>
-      ${speakOk ? `<div class="speed"><button type="button" data-rate="0.9" aria-pressed="${cur.rate === 0.9}">Normal</button><button type="button" data-rate="0.55" aria-pressed="${cur.rate === 0.55}">Lento</button></div>` : ""}
+      ${speakOk ? `<span class="pair"><button class="audio-btn" type="button" data-fr="say" aria-label="Escuchar la frase en ruso">${SPEAKER}</button>${slowBtn(sentence)}</span>` : ""}</div>
     </div>
     <p class="fr-msg">Elige la traducción de la frase que armaste:</p>
     <div class="options">${opts}</div>
@@ -1837,11 +1881,7 @@ function fraseClick(e) {
     cur.bank[i].used = false;
     return renderFrase();
   }
-  if (t.dataset.rate) {
-    cur.rate = Number(t.dataset.rate);
-    speak(displaySentence(fr, cur), cur.rate);
-    return renderFrase();
-  }
+  if (t.dataset.say) return speak(t.dataset.say);
   if (t.dataset.fopt !== undefined && cur.choice === null) {
     cur.choice = Number(t.dataset.fopt);
     cur.ok2 = cur.options[cur.choice] === f.es;
@@ -1875,7 +1915,7 @@ function fraseClick(e) {
   if (act === "step2") return goStep2();
   if (act === "dic") {
     clearTimeout(fr.timer);
-    return openDiccionario(fr.deck, f, cur.bank.map((b) => b.t));
+    return openDiccionario(fr.deck, f, cur.bank.map((b) => b.t), displaySentence(fr, cur));
   }
   if (act === "say") return speak(displaySentence(fr, cur), cur.rate);
   if (act === "report1" || act === "report2") {
@@ -1963,7 +2003,7 @@ function mineId(forma) {
   return norm(forma);
 }
 
-function openDiccionario(deck, f, tokens) {
+function openDiccionario(deck, f, tokens, phrase) {
   const shown = new Set(tokens.map(norm));
   const seen = new Set();
   const entries = (f.diccionario || []).filter((d) => {
@@ -1972,14 +2012,16 @@ function openDiccionario(deck, f, tokens) {
     seen.add(k);
     return true;
   });
-  state.dic = { deck, f, entries };
+  state.dic = { deck, f, entries, phrase: phrase || "" };
   openSheet("Diccionario", dicHtml(), "Las palabras de esta frase, en su forma de diccionario.");
 }
 
 function dicHtml() {
   const { entries } = state.dic;
   const speakOk = canSpeak();
-  return `<div class="dic-list">${entries.map((d, i) => {
+  const phrase = state.dic.phrase;
+  const top = phrase ? `<div class="dic-phrase card-frame pal-bl"><div class="dp-txt"><span class="dp-ru" lang="ru">${esc(phrase)}</span>${state.dic.f.fonetica && fonOn() ? `<span class="fon">${esc(state.dic.f.fonetica)}</span>` : ""}</div>${speakOk ? `<span class="pair"><button class="audio-btn sm" type="button" data-say="${esc(phrase)}" aria-label="Escuchar la frase en ruso">${SPEAKER}</button>${slowBtn(phrase)}</span>` : ""}</div>` : "";
+  return `${top}<div class="dic-list">${entries.map((d, i) => {
     const changed = norm(d.ficha) !== norm(d.forma);
     const on = store.inMine(mineId(d.forma));
     const porque = String(d.porque || "").trim();
@@ -2130,7 +2172,7 @@ function bubbleHtml(b, dl, first) {
   if (b.mine) {
     return `<div class="b-row mine"><div class="bubble out${b.late ? " late" : ""}"><div class="b-main"><span class="b-ru" lang="ru">${esc(m.ru)}</span>${CHECK}</div>${m.fonetica ? `<span class="b-fon">${esc(m.fonetica)}</span>` : ""}${es}</div></div>`;
   }
-  return `<div class="b-row">${first ? `<span class="b-name">${esc(m.de)}</span>` : ""}<div class="bubble in"><div class="b-main"><span class="b-ru" lang="ru">${esc(m.ru)}</span>${speakOk ? `<button class="b-say" type="button" data-bsay="${esc(m.ru)}" aria-label="Escuchar el mensaje de ${esc(m.de)}">${SPEAKER}</button>` : ""}</div>${m.fonetica ? `<span class="b-fon">${esc(m.fonetica)}</span>` : ""}${es}</div></div>`;
+  return `<div class="b-row">${first ? `<span class="b-name">${esc(m.de)}</span>` : ""}<div class="bubble in"><div class="b-main"><span class="b-ru" lang="ru">${esc(m.ru)}</span>${speakOk ? `<span class="pair"><button class="b-say" type="button" data-bsay="${esc(m.ru)}" aria-label="Escuchar el mensaje de ${esc(m.de)}">${SPEAKER}</button>${slowBtn(m.ru, "b-slow")}</span>` : ""}</div>${m.fonetica ? `<span class="b-fon">${esc(m.fonetica)}</span>` : ""}${es}</div></div>`;
 }
 
 function renderDialogo() {
