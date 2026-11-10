@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "app.netlify.ruso_de_bolsillo.twa",
+        "sha256_cert_fingerprints": ["15:3E:F2:59:98:25:39:FD:8B:1A:77:43:13:82:9A:59:51:89:79:50:77:2B:FC:30:A9:30:95:31:8C:2F:AF:0F"]
+      }
+    }]
