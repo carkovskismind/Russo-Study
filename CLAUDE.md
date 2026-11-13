@@ -16,7 +16,7 @@ Responde siempre en español, claro y breve.
 - En vivo: https://carkovskismind.github.io/Russo-Study/ (GitHub Pages, rama `main`, raíz).
 - PWA sin build: `index.html`, `css/app.css`, `js/app.js` (pantallas), `js/store.js` (progreso y Supabase), `js/srs.js` (repaso espaciado), `sw.js`, `data/` (mazos JSON, lista en `data/mazos.json`).
 - Supabase: login con correo y contraseña; tablas `progress` y `reportes` (`supabase/schema.sql`).
-- Formato de tarjetas, Aprender y frases: ver `README.md`.
+- Formato de tarjetas, Aprender y frases: ver `docs/contenido.md`.
 
 ## Cómo debe funcionar el estudio
 
