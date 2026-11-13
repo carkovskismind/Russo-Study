@@ -12,7 +12,7 @@
           {"ru": "Моя́ ко́шка чёрный.", "fonetica": "ma-IA KOSH-ka CHOR-nyi", "correcta": false, "porque": "ко́шка es femenina: чёрная."},
           {"ru": "Моя́ ко́шка чёрное.", "fonetica": "ma-IA KOSH-ka CHOR-na-ie", "correcta": false, "porque": "ко́шка es femenina; чёрное es neutro: чёрная."}
         ]},
-        {"de": "Лена", "ru": "А соба́ка?", "fonetica": "a sa-BA-ka", "es": "¿Y tu perra?"},
+        {"de": "Лена", "ru": "А соба́ка?", "fonetica": "a sa-BA-ka", "es": "¿Y la perra?"},
         {"de": "yo", "ru": "Моя́ соба́ка бе́лая.", "fonetica": "ma-IA sa-BA-ka BIE-la-ia", "es": "Mi perra es blanca.", "opciones": [
           {"ru": "Моя́ соба́ка бе́лая.", "fonetica": "ma-IA sa-BA-ka BIE-la-ia", "correcta": true, "porque": "¡Eso! соба́ка es femenina: бе́лая."},
           {"ru": "Моя́ соба́ка бе́лый.", "fonetica": "ma-IA sa-BA-ka BIE-lyi", "correcta": false, "porque": "соба́ка es femenina: бе́лая."},

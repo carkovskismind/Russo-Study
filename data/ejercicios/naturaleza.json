@@ -12,7 +12,7 @@
           {"ru": "Со́лнце в не́бе.", "fonetica": "SON-tse v NIE-bie", "correcta": false, "porque": "Con не́бо se usa на: на не́бе."},
           {"ru": "Со́лнце на не́бо.", "fonetica": "SON-tse na NIE-ba", "correcta": false, "porque": "Para decir dónde, la palabra cambia: на не́бе."}
         ]},
-        {"de": "Лена", "ru": "А где снег?", "fonetica": "a gdie snieg", "es": "¿Y dónde está la nieve?"},
+        {"de": "Лена", "ru": "А где снег?", "fonetica": "a gdie sniek (y «sniek na SIE-vi-rie», «sniek f SIE-vi-rie», «sniek na SIE-vir»: «snieg» → «sniek» en los 5 lugares)", "es": "¿Y dónde está la nieve?"},
         {"de": "yo", "ru": "Снег на се́вере.", "fonetica": "snieg na SIE-vi-rie", "es": "La nieve está en el norte.", "opciones": [
           {"ru": "Снег на се́вере.", "fonetica": "snieg na SIE-vi-rie", "correcta": true, "porque": "¡Eso! Con los puntos cardinales se usa на."},
           {"ru": "Снег в се́вере.", "fonetica": "snieg f SIE-vi-rie", "correcta": false, "porque": "Con los puntos cardinales se usa на: на се́вере."},
@@ -25,7 +25,7 @@
       "id": "naturaleza-d2",
       "titulo": "En el bosque",
       "mensajes": [
-        {"de": "Лена", "ru": "Что в лесу́?", "fonetica": "shto v lie-SU", "es": "¿Qué hay en el bosque?"},
+        {"de": "Лена", "ru": "Что в лесу́?", "fonetica": "shto v li-SU", "es": "¿Qué hay en el bosque?"},
         {"de": "yo", "ru": "В лесу́ мно́го дере́вьев.", "fonetica": "v lie-SU MNO-ga di-RIE-vief", "es": "En el bosque hay muchos árboles.", "opciones": [
           {"ru": "В лесу́ мно́го дере́вьев.", "fonetica": "v lie-SU MNO-ga di-RIE-vief", "correcta": true, "porque": "¡Bien! Después de мно́го va el plural: дере́вьев."},
           {"ru": "В лесу́ мно́го де́рево.", "fonetica": "v lie-SU MNO-ga DIE-ri-va", "correcta": false, "porque": "Después de мно́го va el plural: дере́вьев."},

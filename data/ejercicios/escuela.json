@@ -25,7 +25,7 @@
       "id": "escuela-d2",
       "titulo": "Matemáticas",
       "mensajes": [
-        {"de": "Лена", "ru": "Два плюс два равно́ ско́лько?", "fonetica": "dva plius dva rav-NO SKOL'-ka", "es": "Dos más dos es igual a ¿cuánto?"},
+        {"de": "Лена", "ru": "Ско́лько бу́дет два плюс два?", "fonetica": "SKOL'-ka BU-dit dva plius dva", "es": "¿Cuánto es dos más dos?"},
         {"de": "yo", "ru": "Два плюс два равно́ четы́ре.", "fonetica": "dva plius dva rav-NO chi-TY-rie", "es": "Dos más dos son cuatro.", "opciones": [
           {"ru": "Два плюс два равно́ четы́ре.", "fonetica": "dva plius dva rav-NO chi-TY-rie", "correcta": true, "porque": "¡Bien! 2 + 2 = 4."},
           {"ru": "Два плюс два равно́ три.", "fonetica": "dva plius dva rav-NO tri", "correcta": false, "porque": "2 + 2 son cuatro: четы́ре."},

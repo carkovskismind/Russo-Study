@@ -25,11 +25,11 @@
       "id": "textos-d2",
       "titulo": "Mensajes",
       "mensajes": [
-        {"de": "Лена", "ru": "Э́то твоё сообще́ние?", "fonetica": "E-ta tva-IO sa-ap-SHIE-nie", "es": "¿Es tu mensaje?"},
-        {"de": "yo", "ru": "Да, э́то моё сообще́ние.", "fonetica": "da, E-ta ma-IO sa-ap-SHIE-nie", "es": "Sí, es mi mensaje.", "opciones": [
-          {"ru": "Да, э́то моё сообще́ние.", "fonetica": "da, E-ta ma-IO sa-ap-SHIE-nie", "correcta": true, "porque": "¡Bien! сообще́ние es neutro: моё."},
-          {"ru": "Да, э́то мой сообще́ние.", "fonetica": "da, E-ta moi sa-ap-SHIE-nie", "correcta": false, "porque": "сообще́ние es neutro: моё."},
-          {"ru": "Да, э́то моя́ сообще́ние.", "fonetica": "da, E-ta ma-IA sa-ap-SHIE-nie", "correcta": false, "porque": "сообще́ние es neutro: моё."}
+        {"de": "Лена", "ru": "Э́то твоё сообще́ние?", "fonetica": "E-ta tva-IO sa-ap-SHCHE-ni-ie", "es": "¿Es tu mensaje?"},
+        {"de": "yo", "ru": "Да, э́то моё сообще́ние.", "fonetica": "da, E-ta ma-IO sa-ap-SHCHE-ni-ie", "es": "Sí, es mi mensaje.", "opciones": [
+          {"ru": "Да, э́то моё сообще́ние.", "fonetica": "da, E-ta ma-IO sa-ap-SHCHE-ni-ie", "correcta": true, "porque": "¡Bien! сообще́ние es neutro: моё."},
+          {"ru": "Да, э́то мой сообще́ние.", "fonetica": "da, E-ta moi sa-ap-SHCHE-ni-ie", "correcta": false, "porque": "сообще́ние es neutro: моё."},
+          {"ru": "Да, э́то моя́ сообще́ние.", "fonetica": "da, E-ta ma-IA sa-ap-SHCHE-ni-ie", "correcta": false, "porque": "сообще́ние es neutro: моё."}
         ]},
         {"de": "Лена", "ru": "А чьё э́то письмо́?", "fonetica": "a chio E-ta pis'-MO", "es": "¿Y de quién es esta carta?"},
         {"de": "yo", "ru": "Э́то твоё письмо́.", "fonetica": "E-ta tva-IO pis'-MO", "es": "Es tu carta.", "opciones": [

@@ -28,7 +28,7 @@
         {"de": "Лена", "ru": "У тебя́ есть брат?", "fonetica": "u ti-BIA iest' brat", "es": "¿Tienes un hermano?"},
         {"de": "yo", "ru": "Нет, у меня́ есть сестра́.", "fonetica": "niet, u mi-NIA iest' sis-TRA", "es": "No, tengo una hermana.", "opciones": [
           {"ru": "Нет, у меня́ есть сестра́.", "fonetica": "niet, u mi-NIA iest' sis-TRA", "correcta": true, "porque": "¡Muy bien! «Tengo» = у меня́ есть."},
-          {"ru": "Да, у меня́ есть сестра́.", "fonetica": "da, u mi-NIA iest' sis-TRA", "correcta": false, "porque": "Ella pregunta por un hermano y tú no tienes: нет."},
+          {"ru": "Да, у меня́ есть сестра́.", "fonetica": "da, u mi-NIA iest' sis-TRA", "correcta": false, "porque": "A «¿tienes un hermano?» no se contesta «sí» y luego «una hermana»: si no tienes hermano, empieza con нет."},
           {"ru": "Нет, я есть сестра́.", "fonetica": "niet, ia iest' sis-TRA", "correcta": false, "porque": "Para decir «tengo» se usa у меня́ есть, no я есть."}
         ]},
         {"de": "Лена", "ru": "Как её зову́т?", "fonetica": "kak i-IO za-VUT", "es": "¿Cómo se llama ella?"},

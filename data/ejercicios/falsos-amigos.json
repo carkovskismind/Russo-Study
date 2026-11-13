@@ -10,7 +10,7 @@
         {"de": "yo", "ru": "Я в кафе́.", "fonetica": "ia f ka-FE", "es": "Estoy en la cafetería.", "opciones": [
           {"ru": "Я в кафе́.", "fonetica": "ia f ka-FE", "correcta": true, "porque": "¡Bien! кафе́ es el lugar y no cambia."},
           {"ru": "Я в ко́фе.", "fonetica": "ia f KO-fie", "correcta": false, "porque": "ко́фе es la bebida (café); el lugar es кафе́."},
-          {"ru": "Я в магази́н.", "fonetica": "ia v ma-ga-ZIN", "correcta": false, "porque": "магази́н es tienda; la cafetería es кафе́."}
+          {"ru": "Я в магази́не.", "fonetica": "ia v ma-ga-ZI-nie", "correcta": false, "porque": "магази́н es tienda; la cafetería es кафе́."}
         ]},
         {"de": "Лена", "ru": "Там ко́фе?", "fonetica": "tam KO-fie", "es": "¿Hay café allá?"},
         {"de": "yo", "ru": "Да, там ко́фе.", "fonetica": "da, tam KO-fie", "es": "Sí, allá hay café.", "opciones": [
@@ -25,7 +25,7 @@
       "id": "falsos-amigos-d2",
       "titulo": "Roma y Román",
       "mensajes": [
-        {"de": "Лена", "ru": "Э́то Ро́ма?", "fonetica": "E-ta RO-ma", "es": "¿Esta es Roma?"},
+        {"de": "Лена", "ru": "Э́то Ро́ма?", "fonetica": "E-ta RO-ma", "es": "¿Este es Román?"},
         {"de": "yo", "ru": "Нет, э́то Рим.", "fonetica": "niet, E-ta rim", "es": "No, esta es Roma (la ciudad).", "opciones": [
           {"ru": "Нет, э́то Рим.", "fonetica": "niet, E-ta rim", "correcta": true, "porque": "¡Bien! La ciudad se llama Рим."},
           {"ru": "Да, э́то Ро́ма.", "fonetica": "da, E-ta RO-ma", "correcta": false, "porque": "Ро́ма es Román (un nombre); la ciudad es Рим."},

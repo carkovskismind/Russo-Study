@@ -13,9 +13,9 @@
           {"ru": "Я живу́ домо́й.", "fonetica": "ia zhy-VU da-MOI", "correcta": false, "porque": "домо́й es «a casa» (movimiento); para dónde vives se usa в + el lugar."}
         ]},
         {"de": "Лена", "ru": "На како́м этаже́?", "fonetica": "na ka-KOM e-ta-ZHE?", "es": "¿En qué piso?"},
-        {"de": "yo", "ru": "На тре́тьем этаже́.", "fonetica": "na TRIE-tim e-ta-ZHE", "es": "En el tercer piso.", "opciones": [
-          {"ru": "На тре́тьем этаже́.", "fonetica": "na TRIE-tim e-ta-ZHE", "correcta": true, "porque": "¡Exacto! эта́ж va con на, y тре́тий cambia junto con él."},
-          {"ru": "В тре́тьем этаже́.", "fonetica": "f TRIE-tim e-ta-ZHE", "correcta": false, "porque": "Con эта́ж se usa на: на тре́тьем этаже́."},
+        {"de": "yo", "ru": "На тре́тьем этаже́.", "fonetica": "na TRIE-tiem e-ta-ZHE", "es": "En el tercer piso.", "opciones": [
+          {"ru": "На тре́тьем этаже́.", "fonetica": "na TRIE-tiem e-ta-ZHE", "correcta": true, "porque": "¡Exacto! эта́ж va con на, y тре́тий cambia junto con él."},
+          {"ru": "В тре́тьем этаже́.", "fonetica": "f TRIE-tiem e-ta-ZHE", "correcta": false, "porque": "Con эта́ж se usa на: на тре́тьем этаже́."},
           {"ru": "На тре́тий эта́ж.", "fonetica": "na TRIE-tii e-TASH", "correcta": false, "porque": "Así se diría «al tercer piso» (hacia allá); para dónde estás: на тре́тьем этаже́."}
         ]},
         {"de": "Лена", "ru": "В до́ме есть лифт?", "fonetica": "v DO-mie iest' lift?", "es": "¿Hay elevador en el edificio?"},

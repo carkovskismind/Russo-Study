@@ -16,7 +16,7 @@
         {"de": "yo", "ru": "Потому́ что э́то смешно́.", "fonetica": "pa-ta-MU shta E-ta smish-NO", "es": "Porque es gracioso.", "opciones": [
           {"ru": "Потому́ что э́то смешно́.", "fonetica": "pa-ta-MU shta E-ta smish-NO", "correcta": true, "porque": "¡Eso! потому́ что = porque."},
           {"ru": "Заче́м э́то смешно́.", "fonetica": "za-CHIEM E-ta smish-NO", "correcta": false, "porque": "заче́м es «para qué»; para responder «porque» se usa потому́ что."},
-          {"ru": "Потому́ что э́то ску́чно.", "fonetica": "pa-ta-MU shta E-ta SKUCH-na", "correcta": false, "porque": "ску́чно es «aburrido»; la idea es que da risa: смешно́."}
+          {"ru": "Потому́ что э́то ску́чно.", "fonetica": "pa-ta-MU shta E-ta SKUSH-na", "correcta": false, "porque": "ску́чно es «aburrido»; la idea es que da risa: смешно́."}
         ]},
         {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-ti-RIES-na", "es": "¡Qué interesante!"}
       ]
@@ -35,7 +35,7 @@
         {"de": "yo", "ru": "Э́то дру́жба и ра́дость.", "fonetica": "E-ta DRUZH-ba i RA-dast'", "es": "Es amistad y alegría.", "opciones": [
           {"ru": "Э́то дру́жба и ра́дость.", "fonetica": "E-ta DRUZH-ba i RA-dast'", "correcta": true, "porque": "¡Eso! и une las dos cosas."},
           {"ru": "Э́то дру́жба и́ли ра́дость.", "fonetica": "E-ta DRUZH-ba I-li RA-dast'", "correcta": false, "porque": "и́ли es «o»; quieres decir las dos cosas: и."},
-          {"ru": "Э́то война́ и ложь.", "fonetica": "E-ta vai-NA i lozh", "correcta": false, "porque": "Eso es «guerra y mentira»; lo que sueñas es дру́жба и ра́дость."}
+          {"ru": "Э́то война́ и ложь.", "fonetica": "E-ta vai-NA i losh", "correcta": false, "porque": "Eso es «guerra y mentira»; lo que sueñas es дру́жба и ра́дость."}
         ]},
         {"de": "Лена", "ru": "Как краси́во!", "fonetica": "kak kra-SI-va", "es": "¡Qué bonito!"}
       ]

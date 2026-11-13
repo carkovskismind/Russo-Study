@@ -6,11 +6,11 @@
       "id": "instrumentos-d1",
       "titulo": "¿Qué tocas?",
       "mensajes": [
-        {"de": "Лена", "ru": "Ты игра́ешь на гита́ре?", "fonetica": "ty ig-RA-iesh na gi-TA-rie", "es": "¿Tocas la guitarra?"},
-        {"de": "yo", "ru": "Да, я игра́ю на гита́ре.", "fonetica": "da, ia ig-RA-iu na gi-TA-rie", "es": "Sí, toco la guitarra.", "opciones": [
-          {"ru": "Да, я игра́ю на гита́ре.", "fonetica": "da, ia ig-RA-iu na gi-TA-rie", "correcta": true, "porque": "¡Bien! Con instrumentos se usa на."},
-          {"ru": "Да, я игра́ю в гита́ру.", "fonetica": "da, ia ig-RA-iu v gi-TA-ru", "correcta": false, "porque": "Con instrumentos se usa на, no в."},
-          {"ru": "Да, я игра́ю на гита́ра.", "fonetica": "da, ia ig-RA-iu na gi-TA-ra", "correcta": false, "porque": "Después de на la palabra cambia: на гита́ре."}
+        {"de": "Лена", "ru": "Ты игра́ешь на гита́ре?", "fonetica": "ty ig-RA-iesh na gui-TA-rie", "es": "¿Tocas la guitarra?"},
+        {"de": "yo", "ru": "Да, я игра́ю на гита́ре.", "fonetica": "da, ia ig-RA-iu na gui-TA-rie", "es": "Sí, toco la guitarra.", "opciones": [
+          {"ru": "Да, я игра́ю на гита́ре.", "fonetica": "da, ia ig-RA-iu na gui-TA-rie", "correcta": true, "porque": "¡Bien! Con instrumentos se usa на."},
+          {"ru": "Да, я игра́ю в гита́ру.", "fonetica": "da, ia ig-RA-iu v gui-TA-ru", "correcta": false, "porque": "Con instrumentos se usa на, no в."},
+          {"ru": "Да, я игра́ю на гита́ра.", "fonetica": "da, ia ig-RA-iu na gui-TA-ra", "correcta": false, "porque": "Después de на la palabra cambia: на гита́ре."}
         ]},
         {"de": "Лена", "ru": "А твой брат?", "fonetica": "a tvoi brat", "es": "¿Y tu hermano?"},
         {"de": "yo", "ru": "Он игра́ет на скри́пке.", "fonetica": "on ig-RA-iet na SKRIP-kie", "es": "Él toca el violín.", "opciones": [

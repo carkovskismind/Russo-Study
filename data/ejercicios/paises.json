@@ -7,7 +7,7 @@
       "titulo": "¿De dónde eres?",
       "mensajes": [
         {"de": "Лена", "ru": "Приве́т! Меня́ зову́т Ле́на. А тебя́?", "fonetica": "pri-VIET! mi-NIA za-VUT LIE-na. a ti-BIA?", "es": "¡Hola! Me llamo Lena. ¿Y tú?"},
-        {"de": "yo", "ru": "Меня́ зову́т Кэ́рол.", "fonetica": "mi-NIA za-VUT KE-ral", "es": "Me llamo Carol."},
+        {"de": "yo", "ru": "Меня́ зову́т Каро́ль.", "fonetica": "mi-NIA za-VUT ka-ROL'", "es": "Me llamo Carol."},
         {"de": "Лена", "ru": "Отку́да ты?", "fonetica": "at-KU-da ty?", "es": "¿De dónde eres?"},
         {"de": "yo", "ru": "Я из Ме́ксики.", "fonetica": "ia iz MIE-ksi-ki", "es": "Soy de México.", "opciones": [
           {"ru": "Я из Ме́ксики.", "fonetica": "ia iz MIE-ksi-ki", "correcta": true, "porque": "¡Eso! De dónde = из + el país con -и."},

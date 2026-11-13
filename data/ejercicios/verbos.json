@@ -26,10 +26,10 @@
       "titulo": "¿Dónde vives y trabajas?",
       "mensajes": [
         {"de": "Лена", "ru": "Где ты живёшь?", "fonetica": "gdie ty zhy-VIOSH", "es": "¿Dónde vives?"},
-        {"de": "yo", "ru": "Я живу́ в Ме́хико.", "fonetica": "ia zhy-VU v MIE-ji-ko", "es": "Vivo en la Ciudad de México.", "opciones": [
-          {"ru": "Я живу́ в Ме́хико.", "fonetica": "ia zhy-VU v MIE-ji-ko", "correcta": true, "porque": "¡Bien! Con я: живу́."},
-          {"ru": "Я живёшь в Ме́хико.", "fonetica": "ia zhy-VIOSH v MIE-ji-ko", "correcta": false, "porque": "живёшь es para ты; con я es живу́."},
-          {"ru": "Я живу́ Ме́хико.", "fonetica": "ia zhy-VU MIE-ji-ko", "correcta": false, "porque": "Falta в antes del lugar: в Ме́хико."}
+        {"de": "yo", "ru": "Я живу́ в Ме́хико.", "fonetica": "ia zhy-VU v MIE-ji-ka", "es": "Vivo en la Ciudad de México.", "opciones": [
+          {"ru": "Я живу́ в Ме́хико.", "fonetica": "ia zhy-VU v MIE-ji-ka", "correcta": true, "porque": "¡Bien! Con я: живу́."},
+          {"ru": "Я живёшь в Ме́хико.", "fonetica": "ia zhy-VIOSH v MIE-ji-ka", "correcta": false, "porque": "живёшь es para ты; con я es живу́."},
+          {"ru": "Я живу́ Ме́хико.", "fonetica": "ia zhy-VU MIE-ji-ka", "correcta": false, "porque": "Falta в antes del lugar: в Ме́хико."}
         ]},
         {"de": "Лена", "ru": "А где ты рабо́таешь?", "fonetica": "a gdie ty ra-BO-ta-iesh", "es": "¿Y dónde trabajas?"},
         {"de": "yo", "ru": "Я рабо́таю до́ма.", "fonetica": "ia ra-BO-ta-iu DO-ma", "es": "Trabajo en casa.", "opciones": [

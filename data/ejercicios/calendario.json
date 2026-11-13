@@ -15,7 +15,7 @@
         {"de": "Лена", "ru": "А како́й сейча́с ме́сяц?", "fonetica": "a ka-KOI si-CHAS MIE-siats", "es": "¿Y qué mes es?"},
         {"de": "yo", "ru": "Сейча́с октя́брь.", "fonetica": "si-CHAS ak-TIABR'", "es": "Ahora es octubre.", "opciones": [
           {"ru": "Сейча́с октя́брь.", "fonetica": "si-CHAS ak-TIABR'", "correcta": true, "porque": "¡Eso! октя́брь es un mes."},
-          {"ru": "Сейча́с о́сень.", "fonetica": "si-CHAS O-sien'", "correcta": false, "porque": "о́сень es la estación (otoño); el mes es октя́брь."},
+          {"ru": "Сейча́с о́сень.", "fonetica": "si-CHAS O-sin'", "correcta": false, "porque": "о́сень es la estación (otoño); el mes es октя́брь."},
           {"ru": "Сейча́с ноя́брь.", "fonetica": "si-CHAS na-IABR'", "correcta": false, "porque": "ноя́брь es noviembre; octubre es октя́брь."}
         ]},
         {"de": "Лена", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
@@ -31,11 +31,11 @@
           {"ru": "Но́вый год в янва́рь.", "fonetica": "NO-vyi got v ian-VAR'", "correcta": false, "porque": "Después de в (cuándo) el mes cambia: в январе́."},
           {"ru": "Но́вый год в ию́ле.", "fonetica": "NO-vyi got v i-IU-lie", "correcta": false, "porque": "ию́ле es julio; Año Nuevo es en enero."}
         ]},
-        {"de": "Лена", "ru": "А День мёртвых?", "fonetica": "a dien' MIORT-vykh", "es": "¿Y el Día de Muertos?"},
-        {"de": "yo", "ru": "День мёртвых в ноябре́.", "fonetica": "dien' MIORT-vykh v na-iab-RIE", "es": "El Día de Muertos es en noviembre.", "opciones": [
-          {"ru": "День мёртвых в ноябре́.", "fonetica": "dien' MIORT-vykh v na-iab-RIE", "correcta": true, "porque": "¡Eso! в ноябре́ = en noviembre."},
-          {"ru": "День мёртвых в ноя́брь.", "fonetica": "dien' MIORT-vykh v na-IABR'", "correcta": false, "porque": "Después de в el mes cambia: в ноябре́."},
-          {"ru": "День мёртвых в январе́.", "fonetica": "dien' MIORT-vykh v ian-va-RIE", "correcta": false, "porque": "январе́ es enero; el Día de Muertos es en noviembre: ноябре́."}
+        {"de": "Лена", "ru": "А День мёртвых?", "fonetica": "a dien' MIORT-vyj", "es": "¿Y el Día de Muertos?"},
+        {"de": "yo", "ru": "День мёртвых в ноябре́.", "fonetica": "dien' MIORT-vyj v na-iab-RIE", "es": "El Día de Muertos es en noviembre.", "opciones": [
+          {"ru": "День мёртвых в ноябре́.", "fonetica": "dien' MIORT-vyj v na-iab-RIE", "correcta": true, "porque": "¡Eso! в ноябре́ = en noviembre."},
+          {"ru": "День мёртвых в ноя́брь.", "fonetica": "dien' MIORT-vyj v na-IABR'", "correcta": false, "porque": "Después de в el mes cambia: в ноябре́."},
+          {"ru": "День мёртвых в январе́.", "fonetica": "dien' MIORT-vyj v ian-va-RIE", "correcta": false, "porque": "январе́ es enero; el Día de Muertos es en noviembre: ноябре́."}
         ]},
         {"de": "Лена", "ru": "Как краси́во!", "fonetica": "kak kra-SI-va", "es": "¡Qué bonito!"}
       ]

@@ -105,7 +105,7 @@
     "ejemplos": [
       {
         "ru": "Здра́вствуйте! Как вас зову́т?",
-        "fonetica": "ZDRAST-vui-tie! kak vas za-VUT",
+        "fonetica": "ZDRAS-tvui-tie! kak vas za-VUT",
         "es": "¡Buenos días! ¿Cómo se llama usted?"
       },
       {
@@ -371,7 +371,7 @@
       {
         "ru": "Како́го цве́та твой дом? — Бе́лый.",
         "fonetica": "ka-KO-va TSVIE-ta tvoi dom? — BIE-lyi",
-        "es": "¿De qué color es tu casa? — Blanca."
+        "es": "¿De qué color es tu casa? — Blanco (дом es masculino en ruso, por eso бе́лый)."
       },
       {
         "ru": "У меня́ кра́сная маши́на.",
@@ -524,7 +524,7 @@
   "textos": {
     "titulo": "Leer y escribir algo",
     "puntos": [
-      "Después de чита́ть, писа́ть o люби́ть, la palabra masculina o neutra queda igual: Я чита́ю журна́л.",
+      "Después de чита́ть, писа́ть o люби́ть, las cosas masculinas y neutras quedan igual: Я чита́ю журна́л. (Las personas y los animales sí cambian: Я люблю́ бра́та.)",
       "La femenina cambia -а → -у y -я → -ю: Я пишу́ запи́ску. Я чита́ю статью́.",
       "Los plurales de cosas quedan igual: Я люблю́ стихи́."
     ],
@@ -712,7 +712,7 @@
       {
         "ru": "Мне бы́ло ску́чно.",
         "fonetica": "mnie BY-la SKUSH-na",
-        "es": "Me aburrí."
+        "es": "Estaba aburrida."
       },
       {
         "ru": "Нам смешно́.",
@@ -765,7 +765,7 @@
       "Son palabras fuertes y coloquiales: úsalas con cuidado.",
       "En presente no hay verbo «ser»: Он подхали́м.",
       "En pasado aparece был y la palabra toma -ом: Он был уго́дником.",
-      "Los verbos en -ся llevan -ся también al conjugar: он пресмыка́ется."
+      "Los verbos en -ся guardan ese -ся al conjugar, y con «yo» se vuelve -сь: он пресмыка́ется, я пресмыка́юсь."
     ],
     "ejemplos": [
       {
@@ -776,7 +776,7 @@
       {
         "ru": "Хозя́ин — уго́дник.",
         "fonetica": "ja-ZIA-in u-GOD-nik",
-        "es": "El anfitrión es un complaciente."
+        "es": "El dueño es un complaciente."
       },
       {
         "ru": "Хозя́ин был уго́дником.",

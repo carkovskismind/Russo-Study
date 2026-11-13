@@ -86,7 +86,7 @@
       "letras": [
         {"letra": "Б б", "sonido": "b", "como_suena": "Como la «b» de «boca».", "tip": "La minúscula б parece un 6: «Б de Бори́с».", "ejemplos": [
           {"ru": "Бори́с", "fonetica": "ba-RIS", "es": "Borís (nombre)"},
-          {"ru": "би́знес", "fonetica": "BIZ-nis", "es": "negocio"}
+          {"ru": "би́знес", "fonetica": "BIZ-nes", "es": "negocio"}
         ]},
         {"letra": "Г г", "sonido": "g", "como_suena": "Siempre «g» de «gato», también antes de е e и.", "tip": "Parece una escuadra. Nunca suena como la g de «gente».", "ejemplos": [
           {"ru": "Га́ля", "fonetica": "GA-lia", "es": "Galia (nombre)"},
@@ -146,7 +146,7 @@
           {"ru": "Э́мма", "fonetica": "EM-ma", "es": "Emma (nombre)"},
           {"ru": "э́тика", "fonetica": "E-ti-ka", "es": "ética"}
         ]},
-        {"letra": "Ю ю", "sonido": "iu", "como_suena": "«iu», como en «ciudad».", "tip": "Una I pegada a una O: I + O = «iu».", "ejemplos": [
+        {"letra": "Ю ю", "sonido": "iu", "como_suena": "«iu», como en «ciudad».", "tip": "Una I pegada a una O. Aunque parezca «io», dice «iu»: Ю de Ю́ля.", "ejemplos": [
           {"ru": "Ю́ля", "fonetica": "IU-lia", "es": "Julia (nombre)"},
           {"ru": "ю́мор", "fonetica": "IU-mar", "es": "humor"}
         ]},
@@ -263,12 +263,12 @@
           {"ru": "сего́дня", "fonetica": "si-VOD-nia", "es": "hoy"},
           {"ru": "ничего́", "fonetica": "ni-chi-VO", "es": "nada"}
         ]},
-        {"letra": "Final de palabra", "sonido": "más suave", "como_suena": "Al final de la palabra, Б Д Ж З В Г suenan como П Т Ш С Ф К.", "tip": "Al final, la letra se cansa y suelta el zumbido: сад suena «sat».", "ejemplos": [
+        {"letra": "Final de palabra", "sonido": "sin zumbido (sorda)", "como_suena": "Al final de la palabra, Б Д Ж З В Г suenan como П Т Ш С Ф К.", "tip": "Al final, la letra se cansa y suelta el zumbido: сад suena «sat».", "ejemplos": [
           {"ru": "сад", "fonetica": "sat", "es": "jardín"},
           {"ru": "друг", "fonetica": "druk", "es": "amigo"},
           {"ru": "эта́ж", "fonetica": "e-TASH", "es": "piso (de un edificio)"}
         ]},
-        {"letra": "Letras calladas", "sonido": "—", "como_suena": "En unas pocas palabras una letra no se pronuncia.", "tip": "En здра́вствуйте la primera В se calla: «ZDRAST-vui-tie».", "ejemplos": [
+        {"letra": "Letras calladas", "sonido": "—", "como_suena": "En unas pocas palabras una letra no se pronuncia.", "tip": "En здра́вствуйте la primera В se calla: «ZDRAS-tvui-tie».", "ejemplos": [
           {"ru": "здра́вствуйте", "fonetica": "ZDRAST-vui-tie", "es": "hola (de usted)"},
           {"ru": "со́лнце", "fonetica": "SON-tse", "es": "sol"}
         ]}

@@ -6,7 +6,7 @@
       "id": "animales-d1",
       "titulo": "Mi mascota",
       "mensajes": [
-        {"de": "Лена", "ru": "У тебя́ есть живо́тное?", "fonetica": "u ti-BIA iest' zhi-VOT-na-ie", "es": "¿Tienes algún animal?"},
+        {"de": "Лена", "ru": "У тебя́ есть живо́тное?", "fonetica": "u ti-BIA iest' zhy-VOT-na-ie", "es": "¿Tienes algún animal?"},
         {"de": "yo", "ru": "Да, у меня́ есть ко́шка.", "fonetica": "da, u mi-NIA iest' KOSH-ka", "es": "Sí, tengo una gata.", "opciones": [
           {"ru": "Да, у меня́ есть ко́шка.", "fonetica": "da, u mi-NIA iest' KOSH-ka", "correcta": true, "porque": "¡Bien! ко́шка es la gata."},
           {"ru": "Да, у меня́ есть кот.", "fonetica": "da, u mi-NIA iest' kot", "correcta": false, "porque": "кот es un gato macho; tienes una gata: ко́шка."},
