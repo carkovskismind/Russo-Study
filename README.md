@@ -67,7 +67,7 @@ Abre `http://localhost:8000/`. Para revisar los mazos antes de publicar: `node t
 
 ## Créditos y licencia
 
-Hecho por [carkovskismind](https://github.com/carkovskismind).
+Desarrollado por **brutus.desiglab** by [carkovskismind](https://github.com/carkovskismind).
 Voz en ruso: sintetizador [RHVoice](https://rhvoice.org) (voz Elena), licencia GPL-3; ver `audio/LICENCIA.txt`.
 
 © carkovskismind. **Todos los derechos reservados:** el código y el contenido no se pueden copiar ni reutilizar sin permiso por escrito.
