@@ -1,6 +1,8 @@
 # Ruso de bolsillo
 
-App para estudiar ruso con tarjetas, frases y repaso espaciado. Se instala en el celular como una app (PWA y APK de Android) y guarda tu progreso en la nube para continuar en cualquier dispositivo.
+App de estudio de ruso para hispanohablantes con tarjetas, frases y repaso espaciado. Enfocada en facilitar el aprendizaje desde el español como primer lengua.
+
+Se instala en el celular como una app (PWA y APK de Android) y guarda tu progreso en la nube para continuar en cualquier dispositivo.
 
 > **Estado:** versión beta en pruebas. **[Pruébala aquí](https://ruso-de-bolsillo.netlify.app/beta/)** y cuéntame qué te parece desde «Reportar falla» dentro de la app.
 
@@ -13,8 +15,8 @@ App para estudiar ruso con tarjetas, frases y repaso espaciado. Se instala en el
 - **Práctica estilo Chessbook:** la palabra nueva se muestra y luego se pregunta con 4 opciones. Si pides pista o fallas, vuelve al final de la fila del día.
 - **Armar frases:** se arma la frase en ruso con fichas, vale cualquier orden correcto y, si hay error, se explica por qué.
 - **Mini diálogos, cajas y diccionario** para entender cómo se usan las palabras.
-- **Audio en ruso** con voz de RHVoice Elena, en velocidad normal y lenta (botón de tortuga) en las frases completas.
-- **Pronunciación escrita** debajo de cada palabra (`sa-BA-ka`, con la sílaba fuerte en mayúsculas); se puede ocultar en Ajustes.
+- **Audio en ruso** con voz de RHVoice Elena, en velocidad normal y lenta (botón de tortuga) en las frases completas **Solo se reproducen los cambios de velocidad en el audio con conexion a internet, en caso de no tenerlo se reproduce a la misma velocidad el audio en ambas versiones**
+- **Pronunciación escrita** debajo de cada palabra (`sa-BA-ka`, con la sílaba fuerte en mayúsculas): se hace enfasis en la transcripcion desde el como se habla el español, para poder dar un punto de comparacion y facilitar el apendeizaje; se puede ocultar en Ajustes.
 - **Repaso espaciado**, listas personales («Mis palabras», «+ Hoy») y notas.
 - Tema **oscuro y claro**, y uso **sin conexión** para el contenido ya cargado.
 
@@ -30,7 +32,7 @@ App web sin compilación: se abre con un servidor estático.
 | Sin conexión | Service worker (`sw.js`) |
 | Publicación | Netlify (beta) y GitHub Pages (versión 2.0) |
 | App de Android | APK generado con PWABuilder (TWA) |
-| Visitas | GoatCounter, anónimo, solo en la versión 2.0 |
+| Visitas | GoatCounter, anónimo **NO APLICA EN LA VERSION BETA** |
 
 ## Estructura
 
