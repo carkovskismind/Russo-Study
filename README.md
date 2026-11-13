@@ -1,104 +1,73 @@
-# Ruso de bolsillo (antes Russo Study)
+# Ruso de bolsillo
 
-Tarjetas de estudio de ruso con repaso espaciado. Es una app web que se instala en el celular y guarda tu progreso en la nube para verlo en cualquier dispositivo.
+App para estudiar ruso con tarjetas, frases y repaso espaciado. Se instala en el celular como una app (PWA y APK de Android) y guarda tu progreso en la nube para continuar en cualquier dispositivo.
 
-- **Práctica como Chessbook:** las palabras nuevas se muestran primero y luego se preguntan con 4 opciones. Si fallas o pides pista, la palabra cuenta como error, pierde su progreso y vuelve a tu fila del día.
-- **Pronunciación** debajo de cada palabra rusa, en las opciones y en la lista del mazo.
-- **Lista para hoy:** en cada mazo agrega palabras con «+ Hoy» o selecciona varias; entran extra en tu práctica del día y se quedan hasta que las practiques.
-- **Sonidos** al acertar y al fallar (se apagan en Ajustes) y tema **oscuro** o claro.
-- **Pistas y notas personales:** cada palabra tiene una explicación breve, y puedes agregar tu propia nota para recordarla (se sincroniza con tu progreso).
-- **Mazos por tema:** vocabulario, países y gentilicios, y gramática. Activa o desactiva cada mazo para tu sesión diaria.
-- **Etiquetas de gramática:** cada sustantivo dice su género y si es animado (`Fem. · anim.`).
-- **Extras:** cursiva rusa, pronunciación con la voz del dispositivo, búsqueda dentro de cada mazo y repaso rápido antes de un examen.
+> **Estado:** versión beta en pruebas. **[Pruébala aquí](https://ruso-de-bolsillo.netlify.app/beta/)** y cuéntame qué te parece desde «Reportar falla» dentro de la app.
 
-## Cómo agregar o cambiar palabras
+<!-- Pendiente: agregar 3 o 4 capturas del celular (Inicio, mapa, tarjeta, frases) en claro y oscuro, en docs/capturas/ -->
 
-Todo el vocabulario vive en la carpeta `data/`. Para agregar una palabra, abre el archivo del mazo y añade una línea dentro de `"tarjetas"`:
+## Qué puedes hacer
 
-```json
-{"ru": "соба́ка", "fonetica": "sa-BA-ka", "es": "perro / perra", "pista": "Animal doméstico que ladra.", "tag": "Fem. · anim.", "nota": "pl. соба́ки"}
-```
+- **Ruta de unidades** con un mapa: cada unidad tiene su vocabulario y su gramática, en el orden sugerido.
+- **Aprende a leer:** alfabeto, acento, reducción de О, consonantes suaves y duras, Ь y Ъ.
+- **Práctica estilo Chessbook:** la palabra nueva se muestra y luego se pregunta con 4 opciones. Si pides pista o fallas, vuelve al final de la fila del día.
+- **Armar frases:** se arma la frase en ruso con fichas, vale cualquier orden correcto y, si hay error, se explica por qué.
+- **Mini diálogos, cajas y diccionario** para entender cómo se usan las palabras.
+- **Audio en ruso** con voz de RHVoice Elena, en velocidad normal y lenta (botón de tortuga) en las frases completas.
+- **Pronunciación escrita** debajo de cada palabra (`sa-BA-ka`, con la sílaba fuerte en mayúsculas); se puede ocultar en Ajustes.
+- **Repaso espaciado**, listas personales («Mis palabras», «+ Hoy») y notas.
+- Tema **oscuro y claro**, y uso **sin conexión** para el contenido ya cargado.
 
-| Campo  | Obligatorio | Qué es |
-|--------|-------------|--------|
-| `ru`   | sí | La palabra en ruso. Puedes marcar el acento con el carácter ◌́ (U+0301) después de la vocal. |
-| `fonetica` | recomendado | Pronunciación con letras del español; la sílaba fuerte en MAYÚSCULAS (`sa-BA-ka`). |
-| `es`   | sí | La traducción. |
-| `pista` | recomendado | Explicación breve que aparece con «No sé, dame una pista». No debe decir la respuesta. Si falta, la app arma una con el tipo de palabra y la primera letra. |
-| `tag`  | no | Género, animado, tipo de palabra. |
-| `nota` | no | Plural, conjugación o cualquier aclaración. `\n` hace un salto de línea. |
+## Cómo está hecha
 
-Para tarjetas de gramática usa `pregunta` y `respuesta` en lugar de `ru` y `es`:
+App web sin compilación: se abre con un servidor estático.
 
-```json
-{"pregunta": "¿Cómo se forma el pasado?", "respuesta": "Infinitivo sin -ть + -л / -ла / -ло / -ли"}
-```
-
-**Reglas importantes**
-
-- Cada línea termina en coma, menos la última de la lista.
-- Usa comillas rectas `"` y escribe el ruso con letras cirílicas (no mezcles letras latinas).
-- Si cambias el texto `ru` de una palabra que ya estudiaste, la app la toma como palabra nueva.
-
-### Modo Aprender y frases para armar (piloto: Familia y personas)
-
-Cada palabra puede llevar además:
-
-| Campo | Qué es |
-|-------|--------|
-| `seccion` | Subgrupo dentro del tema («Abuelos y nietos»). La lista de Aprender se agrupa con esto. |
-| `ejemplo` | `{"ru": "...", "fonetica": "...", "es": "..."}`: una frase de ejemplo con audio. |
-| `tip` | Tip de memoria que aparece en la ficha de la palabra. |
-
-Y el mazo puede tener, junto a `tarjetas`:
-
-- `"aprender": {"intro": "...", "reglas": ["...", "..."], "tip": "..."}`: lo que se ve arriba del tema.
-- `"frases": [...]`: ejercicios de armar frases. Cada uno lleva `id`, `idea` (en español), `fichas` (las palabras en ruso), `validas` (todas las frases correctas que se pueden armar con esas fichas, en cualquier orden válido), `texto` (cómo se muestra), `fonetica`, `es` (traducción), `opciones` (4 traducciones; una es `es`), `distractores` (fichas de más que aparecen en los repasos) y `pista`.
-
-Si alguien toca «Mi respuesta también es correcta», se guarda en la tabla `reportes` de Supabase. Revísalos en **Table Editor → reportes** y, si tienen razón, agrega esa frase a `validas`.
-
-**Mazo nuevo:** crea un archivo `.json` con la misma forma que los demás (`id`, `titulo`, `grupo`, `descripcion`, `tarjetas`) y agrega su ruta en `data/mazos.json`.
-
-Cuando guardes cambios en GitHub, una revisión automática comprueba que los mazos estén bien escritos (pestaña **Actions**). Si sale en rojo, abre el detalle para ver qué línea falla. También puedes revisarlo en tu computadora con `node tools/validar.mjs`.
-
-## Publicar la app (GitHub Pages)
-
-1. En el repositorio, ve a **Settings → Pages**.
-2. En **Source** elige **Deploy from a branch**.
-3. En **Branch** elige `main` y la carpeta `/ (root)`. Guarda.
-4. En uno o dos minutos la app queda en `https://carkovskismind.github.io/Russo-Study/`.
-
-**Instalarla en el celular:** abre ese enlace. En iPhone (Safari): Compartir → *Agregar a pantalla de inicio*. En Android (Chrome): menú ⋮ → *Instalar app*.
-
-## Sincronizar el progreso (Supabase)
-
-Sin este paso la app funciona, pero el progreso solo se guarda en el dispositivo donde estudias.
-
-1. Crea una cuenta gratis en [supabase.com](https://supabase.com) y un proyecto nuevo.
-2. Abre **SQL Editor → New query**, pega el contenido de `supabase/schema.sql` y presiona **Run**. Eso crea las tablas (tu progreso y los reportes de «Mi respuesta también es correcta») y las reglas para que solo tú veas tu progreso. Si ya lo habías corrido antes, córrelo otra vez: solo agrega lo nuevo.
-3. En **Authentication → Sign In / Providers → Email**, deja **Email** activado y apaga **Confirm email** para poder entrar en cuanto creas la cuenta.
-4. En **Project Settings → API Keys** copia la **Publishable key** (o la **anon public** de *Legacy API keys*) y pégala junto con el **Project URL** en `js/config.js` (en tu proyecto ya están puestos).
-
-La *anon key* es pública y está hecha para ir dentro de la app. **Nunca** pongas en el repositorio la llave `service_role`.
-
-Después, en la app: **Ajustes → Cuenta y sincronización → ¿No tienes cuenta? Crea una**. Escribe tu correo y una contraseña. En cada dispositivo entra con los mismos datos.
+| Parte | Tecnología |
+|-------|-----------|
+| Pantallas y estudio | HTML, CSS y JavaScript (sin framework) |
+| Repaso espaciado | `js/srs.js` |
+| Progreso y cuentas | Supabase (inicio de sesión con correo y tablas `progress` y `reportes`) |
+| Sin conexión | Service worker (`sw.js`) |
+| Publicación | Netlify (beta) y GitHub Pages (versión 2.0) |
+| App de Android | APK generado con PWABuilder (TWA) |
+| Visitas | GoatCounter, anónimo, solo en la versión 2.0 |
 
 ## Estructura
 
 ```
-index.html              la app
-css/app.css             estilos
-js/app.js               pantallas y sesiones de estudio
-js/srs.js               algoritmo de repaso espaciado
-js/store.js             progreso local y sincronización
-js/config.js            datos de Supabase
-sw.js                   funcionamiento sin conexión
-data/mazos.json         lista de mazos
-data/vocabulario/       mazos de vocabulario
-data/paises/            países, gentilicios y sus reglas
-data/gramatica/         mazos de gramática
-supabase/schema.sql     tabla del progreso
-tools/validar.mjs       revisión de los mazos
+index.html            la app
+css/                  estilos
+js/                   pantallas, repaso espaciado, progreso y configuración
+sw.js                 funcionamiento sin conexión
+data/                 mazos, ejercicios y lectura (JSON)
+audio/                grabaciones en ruso
+img/ icons/           imágenes e íconos
+supabase/             tablas de la base de datos
+tools/                validación de mazos y armado del sitio
+docs/                 guías (contenido, privacidad)
 ```
 
-Si cambias archivos de la app (no los mazos), sube el número de `CACHE` en `sw.js` para que los celulares descarguen la versión nueva.
+## Probarla en tu computadora
+
+```
+python3 -m http.server 8000
+```
+
+Abre `http://localhost:8000/`. Para revisar los mazos antes de publicar: `node tools/validar.mjs`.
+
+## Documentación
+
+- [Cómo agregar o cambiar contenido](docs/contenido.md)
+- [Publicar y sincronizar (GitHub Pages, Netlify, Supabase)](docs/publicar.md)
+- [Privacidad](docs/privacidad.md)
+
+## Notas para el asistente de IA
+
+`CLAUDE.md` y la carpeta `.claude/` son instrucciones de trabajo para el asistente de IA que ayuda a desarrollar la app. No forman parte de la app ni hace falta leerlos.
+
+## Créditos y licencia
+
+Desarrollado por **brutus.desiglab** by [carkovskismind](https://github.com/carkovskismind).
+Voz en ruso: sintetizador [RHVoice](https://rhvoice.org) (voz Elena), licencia GPL-3; ver `audio/LICENCIA.txt`.
+
+© carkovskismind. **Todos los derechos reservados:** el código y el contenido no se pueden copiar ni reutilizar sin permiso por escrito.
