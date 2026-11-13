@@ -1,0 +1,4 @@
+# Netlify publica la app dentro de /beta/ (la usa el APK). Ver tools/netlify-build.sh
+[build]
+  command = "sh tools/netlify-build.sh"
+  publish = "sitio"

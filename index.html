@@ -61,8 +61,9 @@ document.documentElement.setAttribute("data-theme",t);var m=document.querySelect
 </div>
 <script>
 (function(){var t0=performance.now(),s=document.getElementById("splash"),done=false;
+try{if(sessionStorage.getItem("russo-splash")){done=true;window.hideSplash=function(){};if(s&&s.parentNode)s.parentNode.removeChild(s);return}sessionStorage.setItem("russo-splash","1")}catch(e){}
 window.hideSplash=function(){if(done||!s)return;done=true;
-var w=Math.max(0,5000-(performance.now()-t0));
+var w=Math.max(0,3500-(performance.now()-t0));
 setTimeout(function(){s.classList.add("out");setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s)},270)},w)};
 setTimeout(window.hideSplash,10000)})();
 </script>
