@@ -26,15 +26,15 @@
       "titulo": "En el restaurante",
       "mensajes": [
         {"de": "Лена", "ru": "Здра́вствуйте! Что вы хоти́те?", "fonetica": "ZDRAS-tvui-tie! shto vy ja-TI-tie", "es": "¡Hola! ¿Qué desea?"},
-        {"de": "yo", "ru": "Мне пожа́луйста сок.", "fonetica": "mnie pa-ZHAL-sta sok", "es": "Para mí un jugo, por favor.", "opciones": [
-          {"ru": "Мне пожа́луйста сок.", "fonetica": "mnie pa-ZHAL-sta sok", "correcta": true, "porque": "¡Bien! Para pedir: мне + пожа́луйста."},
-          {"ru": "Я пожа́луйста сок.", "fonetica": "ia pa-ZHAL-sta sok", "correcta": false, "porque": "Para pedir se dice мне («para mí»), no я."},
-          {"ru": "Мне пожа́луйста молоко́.", "fonetica": "mnie pa-ZHAL-sta ma-la-KO", "correcta": false, "porque": "молоко́ es leche; quieres jugo: сок."}
+        {"de": "yo", "ru": "Мне пожа́луйста сок.", "fonetica": "mnie pa-ZHA-lus-ta sok", "es": "Para mí un jugo, por favor.", "opciones": [
+          {"ru": "Мне пожа́луйста сок.", "fonetica": "mnie pa-ZHA-lus-ta sok", "correcta": true, "porque": "¡Bien! Para pedir: мне + пожа́луйста."},
+          {"ru": "Я пожа́луйста сок.", "fonetica": "ia pa-ZHA-lus-ta sok", "correcta": false, "porque": "Para pedir se dice мне («para mí»), no я."},
+          {"ru": "Мне пожа́луйста молоко́.", "fonetica": "mnie pa-ZHA-lus-ta ma-la-KO", "correcta": false, "porque": "молоко́ es leche; quieres jugo: сок."}
         ]},
         {"de": "Лена", "ru": "Хорошо́. А что ещё?", "fonetica": "ja-ra-SHO. a shto ish-CHO", "es": "Bien. ¿Y qué más?"},
-        {"de": "yo", "ru": "Пи́ццу, пожа́луйста.", "fonetica": "PI-tsu pa-ZHAL-sta", "es": "Una pizza, por favor.", "opciones": [
-          {"ru": "Пи́ццу, пожа́луйста.", "fonetica": "PI-tsu pa-ZHAL-sta", "correcta": true, "porque": "¡Eso! Al pedir, пи́цца cambia a пи́ццу."},
-          {"ru": "Пи́цца, пожа́луйста.", "fonetica": "PIT-tsa pa-ZHAL-sta", "correcta": false, "porque": "Al pedir, пи́цца cambia a пи́ццу."},
+        {"de": "yo", "ru": "Пи́ццу, пожа́луйста.", "fonetica": "PI-tsu pa-ZHA-lus-ta", "es": "Una pizza, por favor.", "opciones": [
+          {"ru": "Пи́ццу, пожа́луйста.", "fonetica": "PI-tsu pa-ZHA-lus-ta", "correcta": true, "porque": "¡Eso! Al pedir, пи́цца cambia a пи́ццу."},
+          {"ru": "Пи́цца, пожа́луйста.", "fonetica": "PIT-tsa pa-ZHA-lus-ta", "correcta": false, "porque": "Al pedir, пи́цца cambia a пи́ццу."},
           {"ru": "Пи́ццу, спаси́бо.", "fonetica": "PI-tsu spa-SI-ba", "correcta": false, "porque": "спаси́бо es «gracias»; al pedir se usa пожа́луйста."}
         ]},
         {"de": "Лена", "ru": "Хорошо́, спаси́бо!", "fonetica": "ja-ra-SHO, spa-SI-ba", "es": "Bien, ¡gracias!"}

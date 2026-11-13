@@ -16,7 +16,7 @@
         {"de": "yo", "ru": "О́чень прия́тно!", "fonetica": "O-chin' pri-IAT-na", "es": "¡Mucho gusto!", "opciones": [
           {"ru": "О́чень прия́тно!", "fonetica": "O-chin' pri-IAT-na", "correcta": true, "porque": "¡Eso! Se responde igual."},
           {"ru": "До свида́ния!", "fonetica": "da svi-DA-ni-ia", "correcta": false, "porque": "Es una despedida; apenas se están conociendo."},
-          {"ru": "Пожа́луйста!", "fonetica": "pa-ZHAL-sta", "correcta": false, "porque": "пожа́луйста es «por favor / de nada»; aquí respondes al «mucho gusto»."}
+          {"ru": "Пожа́луйста!", "fonetica": "pa-ZHA-lus-ta", "correcta": false, "porque": "пожа́луйста es «por favor / de nada»; aquí respondes al «mucho gusto»."}
         ]}
       ]
     },
@@ -25,8 +25,8 @@
       "titulo": "Despedirse",
       "mensajes": [
         {"de": "Лена", "ru": "Спаси́бо!", "fonetica": "spa-SI-ba", "es": "¡Gracias!"},
-        {"de": "yo", "ru": "Пожа́луйста!", "fonetica": "pa-ZHAL-sta", "es": "¡De nada!", "opciones": [
-          {"ru": "Пожа́луйста!", "fonetica": "pa-ZHAL-sta", "correcta": true, "porque": "¡Bien! A un «gracias» se responde пожа́луйста."},
+        {"de": "yo", "ru": "Пожа́луйста!", "fonetica": "pa-ZHA-lus-ta", "es": "¡De nada!", "opciones": [
+          {"ru": "Пожа́луйста!", "fonetica": "pa-ZHA-lus-ta", "correcta": true, "porque": "¡Bien! A un «gracias» se responde пожа́луйста."},
           {"ru": "Извини́те!", "fonetica": "iz-vi-NI-tie", "correcta": false, "porque": "извини́те es «disculpe»; para responder a un gracias: пожа́луйста."},
           {"ru": "Здра́вствуйте!", "fonetica": "ZDRAS-tvui-tie", "correcta": false, "porque": "Es un saludo; aquí te están dando las gracias."}
         ]},
