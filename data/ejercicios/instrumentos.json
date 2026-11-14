@@ -25,11 +25,11 @@
       "id": "instrumentos-d2",
       "titulo": "En la orquesta",
       "mensajes": [
-        {"de": "Лена", "ru": "Э́то фле́йта и́ли труба́?", "fonetica": "E-ta FLEI-ta I-li tru-BA", "es": "¿Es flauta o trompeta?"},
-        {"de": "yo", "ru": "Э́то не фле́йта, э́то труба́.", "fonetica": "E-ta nie FLEI-ta, E-ta tru-BA", "es": "No es flauta, es trompeta.", "opciones": [
-          {"ru": "Э́то не фле́йта, э́то труба́.", "fonetica": "E-ta nie FLEI-ta, E-ta tru-BA", "correcta": true, "porque": "¡Bien! не va antes de lo que niegas."},
-          {"ru": "Э́то нет фле́йта, э́то труба́.", "fonetica": "E-ta niet FLEI-ta, E-ta tru-BA", "correcta": false, "porque": "Para negar una palabra se usa не: не фле́йта."},
-          {"ru": "Э́то не фле́йта, э́то ту́ба.", "fonetica": "E-ta nie FLEI-ta, E-ta TU-ba", "correcta": false, "porque": "ту́ба es tuba; la respuesta es труба́ (trompeta)."}
+        {"de": "Лена", "ru": "Э́то фле́йта и́ли труба́?", "fonetica": "E-ta FLIEI-ta I-li tru-BA", "es": "¿Es flauta o trompeta?"},
+        {"de": "yo", "ru": "Э́то не фле́йта, э́то труба́.", "fonetica": "E-ta nie FLIEI-ta, E-ta tru-BA", "es": "No es flauta, es trompeta.", "opciones": [
+          {"ru": "Э́то не фле́йта, э́то труба́.", "fonetica": "E-ta nie FLIEI-ta, E-ta tru-BA", "correcta": true, "porque": "¡Bien! не va antes de lo que niegas."},
+          {"ru": "Э́то нет фле́йта, э́то труба́.", "fonetica": "E-ta niet FLIEI-ta, E-ta tru-BA", "correcta": false, "porque": "Para negar una palabra se usa не: не фле́йта."},
+          {"ru": "Э́то не фле́йта, э́то ту́ба.", "fonetica": "E-ta nie FLIEI-ta, E-ta TU-ba", "correcta": false, "porque": "ту́ба es tuba; la respuesta es труба́ (trompeta)."}
         ]},
         {"de": "Лена", "ru": "А э́то балала́йка?", "fonetica": "a E-ta ba-la-LAI-ka", "es": "¿Y esto es una balalaica?"},
         {"de": "yo", "ru": "Да, э́то балала́йка.", "fonetica": "da, E-ta ba-la-LAI-ka", "es": "Sí, es una balalaica.", "opciones": [
@@ -37,7 +37,7 @@
           {"ru": "Нет, э́то балала́йка.", "fonetica": "niet, E-ta ba-la-LAI-ka", "correcta": false, "porque": "Dices нет pero lo confirmas: да."},
           {"ru": "Да, э́то гу́сли.", "fonetica": "da, E-ta GUS-li", "correcta": false, "porque": "Dices да a балала́йка, pero nombras гу́сли."}
         ]},
-        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-ti-RIES-na", "es": "¡Qué interesante!"}
+        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
       ]
     }
   ],

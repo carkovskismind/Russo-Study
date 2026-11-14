@@ -25,11 +25,11 @@
       "id": "colores-d2",
       "titulo": "La bandera y el cielo",
       "mensajes": [
-        {"de": "Лена", "ru": "Како́го цве́та ваш флаг?", "fonetica": "ka-KO-va TSVIE-ta vash flak", "es": "¿De qué color es su bandera?"},
-        {"de": "yo", "ru": "Наш флаг зелёный, бе́лый и кра́сный.", "fonetica": "nash flak zi-LIO-nyi BIE-lyi i KRAS-nyi", "es": "Nuestra bandera es verde, blanca y roja.", "opciones": [
-          {"ru": "Наш флаг зелёный, бе́лый и кра́сный.", "fonetica": "nash flak zi-LIO-nyi BIE-lyi i KRAS-nyi", "correcta": true, "porque": "¡Bien! флаг es masculino."},
-          {"ru": "Наш флаг зелёная, бе́лая и кра́сная.", "fonetica": "nash flak zi-LIO-na-ia BIE-la-ia i KRAS-na-ia", "correcta": false, "porque": "флаг es masculino: зелёный, бе́лый, кра́сный."},
-          {"ru": "На́ша флаг зелёный, бе́лый и кра́сный.", "fonetica": "NA-sha flak zi-LIO-nyi BIE-lyi i KRAS-nyi", "correcta": false, "porque": "флаг es masculino: наш."}
+        {"de": "Лена", "ru": "Како́го цве́та ваш флаг?", "fonetica": "ka-KO-va TSVIE-ta vash flag", "es": "¿De qué color es su bandera?"},
+        {"de": "yo", "ru": "Наш флаг зелёный, бе́лый и кра́сный.", "fonetica": "nash flag zie-LIO-nyi BIE-lyi i KRAS-nyi", "es": "Nuestra bandera es verde, blanca y roja.", "opciones": [
+          {"ru": "Наш флаг зелёный, бе́лый и кра́сный.", "fonetica": "nash flag zie-LIO-nyi BIE-lyi i KRAS-nyi", "correcta": true, "porque": "¡Bien! флаг es masculino."},
+          {"ru": "Наш флаг зелёная, бе́лая и кра́сная.", "fonetica": "nash flag zie-LIO-na-ia BIE-la-ia i KRAS-na-ia", "correcta": false, "porque": "флаг es masculino: зелёный, бе́лый, кра́сный."},
+          {"ru": "На́ша флаг зелёный, бе́лый и кра́сный.", "fonetica": "NA-sha flag zie-LIO-nyi BIE-lyi i KRAS-nyi", "correcta": false, "porque": "флаг es masculino: наш."}
         ]},
         {"de": "Лена", "ru": "А не́бо?", "fonetica": "a NIE-ba", "es": "¿Y el cielo?"},
         {"de": "yo", "ru": "Не́бо голубо́е.", "fonetica": "NIE-ba ga-lu-BO-ie", "es": "El cielo es azul claro.", "opciones": [

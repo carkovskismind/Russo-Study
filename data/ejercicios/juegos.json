@@ -12,11 +12,11 @@
           {"ru": "Я игра́ю на футбо́л.", "fonetica": "ia ig-RA-iu na fud-BOL", "correcta": false, "porque": "Con juegos y deportes se usa в, no на."},
           {"ru": "Я игра́ешь в футбо́л.", "fonetica": "ia ig-RA-iesh f fud-BOL", "correcta": false, "porque": "Con я el verbo es игра́ю."}
         ]},
-        {"de": "Лена", "ru": "А твоя́ сестра́?", "fonetica": "a tva-IA sis-TRA", "es": "¿Y tu hermana?"},
+        {"de": "Лена", "ru": "А твоя́ сестра́?", "fonetica": "a tva-IA sies-TRA", "es": "¿Y tu hermana?"},
         {"de": "yo", "ru": "Она́ игра́ет в волейбо́л.", "fonetica": "a-NA ig-RA-iet v va-liei-BOL", "es": "Ella juega voleibol.", "opciones": [
           {"ru": "Она́ игра́ет в волейбо́л.", "fonetica": "a-NA ig-RA-iet v va-liei-BOL", "correcta": true, "porque": "¡Eso! Con она́: игра́ет."},
-          {"ru": "Она́ игра́ют в волейбо́л.", "fonetica": "a-NA ig-RA-iut v va-lei-BOL", "correcta": false, "porque": "игра́ют es para ellos; con она́: игра́ет."},
-          {"ru": "Она́ игра́ет волейбо́л.", "fonetica": "a-NA ig-RA-iet va-lei-BOL", "correcta": false, "porque": "Falta в: игра́ет в волейбо́л."}
+          {"ru": "Она́ игра́ют в волейбо́л.", "fonetica": "a-NA ig-RA-iut v va-liei-BOL", "correcta": false, "porque": "игра́ют es para ellos; con она́: игра́ет."},
+          {"ru": "Она́ игра́ет волейбо́л.", "fonetica": "a-NA ig-RA-iet va-liei-BOL", "correcta": false, "porque": "Falta в: игра́ет в волейбо́л."}
         ]},
         {"de": "Лена", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
       ]

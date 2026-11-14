@@ -76,7 +76,7 @@
         {"ru": "сок", "fonetica": "sok", "es": "jugo"},
         {"ru": "хор", "fonetica": "jor", "es": "coro"},
         {"ru": "рука́", "fonetica": "ru-KA", "es": "mano"},
-        {"ru": "рестора́н", "fonetica": "ris-ta-RAN", "es": "restaurante"}
+        {"ru": "рестора́н", "fonetica": "ries-ta-RAN", "es": "restaurante"}
       ]
     },
     {
@@ -183,7 +183,7 @@
           {"ru": "Москва́", "fonetica": "mas-KVA", "es": "Moscú"}
         ]},
         {"letra": "Е y Я sin acento", "sonido": "i", "como_suena": "Sin acento, Е y Я suenan casi como «i».", "tip": "Sin fuerza, se encogen hasta quedar en «i».", "ejemplos": [
-          {"ru": "сестра́", "fonetica": "sis-TRA", "es": "hermana"},
+          {"ru": "сестра́", "fonetica": "sies-TRA", "es": "hermana"},
           {"ru": "язы́к", "fonetica": "i-ZYK", "es": "idioma, lengua"}
         ]},
         {"letra": "El acento cambia el sentido", "sonido": "—", "como_suena": "La misma escritura con acento en otro lugar puede ser otra palabra.", "tip": "до́ма (en casa) / дома́ (casas): escucha dónde cae la fuerza.", "ejemplos": [
@@ -194,9 +194,9 @@
       "practica": [
         {"ru": "молоко́", "fonetica": "ma-la-KO", "es": "leche"},
         {"ru": "хорошо́", "fonetica": "ja-ra-SHO", "es": "bien"},
-        {"ru": "го́род", "fonetica": "GO-rat", "es": "ciudad"},
+        {"ru": "го́род", "fonetica": "GO-rad", "es": "ciudad"},
         {"ru": "ко́мната", "fonetica": "KOM-na-ta", "es": "cuarto, habitación"},
-        {"ru": "сестра́", "fonetica": "sis-TRA", "es": "hermana"},
+        {"ru": "сестра́", "fonetica": "sies-TRA", "es": "hermana"},
         {"ru": "Москва́", "fonetica": "mas-KVA", "es": "Moscú"}
       ]
     },
@@ -221,7 +221,7 @@
         ]},
         {"letra": "Ъ ъ", "sonido": "sin sonido", "como_suena": "El signo duro tampoco se pronuncia: hace una pausita y la vocal que sigue empieza con «i».", "tip": "Es una pared pequeña: separa la consonante de la vocal.", "ejemplos": [
           {"ru": "объе́кт", "fonetica": "ab-IEKT", "es": "objeto"},
-          {"ru": "подъе́зд", "fonetica": "pad-IEST", "es": "entrada del edificio"}
+          {"ru": "подъе́зд", "fonetica": "pad-IESD", "es": "entrada del edificio"}
         ]},
         {"letra": "Ж Ш Ц", "sonido": "siempre duras", "como_suena": "Estas tres siempre son duras: después de ellas la И suena como Ы.", "tip": "Las tres «tercas»: no se ablandan nunca.", "ejemplos": [
           {"ru": "маши́на", "fonetica": "ma-SHY-na", "es": "coche"},
@@ -238,7 +238,7 @@
         {"ru": "объе́кт", "fonetica": "ab-IEKT", "es": "objeto"},
         {"ru": "мы", "fonetica": "my", "es": "nosotros"},
         {"ru": "пять", "fonetica": "piat'", "es": "cinco"},
-        {"ru": "подъе́зд", "fonetica": "pad-IEST", "es": "entrada del edificio"}
+        {"ru": "подъе́зд", "fonetica": "pad-IESD", "es": "entrada del edificio"}
       ]
     },
     {
@@ -256,17 +256,17 @@
         ]},
         {"letra": "ЧН", "sonido": "shn (a veces)", "como_suena": "En algunas palabras muy usadas, ЧН se lee «shn». En la mayoría se lee normal, «chn».", "tip": "La famosa: коне́чно = «ka-NIESH-na».", "ejemplos": [
           {"ru": "коне́чно", "fonetica": "ka-NIESH-na", "es": "claro, por supuesto"},
-          {"ru": "Со́лнечная систе́ма", "fonetica": "SOL-nich-na-ia sis-TIE-ma", "es": "sistema solar (aquí se lee normal)"}
+          {"ru": "Со́лнечная систе́ма", "fonetica": "SOL-niech-na-ia sis-TIE-ma", "es": "sistema solar (aquí se lee normal)"}
         ]},
         {"letra": "-ОГО / -ЕГО", "sonido": "-ava / -iva", "como_suena": "En estas terminaciones la Г suena «v».", "tip": "его́ se lee «ie-VO»: la Г se disfraza de В.", "ejemplos": [
           {"ru": "его́", "fonetica": "ie-VO", "es": "su (de él) / lo"},
-          {"ru": "сего́дня", "fonetica": "si-VOD-nia", "es": "hoy"},
+          {"ru": "сего́дня", "fonetica": "sie-VOD-nia", "es": "hoy"},
           {"ru": "ничего́", "fonetica": "ni-chi-VO", "es": "nada"}
         ]},
         {"letra": "Final de palabra", "sonido": "sin zumbido (sorda)", "como_suena": "Al final de la palabra, Б Д Ж З В Г suenan como П Т Ш С Ф К.", "tip": "Al final, la letra se cansa y suelta el zumbido: сад suena «sat».", "ejemplos": [
-          {"ru": "сад", "fonetica": "sat", "es": "jardín"},
-          {"ru": "друг", "fonetica": "druk", "es": "amigo"},
-          {"ru": "эта́ж", "fonetica": "e-TASH", "es": "piso (de un edificio)"}
+          {"ru": "сад", "fonetica": "sad", "es": "jardín"},
+          {"ru": "друг", "fonetica": "drug", "es": "amigo"},
+          {"ru": "эта́ж", "fonetica": "e-TAZH", "es": "piso (de un edificio)"}
         ]},
         {"letra": "Letras calladas", "sonido": "—", "como_suena": "En unas pocas palabras una letra no se pronuncia.", "tip": "En здра́вствуйте la primera В se calla: «ZDRAS-tvui-tie».", "ejemplos": [
           {"ru": "здра́вствуйте", "fonetica": "ZDRAST-vui-tie", "es": "hola (de usted)"},
@@ -277,7 +277,7 @@
         {"ru": "Что э́то?", "fonetica": "shto E-ta", "es": "¿Qué es esto?"},
         {"ru": "коне́чно", "fonetica": "ka-NIESH-na", "es": "claro, por supuesto"},
         {"ru": "мужчи́на", "fonetica": "mu-SHCHI-na", "es": "hombre"},
-        {"ru": "сего́дня", "fonetica": "si-VOD-nia", "es": "hoy"},
+        {"ru": "сего́дня", "fonetica": "sie-VOD-nia", "es": "hoy"},
         {"ru": "здра́вствуйте", "fonetica": "ZDRAST-vui-tie", "es": "hola (de usted)"},
         {"ru": "Как его́ зову́т?", "fonetica": "kak ie-VO za-VUT", "es": "¿Cómo se llama él?"}
       ]

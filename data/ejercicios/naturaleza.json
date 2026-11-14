@@ -12,11 +12,11 @@
           {"ru": "Со́лнце в не́бе.", "fonetica": "SON-tse v NIE-bie", "correcta": false, "porque": "Con не́бо se usa на: на не́бе."},
           {"ru": "Со́лнце на не́бо.", "fonetica": "SON-tse na NIE-ba", "correcta": false, "porque": "Para decir dónde, la palabra cambia: на не́бе."}
         ]},
-        {"de": "Лена", "ru": "А где снег?", "fonetica": "a gdie sniek (y «sniek na SIE-vi-rie», «sniek f SIE-vi-rie», «sniek na SIE-vir»: «snieg» → «sniek» en los 5 lugares)", "es": "¿Y dónde está la nieve?"},
-        {"de": "yo", "ru": "Снег на се́вере.", "fonetica": "snieg na SIE-vi-rie", "es": "La nieve está en el norte.", "opciones": [
-          {"ru": "Снег на се́вере.", "fonetica": "snieg na SIE-vi-rie", "correcta": true, "porque": "¡Eso! Con los puntos cardinales se usa на."},
-          {"ru": "Снег в се́вере.", "fonetica": "snieg f SIE-vi-rie", "correcta": false, "porque": "Con los puntos cardinales se usa на: на се́вере."},
-          {"ru": "Снег на се́вер.", "fonetica": "snieg na SIE-vir", "correcta": false, "porque": "Para decir dónde, се́вер cambia: на се́вере."}
+        {"de": "Лена", "ru": "А где снег?", "fonetica": "a gdie snieg", "es": "¿Y dónde está la nieve?"},
+        {"de": "yo", "ru": "Снег на се́вере.", "fonetica": "snieg na SIE-vie-rie", "es": "La nieve está en el norte.", "opciones": [
+          {"ru": "Снег на се́вере.", "fonetica": "snieg na SIE-vie-rie", "correcta": true, "porque": "¡Eso! Con los puntos cardinales se usa на."},
+          {"ru": "Снег в се́вере.", "fonetica": "snieg f SIE-vie-rie", "correcta": false, "porque": "Con los puntos cardinales se usa на: на се́вере."},
+          {"ru": "Снег на се́вер.", "fonetica": "snieg na SIE-vier", "correcta": false, "porque": "Para decir dónde, се́вер cambia: на се́вере."}
         ]},
         {"de": "Лена", "ru": "Как краси́во!", "fonetica": "kak kra-SI-va", "es": "¡Qué bonito!"}
       ]
@@ -25,17 +25,17 @@
       "id": "naturaleza-d2",
       "titulo": "En el bosque",
       "mensajes": [
-        {"de": "Лена", "ru": "Что в лесу́?", "fonetica": "shto v li-SU", "es": "¿Qué hay en el bosque?"},
-        {"de": "yo", "ru": "В лесу́ мно́го дере́вьев.", "fonetica": "v lie-SU MNO-ga di-RIE-vief", "es": "En el bosque hay muchos árboles.", "opciones": [
-          {"ru": "В лесу́ мно́го дере́вьев.", "fonetica": "v lie-SU MNO-ga di-RIE-vief", "correcta": true, "porque": "¡Bien! Después de мно́го va el plural: дере́вьев."},
-          {"ru": "В лесу́ мно́го де́рево.", "fonetica": "v lie-SU MNO-ga DIE-ri-va", "correcta": false, "porque": "Después de мно́го va el plural: дере́вьев."},
-          {"ru": "В лес мно́го дере́вьев.", "fonetica": "v lies MNO-ga di-RIE-vief", "correcta": false, "porque": "Para decir dónde, лес cambia: в лесу́."}
+        {"de": "Лена", "ru": "Что в лесу́?", "fonetica": "shto v lie-SU", "es": "¿Qué hay en el bosque?"},
+        {"de": "yo", "ru": "В лесу́ мно́го дере́вьев.", "fonetica": "v lie-SU MNO-ga die-RIE-viev", "es": "En el bosque hay muchos árboles.", "opciones": [
+          {"ru": "В лесу́ мно́го дере́вьев.", "fonetica": "v lie-SU MNO-ga die-RIE-viev", "correcta": true, "porque": "¡Bien! Después de мно́го va el plural: дере́вьев."},
+          {"ru": "В лесу́ мно́го де́рево.", "fonetica": "v lie-SU MNO-ga DIE-rie-va", "correcta": false, "porque": "Después de мно́го va el plural: дере́вьев."},
+          {"ru": "В лес мно́го дере́вьев.", "fonetica": "v lies MNO-ga die-RIE-viev", "correcta": false, "porque": "Para decir dónde, лес cambia: в лесу́."}
         ]},
-        {"de": "Лена", "ru": "Там есть цвето́к?", "fonetica": "tam iest' tsvi-TOK", "es": "¿Hay una flor allá?"},
-        {"de": "yo", "ru": "Да, там есть цвето́к.", "fonetica": "da, tam iest' tsvi-TOK", "es": "Sí, allá hay una flor.", "opciones": [
-          {"ru": "Да, там есть цвето́к.", "fonetica": "da, tam iest' tsvi-TOK", "correcta": true, "porque": "¡Eso! есть = hay."},
-          {"ru": "Нет, там есть цвето́к.", "fonetica": "niet, tam iest' tsvi-TOK", "correcta": false, "porque": "Dices нет pero dices que hay una flor: да."},
-          {"ru": "Да, там нет цвето́к.", "fonetica": "da, tam niet tsvi-TOK", "correcta": false, "porque": "нет significa «no hay»; dices que sí hay: есть."}
+        {"de": "Лена", "ru": "Там есть цвето́к?", "fonetica": "tam iest' tsvie-TOK", "es": "¿Hay una flor allá?"},
+        {"de": "yo", "ru": "Да, там есть цвето́к.", "fonetica": "da, tam iest' tsvie-TOK", "es": "Sí, allá hay una flor.", "opciones": [
+          {"ru": "Да, там есть цвето́к.", "fonetica": "da, tam iest' tsvie-TOK", "correcta": true, "porque": "¡Eso! есть = hay."},
+          {"ru": "Нет, там есть цвето́к.", "fonetica": "niet, tam iest' tsvie-TOK", "correcta": false, "porque": "Dices нет pero dices que hay una flor: да."},
+          {"ru": "Да, там нет цвето́к.", "fonetica": "da, tam niet tsvie-TOK", "correcta": false, "porque": "нет significa «no hay»; dices que sí hay: есть."}
         ]},
         {"de": "Лена", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
       ]

@@ -12,11 +12,11 @@
           {"ru": "Я хо́чешь чай.", "fonetica": "ia JO-chish chai", "correcta": false, "porque": "хо́чешь va con ты; con я es хочу́."},
           {"ru": "Мы хоти́м чай.", "fonetica": "my ja-TIM chai", "correcta": false, "porque": "хоти́м es «queremos»; hablas de ti sola: я хочу́."}
         ]},
-        {"de": "Лена", "ru": "А что ещё?", "fonetica": "a shto ish-CHO", "es": "¿Y qué más?"},
-        {"de": "yo", "ru": "Я хочу́ хлеб и мя́со.", "fonetica": "ia ja-CHU jliep i MIA-sa", "es": "Quiero pan y carne.", "opciones": [
-          {"ru": "Я хочу́ хлеб и мя́со.", "fonetica": "ia ja-CHU jliep i MIA-sa", "correcta": true, "porque": "¡Eso! и une las dos cosas."},
+        {"de": "Лена", "ru": "А что ещё?", "fonetica": "a shto iesh-CHO", "es": "¿Y qué más?"},
+        {"de": "yo", "ru": "Я хочу́ хлеб и мя́со.", "fonetica": "ia ja-CHU jlieb i MIA-sa", "es": "Quiero pan y carne.", "opciones": [
+          {"ru": "Я хочу́ хлеб и мя́со.", "fonetica": "ia ja-CHU jlieb i MIA-sa", "correcta": true, "porque": "¡Eso! и une las dos cosas."},
           {"ru": "Я хочу́ хлеб и́ли мя́со.", "fonetica": "ia ja-CHU khlieb I-li MIA-sa", "correcta": false, "porque": "и́ли es «o»; quieres las dos cosas: и."},
-          {"ru": "Я хочу́ хлеб и мёд.", "fonetica": "ia ja-CHU khlieb i miot", "correcta": false, "porque": "мёд es miel; quieres carne: мя́со."}
+          {"ru": "Я хочу́ хлеб и мёд.", "fonetica": "ia ja-CHU khlieb i miod", "correcta": false, "porque": "мёд es miel; quieres carne: мя́со."}
         ]},
         {"de": "Лена", "ru": "Коне́чно!", "fonetica": "ka-NIESH-na", "es": "¡Claro!"}
       ]
@@ -31,7 +31,7 @@
           {"ru": "Я пожа́луйста сок.", "fonetica": "ia pa-ZHA-lus-ta sok", "correcta": false, "porque": "Para pedir se dice мне («para mí»), no я."},
           {"ru": "Мне пожа́луйста молоко́.", "fonetica": "mnie pa-ZHA-lus-ta ma-la-KO", "correcta": false, "porque": "молоко́ es leche; quieres jugo: сок."}
         ]},
-        {"de": "Лена", "ru": "Хорошо́. А что ещё?", "fonetica": "ja-ra-SHO. a shto ish-CHO", "es": "Bien. ¿Y qué más?"},
+        {"de": "Лена", "ru": "Хорошо́. А что ещё?", "fonetica": "ja-ra-SHO. a shto iesh-CHO", "es": "Bien. ¿Y qué más?"},
         {"de": "yo", "ru": "Пи́ццу, пожа́луйста.", "fonetica": "PI-tsu pa-ZHA-lus-ta", "es": "Una pizza, por favor.", "opciones": [
           {"ru": "Пи́ццу, пожа́луйста.", "fonetica": "PI-tsu pa-ZHA-lus-ta", "correcta": true, "porque": "¡Eso! Al pedir, пи́цца cambia a пи́ццу."},
           {"ru": "Пи́цца, пожа́луйста.", "fonetica": "PIT-tsa pa-ZHA-lus-ta", "correcta": false, "porque": "Al pedir, пи́цца cambia a пи́ццу."},

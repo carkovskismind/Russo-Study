@@ -18,7 +18,7 @@
           {"ru": "Я чита́ю кни́га.", "fonetica": "ia chi-TA-iu KNI-ga", "correcta": false, "porque": "Después del verbo la -а cambia a -у: кни́гу."},
           {"ru": "Я чита́ть кни́гу.", "fonetica": "ia chi-TAT' KNI-gu", "correcta": false, "porque": "чита́ть es el infinitivo («leer»); con я: чита́ю."}
         ]},
-        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-ti-RIES-na", "es": "¡Qué interesante!"}
+        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
       ]
     },
     {

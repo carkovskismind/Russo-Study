@@ -18,7 +18,7 @@
           {"ru": "Да, э́то ко́микс.", "fonetica": "da, E-ta KO-miks", "correcta": false, "porque": "Ella pregunta si es una revista; no lo es: нет."},
           {"ru": "Нет, э́то журна́л.", "fonetica": "niet, E-ta zhur-NAL", "correcta": false, "porque": "Dices нет pero nombras lo mismo; es ко́микс."}
         ]},
-        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-ti-RIES-na", "es": "¡Qué interesante!"}
+        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
       ]
     },
     {

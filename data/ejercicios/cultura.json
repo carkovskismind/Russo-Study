@@ -6,19 +6,19 @@
       "id": "cultura-d1",
       "titulo": "¿Qué música es?",
       "mensajes": [
-        {"de": "Лена", "ru": "Э́то джаз?", "fonetica": "E-ta dzhas", "es": "¿Es jazz?"},
+        {"de": "Лена", "ru": "Э́то джаз?", "fonetica": "E-ta dzhaz", "es": "¿Es jazz?"},
         {"de": "yo", "ru": "Нет, э́то не джаз, э́то рок.", "fonetica": "niet, E-ta nie dzhaz, E-ta rok", "es": "No, no es jazz, es rock.", "opciones": [
           {"ru": "Нет, э́то не джаз, э́то рок.", "fonetica": "niet, E-ta nie dzhaz, E-ta rok", "correcta": true, "porque": "¡Bien! нет y luego lo que sí es."},
           {"ru": "Да, э́то не джаз, э́то рок.", "fonetica": "da, E-ta nie dzhaz, E-ta rok", "correcta": false, "porque": "Si niegas el jazz, empiezas con нет."},
-          {"ru": "Нет, э́то нет джаз, э́то рок.", "fonetica": "niet, E-ta niet dzhas, E-ta rok", "correcta": false, "porque": "Para negar una palabra se usa не: не джаз."}
+          {"ru": "Нет, э́то нет джаз, э́то рок.", "fonetica": "niet, E-ta niet dzhaz, E-ta rok", "correcta": false, "porque": "Para negar una palabra se usa не: не джаз."}
         ]},
-        {"de": "Лена", "ru": "А э́то? Реггето́н?", "fonetica": "a E-ta? rie-gui-TON", "es": "¿Y esto? ¿Reguetón?"},
-        {"de": "yo", "ru": "Да, э́то реггето́н.", "fonetica": "da, E-ta rie-gui-TON", "es": "Sí, es reguetón.", "opciones": [
-          {"ru": "Да, э́то реггето́н.", "fonetica": "da, E-ta rie-gui-TON", "correcta": true, "porque": "¡Eso! Confirmas con да."},
-          {"ru": "Нет, э́то реггето́н.", "fonetica": "niet, E-ta rie-gui-TON", "correcta": false, "porque": "Dices нет pero lo confirmas: да."},
+        {"de": "Лена", "ru": "А э́то? Реггето́н?", "fonetica": "a E-ta? rie-guie-TON", "es": "¿Y esto? ¿Reguetón?"},
+        {"de": "yo", "ru": "Да, э́то реггето́н.", "fonetica": "da, E-ta rie-guie-TON", "es": "Sí, es reguetón.", "opciones": [
+          {"ru": "Да, э́то реггето́н.", "fonetica": "da, E-ta rie-guie-TON", "correcta": true, "porque": "¡Eso! Confirmas con да."},
+          {"ru": "Нет, э́то реггето́н.", "fonetica": "niet, E-ta rie-guie-TON", "correcta": false, "porque": "Dices нет pero lo confirmas: да."},
           {"ru": "Да, э́то бо́сса-но́ва.", "fonetica": "da, E-ta BO-sa NO-va", "correcta": false, "porque": "Es reguetón; бо́сса-но́ва es otro estilo."}
         ]},
-        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-ti-RIES-na", "es": "¡Qué interesante!"}
+        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
       ]
     },
     {
@@ -26,18 +26,18 @@
       "titulo": "Una película",
       "mensajes": [
         {"de": "Лена", "ru": "Э́то коме́дия?", "fonetica": "E-ta ka-MIE-di-ia", "es": "¿Es una comedia?"},
-        {"de": "yo", "ru": "Нет, э́то детекти́в.", "fonetica": "niet, E-ta di-tik-TIF", "es": "No, es una película policiaca.", "opciones": [
-          {"ru": "Нет, э́то детекти́в.", "fonetica": "niet, E-ta di-tik-TIF", "correcta": true, "porque": "¡Bien! Dices нет y nombras el género."},
-          {"ru": "Да, э́то детекти́в.", "fonetica": "da, E-ta di-tik-TIF", "correcta": false, "porque": "Ella pregunta si es comedia; no lo es: нет."},
+        {"de": "yo", "ru": "Нет, э́то детекти́в.", "fonetica": "niet, E-ta die-tiek-TIV", "es": "No, es una película policiaca.", "opciones": [
+          {"ru": "Нет, э́то детекти́в.", "fonetica": "niet, E-ta die-tiek-TIV", "correcta": true, "porque": "¡Bien! Dices нет y nombras el género."},
+          {"ru": "Да, э́то детекти́в.", "fonetica": "da, E-ta die-tiek-TIV", "correcta": false, "porque": "Ella pregunta si es comedia; no lo es: нет."},
           {"ru": "Нет, э́то коме́дия.", "fonetica": "niet, E-ta ka-MIE-di-ia", "correcta": false, "porque": "Dices нет pero nombras la misma; es детекти́в."}
         ]},
-        {"de": "Лена", "ru": "А э́то фильм у́жасов?", "fonetica": "a E-ta fil'm U-zha-saf", "es": "¿Y esto es una película de terror?"},
-        {"de": "yo", "ru": "Да, э́то фильм у́жасов.", "fonetica": "da, E-ta fil'm U-zha-saf", "es": "Sí, es una película de terror.", "opciones": [
-          {"ru": "Да, э́то фильм у́жасов.", "fonetica": "da, E-ta fil'm U-zha-saf", "correcta": true, "porque": "¡Eso! Confirmas con да."},
-          {"ru": "Нет, э́то фильм у́жасов.", "fonetica": "niet, E-ta fil'm U-zha-saf", "correcta": false, "porque": "Dices нет pero lo confirmas: да."},
-          {"ru": "Да, э́то не фильм у́жасов.", "fonetica": "da, E-ta nie fil'm U-zha-sof", "correcta": false, "porque": "Dices да pero luego lo niegas."}
+        {"de": "Лена", "ru": "А э́то фильм у́жасов?", "fonetica": "a E-ta fil'm U-zha-sav", "es": "¿Y esto es una película de terror?"},
+        {"de": "yo", "ru": "Да, э́то фильм у́жасов.", "fonetica": "da, E-ta fil'm U-zha-sav", "es": "Sí, es una película de terror.", "opciones": [
+          {"ru": "Да, э́то фильм у́жасов.", "fonetica": "da, E-ta fil'm U-zha-sav", "correcta": true, "porque": "¡Eso! Confirmas con да."},
+          {"ru": "Нет, э́то фильм у́жасов.", "fonetica": "niet, E-ta fil'm U-zha-sav", "correcta": false, "porque": "Dices нет pero lo confirmas: да."},
+          {"ru": "Да, э́то не фильм у́жасов.", "fonetica": "da, E-ta nie fil'm U-zha-sov", "correcta": false, "porque": "Dices да pero luego lo niegas."}
         ]},
-        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-ti-RIES-na", "es": "¡Qué interesante!"}
+        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
       ]
     }
   ],

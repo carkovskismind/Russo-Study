@@ -15,7 +15,7 @@
         {"de": "Лена", "ru": "Э́то пра́вильно?", "fonetica": "E-ta PRA-vil'-na", "es": "¿Esto es correcto?"},
         {"de": "yo", "ru": "Да, э́то пра́вильно.", "fonetica": "da, E-ta PRA-vil'-na", "es": "Sí, es correcto.", "opciones": [
           {"ru": "Да, э́то пра́вильно.", "fonetica": "da, E-ta PRA-vil'-na", "correcta": true, "porque": "¡Eso! Confirmas con да."},
-          {"ru": "Да, э́то непра́вильно.", "fonetica": "da, E-ta ni-PRA-vil'-na", "correcta": false, "porque": "непра́вильно es «incorrecto»; dices que sí es correcto."},
+          {"ru": "Да, э́то непра́вильно.", "fonetica": "da, E-ta nie-PRA-vil'-na", "correcta": false, "porque": "непра́вильно es «incorrecto»; dices que sí es correcto."},
           {"ru": "Нет, э́то пра́вильно.", "fonetica": "niet, E-ta PRA-vil'-na", "correcta": false, "porque": "Dices нет pero confirmas que es correcto: да."}
         ]},
         {"de": "Лена", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
@@ -25,7 +25,7 @@
       "id": "escuela-d2",
       "titulo": "Matemáticas",
       "mensajes": [
-        {"de": "Лена", "ru": "Ско́лько бу́дет два плюс два?", "fonetica": "SKOL'-ka BU-dit dva plius dva", "es": "¿Cuánto es dos más dos?"},
+        {"de": "Лена", "ru": "Ско́лько бу́дет два плюс два?", "fonetica": "SKOL'-ka BU-diet dva plius dva", "es": "¿Cuánto es dos más dos?"},
         {"de": "yo", "ru": "Два плюс два равно́ четы́ре.", "fonetica": "dva plius dva rav-NO chi-TY-rie", "es": "Dos más dos son cuatro.", "opciones": [
           {"ru": "Два плюс два равно́ четы́ре.", "fonetica": "dva plius dva rav-NO chi-TY-rie", "correcta": true, "porque": "¡Bien! 2 + 2 = 4."},
           {"ru": "Два плюс два равно́ три.", "fonetica": "dva plius dva rav-NO tri", "correcta": false, "porque": "2 + 2 son cuatro: четы́ре."},
@@ -34,7 +34,7 @@
         {"de": "Лена", "ru": "А три плюс шесть?", "fonetica": "a tri plius shest'", "es": "¿Y tres más seis?"},
         {"de": "yo", "ru": "Три плюс шесть равно́ де́вять.", "fonetica": "tri plius shest' rav-NO DIE-viat'", "es": "Tres más seis son nueve.", "opciones": [
           {"ru": "Три плюс шесть равно́ де́вять.", "fonetica": "tri plius shest' rav-NO DIE-viat'", "correcta": true, "porque": "¡Eso! 3 + 6 = 9."},
-          {"ru": "Три плюс шесть равно́ во́семь.", "fonetica": "tri plius shest' rav-NO VO-sim'", "correcta": false, "porque": "3 + 6 son nueve: де́вять."},
+          {"ru": "Три плюс шесть равно́ во́семь.", "fonetica": "tri plius shest' rav-NO VO-siem'", "correcta": false, "porque": "3 + 6 son nueve: де́вять."},
           {"ru": "Три плюс шесть равно́ пять.", "fonetica": "tri plius shest' rav-NO piat'", "correcta": false, "porque": "3 + 6 son nueve: де́вять."}
         ]},
         {"de": "Лена", "ru": "Пра́вильно!", "fonetica": "PRA-vil'-na", "es": "¡Correcto!"}

@@ -6,7 +6,7 @@
       "id": "basicas-d1",
       "titulo": "¿Dónde estás?",
       "mensajes": [
-        {"de": "Лена", "ru": "Ты сейча́с здесь?", "fonetica": "ty si-CHAS zdies'", "es": "¿Estás aquí ahora?"},
+        {"de": "Лена", "ru": "Ты сейча́с здесь?", "fonetica": "ty sie-CHAS zdies'", "es": "¿Estás aquí ahora?"},
         {"de": "yo", "ru": "Да, я здесь.", "fonetica": "da, ia zdies'", "es": "Sí, estoy aquí.", "opciones": [
           {"ru": "Да, я здесь.", "fonetica": "da, ia zdies'", "correcta": true, "porque": "¡Bien! здесь = aquí, donde estás."},
           {"ru": "Да, я куда́.", "fonetica": "da, ia ku-DA", "correcta": false, "porque": "куда́ es «a dónde», una pregunta; para decir dónde estás se usa здесь o там."},
@@ -44,7 +44,7 @@
       "id": "basicas-d3",
       "titulo": "¿Por qué?",
       "mensajes": [
-        {"de": "Лена", "ru": "Ты то́лько сего́дня здесь?", "fonetica": "ty TOL'-ka si-VOD-nia zdies'", "es": "¿Estás aquí solo hoy?"},
+        {"de": "Лена", "ru": "Ты то́лько сего́дня здесь?", "fonetica": "ty TOL'-ka sie-VOD-nia zdies'", "es": "¿Estás aquí solo hoy?"},
         {"de": "yo", "ru": "Нет, я здесь и за́втра.", "fonetica": "niet, ia zdies' i ZAF-tra", "es": "No, estoy aquí también mañana.", "opciones": [
           {"ru": "Нет, я здесь и за́втра.", "fonetica": "niet, ia zdies' i ZAF-tra", "correcta": true, "porque": "¡Bien! нет porque no es «solo hoy»."},
           {"ru": "Да, я здесь и за́втра.", "fonetica": "da, ia zdies' i ZAF-tra", "correcta": false, "porque": "да confirma «solo hoy», pero tú estarás también mañana: нет."},
