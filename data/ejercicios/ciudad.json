@@ -18,10 +18,10 @@
           {"ru": "В музе́е.", "fonetica": "v mu-ZIE-ie", "correcta": false, "porque": "в музе́е responde a Где? (dónde estás). Лена preguntó Куда́? (a dónde vas): в музе́й."},
           {"ru": "На музе́й.", "fonetica": "na mu-ZIEI", "correcta": false, "porque": "Con музе́й se usa в: в музе́й."}
         ]},
-        {"de": "Лена", "ru": "Ты е́дешь на авто́бусе?", "fonetica": "ty IE-dish na af-TO-bu-sie?", "es": "¿Vas en autobús?"},
-        {"de": "yo", "ru": "Нет, на метро́.", "fonetica": "niet, na mit-RO", "es": "No, en metro.", "opciones": [
-          {"ru": "Нет, на метро́.", "fonetica": "niet, na mit-RO", "correcta": true, "porque": "¡Muy bien! метро́ nunca cambia: на метро́."},
-          {"ru": "Нет, на метре́.", "fonetica": "niet, na mit-RIE", "correcta": false, "porque": "метро́ es de las palabras que nunca cambian: на метро́."},
+        {"de": "Лена", "ru": "Ты е́дешь на авто́бусе?", "fonetica": "ty IE-diesh na af-TO-bu-sie?", "es": "¿Vas en autobús?"},
+        {"de": "yo", "ru": "Нет, на метро́.", "fonetica": "niet, na miet-RO", "es": "No, en metro.", "opciones": [
+          {"ru": "Нет, на метро́.", "fonetica": "niet, na miet-RO", "correcta": true, "porque": "¡Muy bien! метро́ nunca cambia: на метро́."},
+          {"ru": "Нет, на метре́.", "fonetica": "niet, na miet-RIE", "correcta": false, "porque": "метро́ es de las palabras que nunca cambian: на метро́."},
           {"ru": "Нет, на трамва́й.", "fonetica": "niet, na tram-VAI", "correcta": false, "porque": "Para el transporte la palabra cambia: на трамва́е."}
         ]}
       ]
@@ -34,7 +34,7 @@
         {"de": "yo", "ru": "Он рабо́тает на заво́де.", "fonetica": "on ra-BO-ta-iet na za-VO-die", "es": "Trabaja en una fábrica.", "opciones": [
           {"ru": "Он рабо́тает на заво́де.", "fonetica": "on ra-BO-ta-iet na za-VO-die", "correcta": true, "porque": "¡Eso! заво́д va con на: на заво́де."},
           {"ru": "Он рабо́тает в заво́де.", "fonetica": "on ra-BO-ta-iet v za-VO-die", "correcta": false, "porque": "Con заво́д se usa на (se aprende de memoria): на заво́де."},
-          {"ru": "Он рабо́тает заво́д.", "fonetica": "on ra-BO-ta-iet za-VOT", "correcta": false, "porque": "Faltan на y el cambio: на заво́де."}
+          {"ru": "Он рабо́тает заво́д.", "fonetica": "on ra-BO-ta-iet za-VOD", "correcta": false, "porque": "Faltan на y el cambio: на заво́де."}
         ]},
         {"de": "Лена", "ru": "А ма́ма?", "fonetica": "a MA-ma?", "es": "¿Y tu mamá?"},
         {"de": "yo", "ru": "Она́ рабо́тает в больни́це.", "fonetica": "a-NA ra-BO-ta-iet v bal'-NI-tse", "es": "Trabaja en un hospital.", "opciones": [
@@ -49,11 +49,11 @@
       "id": "ciudad-d3",
       "titulo": "Paseo por la ciudad",
       "mensajes": [
-        {"de": "Лена", "ru": "Где здесь рестора́н?", "fonetica": "gdie zdies' ris-ta-RAN?", "es": "¿Dónde hay un restaurante aquí?"},
+        {"de": "Лена", "ru": "Где здесь рестора́н?", "fonetica": "gdie zdies' ries-ta-RAN?", "es": "¿Dónde hay un restaurante aquí?"},
         {"de": "yo", "ru": "Там, на пло́щади.", "fonetica": "tam, na PLO-shcha-di", "es": "Allá, en la plaza.", "opciones": [
           {"ru": "Там, на пло́щади.", "fonetica": "tam, na PLO-shcha-di", "correcta": true, "porque": "¡Bien! La plaza es un lugar abierto: на пло́щади."},
           {"ru": "Там, в пло́щади.", "fonetica": "tam, f PLO-shcha-di", "correcta": false, "porque": "La plaza es un lugar abierto: se usa на."},
-          {"ru": "Там, на пло́щадь.", "fonetica": "tam, na PLO-shchat'", "correcta": false, "porque": "Así sería «hacia la plaza»; para dónde está: на пло́щади."}
+          {"ru": "Там, на пло́щадь.", "fonetica": "tam, na PLO-shchad'", "correcta": false, "porque": "Así sería «hacia la plaza»; para dónde está: на пло́щади."}
         ]},
         {"de": "Лена", "ru": "Спаси́бо! Ты была́ на конце́рте?", "fonetica": "spa-SI-ba! ty by-LA na kan-TSER-tie?", "es": "¡Gracias! ¿Fuiste al concierto?"},
         {"de": "yo", "ru": "Да, я была́ на конце́рте.", "fonetica": "da, ia by-LA na kan-TSER-tie", "es": "Sí, estuve en el concierto.", "opciones": [
@@ -61,7 +61,7 @@
           {"ru": "Да, я был на конце́рте.", "fonetica": "da, ia byl na kan-TSER-tie", "correcta": false, "porque": "я был lo dice un hombre; tú dices я была́."},
           {"ru": "Да, я была́ в конце́рте.", "fonetica": "da, ia by-LA f kan-TSER-tie", "correcta": false, "porque": "Un concierto es un evento: se dice на конце́рте."}
         ]},
-        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-ti-RIES-na!", "es": "¡Qué interesante!"}
+        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na!", "es": "¡Qué interesante!"}
       ]
     }
   ],

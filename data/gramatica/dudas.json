@@ -20,7 +20,7 @@
       },
       {
         "ru": "Нет, э́то не кот, э́то соба́ка.",
-        "fonetica": "niet, E-ta ni kot, E-ta sa-BA-ka",
+        "fonetica": "niet, E-ta nie kot, E-ta sa-BA-ka",
         "es": "No, no es un gato, es un perro."
       },
       {
@@ -83,12 +83,12 @@
       },
       {
         "ru": "Э́то мои́ роди́тели.",
-        "fonetica": "E-ta ma-I ra-DI-ti-li",
+        "fonetica": "E-ta ma-I ra-DI-tie-li",
         "es": "Estos son mis padres."
       },
       {
         "ru": "Э́то его́ сестра́ и его́ брат.",
-        "fonetica": "E-ta ie-VO sis-TRA i ie-VO brat",
+        "fonetica": "E-ta ie-VO sies-TRA i ie-VO brat",
         "es": "Esta es su hermana y este es su hermano (de él)."
       }
     ],
@@ -105,17 +105,17 @@
     "ejemplos": [
       {
         "ru": "Здра́вствуйте! Как вас зову́т?",
-        "fonetica": "ZDRAST-vui-tie! kak vas za-VUT",
+        "fonetica": "ZDRAS-tvui-tie! kak vas za-VUT",
         "es": "¡Buenos días! ¿Cómo se llama usted?"
       },
       {
         "ru": "Приве́т! Как тебя́ зову́т?",
-        "fonetica": "pri-VIET! kak ti-BIA za-VUT",
+        "fonetica": "pri-VIET! kak tie-BIA za-VUT",
         "es": "¡Hola! ¿Cómo te llamas?"
       },
       {
         "ru": "Меня́ зову́т Ка́тя.",
-        "fonetica": "mi-NIA za-VUT KA-tia",
+        "fonetica": "mie-NIA za-VUT KA-tia",
         "es": "Me llamo Katia."
       },
       {
@@ -174,7 +174,7 @@
       },
       {
         "ru": "У меня́ есть соба́ка.",
-        "fonetica": "u mi-NIA iest' sa-BA-ka",
+        "fonetica": "u mie-NIA iest' sa-BA-ka",
         "es": "Tengo un perro."
       },
       {
@@ -206,12 +206,12 @@
       },
       {
         "ru": "Карти́на виси́т на стене́.",
-        "fonetica": "kar-TI-na vi-SIT na sti-NIE",
+        "fonetica": "kar-TI-na vi-SIT na stie-NIE",
         "es": "El cuadro está colgado en la pared."
       },
       {
         "ru": "Ковёр лежи́т на полу́.",
-        "fonetica": "ka-VIOR li-ZHYT na pa-LU",
+        "fonetica": "ka-VIOR lie-ZHYT na pa-LU",
         "es": "La alfombra está en el piso."
       },
       {
@@ -253,7 +253,7 @@
       },
       {
         "ru": "Я е́ду на метро́.",
-        "fonetica": "ia IE-du na mit-RO",
+        "fonetica": "ia IE-du na miet-RO",
         "es": "Voy en metro."
       },
       {
@@ -280,7 +280,7 @@
       },
       {
         "ru": "Я мексика́нка.",
-        "fonetica": "ia mi-ksi-KAN-ka",
+        "fonetica": "ia mie-ksi-KAN-ka",
         "es": "Soy mexicana."
       },
       {
@@ -295,7 +295,7 @@
       },
       {
         "ru": "Он францу́з, он из Фра́нции.",
-        "fonetica": "on fran-TSUS, on iz FRAN-tsy-i",
+        "fonetica": "on fran-TSUZ, on iz FRAN-tsy-i",
         "es": "Es francés, es de Francia."
       }
     ],
@@ -321,7 +321,7 @@
       },
       {
         "ru": "Мы гуля́ем в лесу́.",
-        "fonetica": "my gu-LIA-iem v li-SU",
+        "fonetica": "my gu-LIA-iem v lie-SU",
         "es": "Paseamos por el bosque."
       }
     ],
@@ -371,11 +371,11 @@
       {
         "ru": "Како́го цве́та твой дом? — Бе́лый.",
         "fonetica": "ka-KO-va TSVIE-ta tvoi dom? — BIE-lyi",
-        "es": "¿De qué color es tu casa? — Blanca."
+        "es": "¿De qué color es tu casa? — Blanco (дом es masculino en ruso, por eso бе́лый)."
       },
       {
         "ru": "У меня́ кра́сная маши́на.",
-        "fonetica": "u mi-NIA KRAS-na-ia ma-SHY-na",
+        "fonetica": "u mie-NIA KRAS-na-ia ma-SHY-na",
         "es": "Tengo un coche rojo."
       },
       {
@@ -385,7 +385,7 @@
       },
       {
         "ru": "Каки́е у тебя́ брю́ки? — Се́рые.",
-        "fonetica": "ka-KI-ie u ti-BIA BRIU-ki? — SIE-ry-ie",
+        "fonetica": "ka-KI-ie u tie-BIA BRIU-ki? — SIE-ry-ie",
         "es": "¿Cómo son tus pantalones? — Grises."
       }
     ],
@@ -406,12 +406,12 @@
       },
       {
         "ru": "Моя́ ко́мната ма́ленькая.",
-        "fonetica": "ma-IA KOM-na-ta MA-lin'-ka-ia",
+        "fonetica": "ma-IA KOM-na-ta MA-lien'-ka-ia",
         "es": "Mi cuarto es pequeño."
       },
       {
         "ru": "Как интере́сно!",
-        "fonetica": "kak in-ti-RIES-na",
+        "fonetica": "kak in-tie-RIES-na",
         "es": "¡Qué interesante!"
       },
       {
@@ -453,7 +453,7 @@
       },
       {
         "ru": "Я не зна́ю.",
-        "fonetica": "ia ni ZNA-iu",
+        "fonetica": "ia nie ZNA-iu",
         "es": "No sé."
       }
     ],
@@ -515,7 +515,7 @@
       },
       {
         "ru": "Ты игра́ешь на фортепиа́но?",
-        "fonetica": "ty ig-RA-iesh na far-ti-pi-A-na",
+        "fonetica": "ty ig-RA-iesh na far-tie-pi-A-na",
         "es": "¿Tocas el piano?"
       }
     ],
@@ -524,7 +524,7 @@
   "textos": {
     "titulo": "Leer y escribir algo",
     "puntos": [
-      "Después de чита́ть, писа́ть o люби́ть, la palabra masculina o neutra queda igual: Я чита́ю журна́л.",
+      "Después de чита́ть, писа́ть o люби́ть, las cosas masculinas y neutras quedan igual: Я чита́ю журна́л. (Las personas y los animales sí cambian: Я люблю́ бра́та.)",
       "La femenina cambia -а → -у y -я → -ю: Я пишу́ запи́ску. Я чита́ю статью́.",
       "Los plurales de cosas quedan igual: Я люблю́ стихи́."
     ],
@@ -563,7 +563,7 @@
     "ejemplos": [
       {
         "ru": "Я люблю́ рок и джаз.",
-        "fonetica": "ia liub-LIU rok i dzhas",
+        "fonetica": "ia liub-LIU rok i dzhaz",
         "es": "Me encantan el rock y el jazz."
       },
       {
@@ -595,22 +595,22 @@
     "ejemplos": [
       {
         "ru": "У меня́ есть очки́.",
-        "fonetica": "u mi-NIA iest' ach-KI",
+        "fonetica": "u mie-NIA iest' ach-KI",
         "es": "Tengo lentes."
       },
       {
         "ru": "У тебя́ есть моби́льник?",
-        "fonetica": "u ti-BIA iest' ma-BIL'-nik",
+        "fonetica": "u tie-BIA iest' ma-BIL'-nik",
         "es": "¿Tienes celular?"
       },
       {
         "ru": "У неё дли́нные во́лосы.",
-        "fonetica": "u ni-IO DLIN-ny-ie VO-la-sy",
+        "fonetica": "u nie-IO DLIN-ny-ie VO-la-sy",
         "es": "Ella tiene el cabello largo."
       },
       {
         "ru": "У меня́ бы́ло пальто́.",
-        "fonetica": "u mi-NIA BY-la pal'-TO",
+        "fonetica": "u mie-NIA BY-la pal'-TO",
         "es": "Yo tenía un abrigo."
       },
       {
@@ -647,7 +647,7 @@
       },
       {
         "ru": "Весно́й я гуля́ю в па́рке.",
-        "fonetica": "vis-NOI ia gu-LIA-iu f PAR-kie",
+        "fonetica": "vies-NOI ia gu-LIA-iu f PAR-kie",
         "es": "En primavera paseo por el parque."
       }
     ],
@@ -712,16 +712,16 @@
       {
         "ru": "Мне бы́ло ску́чно.",
         "fonetica": "mnie BY-la SKUSH-na",
-        "es": "Me aburrí."
+        "es": "Estaba aburrida."
       },
       {
         "ru": "Нам смешно́.",
-        "fonetica": "nam smish-NO",
+        "fonetica": "nam smiesh-NO",
         "es": "Nos da risa."
       },
       {
         "ru": "Э́то моя́ мечта́.",
-        "fonetica": "E-ta ma-IA mich-TA",
+        "fonetica": "E-ta ma-IA miech-TA",
         "es": "Es mi sueño."
       }
     ],
@@ -743,12 +743,12 @@
       },
       {
         "ru": "У меня́ есть иде́я!",
-        "fonetica": "u mi-NIA iest' i-DIE-ia",
+        "fonetica": "u mie-NIA iest' i-DIE-ia",
         "es": "¡Tengo una idea!"
       },
       {
         "ru": "Мне не хвата́ет сна.",
-        "fonetica": "mnie ni jva-TA-iet sna",
+        "fonetica": "mnie nie jva-TA-iet sna",
         "es": "No duermo lo suficiente."
       },
       {
@@ -765,7 +765,7 @@
       "Son palabras fuertes y coloquiales: úsalas con cuidado.",
       "En presente no hay verbo «ser»: Он подхали́м.",
       "En pasado aparece был y la palabra toma -ом: Он был уго́дником.",
-      "Los verbos en -ся llevan -ся también al conjugar: он пресмыка́ется."
+      "Los verbos en -ся guardan ese -ся al conjugar, y con «yo» se vuelve -сь: он пресмыка́ется, я пресмыка́юсь."
     ],
     "ejemplos": [
       {
@@ -776,7 +776,7 @@
       {
         "ru": "Хозя́ин — уго́дник.",
         "fonetica": "ja-ZIA-in u-GOD-nik",
-        "es": "El anfitrión es un complaciente."
+        "es": "El dueño es un complaciente."
       },
       {
         "ru": "Хозя́ин был уго́дником.",
@@ -785,7 +785,7 @@
       },
       {
         "ru": "Он пресмыка́ется.",
-        "fonetica": "on pris-my-KA-ie-tsa",
+        "fonetica": "on pries-my-KA-ie-tsa",
         "es": "Se arrastra (servilmente)."
       }
     ],
@@ -816,7 +816,7 @@
       },
       {
         "ru": "Сейча́с ра́но.",
-        "fonetica": "si-CHAS RA-na",
+        "fonetica": "sie-CHAS RA-na",
         "es": "Ahora es temprano."
       }
     ],
