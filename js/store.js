@@ -352,7 +352,7 @@ export class Store {
 
   // «Reportar falla» (botón de la beta). Sin conexión se queda en la cola de pendientes.
   async reportFalla(entry) {
-    const row = { ...entry, tipo: "falla", user_id: this.user ? this.user.id : null, created_at: new Date().toISOString() };
+    const row = { tipo: "falla", ...entry, user_id: this.user ? this.user.id : null, created_at: new Date().toISOString() };
     const pending = readPending();
     pending.push(row);
     writePending(pending.slice(-50));

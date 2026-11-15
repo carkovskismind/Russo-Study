@@ -6,7 +6,7 @@
       "id": "basicas-d1",
       "titulo": "¿Dónde estás?",
       "mensajes": [
-        {"de": "Лена", "ru": "Ты сейча́с здесь?", "fonetica": "ty si-CHAS zdies'", "es": "¿Estás aquí ahora?"},
+        {"de": "Лена", "ru": "Ты сейча́с здесь?", "fonetica": "ty sie-CHAS zdies'", "es": "¿Estás aquí ahora?"},
         {"de": "yo", "ru": "Да, я здесь.", "fonetica": "da, ia zdies'", "es": "Sí, estoy aquí.", "opciones": [
           {"ru": "Да, я здесь.", "fonetica": "da, ia zdies'", "correcta": true, "porque": "¡Bien! здесь = aquí, donde estás."},
           {"ru": "Да, я куда́.", "fonetica": "da, ia ku-DA", "correcta": false, "porque": "куда́ es «a dónde», una pregunta; para decir dónde estás se usa здесь o там."},
@@ -16,7 +16,7 @@
         {"de": "yo", "ru": "Он там.", "fonetica": "on tam", "es": "Él está allá.", "opciones": [
           {"ru": "Он там.", "fonetica": "on tam", "correcta": true, "porque": "¡Eso! там = allá."},
           {"ru": "Он куда́.", "fonetica": "on ku-DA", "correcta": false, "porque": "куда́ es una pregunta («a dónde»); para responder se usa там."},
-          {"ru": "Он никогда́.", "fonetica": "on ni-gda-DA", "correcta": false, "porque": "никогда́ es «nunca»; la pregunta es dónde: там."}
+          {"ru": "Он никогда́.", "fonetica": "on ni-ka-GDA", "correcta": false, "porque": "никогда́ es «nunca»; la pregunta es dónde: там."}
         ]},
         {"de": "Лена", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
       ]
@@ -25,7 +25,7 @@
       "id": "basicas-d2",
       "titulo": "¿De quién es?",
       "mensajes": [
-        {"de": "Лена", "ru": "Чья э́то?", "fonetica": "cha E-ta", "es": "¿De quién es esto? (algo femenino)"},
+        {"de": "Лена", "ru": "Чья э́то?", "fonetica": "chia E-ta", "es": "¿De quién es esto? (algo femenino)"},
         {"de": "yo", "ru": "Э́то моя́.", "fonetica": "E-ta ma-IA", "es": "Es mía.", "opciones": [
           {"ru": "Э́то моя́.", "fonetica": "E-ta ma-IA", "correcta": true, "porque": "¡Muy bien! чья es femenino y la respuesta también: моя́."},
           {"ru": "Э́то мой.", "fonetica": "E-ta moi", "correcta": false, "porque": "чья es femenino; la respuesta también: моя́, no мой."},
@@ -44,7 +44,7 @@
       "id": "basicas-d3",
       "titulo": "¿Por qué?",
       "mensajes": [
-        {"de": "Лена", "ru": "Ты то́лько сего́дня здесь?", "fonetica": "ty TOL'-ka si-VOD-nia zdies'", "es": "¿Estás aquí solo hoy?"},
+        {"de": "Лена", "ru": "Ты то́лько сего́дня здесь?", "fonetica": "ty TOL'-ka sie-VOD-nia zdies'", "es": "¿Estás aquí solo hoy?"},
         {"de": "yo", "ru": "Нет, я здесь и за́втра.", "fonetica": "niet, ia zdies' i ZAF-tra", "es": "No, estoy aquí también mañana.", "opciones": [
           {"ru": "Нет, я здесь и за́втра.", "fonetica": "niet, ia zdies' i ZAF-tra", "correcta": true, "porque": "¡Bien! нет porque no es «solo hoy»."},
           {"ru": "Да, я здесь и за́втра.", "fonetica": "da, ia zdies' i ZAF-tra", "correcta": false, "porque": "да confirma «solo hoy», pero tú estarás también mañana: нет."},
