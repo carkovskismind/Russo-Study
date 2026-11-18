@@ -2464,7 +2464,7 @@ function renderCajas() {
     const active = c.sel !== null && !finished;
     const help = hasEs ? `<button class="cbox-help" style="color: var(--ink-${BOX_PALS[k % BOX_PALS.length]})" type="button" data-chelp="${k}" aria-label="Qué significa ${esc(name)}" aria-expanded="${c.help === k}">?</button>` : "";
     const tip = hasEs && c.help === k
-      ? `<p class="cbox-tip" role="status"><b><span lang="ru">${esc(name)}</span> = ${esc(e.cajas_es[k])}</b>${items.length ? "<br>" + items.map((x) => `<span lang="ru">${esc(x.ru)}</span> = ${esc(x.es)}`).join(" · ") : ""}</p>`
+      ? `<p class="cbox-tip" role="status"><b><span lang="ru">${esc(name)}</span> = ${esc(e.cajas_es[k])}</b></p>`
       : "";
     return `<div class="cbox-wrap"><button class="cbox card-frame pal-${BOX_PALS[k % BOX_PALS.length]}${active ? " ready" : ""}${hasEs ? " has-help" : ""}" type="button" data-box="${k}" aria-label="Caja ${esc(name)}"${active ? "" : " disabled"}><span class="cbox-name ${boxSize(name)}"${/[а-яё]/i.test(name) ? ' lang="ru"' : ""}>${esc(name)}</span>${chips}${tip}</button>${help}</div>`;
   }).join("");
