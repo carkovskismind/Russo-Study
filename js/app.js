@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "4.0.2";
+const APP_VERSION = "4.1.0";
 // Botón «Reportar falla». Está activo en la beta; para activarlo también en la versión real, cambia a true.
 const REPORT_BUTTON = IS_BETA || false;
 
@@ -2363,28 +2363,64 @@ function finishEjer(title, summary, returnTo) {
 }
 
 // ---------- Cajas ----------
-// Tocas una palabra y luego su caja. Si te equivocas se explica por qué y la
-// palabra pasa a su caja correcta.
+// Tocas una palabra y luego su caja. Antes de empezar sale una pantalla que explica
+// el ejercicio. Si el ejercicio trae "cajas_es" y "es" en cada palabra, se puede
+// hacer «en español» (cajas en ruso, fichas en español) o «en ruso» (todo en ruso);
+// el significado de cada caja solo se ve con su botón ?. Si te equivocas, la palabra
+// regresa a «Faltan», se explica por qué y lo intentas de nuevo (4.1.0).
 
 const BOX_PALS = ["bl", "pe", "li", "pk"];
+
+function cajaHasEs(e) {
+  return Array.isArray(e.cajas_es) && e.cajas_es.length === e.cajas.length && e.items.every((it) => it.es);
+}
 
 function startCajas(deck) {
   const list = ejOf(deck).cajas;
   if (!list.length) return;
-  state.cj = { deck, list, ci: 0, ok: 0, bad: 0, returnTo: state.view === "tema" ? "tema" : state.view };
+  // Empieza en el primer ejercicio que aún no terminas: el avance se queda guardado.
+  let ci = list.findIndex((x) => { const r = store.ejer(x.id); return !(r && r.ok > 0); });
+  if (ci < 0) ci = 0;
+  state.cj = { deck, list, ci, ok: 0, bad: 0, stage: "intro", returnTo: state.view === "tema" ? "tema" : state.view };
   show("cajas");
-  beginCaja();
+  renderCajasIntro();
 }
 
-function beginCaja() {
+function renderCajasIntro() {
   const cj = state.cj;
   const e = cj.list[cj.ci];
+  const es = cajaHasEs(e);
+  $("#cajas-title").textContent = "Cajas";
+  $("#cajas-sub").innerHTML = cj.ci > 0 ? `Ejercicio <span class="num">${cj.ci + 1}</span> de <span class="num">${cj.list.length}</span>` : "";
+  const minis = e.cajas.map((n, k) => `<span class="cx-mini card-frame pal-${BOX_PALS[k % BOX_PALS.length]}"${/[а-яё]/i.test(n) ? ' lang="ru"' : ""}>${esc(n)}</span>`).join("");
+  $("#cajas-body").innerHTML = `<div class="cx-intro">
+      <section class="cx-intro-card card-frame pal-pk">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="8" height="11" rx="1.5"/><rect x="13" y="9" width="8" height="11" rx="1.5"/><path d="M7 5v4M17 5v4"/></svg>
+        <h2>Ya conoces las palabras<br>¿Las puedes relacionar?</h2>
+        <div class="cx-minis">${minis}</div>
+        ${es ? `<p>Inténtalo en español y, si quieres un reto extra, ¡hazlo en ruso!</p>
+        <p>Si necesitas ayuda con el significado, dale clic al botón <span class="cx-q-ico" aria-hidden="true">?</span></p>` : `<p>Toca una palabra y luego su caja.</p>`}
+        <p class="cx-calm">Tómate tu tiempo y, si necesitas un descanso, tu progreso se queda guardado. <b>Take it easy!</b></p>
+      </section>
+      ${es ? `<button class="btn btn-primary btn-wide" type="button" data-cstart="es">Empezar en español</button>
+      <button class="btn btn-line btn-wide cx-ru-btn" type="button" data-cstart="ru"><span class="cx-tag">Reto extra</span>Hacerlo en ruso</button>`
+        : `<button class="btn btn-primary btn-wide" type="button" data-cstart="ru">Empezar</button>`}
+    </div>`;
+}
+
+function beginCaja(lang) {
+  const cj = state.cj;
+  const e = cj.list[cj.ci];
+  cj.stage = "play";
   cj.cur = {
     e,
+    lang: lang === "es" && cajaHasEs(e) ? "es" : "ru",
     bank: shuffle(e.items.map((it, i) => ({ ...it, i }))),
     boxes: e.cajas.map(() => []),
     sel: null,
     err: null,
+    good: null,
+    help: -1,
     fail: false,
     done: 0
   };
@@ -2401,83 +2437,129 @@ function boxSize(name) {
   return "s4";
 }
 
+// Al fallar no se dice en qué caja va: se quita lo que viene después de los dos puntos
+// cuando ahí está la respuesta en ruso («Dice un momento: когда́.» → «Dice un momento.»).
+function cajaPista(porque) {
+  const m = String(porque).match(/^(.*?):\s*[^:]*[а-яё][^:]*$/i);
+  return m ? m[1] + "." : porque;
+}
+
+function cajaWord(c, it) {
+  return c.lang === "es" ? it.es : it.ru;
+}
+
 function renderCajas() {
   const cj = state.cj;
   const c = cj.cur;
-  const total = c.e.items.length;
-  $("#cajas-title").textContent = c.e.pregunta.length > 34 ? c.e.cajas.join(" o ") + "?" : c.e.pregunta;
+  const e = c.e;
+  const total = e.items.length;
+  const hasEs = cajaHasEs(e);
+  const wordLang = c.lang === "es" ? "" : ' lang="ru"';
+  $("#cajas-title").textContent = e.pregunta.length > 34 ? e.cajas.join(" o ") + "?" : e.pregunta;
   $("#cajas-sub").innerHTML = `<span class="num">${c.done}</span> de <span class="num">${total}</span> acomodadas`;
-  const finished = c.done === total && !c.err;
-  const boxes = c.e.cajas.map((name, k) => {
-    const chips = c.boxes[k].map((x) => `<span class="cx-chip${x.bad ? " bad" : ""}" lang="ru">${esc(x.ru)}</span>`).join("");
-    const active = c.sel !== null && !c.err;
-    return `<button class="cbox card-frame pal-${BOX_PALS[k % BOX_PALS.length]}${active ? " ready" : ""}" type="button" data-box="${k}" aria-label="Caja ${esc(name)}"${active ? "" : " disabled"}><span class="cbox-name ${boxSize(name)}"${/[а-яё]/i.test(name) ? ' lang="ru"' : ""}>${esc(name)}</span>${chips}</button>`;
+  const finished = c.done === total;
+  const boxes = e.cajas.map((name, k) => {
+    const items = c.boxes[k];
+    const chips = items.map((x) => `<span class="cx-chip${c.lang === "es" ? " es" : ""}"${wordLang}>${esc(cajaWord(c, x))}</span>`).join("");
+    const active = c.sel !== null && !finished;
+    const help = hasEs ? `<button class="cbox-help" style="color: var(--ink-${BOX_PALS[k % BOX_PALS.length]})" type="button" data-chelp="${k}" aria-label="Qué significa ${esc(name)}" aria-expanded="${c.help === k}">?</button>` : "";
+    const tip = hasEs && c.help === k
+      ? `<p class="cbox-tip" role="status"><b><span lang="ru">${esc(name)}</span> = ${esc(e.cajas_es[k])}</b>${items.length ? "<br>" + items.map((x) => `<span lang="ru">${esc(x.ru)}</span> = ${esc(x.es)}`).join(" · ") : ""}</p>`
+      : "";
+    return `<div class="cbox-wrap"><button class="cbox card-frame pal-${BOX_PALS[k % BOX_PALS.length]}${active ? " ready" : ""}${hasEs ? " has-help" : ""}" type="button" data-box="${k}" aria-label="Caja ${esc(name)}"${active ? "" : " disabled"}><span class="cbox-name ${boxSize(name)}"${/[а-яё]/i.test(name) ? ' lang="ru"' : ""}>${esc(name)}</span>${chips}${tip}</button>${help}</div>`;
   }).join("");
   let msg = "";
   if (c.err) {
-    msg = `<section class="fr-error" role="status"><b><span lang="ru">${esc(c.err.item.ru)}</span> va con <span lang="ru">${esc(c.err.item.caja)}</span></b><p>${esc(c.err.item.porque)}</p></section>`;
+    const it = c.err.item;
+    msg = `<section class="fr-error" role="status"><b>«<span${wordLang}>${esc(cajaWord(c, it))}</span>» no va en <span lang="ru">${esc(e.cajas[c.err.k])}</span>.</b><p>${esc(cajaPista(it.porque))}</p><p class="cx-retry">Inténtalo de nuevo</p></section>`;
+  } else if (c.good) {
+    msg = `<p class="cx-good" role="status"><b>¡Bien!</b> ${esc(c.good.porque)}</p>`;
   }
-  const bank = c.bank.map((x) => `<button class="cx-pick${c.sel === x.i ? " on" : ""}" type="button" lang="ru" data-pick-item="${x.i}" aria-pressed="${c.sel === x.i}"${c.err ? " disabled" : ""}>${esc(x.ru)}</button>`).join("");
-  let btn = "";
-  if (c.err) btn = `<button class="btn btn-primary btn-wide cx-btn" type="button" data-cnext="1">Entendido, sigue</button>`;
-  else if (finished) btn = `<button class="btn btn-primary btn-wide cx-btn" type="button" data-cnext="2">${cj.ci >= cj.list.length - 1 ? "Terminar" : "Siguiente ejercicio"}</button>`;
-  $("#cajas-body").innerHTML = `<p class="cx-hint">${finished ? (c.fail ? "Listo. Repásalo cuando quieras." : "¡Todo en su caja!") : esc(c.e.pregunta) + " Toca una palabra y luego su caja."}</p>
-    <div class="cboxes" style="--n:${c.e.cajas.length}">${boxes}</div>
+  const bank = c.bank.map((x) => `<button class="cx-pick${c.lang === "es" ? " es" : ""}${c.sel === x.i ? " on" : ""}${c.err && c.err.item.i === x.i ? " bad" : ""}" type="button"${wordLang} data-pick-item="${x.i}" aria-pressed="${c.sel === x.i}">${esc(cajaWord(c, x))}</button>`).join("");
+  let btns = "";
+  if (finished) {
+    const last = cj.ci >= cj.list.length - 1;
+    btns = c.lang === "es"
+      ? `<button class="btn btn-primary btn-wide cx-btn" type="button" data-cnext="ru">Ahora en ruso</button>
+         <button class="btn btn-line btn-wide" type="button" data-cnext="next">${last ? "Terminar" : "Siguiente ejercicio"}</button>`
+      : `<button class="btn btn-primary btn-wide cx-btn" type="button" data-cnext="next">${last ? "Terminar" : "Siguiente ejercicio"}</button>`;
+  }
+  const hint = finished
+    ? (c.fail ? "Listo. Repásalo cuando quieras." : "¡Todo en su caja!")
+    : esc(e.pregunta) + " Toca una palabra y luego su caja.";
+  $("#cajas-body").innerHTML = `<p class="cx-hint">${hint}</p>
+    <div class="cboxes" style="--n:${e.cajas.length}">${boxes}</div>
     ${msg}
     ${c.bank.length ? `<div class="cx-bank"><span class="chat-q">Faltan</span><div class="cx-picks">${bank}</div></div>` : ""}
-    ${btn}`;
+    ${btns}`;
   const sc = c.err ? $("#cajas-body .fr-error") : null;
   if (sc) sc.scrollIntoView({ block: "nearest", behavior: REDUCE() ? "auto" : "smooth" });
+}
+
+function finishCaja() {
+  const cj = state.cj;
+  const c = cj.cur;
+  store.setEjer(c.e.id, !c.fail);
+  logActivity();
+  if (c.fail) cj.bad++; else cj.ok++;
 }
 
 function cajasClick(e) {
   const cj = state.cj;
   if (!cj) return;
+  const start = e.target.closest("[data-cstart]");
+  if (start && cj.stage === "intro") { cj.mode = start.dataset.cstart; return beginCaja(cj.mode); }
   const c = cj.cur;
+  if (!c) return;
+  const help = e.target.closest("[data-chelp]");
+  if (help) {
+    const k = Number(help.dataset.chelp);
+    c.help = c.help === k ? -1 : k;
+    return renderCajas();
+  }
   const pick = e.target.closest("[data-pick-item]");
-  if (pick && !c.err) {
+  if (pick) {
     const i = Number(pick.dataset.pickItem);
     c.sel = c.sel === i ? null : i;
+    c.err = null;
+    c.good = null;
     return renderCajas();
   }
   const box = e.target.closest("[data-box]");
-  if (box && c.sel !== null && !c.err) {
+  if (box && c.sel !== null) {
     const k = Number(box.dataset.box);
     const idx = c.bank.findIndex((x) => x.i === c.sel);
     const item = c.bank[idx];
     c.sel = null;
     if (item.caja === c.e.cajas[k]) {
       c.bank.splice(idx, 1);
-      c.boxes[k].push({ ru: item.ru });
+      c.boxes[k].push(item);
       c.done++;
+      c.err = null;
+      c.good = item;
       playSound(true);
     } else {
+      // La palabra regresa a «Faltan»: se explica por qué y lo intentas de nuevo.
       c.fail = true;
-      c.boxes[k].push({ ru: item.ru, bad: true });
-      c.err = { item, k, idx };
+      c.err = { item, k };
+      c.good = null;
       playSound(false);
     }
     return renderCajas();
   }
   const n = e.target.closest("[data-cnext]");
   if (!n) return;
-  if (n.dataset.cnext === "1") {
-    const { item, k, idx } = c.err;
-    c.boxes[k] = c.boxes[k].filter((x) => !x.bad);
-    c.boxes[c.e.cajas.indexOf(item.caja)].push({ ru: item.ru });
-    c.bank.splice(c.bank.findIndex((x) => x.i === item.i), 1);
-    c.done++;
-    c.err = null;
-    return renderCajas();
+  if (n.dataset.cnext === "ru") {
+    // Reto extra: el mismo ejercicio, ahora todo en ruso.
+    finishCaja();
+    return beginCaja("ru");
   }
-  store.setEjer(c.e.id, !c.fail);
-  logActivity();
-  if (c.fail) cj.bad++; else cj.ok++;
+  if (c.lang === "ru" || n.dataset.cnext === "next") finishCaja();
   if (cj.ci < cj.list.length - 1) {
     cj.ci++;
-    return beginCaja();
+    return beginCaja(cj.mode);
   }
-  finishEjer("Cajas terminadas", `${cj.ok} de ${cj.list.length} ejercicios sin errores. Los que tuvieron errores los puedes repetir cuando quieras.`, cj.returnTo);
+  finishEjer("Cajas terminadas", `${cj.ok} de ${cj.ok + cj.bad} rondas sin errores. Tu avance se queda guardado; repítelas cuando quieras.`, cj.returnTo);
   state.cj = null;
 }
 
