@@ -66,6 +66,7 @@
       "pregunta": "Elige la pregunta que va con cada respuesta.",
       "cajas": ["кто", "где", "когда́", "как"],
       "cajas_es": ["¿quién?", "¿dónde?", "¿cuándo?", "¿cómo?"],
+      "cajas_uso": ["Se usa para preguntar por una persona.", "Se usa para preguntar en qué lugar está algo o alguien.", "Se usa para preguntar en qué momento pasa algo.", "Para preguntar cómo es, cómo está o cómo se hace algo. Aquí van palabras que lo describen."],
       "items": [
         {"ru": "я", "caja": "кто", "porque": "Es una persona: кто.", "es": "yo"},
         {"ru": "она́", "caja": "кто", "porque": "Es una persona: кто.", "es": "ella"},
@@ -82,6 +83,7 @@
       "pregunta": "да, нет o не: completa la frase.",
       "cajas": ["да", "нет", "не"],
       "cajas_es": ["sí", "no (contesta)", "no (niega la palabra)"],
+      "cajas_uso": ["Se usa para contestar que sí o confirmar algo.", "Se usa sola para contestar que no a una pregunta.", "Va justo antes de una palabra para negarla, dentro de la frase."],
       "items": [
         {"ru": "Ты здесь? — … , я здесь.", "caja": "да", "porque": "Confirmas lo que dice la pregunta: да.", "es": "¿Estás aquí? — … , estoy aquí."},
         {"ru": "Ты здесь? — … , я там.", "caja": "нет", "porque": "Dices lo contrario: нет.", "es": "¿Estás aquí? — … , estoy allá."},

@@ -770,6 +770,7 @@ body.sheet-on { overflow: hidden; }
 .cx-pick.bad { border: 2.5px dashed var(--bad); }
 .cx-good { margin: 0; padding: 10px 14px; border-radius: 18px; background: #cefbc8; color: #2433a0; font-size: 14px; font-weight: 600; line-height: 1.4; }
 .cx-good b { font-weight: 800; }
+.cbox-uso { display: block; margin-top: 3px; font-weight: 500; }
 .cx-retry { margin: 6px 0 0; font-weight: 800; }
 
 /* ---------- 3.0 · Aprende a leer ---------- */
