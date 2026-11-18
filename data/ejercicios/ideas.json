@@ -63,13 +63,13 @@
       "pregunta": "мне o у меня́: completa la frase.",
       "cajas": ["мне", "у меня́"],
       "items": [
-        {"ru": "… смешно́", "caja": "мне", "porque": "Los sentimientos se dicen con мне: мне смешно́."},
+        {"ru": "… смешно́", "caja": "мне", "porque": "Con стра́шно, смешно́, ску́чно, гру́стно se usa мне: мне смешно́."},
         {"ru": "… есть мечта́", "caja": "у меня́", "porque": "«Tengo» se dice у меня́ есть."},
-        {"ru": "… стра́шно", "caja": "мне", "porque": "Los sentimientos se dicen con мне: мне стра́шно."},
+        {"ru": "… стра́шно", "caja": "мне", "porque": "Con стра́шно, смешно́, ску́чно, гру́стно se usa мне: мне стра́шно."},
         {"ru": "… есть иде́я", "caja": "у меня́", "porque": "«Tengo» se dice у меня́ есть."},
-        {"ru": "… ску́чно", "caja": "мне", "porque": "Los sentimientos se dicen con мне: мне ску́чно."},
+        {"ru": "… ску́чно", "caja": "мне", "porque": "Con стра́шно, смешно́, ску́чно, гру́стно se usa мне: мне ску́чно."},
         {"ru": "… есть хо́бби", "caja": "у меня́", "porque": "«Tengo» se dice у меня́ есть."},
-        {"ru": "… гру́стно", "caja": "мне", "porque": "Los sentimientos se dicen con мне: мне гру́стно."},
+        {"ru": "… гру́стно", "caja": "мне", "porque": "Con стра́шно, смешно́, ску́чно, гру́стно se usa мне: мне гру́стно."},
         {"ru": "… есть пробле́ма", "caja": "у меня́", "porque": "«Tengo» se dice у меня́ есть."}
       ]
     }
