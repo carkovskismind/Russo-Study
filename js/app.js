@@ -137,7 +137,7 @@ function toast(msg) {
   toast.t = setTimeout(() => (el.hidden = true), 2600);
 }
 
-const VIEWS = ["home", "modulos", "temas", "mapa", "tema", "palabra", "study", "frase", "dialogo", "cajas", "reto", "leer", "done", "settings"];
+const VIEWS = ["home", "modulos", "temas", "mapa", "tema", "palabra", "study", "frase", "dialogo", "cajas", "gram", "reto", "leer", "done", "settings"];
 const NAV_VIEWS = { home: "home", modulos: "modulos", temas: "modulos", settings: "settings" };
 
 function show(view) {
@@ -267,6 +267,7 @@ function appBack() {
     case "frase": return $("#frase-close").click();
     case "dialogo": return $("#dialogo-close").click();
     case "cajas": return $("#cajas-close").click();
+    case "gram": return $("#gram-back").click();
     case "reto": return retoBack();
     case "done": return doneContinue();
     case "palabra": return $("#palabra-back").click();
@@ -2073,6 +2074,7 @@ function closeSheet() {
   document.body.classList.remove("sheet-on");
   for (const el of $$(".view, #nav")) el.inert = false;
   state.dic = null;
+  state.cdic = null;
   const done = () => { wrap.hidden = true; };
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce) done(); else setTimeout(done, 260);
@@ -2371,6 +2373,69 @@ function finishEjer(title, summary, returnTo) {
 
 const BOX_PALS = ["bl", "pe", "li", "pk"];
 
+// Botón ? de cada caja: basta con la traducción de las cajas (cajas_es).
+function cajaHasHelp(e) {
+  return Array.isArray(e.cajas_es) && e.cajas_es.length === e.cajas.length;
+}
+
+// Diccionario de Cajas: explicación corta de cada forma (botón ? junto a la etiqueta).
+const GRAM_TAGS = {
+  "dativo": "Dativo: la forma de la persona a quien le pasa algo. я cambia a мне: мне стра́шно = me da miedo.",
+  "у + genitivo": "Después de у, я cambia a меня́. У меня́ есть… = tengo…",
+  "palabra de estado": "Palabra de estado: dice cómo te sientes. Va con мне: мне смешно́ = me da risa.",
+  "neutro": "Neutro: la forma para cosas neutras (las que terminan en -о o -е). мой cambia a моё: э́то моё письмо́ = es mi carta.",
+};
+const BOOK_ICO = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg>`;
+
+function cajaHasDic(e) {
+  return Array.isArray(e.diccionario) && e.diccionario.length > 0;
+}
+
+function openCajasDic() {
+  const cj = state.cj;
+  if (!cj) return;
+  const e = cj.list[cj.ci];
+  if (!cajaHasDic(e)) return;
+  state.cdic = { entries: e.diccionario, open: null };
+  openSheet("Diccionario", cajasDicHtml(), "Si una palabra cambió, primero va su forma de diccionario.");
+}
+
+function cajasDicHtml() {
+  const { entries, open } = state.cdic;
+  return `<div class="dic-list">${entries.map((d, i) => {
+    const tag = d.tag && GRAM_TAGS[d.tag] ? d.tag : (d.tag || "");
+    const isOpen = open === i && GRAM_TAGS[tag];
+    return `<div class="dic-row cdic-row">
+      <span class="cdic-words">${d.dic ? `<span class="dic-from" lang="ru">${esc(d.dic)}</span><span class="cdic-arrow" aria-hidden="true">→</span>` : ""}<span class="dic-forma" lang="ru">${esc(d.forma)}</span>${tag ? `<span class="cdic-tag">${esc(tag)}</span>` : ""}${tag && GRAM_TAGS[tag] ? `<button class="cdic-q" type="button" data-ctag="${i}" aria-expanded="${!!isOpen}" aria-label="Qué quiere decir ${esc(tag)}">?</button>` : ""}</span>
+      <span class="cdic-es">= ${esc(d.es)}</span>
+      ${isOpen ? `<div class="cdic-expl" role="status"><span>${esc(GRAM_TAGS[tag])}</span><button class="cdic-gram" type="button" data-cgram="${i}">Repasar gramática →</button></div>` : ""}
+    </div>`;
+  }).join("")}</div>`;
+}
+
+function cajasDicClick(e) {
+  const cd = state.cdic;
+  if (!cd) return false;
+  const q = e.target.closest("[data-ctag]");
+  if (q) {
+    const i = Number(q.dataset.ctag);
+    cd.open = cd.open === i ? null : i;
+    $("#sheet-body").innerHTML = cajasDicHtml();
+    const again = $(`#sheet-body [data-ctag="${i}"]`);
+    if (again) again.focus();
+    return true;
+  }
+  const g = e.target.closest("[data-cgram]");
+  if (g) {
+    const tag = cd.entries[Number(g.dataset.cgram)].tag || "";
+    closeSheet();
+    $("#gram-sub").textContent = tag ? tag.charAt(0).toUpperCase() + tag.slice(1) : "";
+    show("gram");
+    return true;
+  }
+  return false;
+}
+
 function cajaHasEs(e) {
   return Array.isArray(e.cajas_es) && e.cajas_es.length === e.cajas.length && e.items.every((it) => it.es);
 }
@@ -2391,7 +2456,8 @@ function renderCajasIntro() {
   const e = cj.list[cj.ci];
   const es = cajaHasEs(e);
   $("#cajas-title").textContent = "Cajas";
-  $("#cajas-sub").innerHTML = cj.ci > 0 ? `Ejercicio <span class="num">${cj.ci + 1}</span> de <span class="num">${cj.list.length}</span>` : "";
+  $("#cajas-dic").hidden = !cajaHasDic(e);
+  $("#cajas-sub").textContent = cj.deck && cj.deck.title ? cj.deck.title : "";
   const minis = e.cajas.map((n, k) => `<span class="cx-mini card-frame pal-${BOX_PALS[k % BOX_PALS.length]}"${/[а-яё]/i.test(n) ? ' lang="ru"' : ""}>${esc(n)}</span>`).join("");
   $("#cajas-body").innerHTML = `<div class="cx-intro">
       <section class="cx-intro-card card-frame pal-pk">
@@ -2399,7 +2465,9 @@ function renderCajasIntro() {
         <h2>Ya conoces las palabras<br>¿Las puedes relacionar?</h2>
         <div class="cx-minis">${minis}</div>
         ${es ? `<p>Inténtalo en español y, si quieres un reto extra, ¡hazlo en ruso!</p>
-        <p>Si necesitas ayuda con el significado, dale clic al botón <span class="cx-q-ico" aria-hidden="true">?</span></p>` : `<p>Toca una palabra y luego su caja.</p>`}
+        <p>Si necesitas ayuda con el significado, dale clic al botón <span class="cx-q-ico" aria-hidden="true">?</span></p>` : `<p>Toca una palabra y luego su caja.</p>${cajaHasHelp(e) ? `
+        <p>Si necesitas ayuda con el significado, dale clic al botón <span class="cx-q-ico" aria-hidden="true">?</span></p>` : ""}`}
+        ${cajaHasDic(e) ? `<p class="cx-dic-line"><span>¿No conoces alguna palabra?<br>Búscala en el Diccionario con este botón de arriba:</span><span class="cx-q-ico cx-book-ico" aria-hidden="true">${BOOK_ICO}</span></p>` : ""}
         <p class="cx-calm">Tómate tu tiempo y, si necesitas un descanso, tu progreso se queda guardado. <b>Take it easy!</b></p>
       </section>
       ${es ? `<button class="btn btn-primary btn-wide" type="button" data-cstart="es">Empezar en español</button>
@@ -2453,10 +2521,15 @@ function renderCajas() {
   const c = cj.cur;
   const e = c.e;
   const total = e.items.length;
-  const hasEs = cajaHasEs(e);
+  const hasEs = cajaHasHelp(e);
+  $("#cajas-dic").hidden = !cajaHasDic(e);
   const wordLang = c.lang === "es" ? "" : ' lang="ru"';
-  $("#cajas-title").textContent = e.pregunta.length > 34 ? e.cajas.join(" o ") + "?" : e.pregunta;
-  $("#cajas-sub").innerHTML = `<span class="num">${c.done}</span> de <span class="num">${total}</span> acomodadas`;
+  $("#cajas-title").textContent = "Cajas";
+  $("#cajas-sub").textContent = cj.deck && cj.deck.title ? cj.deck.title : "";
+  const phase = cajaHasEs(e)
+    ? (c.lang === "es" ? `<span class="cx-phase">Fase 1 · en español</span>` : `<span class="cx-phase ru">Fase 2 · ahora en ruso</span>`)
+    : "";
+  const countRow = `<div class="cx-count-row">${phase}<span class="cx-count"><span class="num">${c.done}</span> de <span class="num">${total}</span> acomodadas</span></div>`;
   const finished = c.done === total;
   const boxes = e.cajas.map((name, k) => {
     const items = c.boxes[k];
@@ -2464,9 +2537,9 @@ function renderCajas() {
     const active = c.sel !== null && !finished;
     const help = hasEs ? `<button class="cbox-help" style="color: var(--ink-${BOX_PALS[k % BOX_PALS.length]})" type="button" data-chelp="${k}" aria-label="Qué significa ${esc(name)}" aria-expanded="${c.help === k}">?</button>` : "";
     const tip = hasEs && c.help === k
-      ? `<p class="cbox-tip" role="status"><b><span lang="ru">${esc(name)}</span> = ${esc(e.cajas_es[k])}</b></p>`
+      ? `<p class="cbox-tip" role="status"><b><span lang="ru">${esc(name)}</span> = ${esc(e.cajas_es[k])}</b>${e.cajas_uso && e.cajas_uso[k] ? `<span class="cbox-uso">${esc(e.cajas_uso[k])}</span>` : ""}</p>`
       : "";
-    return `<div class="cbox-wrap"><button class="cbox card-frame pal-${BOX_PALS[k % BOX_PALS.length]}${active ? " ready" : ""}${hasEs ? " has-help" : ""}" type="button" data-box="${k}" aria-label="Caja ${esc(name)}"${active ? "" : " disabled"}><span class="cbox-name ${boxSize(name)}"${/[а-яё]/i.test(name) ? ' lang="ru"' : ""}>${esc(name)}</span>${chips}${tip}</button>${help}</div>`;
+    return `<div class="cbox-wrap"><button class="cbox card-frame pal-${BOX_PALS[k % BOX_PALS.length]}${active ? " ready" : ""}${hasEs ? " has-help" : ""}" type="button" data-box="${k}" aria-label="Caja ${esc(name)}"${active ? "" : " disabled"}><span class="cbox-name ${boxSize(name)}"${/[а-яё]/i.test(name) ? ' lang="ru"' : ""}>${esc(name)}</span>${chips ? `<span class="cbox-chips">${chips}</span>` : ""}${tip}</button>${help}</div>`;
   }).join("");
   let msg = "";
   if (c.err) {
@@ -2487,7 +2560,7 @@ function renderCajas() {
   const hint = finished
     ? (c.fail ? "Listo. Repásalo cuando quieras." : "¡Todo en su caja!")
     : esc(e.pregunta) + " Toca una palabra y luego su caja.";
-  $("#cajas-body").innerHTML = `<p class="cx-hint">${hint}</p>
+  $("#cajas-body").innerHTML = `${countRow}<p class="cx-hint cx-hint-main">${hint}</p>
     <div class="cboxes" style="--n:${e.cajas.length}">${boxes}</div>
     ${msg}
     ${c.bank.length ? `<div class="cx-bank"><span class="chat-q">Faltan</span><div class="cx-picks">${bank}</div></div>` : ""}
@@ -3594,6 +3667,9 @@ function bind() {
     renderDialogo();
   });
   $("#cajas-body").addEventListener("click", cajasClick);
+  $("#cajas-dic").addEventListener("click", openCajasDic);
+  $("#gram-back").addEventListener("click", () => show("cajas"));
+  $("#gram-done").addEventListener("click", () => show("cajas"));
   $("#cajas-close").addEventListener("click", () => {
     const cj = state.cj;
     state.cj = null;
@@ -3615,6 +3691,7 @@ function bind() {
     if (e.target.closest("[data-sheet-close]")) return closeSheet();
     const say = e.target.closest("[data-say]");
     if (say) return speak(say.dataset.say);
+    if (cajasDicClick(e)) return;
     dicClick(e);
   });
   document.addEventListener("visibilitychange", () => { if (state.view === "home") startBlink(); else stopBlink(); });

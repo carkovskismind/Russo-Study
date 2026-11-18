@@ -66,6 +66,21 @@
       "pregunta": "Elige la pregunta que va con cada respuesta.",
       "cajas": ["кто", "где", "когда́", "как"],
       "cajas_es": ["¿quién?", "¿dónde?", "¿cuándo?", "¿cómo?"],
+      "cajas_uso": ["Se usa para preguntar por una persona.", "Se usa para preguntar en qué lugar está algo o alguien.", "Se usa para preguntar en qué momento pasa algo.", "Para preguntar cómo es, cómo está o cómo se hace algo. Aquí van palabras que lo describen."],
+      "diccionario": [
+        {"forma": "кто", "es": "¿quién?"},
+        {"forma": "где", "es": "¿dónde?"},
+        {"forma": "когда́", "es": "¿cuándo?"},
+        {"forma": "как", "es": "¿cómo?"},
+        {"forma": "я", "es": "yo"},
+        {"forma": "она́", "es": "ella"},
+        {"forma": "здесь", "es": "aquí"},
+        {"forma": "там", "es": "allá"},
+        {"forma": "сейча́с", "es": "ahora"},
+        {"forma": "за́втра", "es": "mañana"},
+        {"forma": "хорошо́", "es": "bien, está bien"},
+        {"forma": "краси́во", "es": "bonito, está bonito"}
+      ],
       "items": [
         {"ru": "я", "caja": "кто", "porque": "Es una persona: кто.", "es": "yo"},
         {"ru": "она́", "caja": "кто", "porque": "Es una persona: кто.", "es": "ella"},
@@ -73,8 +88,8 @@
         {"ru": "там", "caja": "где", "porque": "Dice un lugar: где.", "es": "allá"},
         {"ru": "сейча́с", "caja": "когда́", "porque": "Dice un momento: когда́.", "es": "ahora"},
         {"ru": "за́втра", "caja": "когда́", "porque": "Dice un momento: когда́.", "es": "mañana"},
-        {"ru": "хорошо́", "caja": "как", "porque": "Dice cómo es o cómo está algo: как.", "es": "bien"},
-        {"ru": "краси́во", "caja": "как", "porque": "Dice cómo es algo: как.", "es": "bonito"}
+        {"ru": "хорошо́", "caja": "как", "porque": "Dice cómo es o cómo está algo: как.", "es": "está bien"},
+        {"ru": "краси́во", "caja": "как", "porque": "Dice cómo es algo: как.", "es": "está bonito"}
       ]
     },
     {
@@ -82,6 +97,21 @@
       "pregunta": "да, нет o не: completa la frase.",
       "cajas": ["да", "нет", "не"],
       "cajas_es": ["sí", "no (contesta)", "no (niega la palabra)"],
+      "cajas_uso": ["Se usa para contestar que sí o confirmar algo.", "Se usa sola para contestar que no a una pregunta.", "Va justo antes de una palabra para negarla, dentro de la frase."],
+      "diccionario": [
+        {"forma": "да", "es": "sí"},
+        {"forma": "нет", "es": "no (contesta)"},
+        {"forma": "не", "es": "no (niega la palabra siguiente)"},
+        {"forma": "ты", "es": "tú"},
+        {"forma": "здесь", "es": "aquí"},
+        {"forma": "я", "es": "yo"},
+        {"forma": "там", "es": "allá"},
+        {"forma": "э́то", "es": "esto, eso"},
+        {"forma": "моё", "dic": "мой", "tag": "neutro", "es": "mío (algo neutro)"},
+        {"forma": "он", "es": "él"},
+        {"forma": "коне́чно", "es": "claro"},
+        {"forma": "твоё", "dic": "твой", "tag": "neutro", "es": "tuyo (algo neutro)"}
+      ],
       "items": [
         {"ru": "Ты здесь? — … , я здесь.", "caja": "да", "porque": "Confirmas lo que dice la pregunta: да.", "es": "¿Estás aquí? — … , estoy aquí."},
         {"ru": "Ты здесь? — … , я там.", "caja": "нет", "porque": "Dices lo contrario: нет.", "es": "¿Estás aquí? — … , estoy allá."},
