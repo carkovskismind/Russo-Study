@@ -73,8 +73,8 @@
         {"ru": "там", "caja": "где", "porque": "Dice un lugar: где.", "es": "allá"},
         {"ru": "сейча́с", "caja": "когда́", "porque": "Dice un momento: когда́.", "es": "ahora"},
         {"ru": "за́втра", "caja": "когда́", "porque": "Dice un momento: когда́.", "es": "mañana"},
-        {"ru": "хорошо́", "caja": "как", "porque": "Dice cómo es o cómo está algo: как.", "es": "bien"},
-        {"ru": "краси́во", "caja": "как", "porque": "Dice cómo es algo: как.", "es": "bonito"}
+        {"ru": "хорошо́", "caja": "как", "porque": "Dice cómo es o cómo está algo: как.", "es": "está bien"},
+        {"ru": "краси́во", "caja": "как", "porque": "Dice cómo es algo: как.", "es": "está bonito"}
       ]
     },
     {
