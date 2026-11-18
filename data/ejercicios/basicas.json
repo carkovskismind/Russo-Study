@@ -65,28 +65,30 @@
       "id": "basicas-c1",
       "pregunta": "Elige la pregunta que va con cada respuesta.",
       "cajas": ["кто", "где", "когда́", "как"],
+      "cajas_es": ["¿quién?", "¿dónde?", "¿cuándo?", "¿cómo?"],
       "items": [
-        {"ru": "я", "caja": "кто", "porque": "Es una persona: кто."},
-        {"ru": "она́", "caja": "кто", "porque": "Es una persona: кто."},
-        {"ru": "здесь", "caja": "где", "porque": "Dice un lugar: где."},
-        {"ru": "там", "caja": "где", "porque": "Dice un lugar: где."},
-        {"ru": "сейча́с", "caja": "когда́", "porque": "Dice un momento: когда́."},
-        {"ru": "за́втра", "caja": "когда́", "porque": "Dice un momento: когда́."},
-        {"ru": "хорошо́", "caja": "как", "porque": "Dice cómo es o cómo está algo: как."},
-        {"ru": "краси́во", "caja": "как", "porque": "Dice cómo es algo: как."}
+        {"ru": "я", "caja": "кто", "porque": "Es una persona: кто.", "es": "yo"},
+        {"ru": "она́", "caja": "кто", "porque": "Es una persona: кто.", "es": "ella"},
+        {"ru": "здесь", "caja": "где", "porque": "Dice un lugar: где.", "es": "aquí"},
+        {"ru": "там", "caja": "где", "porque": "Dice un lugar: где.", "es": "allá"},
+        {"ru": "сейча́с", "caja": "когда́", "porque": "Dice un momento: когда́.", "es": "ahora"},
+        {"ru": "за́втра", "caja": "когда́", "porque": "Dice un momento: когда́.", "es": "mañana"},
+        {"ru": "хорошо́", "caja": "как", "porque": "Dice cómo es o cómo está algo: как.", "es": "bien"},
+        {"ru": "краси́во", "caja": "как", "porque": "Dice cómo es algo: как.", "es": "bonito"}
       ]
     },
     {
       "id": "basicas-c2",
       "pregunta": "да, нет o не: completa la frase.",
       "cajas": ["да", "нет", "не"],
+      "cajas_es": ["sí", "no (contesta)", "no (niega la palabra)"],
       "items": [
-        {"ru": "Ты здесь? — … , я здесь.", "caja": "да", "porque": "Confirmas lo que dice la pregunta: да."},
-        {"ru": "Ты здесь? — … , я там.", "caja": "нет", "porque": "Dices lo contrario: нет."},
-        {"ru": "Э́то … моё.", "caja": "не", "porque": "не niega la palabra que sigue: не моё."},
-        {"ru": "Он … здесь.", "caja": "не", "porque": "не va justo antes de lo que niegas: не здесь."},
-        {"ru": "… , коне́чно!", "caja": "да", "porque": "Es una afirmación: да."},
-        {"ru": "Э́то … твоё.", "caja": "не", "porque": "не niega la palabra que sigue: не твоё."}
+        {"ru": "Ты здесь? — … , я здесь.", "caja": "да", "porque": "Confirmas lo que dice la pregunta: да.", "es": "¿Estás aquí? — … , estoy aquí."},
+        {"ru": "Ты здесь? — … , я там.", "caja": "нет", "porque": "Dices lo contrario: нет.", "es": "¿Estás aquí? — … , estoy allá."},
+        {"ru": "Э́то … моё.", "caja": "не", "porque": "не niega la palabra que sigue: не моё.", "es": "Esto … es mío."},
+        {"ru": "Он … здесь.", "caja": "не", "porque": "не va justo antes de lo que niegas: не здесь.", "es": "Él … está aquí."},
+        {"ru": "… , коне́чно!", "caja": "да", "porque": "Es una afirmación: да.", "es": "¡… , claro!"},
+        {"ru": "Э́то … твоё.", "caja": "не", "porque": "не niega la palabra que sigue: не твоё.", "es": "Esto … es tuyo."}
       ]
     }
   ]
