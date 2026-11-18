@@ -479,17 +479,23 @@ svg { display: block; }
 /* ---------- Barra inferior ---------- */
 /* 4.0.0: barra más delgada y ancha, un poco transparente (maqueta de Carol). */
 .nav {
-  position: fixed; left: calc(34px + env(safe-area-inset-left)); bottom: calc(18px + env(safe-area-inset-bottom));
-  display: flex; justify-content: space-between; align-items: center; gap: 6px;
-  width: 208px; height: 48px; padding: 6px; border-radius: 999px; z-index: 20; opacity: .88;
+  position: fixed; left: calc(16px + env(safe-area-inset-left)); bottom: calc(18px + env(safe-area-inset-bottom));
+  display: flex; justify-content: flex-start; align-items: center; gap: 6px;
+  width: auto; height: 48px; padding: 6px; border-radius: 999px; z-index: 20; opacity: .88;
   background: var(--nav-bg); box-shadow: 0 6px 20px rgba(0, 0, 0, .3);
 }
 .nav button {
-  width: 44px; height: 44px; border-radius: 50%; border: 0; background: transparent; color: var(--nav-ink);
+  width: 40px; height: 40px; border-radius: 50%; border: 0; background: transparent; color: var(--nav-ink);
   display: flex; align-items: center; justify-content: center;
 }
 .nav button[aria-current="page"] { background: var(--nav-on-bg); color: var(--nav-on-ink); }
-.nav svg { width: 22px; height: 22px; }
+.nav svg { width: 20px; height: 20px; }
+/* En pantallas angostas la barra se encoge un poco más para no quedar debajo
+   del letrero que Netlify pone abajo a la derecha. */
+@media (max-width: 370px) {
+  .nav { gap: 4px; padding: 4px; }
+  .nav button { width: 38px; height: 38px; }
+}
 
 .toast {
   position: fixed; left: 50%; top: calc(14px + env(safe-area-inset-top)); transform: translateX(-50%);

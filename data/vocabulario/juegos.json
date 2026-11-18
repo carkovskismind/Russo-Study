@@ -36,7 +36,7 @@
     {"ru": "те́ннис", "fonetica": "TE-nis", "es": "tenis", "pista": "Deporte de raqueta en cancha.", "tag": "Masc. · inanim.", "nota": "Se pronuncia «tenis», con е dura."},
     {"ru": "насто́льный те́ннис", "fonetica": "nas-TOL'-nyi TE-nis", "es": "ping-pong", "pista": "Deporte de raqueta sobre una mesa.", "tag": "Masc. · inanim."},
     {"ru": "гольф", "fonetica": "gol'f", "es": "golf", "pista": "Deporte de meter la pelota en hoyos con un palo.", "tag": "Masc. · inanim."},
-    {"ru": "фронто́н", "fonetica": "fran-TON", "es": "frontón", "pista": "Deporte de pelota contra una pared.", "tag": "Masc. · inanim."},
+    {"ru": "фронто́н", "fonetica": "fran-TON", "es": "frontón", "pista": "Deporte de pelota contra una pared.", "tag": "Masc. · inanim.", "nota": "Deporte que se practica sobre todo en países de habla hispana y en Francia. Ojo: en ruso фронто́н es además el remate triangular de un edificio."},
     {"ru": "бо́улинг", "fonetica": "BOU-ling", "es": "boliche", "pista": "Derribar pinos con una bola pesada.", "tag": "Masc. · inanim."},
     {"ru": "билья́рд", "fonetica": "bil-IARD", "es": "billar", "pista": "Juego de mesa con taco y bolas.", "tag": "Masc. · inanim."},
     {"ru": "ша́хматы", "fonetica": "SHAJ-ma-ty", "es": "ajedrez", "pista": "Juego de estrategia con rey y reina (siempre plural).", "tag": "Plural · inanim.", "nota": "Solo existe en plural: игра́ть в ша́хматы."},
