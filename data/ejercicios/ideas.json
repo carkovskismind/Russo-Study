@@ -8,8 +8,8 @@
       "mensajes": [
         {"de": "Лена", "ru": "Тебе́ стра́шно?", "fonetica": "tie-BIE STRASH-na", "es": "¿Tienes miedo?"},
         {"de": "yo", "ru": "Нет, мне смешно́.", "fonetica": "niet, mnie smiesh-NO", "es": "No, me da risa.", "opciones": [
-          {"ru": "Нет, мне смешно́.", "fonetica": "niet, mnie smiesh-NO", "correcta": true, "porque": "¡Bien! Para sentimientos se usa мне."},
-          {"ru": "Нет, я смешно́.", "fonetica": "niet, ia smiesh-NO", "correcta": false, "porque": "Para sentimientos se usa мне: мне смешно́."},
+          {"ru": "Нет, мне смешно́.", "fonetica": "niet, mnie smiesh-NO", "correcta": true, "porque": "¡Bien! Con стра́шно, смешно́, ску́чно, гру́стно se usa мне."},
+          {"ru": "Нет, я смешно́.", "fonetica": "niet, ia smiesh-NO", "correcta": false, "porque": "Con стра́шно, смешно́, ску́чно, гру́стно se usa мне, no я: мне смешно́."},
           {"ru": "Да, мне смешно́.", "fonetica": "da, mnie smiesh-NO", "correcta": false, "porque": "Ella pregunta si da miedo; a ti te da risa: нет."}
         ]},
         {"de": "Лена", "ru": "Почему́?", "fonetica": "pa-chi-MU", "es": "¿Por qué?"},
@@ -46,6 +46,17 @@
       "id": "ideas-c1",
       "pregunta": "¿Es algo bueno o algo malo? Elige la caja.",
       "cajas": ["bueno", "malo"],
+      "diccionario": [
+        {"forma": "ра́дость", "es": "alegría"},
+        {"forma": "дру́жба", "es": "amistad"},
+        {"forma": "любо́вь", "es": "amor"},
+        {"forma": "смешно́", "tag": "palabra de estado", "es": "da risa"},
+        {"forma": "война́", "es": "guerra"},
+        {"forma": "ложь", "es": "mentira"},
+        {"forma": "у́жас", "es": "horror"},
+        {"forma": "ску́чно", "tag": "palabra de estado", "es": "da aburrimiento (me aburro)"},
+        {"forma": "гру́стно", "tag": "palabra de estado", "es": "da tristeza"}
+      ],
       "items": [
         {"ru": "ра́дость", "caja": "bueno", "porque": "La alegría es algo bueno."},
         {"ru": "дру́жба", "caja": "bueno", "porque": "La amistad es algo bueno."},
@@ -62,6 +73,21 @@
       "id": "ideas-c2",
       "pregunta": "мне o у меня́: completa la frase.",
       "cajas": ["мне", "у меня́"],
+      "cajas_es": ["a mí, me", "tengo (con есть)"],
+      "cajas_uso": ["Se usa para decir a quién le pasa algo o quién siente algo.", "Se usa con есть para decir que tienes algo."],
+      "diccionario": [
+        {"forma": "мне", "dic": "я", "tag": "dativo", "es": "a mí, me"},
+        {"forma": "у меня́", "dic": "я", "tag": "у + genitivo", "es": "yo tengo (con есть)"},
+        {"forma": "смешно́", "tag": "palabra de estado", "es": "da risa"},
+        {"forma": "есть", "es": "hay (у меня́ есть = tengo)"},
+        {"forma": "мечта́", "es": "sueño, anhelo"},
+        {"forma": "стра́шно", "tag": "palabra de estado", "es": "da miedo"},
+        {"forma": "иде́я", "es": "idea"},
+        {"forma": "ску́чно", "tag": "palabra de estado", "es": "da aburrimiento (me aburro)"},
+        {"forma": "хо́бби", "es": "pasatiempo"},
+        {"forma": "гру́стно", "tag": "palabra de estado", "es": "da tristeza"},
+        {"forma": "пробле́ма", "es": "problema"}
+      ],
       "items": [
         {"ru": "… смешно́", "caja": "мне", "porque": "Con стра́шно, смешно́, ску́чно, гру́стно se usa мне: мне смешно́."},
         {"ru": "… есть мечта́", "caja": "у меня́", "porque": "«Tengo» se dice у меня́ есть."},

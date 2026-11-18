@@ -1208,3 +1208,32 @@ body.no-fon .sheet :is(.fon, .w-fon, .ex-fon:not(.keep), .dic-fon) { display: no
 #cajas-body .cx-pick { min-height: 40px; font-size: 15px; }
 #cajas-body .cx-pick[lang="ru"], #cajas-body .cx-pick:not(.es) { font-size: 16px; }
 #cajas-body .cbox-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* 4.1.0 · Cajas: Diccionario y pantalla de Gramática (próximamente) */
+#view-cajas .practice-head #cajas-dic { flex: none; }
+.cx-dic-line { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.cx-book-ico svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
+.cdic-row { gap: 4px; padding: 10px 14px; }
+.cdic-words { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cdic-words .dic-from { font-family: var(--f-ru); font-size: 16px; font-weight: 700; }
+.cdic-arrow { color: var(--muted); font-weight: 700; }
+.cdic-words .dic-forma { font-family: var(--f-ru); }
+.cdic-tag { font-size: 11.5px; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: var(--pal-lav, #ece7ff); color: var(--ink-lav, #4936e0); }
+.cdic-q { position: relative; width: 44px; height: 44px; margin: -10px -10px -10px -8px; border: 0; background: transparent; color: var(--text); font-size: 13px; font-weight: 800; cursor: pointer; }
+.cdic-q::before { content: ""; position: absolute; inset: 10px; border-radius: 999px; border: 1.5px solid currentColor; }
+.cdic-q[aria-expanded="true"]::before { background: var(--line-soft, rgba(127,127,127,.15)); }
+.cdic-es { font-size: 14px; font-weight: 700; }
+.cdic-expl { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; padding: 10px 12px; border-radius: 12px; background: #ece7ff; color: #4936e0; font-size: 13px; font-weight: 600; line-height: 1.4; }
+.cdic-gram { align-self: flex-start; min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1.5px solid #4936e0; background: transparent; color: #4936e0; font-size: 13px; font-weight: 800; cursor: pointer; }
+.gram-wrap { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.gram-card { border-radius: 28px; padding: 28px 20px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; color: #151515; }
+.gram-card svg { width: 60px; height: 60px; fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+.gram-card h2 { margin: 0; font-size: 22px; font-weight: 800; line-height: 1.25; }
+.gram-card p { margin: 0; font-size: 15px; font-weight: 600; line-height: 1.45; color: var(--ink); }
+.cx-count-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cx-phase { height: 26px; padding: 0 10px; border-radius: 999px; background: #4af2d5; color: #0b0b0c; font-size: 12px; font-weight: 800; display: inline-flex; align-items: center; }
+.cx-phase.ru { background: #f2c14e; color: #151515; }
+.cx-count { font-size: 13px; font-weight: 700; color: var(--muted); }
+.cx-hint.cx-hint-main { font-size: 15px; font-weight: 700; color: var(--text); }
+.cdic-q[aria-expanded="true"]::before { background: rgba(127, 127, 127, .25); }
+#cajas-body .cx-bank .chat-q { text-transform: uppercase; font-size: 12px; font-weight: 800; letter-spacing: .08em; }
