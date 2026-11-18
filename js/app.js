@@ -499,8 +499,8 @@ function logActivity() {
 // Tema del que más tarjetas trae la fila de hoy (la que arma «Empezar»).
 function todayTopic() {
   const today = dateKey(Date.now());
-  const newLeft = Math.max(0, store.settings.newPerDay - store.newToday(today));
-  const queue = buildQueue(state.decks.filter(deckEnabled), newLeft, revLeftToday());
+  const plan = dailyPlan();
+  const queue = buildQueue(state.decks.filter(deckEnabled), plan.n, plan.r);
   const counts = new Map();
   for (const it of queue) counts.set(it.card.deckId, (counts.get(it.card.deckId) || 0) + 1);
   const sug = suggestedDeck();
@@ -541,9 +541,9 @@ function renderHome() {
     due += s.due;
     fresh += s.fresh;
   }
-  const newLeft = Math.max(0, store.settings.newPerDay - store.newToday(today));
-  // 4.0.1: tope diario de repasos; lo atrasado no se suma de golpe al número del día.
-  const forToday = Math.min(due, revLeftToday()) + Math.min(newLeft, fresh) + pickedCards().length;
+  // 4.0.1: tope de 30 palabras al día (lo atrasado sale los días siguientes).
+  const plan = dailyPlan();
+  const forToday = plan.p + plan.n + plan.r;
 
   const name = (store.settings.name || "").trim().replace(/!+$/, "");
   $("#greet-name").textContent = name ? `${name}!` : "¡Hola!";
@@ -1078,10 +1078,27 @@ function renderPalabra(editingNote = false) {
 // preguntan con 4 opciones. Si fallas, la palabra pierde su progreso y
 // vuelve a la fila del día hasta que la contestes bien.
 
-// Repasos que aún caben hoy (tope diario, 4.0.1).
-function revLeftToday() {
-  const max = store.settings.revPerDay || 15;
-  return Math.max(0, max - store.revToday(dateKey(Date.now())));
+// 4.0.1 · Tope diario de la «Práctica de hoy»: 30 palabras en total (dayMax).
+// Solo cuenta lo que se practica desde «Hoy nos toca»; un tema aparte («Continúa en…») no suma.
+// Reparto: primero lo de «+ Hoy», luego hasta 15 nuevas (newPerDay) y el resto, repasos.
+function dailyPlan() {
+  const now = Date.now();
+  const today = dateKey(now);
+  const max = store.settings.dayMax || 30;
+  let left = Math.max(0, max - store.newToday(today) - store.revToday(today));
+  let due = 0, fresh = 0;
+  for (const d of state.decks) {
+    if (!deckEnabled(d)) continue;
+    const s = deckStats(d, now);
+    due += s.due;
+    fresh += s.fresh;
+  }
+  const p = Math.min(pickedCards().length, left);
+  left -= p;
+  const n = Math.min(Math.max(0, store.settings.newPerDay - store.newToday(today)), fresh, left);
+  left -= n;
+  const r = Math.min(due, left);
+  return { p, n, r };
 }
 
 function buildQueue(decks, newLimit, revLimit = Infinity) {
@@ -1110,12 +1127,11 @@ function buildQueue(decks, newLimit, revLimit = Infinity) {
 }
 
 function startToday() {
-  const today = dateKey(Date.now());
-  const newLeft = Math.max(0, store.settings.newPerDay - store.newToday(today));
-  const queue = buildQueue(state.decks.filter(deckEnabled), newLeft, revLeftToday());
-  // Palabras elegidas a mano: extra, mezcladas con las demás.
+  const plan = dailyPlan();
+  const queue = buildQueue(state.decks.filter(deckEnabled), plan.n, plan.r);
+  // Palabras elegidas a mano («+ Hoy»), dentro del tope del día; las que no caben salen mañana.
   const inQueue = new Set(queue.map((it) => it.key));
-  for (const c of pickedCards()) {
+  for (const c of pickedCards().slice(0, plan.p)) {
     for (const key of keysFor(c)) {
       if (inQueue.has(key)) {
         queue.find((it) => it.key === key).picked = true;
@@ -1126,6 +1142,7 @@ function startToday() {
     }
   }
   startSession(queue, "Práctica de hoy", false, "home");
+  if (state.session && state.session.queue === queue) state.session.daily = true;
 }
 
 function startDeck(deck) {
@@ -1625,8 +1642,12 @@ function settle(ok) {
   else s.bad++;
   if (!s.cram) {
     const prev = store.card(it.key);
-    if (!prev) store.countNew(dateKey(now));
-    else if (it.due !== undefined && !it.revCounted) { it.revCounted = true; store.countReview(dateKey(now)); }
+    // Solo la «Práctica de hoy» cuenta para el tope del día; una vez por palabra.
+    if (s.daily && !it.dayCounted) {
+      it.dayCounted = true;
+      if (!prev) store.countNew(dateKey(now));
+      else store.countReview(dateKey(now));
+    }
     const rating = ok ? (it.hint && !it.failed ? 2 : 3) : 1;
     logActivity();
     store.setCard(it.key, schedule(prev, rating, now));

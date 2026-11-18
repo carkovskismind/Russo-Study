@@ -26,7 +26,7 @@ function writePending(list) {
 export const DEFAULT_SETTINGS = {
   dir: "ru",
   newPerDay: 15,
-  revPerDay: 15, // tope de repasos al día (4.0.1); lo atrasado sale los días siguientes
+  dayMax: 30, // tope de la «Práctica de hoy» (4.0.1); lo atrasado sale los días siguientes
   cursive: false,
   autoSpeak: false,
   sound: true,
