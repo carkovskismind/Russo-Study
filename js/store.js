@@ -26,6 +26,7 @@ function writePending(list) {
 export const DEFAULT_SETTINGS = {
   dir: "ru",
   newPerDay: 15,
+  dayMax: 30, // tope de la «Práctica de hoy» (4.0.1); lo atrasado sale los días siguientes
   cursive: false,
   autoSpeak: false,
   sound: true,
@@ -40,6 +41,7 @@ function emptyProgress() {
     v: 1,
     cards: {},
     newLog: {},
+    revLog: {},
     days: {},
     frases: {},
     notes: {},
@@ -78,6 +80,7 @@ function normalize(p) {
     v: 1,
     cards: p.cards && typeof p.cards === "object" ? p.cards : {},
     newLog: p.newLog && typeof p.newLog === "object" ? p.newLog : {},
+    revLog: p.revLog && typeof p.revLog === "object" ? p.revLog : {},
     days: p.days && typeof p.days === "object" ? p.days : {},
     frases: p.frases && typeof p.frases === "object" ? p.frases : {},
     notes: p.notes && typeof p.notes === "object" ? p.notes : {},
@@ -110,6 +113,11 @@ export function merge(a, b) {
     for (const [day, n] of Object.entries(src.newLog)) {
       if (resetDay && day < resetDay) continue;
       out.newLog[day] = Math.max(out.newLog[day] || 0, n);
+    }
+    // Repasos hechos por día (tope diario de repasos, 4.0.1).
+    for (const [day, n] of Object.entries(src.revLog)) {
+      if (resetDay && day < resetDay) continue;
+      out.revLog[day] = Math.max(out.revLog[day] || 0, n);
     }
   }
   // Actividad por día (para la racha y la gráfica de la semana).
@@ -320,6 +328,14 @@ export class Store {
 
   countNew(day) {
     this.p.newLog[day] = (this.p.newLog[day] || 0) + 1;
+  }
+
+  revToday(day) {
+    return this.p.revLog[day] || 0;
+  }
+
+  countReview(day) {
+    this.p.revLog[day] = (this.p.revLog[day] || 0) + 1;
   }
 
   logActivity(day) {
