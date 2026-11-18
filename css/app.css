@@ -1196,3 +1196,15 @@ body.on-palabra .beta-tag { display: none; }
 /* Sin fonética (excepto «Aprende a leer») */
 body.no-fon .view:not(#view-leer) :is(.fon, .w-fon, .word-fon, .ex-fon:not(.keep), .b-fon, .dic-fon),
 body.no-fon .sheet :is(.fon, .w-fon, .ex-fon:not(.keep), .dic-fon) { display: none; }
+
+/* 4.1.0 · Cajas: medidas exactas de la maqueta aprobada (K1/K3) */
+#cajas-body .cbox { min-height: 128px; }
+#cajas-body .cbox-name, #cajas-body .cbox-name.s1, #cajas-body .cbox-name.s2 { font-size: 20px; }
+#cajas-body .cbox.has-help .cbox-name { padding-right: 32px; }
+#cajas-body .cbox-help { top: 2px; right: 2px; font-size: 13px; }
+#cajas-body .cbox-help::before { inset: 10px; }
+#cajas-body .cx-chip { padding: 5px 10px; border-radius: 12px; border: 1.5px solid #151515; font-size: 16px; }
+#cajas-body .cx-chip.es { font-size: 14px; }
+#cajas-body .cx-pick { min-height: 40px; font-size: 15px; }
+#cajas-body .cx-pick[lang="ru"], #cajas-body .cx-pick:not(.es) { font-size: 16px; }
+#cajas-body .cbox-chips { display: flex; flex-wrap: wrap; gap: 6px; }

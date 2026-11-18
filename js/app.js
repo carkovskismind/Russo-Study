@@ -2466,7 +2466,7 @@ function renderCajas() {
     const tip = hasEs && c.help === k
       ? `<p class="cbox-tip" role="status"><b><span lang="ru">${esc(name)}</span> = ${esc(e.cajas_es[k])}</b>${e.cajas_uso && e.cajas_uso[k] ? `<span class="cbox-uso">${esc(e.cajas_uso[k])}</span>` : ""}</p>`
       : "";
-    return `<div class="cbox-wrap"><button class="cbox card-frame pal-${BOX_PALS[k % BOX_PALS.length]}${active ? " ready" : ""}${hasEs ? " has-help" : ""}" type="button" data-box="${k}" aria-label="Caja ${esc(name)}"${active ? "" : " disabled"}><span class="cbox-name ${boxSize(name)}"${/[а-яё]/i.test(name) ? ' lang="ru"' : ""}>${esc(name)}</span>${chips}${tip}</button>${help}</div>`;
+    return `<div class="cbox-wrap"><button class="cbox card-frame pal-${BOX_PALS[k % BOX_PALS.length]}${active ? " ready" : ""}${hasEs ? " has-help" : ""}" type="button" data-box="${k}" aria-label="Caja ${esc(name)}"${active ? "" : " disabled"}><span class="cbox-name ${boxSize(name)}"${/[а-яё]/i.test(name) ? ' lang="ru"' : ""}>${esc(name)}</span>${chips ? `<span class="cbox-chips">${chips}</span>` : ""}${tip}</button>${help}</div>`;
   }).join("");
   let msg = "";
   if (c.err) {
