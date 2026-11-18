@@ -21,7 +21,7 @@
     {"ru": "золото́е", "fonetica": "za-la-TO-ie", "es": "dorado · neutro", "pista": "Color del oro, con un sustantivo neutro.", "tag": "Adj.", "ejemplo": {"ru":"Э́то золото́е кольцо́.","fonetica":"E-ta za-la-TO-ie kal'-TSO","es":"Es un anillo dorado."}},
     {"ru": "золоты́е", "fonetica": "za-la-TY-ie", "es": "dorados / doradas · plural", "pista": "Color del oro, con un sustantivo en plural.", "tag": "Adj.", "ejemplo": {"ru":"Э́то золоты́е часы́.","fonetica":"E-ta za-la-TY-ie chi-SY","es":"Es un reloj dorado."}},
     {"ru": "зелёный", "fonetica": "zie-LIO-nyi", "es": "verde", "pista": "Color del pasto y de las hojas.", "tag": "Adj."},
-    {"ru": "све́тло-зелёный", "fonetica": "SVIET-la zie-LIO-nyi", "es": "verde claro", "pista": "El color del pasto, pero suave.", "tag": "Adj."},
+    {"ru": "светло-зелёный", "fonetica": "sviet-la-zie-LIO-nyi", "es": "verde claro", "pista": "El color del pasto, pero suave.", "tag": "Adj."},
     {"ru": "тёмно-зелёный", "fonetica": "TIOM-na zie-LIO-nyi", "es": "verde oscuro", "pista": "El color del pasto, pero intenso.", "tag": "Adj."},
     {"ru": "ха́ки", "fonetica": "JA-ki", "es": "caqui", "pista": "Color de uniforme militar; no cambia.", "tag": "Adj. invariable", "nota": "No cambia."},
     {"ru": "боло́тный", "fonetica": "ba-LOT-nyi", "es": "verde pantano", "pista": "Verde apagado como el agua estancada.", "tag": "Adj."},

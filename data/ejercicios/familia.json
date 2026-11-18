@@ -18,7 +18,7 @@
           {"ru": "Э́то моя́ брат.", "fonetica": "E-ta ma-IA brat", "correcta": false, "porque": "брат es masculino: мой брат."},
           {"ru": "Э́то моё брат.", "fonetica": "E-ta ma-IO brat", "correcta": false, "porque": "моё es neutro; брат es masculino: мой."}
         ]},
-        {"de": "Лена", "ru": "Как краси́во!", "fonetica": "kak kra-SI-va", "es": "¡Qué bonito!"}
+        {"de": "Лена", "ru": "О́чень прия́тно! До свида́ния!", "fonetica": "O-chin' pri-IAT-na! da svi-DA-ni-ia", "es": "¡Mucho gusto! ¡Hasta luego!"}
       ]
     },
     {
@@ -37,7 +37,7 @@
           {"ru": "Его́ зову́т Ма́ша.", "fonetica": "ie-VO za-VUT MA-sha", "correcta": false, "porque": "его́ es «de él / a él»; hablas de una chica: её."},
           {"ru": "Меня́ зову́т Ма́ша.", "fonetica": "mie-NIA za-VUT MA-sha", "correcta": false, "porque": "меня́ es «a mí»; hablas de tu hermana, no de ti: её."}
         ]},
-        {"de": "Лена", "ru": "Как краси́во!", "fonetica": "kak kra-SI-va", "es": "¡Qué bonito!"}
+        {"de": "Лена", "ru": "О́чень прия́тно! До свида́ния!", "fonetica": "O-chin' pri-IAT-na! da svi-DA-ni-ia", "es": "¡Mucho gusto! ¡Hasta luego!"}
       ]
     }
   ],
