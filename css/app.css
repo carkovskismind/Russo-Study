@@ -1237,3 +1237,90 @@ body.no-fon .sheet :is(.fon, .w-fon, .ex-fon:not(.keep), .dic-fon) { display: no
 .cx-hint.cx-hint-main { font-size: 15px; font-weight: 700; color: var(--text); }
 .cdic-q[aria-expanded="true"]::before { background: rgba(127, 127, 127, .25); }
 #cajas-body .cx-bank .chat-q { text-transform: uppercase; font-size: 12px; font-weight: 800; letter-spacing: .08em; }
+
+/* ---------- 4.2.0 · Buscador del inicio ---------- */
+.h-search { display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 6px 0 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--surface); color: var(--text); flex: none; }
+.h-search:focus-within { border: 2px solid var(--accent); }
+.h-search svg { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+.h-search input { flex: 1; min-width: 0; height: 100%; border: 0; background: transparent; color: var(--text); font: 600 15px/1 inherit; font-family: inherit; outline: none; }
+.h-search input::placeholder { color: var(--muted); font-weight: 600; font-size: 14px; }
+.h-search input::-webkit-search-cancel-button { display: none; }
+.h-q-clear { flex: none; width: 36px; height: 36px; border: 0; border-radius: 50%; background: transparent; color: var(--muted); font-size: 22px; line-height: 1; cursor: pointer; }
+.home3.searching > :not(.h-top):not(.h-search):not(.h-results) { display: none !important; }
+.h-results { display: flex; flex-direction: column; gap: 8px; }
+.h-res-lab { margin: 6px 0 0; font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.h-res-row { display: flex; align-items: center; gap: 8px; padding: 6px 8px 6px 4px; border-radius: 16px; border: 1.5px solid var(--line); background: var(--surface); }
+.h-res-main { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 4px 6px; border: 0; background: transparent; color: var(--text); text-align: left; font-family: inherit; cursor: pointer; }
+.h-res-bar { flex: none; width: 10px; height: 40px; border-radius: 6px; border: 0 !important; }
+.h-res-txt { min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.h-res-ru { font-family: var(--f-ru); font-size: 19px; font-weight: 700; }
+.h-res-ru.h-res-frase { font-size: 17px; }
+.h-res-fon { font-size: 13px; font-weight: 700; color: var(--muted); }
+.h-res-es { font-size: 14px; font-weight: 700; }
+.h-res-where { font-size: 12px; font-weight: 600; color: var(--muted); }
+.h-res-say { flex: none; width: 44px; height: 44px; border: 0; border-radius: 50%; background: var(--line-soft); color: var(--text); display: grid; place-items: center; cursor: pointer; }
+.h-res-say svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.h-res-tema { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 52px; padding: 12px 14px; border-radius: 16px; color: #151515; text-align: left; font-family: inherit; cursor: pointer; }
+.h-res-tema b { display: block; font-size: 15px; font-weight: 800; }
+.h-res-sub { font-size: 12px; font-weight: 600; color: var(--ink); }
+.h-res-open { flex: none; font-weight: 800; color: var(--ink); }
+.h-res-hint { margin: 2px 0 0; font-size: 12.5px; font-weight: 600; color: var(--muted); }
+
+/* Inicio: tarjeta roja con la lección del día terminada */
+.h-card-done { align-items: center; }
+.h-card-felic { text-align: center; font-size: 12px; }
+.h-ring-ok { background: #fff; }
+.h-ring-ok svg { width: 18px; height: 18px; fill: none; stroke: #c42b1c; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.h-card-repasa { font-family: var(--f-ru); font-size: 14px; font-weight: 400; line-height: 1.2; color: #fff; }
+
+/* ---------- 4.2.0 · ¡Lo lograste! (fin de las palabras del día) ---------- */
+.view-fin:not([hidden]) { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; box-sizing: border-box; }
+.view-fin { padding-bottom: calc(20px + env(safe-area-inset-bottom)); gap: 12px; }
+.fin-head { display: flex; flex-direction: column; gap: 2px; line-height: 1.05; margin-top: 6px; }
+.fin-ru { font-family: var(--f-ru); font-size: 14px; font-weight: 700; color: var(--muted); }
+.fin-title { margin: 0; font-family: "Unbounded", sans-serif; font-weight: 900; font-size: 28px; letter-spacing: -.01em; line-height: 1.1; }
+.fin-stage { position: relative; height: 196px; flex: none; }
+.fin-party { position: absolute; left: 0; top: 0; bottom: 0; width: 200px; overflow: hidden; }
+.fin-monito { position: absolute; left: 0; bottom: 0; width: 126px; aspect-ratio: 381 / 492; background: var(--h-monito) center / 100% 100% no-repeat; }
+.fin-eye { position: absolute; border-radius: 50%; background: var(--bg); transform: scaleY(0); animation: fin-blink 4s ease-in-out infinite; }
+.fin-eye-l { left: 16.4%; top: 25.4%; width: 15.8%; height: 15.4%; }
+.fin-eye-r { left: 66.2%; top: 26.2%; width: 19.6%; height: 12.2%; }
+:root[data-theme="light"] .fin-eye-l { left: 17.6%; top: 26.4%; width: 13%; height: 13.2%; }
+:root[data-theme="light"] .fin-eye-r { left: 67.2%; top: 27.4%; width: 16.4%; height: 9.6%; }
+@keyframes fin-blink { 0%, 92%, 100% { transform: scaleY(0); } 95%, 97% { transform: scaleY(1.05); } }
+.fin-spark { position: absolute; width: 24px; height: 24px; fill: none; stroke: var(--c); stroke-width: 3; stroke-linecap: round; }
+.fin-cf { position: absolute; top: 0; border-radius: 3px; opacity: 0; animation: fin-fall linear infinite; }
+@keyframes fin-fall { 0% { transform: translateY(-40px) rotate(0deg); opacity: 0; } 10% { opacity: 1; } 80% { opacity: 1; } 100% { transform: translateY(230px) rotate(340deg); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .fin-eye { animation: none; } .fin-cf { animation: none; opacity: 1; transform: translateY(var(--y, 60px)); } }
+.fin-donas { position: absolute; right: 0; top: 50%; transform: translateY(-50%); display: flex; gap: 2px; }
+.fin-dona { width: 72px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.fin-ring { position: relative; width: 64px; height: 64px; }
+.fin-ring svg { width: 64px; height: 64px; display: block; }
+.fin-ring circle { fill: none; stroke-width: 8; stroke-linecap: round; }
+.fin-ring .fin-track { stroke: #2a2a2f; }
+:root[data-theme="light"] .fin-ring .fin-track { stroke: #e4dfd3; }
+.fin-ring .num { position: absolute; inset: 0; display: grid; place-items: center; font-size: 18px; }
+.fin-lab { font-size: 11.5px; font-weight: 700; text-align: center; line-height: 1.2; }
+.fin-de { color: var(--muted); }
+.fin-ask h2 { margin: 0; font-size: 17px; font-weight: 800; }
+.fin-ask p { margin: 2px 0 0; font-size: 13px; font-weight: 600; color: var(--muted); }
+.fin-opts { display: flex; flex-direction: column; gap: 10px; }
+.fin-opt { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; border-radius: 20px; border: 0; color: #151515; text-align: left; font-family: inherit; cursor: pointer; }
+:root[data-theme="light"] .fin-opt { border: 1.5px solid #151515; }
+.fin-frases { background: #aa94fc; --fin-ink: #4936e0; }
+.fin-cajas { background: #e9b293; --fin-ink: #f04e12; }
+.fin-dialogo { background: #99acfc; --fin-ink: #2433a0; }
+.fin-ico { flex: none; width: 44px; height: 44px; border-radius: 14px; background: rgba(255, 255, 255, .7); display: grid; place-items: center; }
+.fin-ico svg, .fin-go { width: 24px; height: 24px; fill: none; stroke: var(--fin-ink); stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.fin-go { width: 18px; height: 18px; stroke-width: 2.2; flex: none; }
+.fin-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.fin-kind { font-size: 11.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--fin-ink); }
+.fin-t { font-size: 15px; font-weight: 800; }
+.fin-d { font-size: 12.5px; font-weight: 600; color: #3a3a3a; }
+.fin-end { margin-top: auto; min-height: 50px; background: var(--accent); color: #0b0b0c; border: 1.5px solid var(--accent); }
+:root[data-theme="light"] .fin-end { background: #111; color: var(--accent); border-color: #111; }
+/* 4.2.0: espacio para el buscador en el inicio */
+.home3 { gap: 10px; }
+.home3 .h-stage { min-height: 206px; }
+.home3 .h-monito { width: 42%; max-width: 180px; }
+.home3 .h-card { width: 47%; max-width: 210px; }

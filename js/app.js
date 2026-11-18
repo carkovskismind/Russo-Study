@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "4.1.0";
+const APP_VERSION = "4.2.0";
 // Botón «Reportar falla». Está activo en la beta; para activarlo también en la versión real, cambia a true.
 const REPORT_BUTTON = IS_BETA || false;
 
@@ -137,7 +137,7 @@ function toast(msg) {
   toast.t = setTimeout(() => (el.hidden = true), 2600);
 }
 
-const VIEWS = ["home", "modulos", "temas", "mapa", "tema", "palabra", "study", "frase", "dialogo", "cajas", "gram", "reto", "leer", "done", "settings"];
+const VIEWS = ["home", "modulos", "temas", "mapa", "tema", "palabra", "study", "frase", "dialogo", "cajas", "gram", "reto", "leer", "done", "fin", "settings"];
 const NAV_VIEWS = { home: "home", modulos: "modulos", temas: "modulos", settings: "settings" };
 
 function show(view) {
@@ -270,6 +270,7 @@ function appBack() {
     case "gram": return $("#gram-back").click();
     case "reto": return retoBack();
     case "done": return doneContinue();
+    case "fin": return finEnd();
     case "palabra": return $("#palabra-back").click();
     case "tema": return $("#tema-back").click();
     case "leer": return $("#leer-back").click();
@@ -530,6 +531,166 @@ function gramaticaDeck() {
   return rutaOrder(state.decks).find((d) => dudasFor(d)) || null;
 }
 
+// ---------- 4.2.0 · Buscador del inicio ----------
+function searchKey(s) {
+  return norm(String(s || "")).replace(/[-·.,;:!?¿¡«»"()]/g, " ").replace(/\s+/g, " ").trim();
+}
+function clearSearch() {
+  $("#h-q").value = "";
+  renderSearch();
+}
+function renderSearch() {
+  const raw = $("#h-q").value;
+  const q = searchKey(raw);
+  const on = q.length >= 2;
+  $("#view-home").classList.toggle("searching", raw.trim().length > 0);
+  $("#h-q-clear").hidden = !raw;
+  const box = $("#h-results");
+  box.hidden = !raw.trim();
+  if (!raw.trim()) { box.innerHTML = ""; return; }
+  if (!on) { box.innerHTML = `<p class="h-res-hint">Escribe al menos 2 letras.</p>`; return; }
+  const words = [], temas = [], frases = [];
+  const seenRu = new Set();
+  for (const d of state.decks) {
+    if (searchKey(d.title).includes(q) && !d.mine) temas.push(d);
+    for (const c of d.cards || []) {
+      if (words.length >= 30) break;
+      const keys = [c.ru, c.es, c.fonetica].map(searchKey);
+      if (!keys.some((k) => k.includes(q))) continue;
+      const id = norm(c.ru) + "|" + d.id;
+      if (seenRu.has(id)) continue;
+      seenRu.add(id);
+      const starts = keys.some((k) => k.startsWith(q) || k.split(" ").some((w) => w.startsWith(q)));
+      words.push({ c, d, starts });
+    }
+    for (const f of d.frases || []) {
+      if (frases.length >= 10) break;
+      if ([f.texto, f.es].some((x) => searchKey(x).includes(q))) frases.push({ f, d });
+    }
+  }
+  words.sort((a, b) => Number(b.starts) - Number(a.starts));
+  const speakOk = canSpeak();
+  const say = (t) => speakOk ? `<button class="h-res-say" type="button" data-say="${esc(t)}" aria-label="Escuchar ${esc(t)}">${SPEAKER}</button>` : "";
+  const lab = (t) => `<h2 class="h-res-lab">${t}</h2>`;
+  let html = "";
+  if (words.length) html += lab("Palabras") + words.slice(0, 6).map(({ c, d }) => `<div class="h-res-row"><button class="h-res-main" type="button" data-sword="${esc(c.id)}"><span class="h-res-bar card-frame pal-${visFor(d).pal}" aria-hidden="true"></span><span class="h-res-txt"><span><span class="h-res-ru" lang="ru">${esc(c.ru)}</span>${c.fonetica && fonOn() ? ` <span class="h-res-fon">${esc(c.fonetica)}</span>` : ""}</span><span class="h-res-es">${esc(c.es)}</span><span class="h-res-where">${esc(d.title)}</span></span></button>${say(c.ru)}</div>`).join("");
+  if (temas.length) html += lab("Temas") + temas.slice(0, 4).map((d) => `<button class="h-res-tema card-frame pal-${visFor(d).pal}" type="button" data-stema="${esc(d.id)}"><span><b>${esc(d.title)}</b><span class="h-res-sub">Mazo · <span class="num">${(d.cards || []).length}</span> palabras</span></span><span class="h-res-open">Abrir →</span></button>`).join("");
+  if (frases.length) html += lab("Frases") + frases.slice(0, 3).map(({ f, d }) => `<div class="h-res-row"><button class="h-res-main" type="button" data-stema="${esc(d.id)}"><span class="h-res-txt"><span class="h-res-ru h-res-frase" lang="ru">${esc(f.texto)}</span><span class="h-res-where">${esc(f.es)} · ${esc(d.title)}</span></span></button>${say(f.texto)}</div>`).join("");
+  if (!html) html = `<p class="h-res-hint">No encontré «${esc(raw.trim())}». Prueba en español, en ruso o como suena (sa-BA-ka).</p>`;
+  else html += `<p class="h-res-hint">Puedes escribir en español, en ruso o como suena (sa-BA-ka).</p>`;
+  box.innerHTML = html;
+}
+
+function streakDays(act, now) {
+  let streak = 0;
+  let day = act[dateKey(now)] ? now : now - DAY;
+  while (act[dateKey(day)]) { streak++; day -= DAY; }
+  return streak;
+}
+
+// ---------- 4.2.0 · Palabras vistas hoy (para «¡Lo lograste!») ----------
+const HOY_KEY = "russo-hoy";
+function hoyLog() {
+  const day = dateKey(Date.now());
+  try {
+    const h = JSON.parse(localStorage.getItem(HOY_KEY) || "null");
+    if (h && h.day === day && h.decks) return h;
+  } catch { /* sin almacenamiento */ }
+  return { day, decks: {} };
+}
+function markHoy(c) {
+  if (!c || !c.deckId) return;
+  const h = hoyLog();
+  const l = h.decks[c.deckId] || (h.decks[c.deckId] = []);
+  if (!l.includes(c.id)) l.push(c.id);
+  try { localStorage.setItem(HOY_KEY, JSON.stringify(h)); } catch { /* sin almacenamiento */ }
+}
+
+function finDona(val, tot, label, color, sub = true) {
+  const r = 26, c = 2 * Math.PI * r, f = tot > 0 ? c * Math.min(val / tot, 1) : 0;
+  return `<div class="fin-dona">
+    <div class="fin-ring"><svg viewBox="0 0 64 64" aria-hidden="true"><circle class="fin-track" cx="32" cy="32" r="${r}"/>${f > 0 ? `<circle cx="32" cy="32" r="${r}" stroke="${color}" stroke-dasharray="${f.toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 32 32)"/>` : ""}</svg><span class="num">${val}</span></div>
+    <span class="fin-lab">${label}${sub && tot > 0 ? `<br><span class="fin-de">de <span class="num">${tot}</span></span>` : ""}</span>
+  </div>`;
+}
+
+const FIN_ICO = {
+  frases: `<path d="M4 6h16M4 12h10M4 18h7"/>`,
+  cajas: `<rect x="3" y="9" width="8" height="11" rx="1.5"/><rect x="13" y="9" width="8" height="11" rx="1.5"/><path d="M7 5v4M17 5v4"/>`,
+  dialogo: `<path d="M4 5h16v10H9l-5 4z"/>`,
+};
+
+// Hasta 3 sugerencias (frases, cajas, diálogo) de los temas que viste hoy; primero lo que no has terminado.
+function finSuggestions() {
+  const h = hoyLog();
+  const ids = Object.keys(h.decks).sort((a, b) => h.decks[b].length - h.decks[a].length);
+  const decks = ids.map((id) => state.deckById.get(id)).filter((d) => d && !d.mine);
+  const td = todayTopic();
+  if (!decks.length) { const alt = td || state.currentDeck || suggestedDeck(); if (alt && !alt.mine) decks.push(alt); }
+  const out = [];
+  const pick = (key, test) => {
+    const cands = decks.filter(test);
+    if (!cands.length) return;
+    const fresh = cands.find((d) => {
+      if (key === "frases") return d.frases.some((f) => !store.frase(`${d.id}:${f.id}`));
+      const list = key === "cajas" ? ejOf(d).cajas : ejOf(d).dialogos;
+      return ejDone(list) < list.length;
+    });
+    out.push({ key, deck: fresh || cands[0] });
+  };
+  pick("frases", (d) => d.frases && d.frases.length);
+  pick("cajas", (d) => ejOf(d).cajas.length);
+  pick("dialogo", (d) => ejOf(d).dialogos.length);
+  return out.map(({ key, deck }) => {
+    const seen = (h.decks[deck.id] || []).map((id) => findCard(id)).filter(Boolean).map((c) => c.ru).slice(0, 3);
+    if (key === "frases") return { key, deck, kind: "Uso de las palabras", title: `Armar frases · ${deck.title}`, desc: seen.length ? `Usa ${seen.join(", ")} en frases` : "Usa tus palabras en frases" };
+    if (key === "cajas") {
+      const e = ejOf(deck).cajas.find((x) => { const r = store.ejer(x.id); return !(r && r.ok > 0); }) || ejOf(deck).cajas[0];
+      const ru = e.cajas.every((n) => /[а-яё]/i.test(n));
+      return { key, deck, kind: "Gramática", title: `Cajas · ${deck.title}`, desc: ru ? `Relaciona ${e.cajas.join(", ")}` : "Acomoda las palabras en su caja" };
+    }
+    return { key, deck, kind: "Uso de las palabras", title: `Mini diálogo · ${deck.title}`, desc: "Úsalas en una conversación corta" };
+  });
+}
+
+function openFin() {
+  const now = Date.now();
+  const today = dateKey(now);
+  activityCache = null;
+  const act = activityByDay();
+  const name = (store.settings.name || "").trim().replace(/!+$/, "");
+  $("#fin-title").innerHTML = name ? `¡Lo lograste,<br>${esc(name)}!` : "¡Lo lograste!";
+  const nNew = store.newToday(today);
+  const nRev = store.revToday(today);
+  const plan = dailyPlan();
+  const newGoal = Math.max(nNew, Math.min(store.settings.newPerDay || 15, nNew + plan.n));
+  const revGoal = nRev + plan.r;
+  const streak = streakDays(act, now);
+  $("#fin-donas").innerHTML = finDona(nNew, newGoal, "nuevas", "#4af2d5") + finDona(nRev, revGoal, "repasos", "#f2c14e") + finDona(streak, 7, "Racha activa", "#f5a3b5", false);
+  $("#fin-donas").setAttribute("aria-label", `Hoy: ${nNew} palabras nuevas de ${newGoal}, ${nRev} repasos de ${revGoal}. Racha activa de ${streak} ${streak === 1 ? "día" : "días"}.`);
+  $("#fin-donas").setAttribute("role", "img");
+  const sug = finSuggestions();
+  state.finSug = sug;
+  $("#fin-opts").innerHTML = sug.map((s, i) => `<button class="fin-opt fin-${s.key}" type="button" data-fin="${i}">
+      <span class="fin-ico"><svg viewBox="0 0 24 24" aria-hidden="true">${FIN_ICO[s.key]}</svg></span>
+      <span class="fin-txt"><span class="fin-kind">${esc(s.kind)}</span><span class="fin-t">${esc(s.title)}</span><span class="fin-d">${esc(s.desc)}</span></span>
+      <svg class="fin-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </button>`).join("");
+  $(".fin-ask").hidden = !sug.length;
+  show("fin");
+}
+
+function finEnd() {
+  // Sin sesión iniciada: primero la invitación a guardar el progreso (pantalla de siempre).
+  if (store.syncConfigured && !store.user) {
+    $("#done-title").textContent = "Práctica terminada";
+    $("#done-summary").textContent = "Tu avance de hoy ya está guardado en este dispositivo.";
+    state.doneReturn = "home";
+    return show("done");
+  }
+  go("home");
+}
+
 function renderHome() {
   activityCache = null;
   const now = Date.now();
@@ -550,9 +711,7 @@ function renderHome() {
   $("#greet-name").textContent = name ? `${name}!` : "¡Hola!";
 
   // Racha y últimos 7 días (el último es hoy; vacío hasta que practiques)
-  let streak = 0;
-  let day = act[today] ? now : now - DAY;
-  while (act[dateKey(day)]) { streak++; day -= DAY; }
+  const streak = streakDays(act, now);
   $("#h-streak-n").textContent = streak;
   $("#h-streak-u").textContent = streak === 1 ? "día" : "días";
   let dots = "";
@@ -565,6 +724,14 @@ function renderHome() {
   $("#h-dots").innerHTML = dots;
   $("#h-streak").setAttribute("aria-label", `Racha de ${streak} ${streak === 1 ? "día" : "días"}. Practicaste ${hits} de los últimos 7 días.`);
 
+  // 4.2.0: con la lección del día terminada, la tarjeta abre «¡Lo lograste!».
+  const doneToday = forToday === 0 && store.newToday(today) + store.revToday(today) > 0;
+  state.doneToday = doneToday;
+  $("#start-card").classList.toggle("done", doneToday);
+  $("#start-card .h-card-todo").hidden = doneToday;
+  $("#start-card .h-card-done").hidden = !doneToday;
+  $("#start-today").textContent = doneToday ? "Repasar otra vez →" : "Empezar →";
+
   // Tarjeta roja: tema del día y N real
   const td = todayTopic();
   const tema = td ? td.title : forToday ? "Tu práctica" : "Todo al día";
@@ -574,9 +741,10 @@ function renderHome() {
   card.setAttribute("aria-label", forToday
     ? `Hoy nos toca: ${tema}, ${forToday} ${forToday === 1 ? "palabra" : "palabras"}, tu fila del día`
     : "Hoy no hay práctica pendiente. Todo al día");
-  card.setAttribute("aria-disabled", String(forToday === 0));
-  $("#start-today").setAttribute("aria-disabled", String(forToday === 0));
-  $("#start-today").setAttribute("aria-label", forToday ? `Empezar la práctica de hoy: ${forToday} palabras` : "Hoy no hay práctica pendiente");
+  card.setAttribute("aria-disabled", String(forToday === 0 && !doneToday));
+  $("#start-today").setAttribute("aria-disabled", String(forToday === 0 && !doneToday));
+  $("#start-today").setAttribute("aria-label", forToday ? `Empezar la práctica de hoy: ${forToday} palabras` : doneToday ? "Repasar otra vez las palabras de hoy" : "Hoy no hay práctica pendiente");
+  if (doneToday) card.setAttribute("aria-label", "¡Felicidades! Terminaste tu lección diaria. Repasa su uso y gramática");
 
   // Sigue con… / O continúa en…
   const cur = suggestedDeck();
@@ -1648,6 +1816,7 @@ function settle(ok) {
       it.dayCounted = true;
       if (!prev) store.countNew(dateKey(now));
       else store.countReview(dateKey(now));
+      markHoy(it.card);
     }
     const rating = ok ? (it.hint && !it.failed ? 2 : 3) : 1;
     logActivity();
@@ -1679,6 +1848,10 @@ function next() {
 
 function finishSession() {
   const s = state.session;
+  if (s && s.daily) {
+    state.session = null;
+    return openFin();
+  }
   $("#done-title").textContent = s.audio ? "Solo audio terminado" : s.cram ? "Repaso rápido terminado" : "Práctica terminada";
   $("#done-summary").textContent =
     `${s.ok} respuestas correctas y ${s.bad} errores. ` +
@@ -3446,8 +3619,38 @@ function bind() {
     if ($("#start-today").getAttribute("aria-disabled") === "true") return toast("Hoy no hay práctica pendiente. ¡Todo al día!");
     startToday();
   };
-  $("#start-today").addEventListener("click", startIfAny);
-  $("#start-card").addEventListener("click", startIfAny);
+  $("#start-today").addEventListener("click", () => {
+    if (state.doneToday) {
+      const h = hoyLog();
+      const id = Object.keys(h.decks).sort((a, b) => h.decks[b].length - h.decks[a].length)[0];
+      const deck = state.deckById.get(id || "") || todayTopic();
+      if (deck) { state.currentDeck = deck; return startCram(deck); }
+    }
+    startIfAny();
+  });
+  $("#start-card").addEventListener("click", () => (state.doneToday ? openFin() : startIfAny()));
+  $("#fin-end").addEventListener("click", finEnd);
+  $("#fin-opts").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-fin]");
+    if (!b || !state.finSug) return;
+    const s = state.finSug[Number(b.dataset.fin)];
+    if (!s) return;
+    state.currentDeck = s.deck;
+    markCurrent(s.deck);
+    startMode(s.deck, s.key);
+  });
+  // Buscador del inicio
+  $("#h-q").addEventListener("input", renderSearch);
+  $("#h-q").addEventListener("keydown", (e) => { if (e.key === "Escape") clearSearch(); });
+  $("#h-q-clear").addEventListener("click", () => { clearSearch(); $("#h-q").focus(); });
+  $("#h-results").addEventListener("click", (e) => {
+    const say = e.target.closest("[data-say]");
+    if (say) return speak(say.dataset.say);
+    const w = e.target.closest("[data-sword]");
+    if (w) return openPalabra(w.dataset.sword);
+    const t = e.target.closest("[data-stema]");
+    if (t) return openTema(t.dataset.stema);
+  });
   $("#h-sigue").addEventListener("click", (e) => {
     const deck = state.deckById.get(e.currentTarget.dataset.deck || "");
     if (deck) { state.currentDeck = deck; markCurrent(deck); return startDeck(deck); }

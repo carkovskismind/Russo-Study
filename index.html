@@ -76,6 +76,13 @@ setTimeout(window.hideSplash,10000)})();
     <button class="avatar h-avatar" type="button" data-go="settings" aria-label="Tu perfil y ajustes"><img src="img/perfil.png" alt=""></button>
   </header>
 
+  <div class="h-search" role="search">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+    <input id="h-q" type="search" placeholder="Busca una palabra, un tema…" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search" aria-label="Buscar palabras, temas y frases">
+    <button class="h-q-clear" id="h-q-clear" type="button" aria-label="Borrar búsqueda" hidden>×</button>
+  </div>
+  <div class="h-results" id="h-results" aria-live="polite" hidden></div>
+
   <div class="h-streak" id="h-streak" role="group" aria-label="Tu racha">
     <svg class="h-flame" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5c.8 3.6 5 5.7 5 10.6a5 5 0 0 1-10 0c0-2 .9-3.3 2.2-4.4.2 1.7.9 2.6 1.9 3 .4-3.2-.1-6.2.9-9.2z"/></svg>
     <span class="h-streak-t" aria-hidden="true">Racha <span class="num" id="h-streak-n">0</span> <span id="h-streak-u">días</span></span>
@@ -85,10 +92,14 @@ setTimeout(window.hideSplash,10000)})();
   <section class="h-stage" aria-label="Tu práctica de hoy">
     <div class="h-monito" id="h-monito" aria-hidden="true"><span class="h-eye h-eye-l"></span><span class="h-eye h-eye-r"></span></div>
     <button class="h-card" id="start-card" type="button">
-      <span class="h-card-in">
+      <span class="h-card-in h-card-todo">
         <span class="h-card-hi" aria-hidden="true">Hoy nos toca…</span>
         <span class="h-card-tema" id="h-tema" aria-hidden="true">…</span>
         <span class="h-card-n" aria-hidden="true"><span class="h-ring num" id="h-count">0</span><span class="h-card-sub">palabras<br>tu fila del día</span></span>
+      </span>
+      <span class="h-card-in h-card-done" hidden>
+        <span class="h-card-hi h-card-felic" aria-hidden="true">¡Felicidades!<br>Terminaste tu lección diaria.</span>
+        <span class="h-card-n" aria-hidden="true"><span class="h-ring h-ring-ok"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span class="h-card-repasa">Repasa su uso y gramática</span></span>
       </span>
     </button>
   </section>
@@ -339,6 +350,39 @@ setTimeout(window.hideSplash,10000)})();
 </main>
 
 <!-- FIN DE SESIÓN -->
+<!-- FIN DE LAS PALABRAS DEL DÍA (4.2.0) -->
+<main id="view-fin" class="view view-fin home3" hidden>
+  <div class="fin-head">
+    <span class="fin-ru" lang="ru">Молоде́ц! · ma-la-DIETS</span>
+    <h1 class="fin-title" id="fin-title">¡Lo lograste!</h1>
+  </div>
+  <section class="fin-stage" aria-label="Tu avance de hoy">
+    <div class="fin-party" aria-hidden="true">
+      <div class="fin-monito"><span class="fin-eye fin-eye-l"></span><span class="fin-eye fin-eye-r"></span></div>
+      <svg class="fin-spark" style="left: 122px; top: 2px; --c: #4af2d5" viewBox="0 0 26 26"><path d="M13 2v7M13 17v7M2 13h7M17 13h7"/></svg>
+      <svg class="fin-spark" style="left: 0; top: 28px; --c: #f9d3ef; transform: rotate(20deg)" viewBox="0 0 26 26"><path d="M13 2v7M13 17v7M2 13h7M17 13h7"/></svg>
+      <svg class="fin-spark" style="left: 140px; top: 92px; --c: #f2c14e; transform: rotate(10deg)" viewBox="0 0 26 26"><path d="M13 2v7M13 17v7M2 13h7M17 13h7"/></svg>
+      <span class="fin-cf" style="left: 8px; width: 14px; height: 6px; background: #f2c14e; animation-duration: 3.6s; animation-delay: 0s"></span>
+      <span class="fin-cf" style="left: 34px; width: 10px; height: 10px; background: #4af2d5; animation-duration: 4.4s; animation-delay: -1.2s"></span>
+      <span class="fin-cf" style="left: 60px; width: 14px; height: 6px; background: #f5a3b5; animation-duration: 3.2s; animation-delay: -2.1s"></span>
+      <span class="fin-cf" style="left: 92px; width: 10px; height: 10px; background: #f9d3ef; animation-duration: 4s; animation-delay: -.6s"></span>
+      <span class="fin-cf" style="left: 118px; width: 14px; height: 6px; background: #4af2d5; animation-duration: 3.8s; animation-delay: -2.8s"></span>
+      <span class="fin-cf" style="left: 146px; width: 10px; height: 10px; background: #f2c14e; animation-duration: 4.6s; animation-delay: -1.7s"></span>
+      <span class="fin-cf" style="left: 176px; width: 14px; height: 6px; background: #f5a3b5; animation-duration: 3.4s; animation-delay: -3.3s"></span>
+      <span class="fin-cf" style="left: 22px; width: 8px; height: 8px; background: #f9d3ef; animation-duration: 5s; animation-delay: -3.9s"></span>
+      <span class="fin-cf" style="left: 80px; width: 8px; height: 8px; background: #f2c14e; animation-duration: 4.2s; animation-delay: -.3s"></span>
+      <span class="fin-cf" style="left: 132px; width: 8px; height: 8px; background: #f5a3b5; animation-duration: 4.8s; animation-delay: -2.4s"></span>
+    </div>
+    <div class="fin-donas" id="fin-donas"></div>
+  </section>
+  <div class="fin-ask">
+    <h2>¿Quieres usar lo que viste hoy?</h2>
+    <p>Es opcional: tu avance de hoy ya está guardado.</p>
+  </div>
+  <div class="fin-opts" id="fin-opts"></div>
+  <button class="btn btn-wide fin-end" id="fin-end" type="button">Terminar por hoy</button>
+</main>
+
 <main id="view-done" class="view view-done" hidden>
   <div class="done-box card-frame pal-mint">
     <p class="done-ru" lang="ru">Молоде́ц!</p>
