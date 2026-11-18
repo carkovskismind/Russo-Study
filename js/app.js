@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "4.0.0";
+const APP_VERSION = "4.0.1";
 // Botón «Reportar falla». Está activo en la beta; para activarlo también en la versión real, cambia a true.
 const REPORT_BUTTON = IS_BETA || false;
 
@@ -500,7 +500,7 @@ function logActivity() {
 function todayTopic() {
   const today = dateKey(Date.now());
   const newLeft = Math.max(0, store.settings.newPerDay - store.newToday(today));
-  const queue = buildQueue(state.decks.filter(deckEnabled), newLeft);
+  const queue = buildQueue(state.decks.filter(deckEnabled), newLeft, revLeftToday());
   const counts = new Map();
   for (const it of queue) counts.set(it.card.deckId, (counts.get(it.card.deckId) || 0) + 1);
   const sug = suggestedDeck();
@@ -542,7 +542,8 @@ function renderHome() {
     fresh += s.fresh;
   }
   const newLeft = Math.max(0, store.settings.newPerDay - store.newToday(today));
-  const forToday = due + Math.min(newLeft, fresh) + pickedCards().length;
+  // 4.0.1: tope diario de repasos; lo atrasado no se suma de golpe al número del día.
+  const forToday = Math.min(due, revLeftToday()) + Math.min(newLeft, fresh) + pickedCards().length;
 
   const name = (store.settings.name || "").trim().replace(/!+$/, "");
   $("#greet-name").textContent = name ? `${name}!` : "¡Hola!";
@@ -1077,7 +1078,13 @@ function renderPalabra(editingNote = false) {
 // preguntan con 4 opciones. Si fallas, la palabra pierde su progreso y
 // vuelve a la fila del día hasta que la contestes bien.
 
-function buildQueue(decks, newLimit) {
+// Repasos que aún caben hoy (tope diario, 4.0.1).
+function revLeftToday() {
+  const max = store.settings.revPerDay || 15;
+  return Math.max(0, max - store.revToday(dateKey(Date.now())));
+}
+
+function buildQueue(decks, newLimit, revLimit = Infinity) {
   const now = Date.now();
   const eod = endOfDay(now);
   const reviews = [];
@@ -1090,6 +1097,7 @@ function buildQueue(decks, newLimit) {
     }
   }
   reviews.sort((a, b) => a.due - b.due);
+  reviews.splice(Math.max(0, revLimit));
   const news = fresh.slice(0, Math.max(0, newLimit));
   const queue = [];
   let n = 0;
@@ -1104,7 +1112,7 @@ function buildQueue(decks, newLimit) {
 function startToday() {
   const today = dateKey(Date.now());
   const newLeft = Math.max(0, store.settings.newPerDay - store.newToday(today));
-  const queue = buildQueue(state.decks.filter(deckEnabled), newLeft);
+  const queue = buildQueue(state.decks.filter(deckEnabled), newLeft, revLeftToday());
   // Palabras elegidas a mano: extra, mezcladas con las demás.
   const inQueue = new Set(queue.map((it) => it.key));
   for (const c of pickedCards()) {
@@ -1618,6 +1626,7 @@ function settle(ok) {
   if (!s.cram) {
     const prev = store.card(it.key);
     if (!prev) store.countNew(dateKey(now));
+    else if (it.due !== undefined && !it.revCounted) { it.revCounted = true; store.countReview(dateKey(now)); }
     const rating = ok ? (it.hint && !it.failed ? 2 : 3) : 1;
     logActivity();
     store.setCard(it.key, schedule(prev, rating, now));
