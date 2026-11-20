@@ -1703,3 +1703,12 @@ body:not(.no-rep) .view#view-gram { padding-bottom: calc(20px + env(safe-area-in
 :root[data-theme="light"] #gram-done { border-color: #151515; }
 #view-cajas.cx-at-intro .rep-row { display: none; }
 body:not(.no-rep) .view#view-cajas { padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+
+/* ---------- Fidelidad a la maqueta Inicio A2 ---------- */
+#view-home { line-height: normal; }
+#view-home .h-top { margin-top: 6px; }
+#view-home .h-search { height: 49px; }
+.h-avatar { border: 0; background: #f4f1ea; }
+.h-avatar img { width: 56px; height: 56px; margin: 0; object-fit: cover; border-radius: 50%; }
+:root[data-theme="light"] .h-avatar { border: 2px solid #151515; box-shadow: 2px 2px 0 #151515; }
+:root[data-theme="light"] .h-avatar img { width: 100%; height: 100%; }
