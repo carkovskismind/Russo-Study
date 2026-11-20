@@ -1562,3 +1562,72 @@ body.no-fon .sheet :is(.fon, .w-fon, .ex-fon:not(.keep), .dic-fon) { display: no
 .set-sec .fon-preview { flex-direction: row; align-items: baseline; gap: 10px; background: var(--bg); }
 .set-sec .fon-preview .fon { color: #4af2d5; font-weight: 700; }
 :root[data-theme="light"] .set-sec .fon-preview .fon { color: #0b7d6c; }
+
+/* ---------- 4.2.0 · Cajas, Diccionario y Gramática (próximamente) en A2 ---------- */
+.a2-head .practice-head { gap: 12px; margin-top: 6px; }
+.a2-head .practice-head .circle-btn { flex: none; width: 46px; height: 46px; border: 1.5px solid #3a3a40; background: #18181b; }
+:root[data-theme="light"] .a2-head .practice-head .circle-btn { border-color: #d6d0c3; background: #fff; }
+.cx-dic-hint { align-self: flex-end; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; margin: -8px 0 2px; color: #4af2d5; pointer-events: none; }
+.cx-dic-hint[hidden] { display: none; }
+:root[data-theme="light"] .cx-dic-hint { color: #0b7d6c; }
+.cx-dic-hint svg { width: 20px; height: 22px; margin-right: 13px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.cx-dic-hint span { font-size: 12px; font-weight: 800; line-height: 1.25; text-align: right; }
+.a2-card { position: relative; border-radius: 28px; border: 2px solid #f4f1ea; padding: 22px 20px; display: flex; flex-direction: column; align-items: stretch !important; gap: 12px; text-align: left !important; color: #151515; background: var(--pal); }
+.a2-card.pal-pk { --pal: var(--pal-pk); } .a2-card.pal-bl { --pal: var(--pal-bl); }
+:root[data-theme="light"] .a2-card { border: 1.5px solid #151515; box-shadow: 3px 3px 0 #151515; }
+.a2-kicker { display: flex; align-items: center; gap: 10px; margin-bottom: -4px; font-size: 12px; font-weight: 800; letter-spacing: .1em; color: var(--ink); }
+.a2-kic-ico { flex: none; width: 32px; height: 32px; border-radius: 10px; background: #fff; border: 1.5px solid #151515; display: grid; place-items: center; rotate: -6deg; }
+.a2-kic-ico svg { width: 20px !important; height: 20px !important; fill: none; stroke: var(--ink) !important; stroke-width: 2 !important; stroke-linecap: round; stroke-linejoin: round; }
+.a2-h { margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.a2-h-s { font-size: 15px; font-weight: 700; color: var(--ink); }
+.a2-h-b { font-family: var(--f-name); font-size: 22px; font-weight: 900; line-height: 1.2; color: #151515; }
+.a2-u { position: relative; white-space: nowrap; }
+.a2-u svg { position: absolute; left: -2px; bottom: -6px; width: calc(100% + 4px) !important; height: 8px !important; overflow: visible; fill: none; stroke: var(--ink) !important; stroke-width: 2.6 !important; stroke-linecap: round; }
+.a2-chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 4px 0 2px; }
+.a2-chip { display: inline-flex; align-items: baseline; gap: 6px; padding: 4px 10px; border-radius: 10px; border: 1.5px solid #151515; font-family: var(--f-ru); font-size: 15px; font-weight: 700; background: var(--pal-x, #fff); color: var(--ink); }
+.a2-chip.pal-bl { background: var(--pal-bl); } .a2-chip.pal-pe { background: var(--pal-pe); } .a2-chip.pal-li { background: var(--pal-li); } .a2-chip.pal-pk { background: var(--pal-pk); }
+.gram-card .a2-chip { font-family: var(--f-ui); font-size: 14px; font-weight: 800; }
+.gram-card .a2-chip [lang="ru"] { font-family: var(--f-ru); font-weight: 700; }
+.a2-chip.c1 { background: #fff; color: #2433a0; rotate: -3deg; }
+.a2-chip.c2 { background: #ffede3; color: #b33a0c; rotate: 2deg; }
+.a2-chip.c3 { background: #f2f9d3; color: #10504b; rotate: -1.5deg; }
+.a2-steps { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.a2-steps li { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 16px; background: #fff; border: 1.5px solid #151515; font-size: 14px; font-weight: 600; line-height: 1.35; }
+.a2-steps b { font-weight: 800; }
+.a2-step-n { flex: none; width: 30px; height: 30px; border-radius: 999px; background: var(--ink); color: var(--pal); font-size: 15px; display: grid; place-items: center; }
+.a2-easy { display: inline-block; margin-top: 4px; padding: 3px 10px; border-radius: 999px; background: #f2c14e; color: #151515; border: 1.5px solid #151515; font-size: 13px; font-weight: 800; rotate: -4deg; }
+.a2-steps .cx-q-ico { vertical-align: middle; }
+.a2-go { min-height: 54px; border: 2px solid #f4f1ea; font-size: 16px; }
+:root[data-theme="light"] .a2-go { border-color: #151515; }
+.a2-ru { min-height: 52px; border: 1.5px solid #3a3a40; background: #18181b; color: var(--text); gap: 8px; }
+:root[data-theme="light"] .a2-ru { border-color: #151515; background: #fff; }
+.a2-ru-t { font-family: var(--f-ru); font-weight: 700; color: var(--muted); }
+.a2-sticker { position: absolute; top: -14px; right: 18px; rotate: 4deg; padding: 5px 12px; border-radius: 999px; background: #4af2d5; color: #0b0b0c; border: 2px solid #f4f1ea; font-size: 12px; font-weight: 800; display: inline-flex; gap: 6px; align-items: baseline; }
+.a2-sticker [lang="ru"] { font-family: var(--f-ru); font-size: 14px; font-weight: 700; }
+:root[data-theme="light"] .a2-sticker { border-color: #151515; }
+.a2-note { margin: 0; padding: 10px 12px; border-radius: 16px; background: #fff; border: 1.5px solid #151515; font-size: 14px; font-weight: 600; line-height: 1.4; color: #151515 !important; }
+.gram-card.a2-card h2 { font-size: inherit; }
+#gram-done { border: 2px solid #f4f1ea; min-height: 52px; font-size: 16px; }
+:root[data-theme="light"] #gram-done { border-color: #151515; }
+/* Juego de cajas */
+#cajas-body .cbox { border: 1.5px solid #f4f1ea; }
+:root[data-theme="light"] #cajas-body .cbox { border-color: #151515; }
+#cajas-body .cbox-wrap:nth-child(odd) .cbox { rotate: -1deg; }
+#cajas-body .cbox-wrap:nth-child(even) .cbox { rotate: 1deg; }
+#cajas-body .cx-pick { border: 1.5px solid #3a3a40; background: #18181b; font-size: 16px; }
+:root[data-theme="light"] #cajas-body .cx-pick { border-color: #d6d0c3; background: #fff; }
+#cajas-body .cx-pick.on { border: 2px solid #4af2d5; background: #18181b; box-shadow: 3px 3px 0 #4af2d5; rotate: -1.5deg; }
+:root[data-theme="light"] #cajas-body .cx-pick.on { border-color: #151515; background: #fff; box-shadow: 3px 3px 0 #4af2d5, 3px 3px 0 1.5px #151515; }
+#cajas-body .cbox-tip { background: #151515; color: #f4f1ea; border-radius: 12px; padding: 8px 10px; font-size: 12.5px; }
+#cajas-body .cbox-tip b { color: #4af2d5; }
+/* Diccionario */
+.cdic-row.card-frame { border: 1.5px solid #f4f1ea; color: #151515; }
+:root[data-theme="light"] .cdic-row.card-frame { border-color: #151515; }
+.cdic-row .dic-from, .cdic-row .cdic-arrow { color: color-mix(in srgb, var(--ink) 65%, #888); }
+.cdic-row .dic-forma { font-size: 20px; font-weight: 700; color: var(--ink); }
+.cdic-row .cdic-tag { background: #f2c14e; color: #151515; border: 1.5px solid #151515; }
+.cdic-row .cdic-q { color: var(--ink); }
+.cdic-row .cdic-es { color: #151515; }
+.cdic-row .cdic-expl { background: #151515; color: #f4f1ea; }
+.cdic-row .cdic-gram { border: 2px solid #f4f1ea; background: #4af2d5; color: #0b0b0c; min-height: 44px; padding: 0 16px; }
+.sheet-title .h-sec-head { display: inline-flex; }

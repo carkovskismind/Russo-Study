@@ -319,33 +319,36 @@ setTimeout(window.hideSplash,10000)})();
 </main>
 
 <!-- CAJAS -->
-<main id="view-cajas" class="view view-study" hidden>
+<main id="view-cajas" class="view view-study a2-head" hidden>
   <header class="practice-head">
     <button class="circle-btn" id="cajas-close" type="button" aria-label="Cerrar ejercicio">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
-    <div class="head-text"><h1 class="practice-title" id="cajas-title">Cajas</h1><span class="head-sub" id="cajas-sub"></span></div>
+    <div class="tm-ttl"><div class="h-sec-head"><h1 class="h-sec-t"><span id="cajas-title">Cajas</span><svg viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5c12-4 22 3 36 0s24-4 38-1 26 3 42-1"/></svg></h1><span class="h-sec-ru" lang="ru">коро́бки</span></div><span class="tm-sub" id="cajas-sub"></span></div>
     <button class="circle-btn" id="cajas-dic" type="button" aria-label="Diccionario" hidden>
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg>
     </button>
   </header>
+  <div class="cx-dic-hint" id="cajas-dic-hint" aria-hidden="true" hidden><svg viewBox="0 0 20 22"><path d="M8 21c-3-5-2-12 2-18"/><path d="M5 6.5l5-4 4 5"/></svg><span>¿no conoces alguna palabra?<br>búscala aquí</span></div>
   <div id="cajas-body" class="cajas-wrap"></div>
   <div class="rep-row"><button class="rep-btn" type="button" data-report hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4M5 4h12l-2 4 2 4H5"/></svg><span>Reportar falla</span></button></div>
 </main>
 
 <!-- GRAMÁTICA (próximamente) -->
-<main id="view-gram" class="view view-study" hidden>
+<main id="view-gram" class="view view-study a2-head" hidden>
   <header class="practice-head">
     <button class="circle-btn" id="gram-back" type="button" aria-label="Volver al ejercicio">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
     </button>
-    <div class="head-text"><h1 class="practice-title">Gramática</h1><span class="head-sub" id="gram-sub"></span></div>
+    <div class="tm-ttl"><div class="h-sec-head"><h1 class="h-sec-t">Gramática<svg viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5c12-4 22 3 36 0s24-4 38-1 26 3 42-1"/></svg></h1><span class="h-sec-ru" lang="ru">грамма́тика</span></div><span class="tm-sub" id="gram-sub"></span></div>
   </header>
   <div class="gram-wrap">
-    <section class="gram-card card-frame pal-lav">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg>
-      <h2>Gramática explicada<br>próximamente</h2>
-      <p>Aquí podrás repasar el dativo, el genitivo y las demás formas con calma.</p>
+    <section class="gram-card a2-card pal-bl">
+      <span class="a2-sticker"><span lang="ru">ско́ро</span> pronto</span>
+      <div class="a2-kicker"><span class="a2-kic-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg></span><span>EN CONSTRUCCIÓN</span></div>
+      <h2 class="a2-h"><span class="a2-h-s">Gramática explicada</span><span class="a2-h-b"><span class="a2-u">Muy pronto<svg viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5c12-4 22 3 36 0s24-4 38-1 26 3 42-1"/></svg></span> por aquí</span></h2>
+      <div class="a2-chips"><span class="a2-chip c1">dativo <span lang="ru">мне</span></span><span class="a2-chip c2">genitivo <span lang="ru">у меня́</span></span><span class="a2-chip c3">y más…</span></div>
+      <p class="a2-note"><b>Aquí podrás repasar</b> cada forma con calma y con ejemplos de tus ejercicios.</p>
     </section>
   </div>
   <button class="btn btn-primary btn-wide" id="gram-done" type="button">Volver al ejercicio</button>

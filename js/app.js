@@ -2622,6 +2622,7 @@ function openCajasDic() {
   if (!cajaHasDic(e)) return;
   state.cdic = { entries: e.diccionario, open: null };
   openSheet("Diccionario", cajasDicHtml(), "Si una palabra cambió, primero va su forma de diccionario.");
+  $("#sheet-title").innerHTML = `<span class="h-sec-head"><span class="h-sec-t">Diccionario<svg viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5c12-4 22 3 36 0s24-4 38-1 26 3 42-1"/></svg></span><span class="h-sec-ru" lang="ru">слова́рь</span></span>`;
 }
 
 function cajasDicHtml() {
@@ -2629,7 +2630,7 @@ function cajasDicHtml() {
   return `<div class="dic-list">${entries.map((d, i) => {
     const tag = d.tag && GRAM_TAGS[d.tag] ? d.tag : (d.tag || "");
     const isOpen = open === i && GRAM_TAGS[tag];
-    return `<div class="dic-row cdic-row">
+    return `<div class="dic-row cdic-row card-frame pal-${BOX_PALS[i % BOX_PALS.length]}">
       <span class="cdic-words">${d.dic ? `<span class="dic-from" lang="ru">${esc(d.dic)}</span><span class="cdic-arrow" aria-hidden="true">→</span>` : ""}<span class="dic-forma" lang="ru">${esc(d.forma)}</span>${tag ? `<span class="cdic-tag">${esc(tag)}</span>` : ""}${tag && GRAM_TAGS[tag] ? `<button class="cdic-q" type="button" data-ctag="${i}" aria-expanded="${!!isOpen}" aria-label="Qué quiere decir ${esc(tag)}">?</button>` : ""}</span>
       <span class="cdic-es">= ${esc(d.es)}</span>
       ${isOpen ? `<div class="cdic-expl" role="status"><span>${esc(GRAM_TAGS[tag])}</span><button class="cdic-gram" type="button" data-cgram="${i}">Repasar gramática →</button></div>` : ""}
@@ -2683,21 +2684,26 @@ function renderCajasIntro() {
   $("#cajas-dic").hidden = !cajaHasDic(e);
   $("#cajas-sub").textContent = cj.deck && cj.deck.title ? cj.deck.title : "";
   const minis = e.cajas.map((n, k) => `<span class="cx-mini card-frame pal-${BOX_PALS[k % BOX_PALS.length]}"${/[а-яё]/i.test(n) ? ' lang="ru"' : ""}>${esc(n)}</span>`).join("");
+  const help = es || cajaHasHelp(e);
+  const tilt = [-3, 2, -1.5, 2.5];
+  const minis2 = e.cajas.map((n, k) => `<span class="a2-chip pal-${BOX_PALS[k % BOX_PALS.length]}" style="rotate:${tilt[k % 4]}deg"${/[а-яё]/i.test(n) ? ' lang="ru"' : ""}>${esc(n)}</span>`).join("");
+  const steps = [];
+  steps.push(es ? `<b>Hazlo en español.</b> ¿Quieres un reto extra? ¡En ruso!` : `<b>Toca una palabra</b> y luego su caja.`);
+  if (help) steps.push(`<b>¿Dudas?</b> Toca <span class="cx-q-ico" aria-hidden="true">?</span> para ver el significado.`);
+  if (cajaHasDic(e)) steps.push(`<b>¿No conoces alguna palabra?</b> Búscala en el Diccionario <span class="cx-q-ico cx-book-ico" aria-hidden="true">${BOOK_ICO}</span> de arriba.`);
+  steps.push(`<b>Tómate tu tiempo.</b> Si descansas, tu progreso se queda guardado. <span class="a2-easy">Take it easy!</span>`);
   $("#cajas-body").innerHTML = `<div class="cx-intro">
-      <section class="cx-intro-card card-frame pal-pk">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="8" height="11" rx="1.5"/><rect x="13" y="9" width="8" height="11" rx="1.5"/><path d="M7 5v4M17 5v4"/></svg>
-        <h2>Ya conoces las palabras<br>¿Las puedes relacionar?</h2>
-        <div class="cx-minis">${minis}</div>
-        ${es ? `<p>Inténtalo en español y, si quieres un reto extra, ¡hazlo en ruso!</p>
-        <p>Si necesitas ayuda con el significado, dale clic al botón <span class="cx-q-ico" aria-hidden="true">?</span></p>` : `<p>Toca una palabra y luego su caja.</p>${cajaHasHelp(e) ? `
-        <p>Si necesitas ayuda con el significado, dale clic al botón <span class="cx-q-ico" aria-hidden="true">?</span></p>` : ""}`}
-        ${cajaHasDic(e) ? `<p class="cx-dic-line"><span>¿No conoces alguna palabra?<br>Búscala en el Diccionario con este botón de arriba:</span><span class="cx-q-ico cx-book-ico" aria-hidden="true">${BOOK_ICO}</span></p>` : ""}
-        <p class="cx-calm">Tómate tu tiempo y, si necesitas un descanso, tu progreso se queda guardado. <b>Take it easy!</b></p>
+      <section class="cx-intro-card a2-card pal-pk">
+        <div class="a2-kicker"><span class="a2-kic-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="9" width="8" height="11" rx="1.5"/><rect x="13" y="9" width="8" height="11" rx="1.5"/><path d="M7 5v4M17 5v4"/></svg></span><span>ANTES DE EMPEZAR</span></div>
+        <h2 class="a2-h"><span class="a2-h-s">Ya conoces las palabras.</span><span class="a2-h-b">¿Las puedes <span class="a2-u">relacionar?<svg viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5c12-4 22 3 36 0s24-4 38-1 26 3 42-1"/></svg></span></span></h2>
+        <div class="a2-chips">${minis2}</div>
+        <ol class="a2-steps">${steps.map((t, i) => `<li><span class="a2-step-n num" aria-hidden="true">${i + 1}</span><span>${t}</span></li>`).join("")}</ol>
       </section>
-      ${es ? `<button class="btn btn-primary btn-wide" type="button" data-cstart="es">Empezar en español</button>
-      <button class="btn btn-line btn-wide cx-ru-btn" type="button" data-cstart="ru"><span class="cx-tag">Reto extra</span>Hacerlo en ruso</button>`
-        : `<button class="btn btn-primary btn-wide" type="button" data-cstart="ru">Empezar</button>`}
+      ${es ? `<button class="btn btn-primary btn-wide a2-go" type="button" data-cstart="es">Empezar en español</button>
+      <button class="btn btn-line btn-wide cx-ru-btn a2-ru" type="button" data-cstart="ru"><span class="cx-tag">Reto extra</span>En ruso<span class="a2-ru-t" lang="ru">· по-ру́сски</span></button>`
+        : `<button class="btn btn-primary btn-wide a2-go" type="button" data-cstart="ru">Empezar</button>`}
     </div>`;
+  $("#cajas-dic-hint").hidden = true;
 }
 
 function beginCaja(lang) {
@@ -2747,6 +2753,7 @@ function renderCajas() {
   const total = e.items.length;
   const hasEs = cajaHasHelp(e);
   $("#cajas-dic").hidden = !cajaHasDic(e);
+  $("#cajas-dic-hint").hidden = !cajaHasDic(e) || c.done > 0;
   const wordLang = c.lang === "es" ? "" : ' lang="ru"';
   $("#cajas-title").textContent = "Cajas";
   $("#cajas-sub").textContent = cj.deck && cj.deck.title ? cj.deck.title : "";
