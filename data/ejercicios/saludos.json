@@ -38,6 +38,37 @@
         ]},
         {"de": "Лена", "ru": "Пока́!", "fonetica": "pa-KA", "es": "¡Adiós!"}
       ]
+    },
+    {
+      "id": "saludos-d3",
+      "titulo": "¡Perdón!",
+      "mensajes": [
+        {"de": "Анто́н", "ru": "Извини́те!", "fonetica": "iz-vi-NI-tie", "es": "¡Disculpe!"},
+        {"de": "yo", "ru": "Нет пробле́м!", "fonetica": "niet prab-LIEM", "es": "¡No hay problema!", "opciones": [
+          {"ru": "Нет пробле́м!", "fonetica": "niet prab-LIEM", "correcta": true, "porque": "¡Bien! Нет пробле́м le dice que no pasó nada."},
+          {"ru": "С пра́здником!", "fonetica": "s PRAZ-ni-kam", "correcta": false, "porque": "С пра́здником se dice en un día de fiesta; aquí él se disculpa."},
+          {"ru": "Э́то всё!", "fonetica": "E-ta fsio", "correcta": false, "porque": "Э́то всё es «eso es todo», para terminar de hablar; aquí él se disculpa."}
+        ]},
+        {"de": "Анто́н", "ru": "Спаси́бо! До встре́чи!", "fonetica": "spa-SI-ba! da FSTRIE-chi", "es": "¡Gracias! ¡Nos vemos!"},
+        {"de": "yo", "ru": "Уви́димся!", "fonetica": "u-VI-dim-sia", "es": "¡Nos vemos!", "opciones": [
+          {"ru": "Уви́димся!", "fonetica": "u-VI-dim-sia", "correcta": true, "porque": "¡Eso! Él se despide y tú también."},
+          {"ru": "Всем приве́т!", "fonetica": "fsiem pri-VIET", "correcta": false, "porque": "Всем приве́т es para saludar a un grupo al llegar; él se está despidiendo."},
+          {"ru": "До́брый ве́чер!", "fonetica": "DOB-ryi VIE-chir", "correcta": false, "porque": "До́брый ве́чер se dice al llegar; aquí ya se despiden."}
+        ]}
+      ]
+    },
+    {
+      "id": "saludos-d4",
+      "titulo": "Una pregunta amable",
+      "mensajes": [
+        {"de": "Ната́ша", "ru": "До́брый ве́чер!", "fonetica": "DOB-ryi VIE-chir", "es": "¡Buenas noches!"},
+        {"de": "yo", "ru": "До́брый ве́чер! Скажи́те, пожа́луйста, как вас зову́т?", "fonetica": "DOB-ryi VIE-chir! ska-ZHY-tie, pa-ZHA-lus-ta, kak vas za-VUT", "es": "¡Buenas noches! Dígame, por favor, ¿cómo se llama?", "opciones": [
+          {"ru": "До́брый ве́чер! Скажи́те, пожа́луйста, как вас зову́т?", "fonetica": "DOB-ryi VIE-chir! ska-ZHY-tie, pa-ZHA-lus-ta, kak vas za-VUT", "correcta": true, "porque": "¡Muy bien! скажи́те y вас: todo de usted."},
+          {"ru": "До́брый ве́чер! Скажи́, пожа́луйста, как вас зову́т?", "fonetica": "DOB-ryi VIE-chir! ska-ZHY, pa-ZHA-lus-ta, kak vas za-VUT", "correcta": false, "porque": "скажи́ es de tú y вас es de usted; para usted: скажи́те."},
+          {"ru": "Споко́йной но́чи! Скажи́те, пожа́луйста, как вас зову́т?", "fonetica": "spa-KOI-nai NO-chi! ska-ZHY-tie, pa-ZHA-lus-ta, kak vas za-VUT", "correcta": false, "porque": "Споко́йной но́чи es para despedirse antes de dormir; al llegar: до́брый ве́чер."}
+        ]},
+        {"de": "Ната́ша", "ru": "Меня́ зову́т Ната́ша.", "fonetica": "mie-NIA za-VUT na-TA-sha", "es": "Me llamo Natasha."}
+      ]
     }
   ],
   "cajas": [
@@ -69,6 +100,22 @@
         {"ru": "Извини́те!", "caja": "a usted (вы)", "porque": "Con -те es la forma de usted."},
         {"ru": "Прости́!", "caja": "a un amigo (ты)", "porque": "Sin -те es la forma de ты."},
         {"ru": "Прости́те!", "caja": "a usted (вы)", "porque": "Con -те es la forma de usted."}
+      ]
+    },
+    {
+      "id": "saludos-c3",
+      "pregunta": "¿Cuándo lo dices? Elige la caja.",
+      "cajas": ["al llegar", "al irse", "en una fiesta", "al terminar de exponer"],
+      "items": [
+        {"ru": "Всем приве́т!", "caja": "al llegar", "porque": "Saludas a todo un grupo a la vez."},
+        {"ru": "До́брый день!", "caja": "al llegar", "porque": "Es un saludo para el día, después de la mañana."},
+        {"ru": "До́брый ве́чер!", "caja": "al llegar", "porque": "Es un saludo de la tarde-noche (no es para irse a dormir)."},
+        {"ru": "До встре́чи!", "caja": "al irse", "porque": "Te despides: «hasta que nos veamos»."},
+        {"ru": "Уви́димся!", "caja": "al irse", "porque": "Te despides: «¡nos vemos!»."},
+        {"ru": "С Но́вым го́дом!", "caja": "en una fiesta", "porque": "Es la felicitación de Año Nuevo; se dice tal cual."},
+        {"ru": "С пра́здником!", "caja": "en una fiesta", "porque": "Sirve para felicitar en cualquier día de fiesta."},
+        {"ru": "Спаси́бо за внима́ние!", "caja": "al terminar de exponer", "porque": "Agradeces que te escucharon; se dice al cerrar una exposición."},
+        {"ru": "Э́то всё!", "caja": "al terminar de exponer", "porque": "«Eso es todo»: avisas que ya terminaste."}
       ]
     }
   ]

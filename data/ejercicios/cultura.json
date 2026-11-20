@@ -39,6 +39,49 @@
         ]},
         {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
       ]
+    },
+    {
+      "id": "cultura-d3",
+      "titulo": "¿Qué te gusta?",
+      "mensajes": [
+        {"de": "О́ля", "ru": "Мне нра́вится бале́т. А тебе́?", "fonetica": "mnie NRA-vit-sa ba-LIET. a tie-BIE", "es": "Me gusta el ballet. ¿Y a ti?"},
+        {"de": "yo", "ru": "Мне то́же нра́вится бале́т.", "fonetica": "mnie TO-zhe NRA-vit-sa ba-LIET", "es": "A mí también me gusta el ballet.", "opciones": [
+          {"ru": "Мне то́же нра́вится бале́т.", "fonetica": "mnie TO-zhe NRA-vit-sa ba-LIET", "correcta": true, "porque": "¡Bien! «Me gusta» empieza con мне, y то́же es «también»."},
+          {"ru": "Я то́же нра́вится бале́т.", "fonetica": "ia TO-zhe NRA-vit-sa ba-LIET", "correcta": false, "porque": "Para «me gusta» se dice мне, no я: мне нра́вится."},
+          {"ru": "Мне то́же нра́вятся бале́т.", "fonetica": "mnie TO-zhe NRA-viat-sa ba-LIET", "correcta": false, "porque": "бале́т es una sola cosa: нра́вится. нра́вятся es para varias."}
+        ]},
+        {"de": "О́ля", "ru": "А кримина́л?", "fonetica": "a kri-mi-NAL", "es": "¿Y las películas de crimen?"},
+        {"de": "yo", "ru": "Нет, мне не нра́вится кримина́л.", "fonetica": "niet, mnie nie NRA-vit-sa kri-mi-NAL", "es": "No, no me gustan las películas de crimen.", "opciones": [
+          {"ru": "Нет, мне не нра́вится кримина́л.", "fonetica": "niet, mnie nie NRA-vit-sa kri-mi-NAL", "correcta": true, "porque": "¡Eso! нет contesta y не va justo antes de нра́вится."},
+          {"ru": "Нет, мне нет нра́вится кримина́л.", "fonetica": "niet, mnie niet NRA-vit-sa kri-mi-NAL", "correcta": false, "porque": "Dentro de la frase se niega con не: не нра́вится."},
+          {"ru": "Да, мне не нра́вится кримина́л.", "fonetica": "da, mnie nie NRA-vit-sa kri-mi-NAL", "correcta": false, "porque": "Si no te gusta, contestas con нет."}
+        ]},
+        {"de": "О́ля", "ru": "А поп?", "fonetica": "a pop", "es": "¿Y el pop?"},
+        {"de": "yo", "ru": "Да, мне нра́вится поп.", "fonetica": "da, mnie NRA-vit-sa pop", "es": "Sí, me gusta el pop.", "opciones": [
+          {"ru": "Да, мне нра́вится поп.", "fonetica": "da, mnie NRA-vit-sa pop", "correcta": true, "porque": "¡Muy bien! да y мне нра́вится."},
+          {"ru": "Да, мне нра́вятся поп.", "fonetica": "da, mnie NRA-viat-sa pop", "correcta": false, "porque": "поп es una sola cosa: нра́вится."},
+          {"ru": "Да, мне не нра́вится поп.", "fonetica": "da, mnie nie NRA-vit-sa pop", "correcta": false, "porque": "Dices да, pero не lo niega. Si te gusta: мне нра́вится."}
+        ]}
+      ]
+    },
+    {
+      "id": "cultura-d4",
+      "titulo": "Un poeta",
+      "mensajes": [
+        {"de": "О́ля", "ru": "Кто э́то? Пу́шкин?", "fonetica": "kto E-ta? PUSH-kin", "es": "¿Quién es? ¿Pushkin?"},
+        {"de": "yo", "ru": "Да, э́то Пу́шкин.", "fonetica": "da, E-ta PUSH-kin", "es": "Sí, es Pushkin.", "opciones": [
+          {"ru": "Да, э́то Пу́шкин.", "fonetica": "da, E-ta PUSH-kin", "correcta": true, "porque": "¡Bien! Confirmas con да."},
+          {"ru": "Да, э́то не Пу́шкин.", "fonetica": "da, E-ta nie PUSH-kin", "correcta": false, "porque": "Dices да pero luego lo niegas con не."},
+          {"ru": "Нет, э́то Пу́шкин.", "fonetica": "niet, E-ta PUSH-kin", "correcta": false, "porque": "Dices нет pero lo confirmas: да."}
+        ]},
+        {"de": "О́ля", "ru": "А кто он?", "fonetica": "a kto on", "es": "¿Y él qué es?"},
+        {"de": "yo", "ru": "Он поэ́т.", "fonetica": "on pa-ET", "es": "Es poeta.", "opciones": [
+          {"ru": "Он поэ́т.", "fonetica": "on pa-ET", "correcta": true, "porque": "¡Eso! Pushkin es el gran poeta ruso."},
+          {"ru": "Он поэте́сса.", "fonetica": "on pa-e-TES-sa", "correcta": false, "porque": "поэте́сса es la forma de mujer; para él: поэ́т."},
+          {"ru": "Она́ поэ́т.", "fonetica": "a-NA pa-ET", "correcta": false, "porque": "Hablas de él: он."}
+        ]},
+        {"de": "О́ля", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
+      ]
     }
   ],
   "cajas": [

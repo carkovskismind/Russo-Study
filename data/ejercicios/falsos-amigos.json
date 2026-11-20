@@ -39,6 +39,31 @@
         ]},
         {"de": "Лена", "ru": "О́чень прия́тно!", "fonetica": "O-chin' pri-IAT-na", "es": "¡Mucho gusto!"}
       ]
+    },
+    {
+      "id": "falsos-amigos-d3",
+      "titulo": "¿Los conoces?",
+      "mensajes": [
+        {"de": "Света", "ru": "Вот Ро́ма и Ми́ша. Э́то твои́ друзья́?", "fonetica": "vot RO-ma i MI-sha. E-ta tva-I druz'-IA", "es": "Ahí están Román y Misha. ¿Son tus amigos?"},
+        {"de": "yo", "ru": "Да, я их хорошо́ зна́ю.", "fonetica": "da, ia ij ja-ra-SHO ZNA-iu", "es": "Sí, los conozco bien.", "opciones": [
+          {"ru": "Да, я их хорошо́ зна́ю.", "fonetica": "da, ia ij ja-ra-SHO ZNA-iu", "correcta": true, "porque": "¡Bien! Aquí их = los (a ellos): я их зна́ю."},
+          {"ru": "Да, я они́ хорошо́ зна́ю.", "fonetica": "da, ia a-NI ja-ra-SHO ZNA-iu", "correcta": false, "porque": "они́ es «ellos» cuando ellos hacen algo. «Los conozco» se dice я их зна́ю."},
+          {"ru": "Да, я его́ хорошо́ зна́ю.", "fonetica": "da, ia ie-VO ja-ra-SHO ZNA-iu", "correcta": false, "porque": "его́ es «lo» (a él, uno solo). Son dos amigos: их."}
+        ]},
+        {"de": "Света", "ru": "А куда́ идёт Ро́ма?", "fonetica": "a ku-DA i-DIOT RO-ma", "es": "¿Y a dónde va Román?"},
+        {"de": "yo", "ru": "Он идёт в класс.", "fonetica": "on i-DIOT f klas", "es": "Va al salón.", "opciones": [
+          {"ru": "Он идёт в класс.", "fonetica": "on i-DIOT f klas", "correcta": true, "porque": "¡Eso! класс es el salón de clases: в класс."},
+          {"ru": "Она́ идёт в класс.", "fonetica": "a-NA i-DIOT f klas", "correcta": false, "porque": "Ро́ма es un chico: он."},
+          {"ru": "Он идёт там.", "fonetica": "on i-DIOT tam", "correcta": false, "porque": "там contesta где (dónde está). Para куда́ dices a dónde va: в класс."}
+        ]},
+        {"de": "Света", "ru": "Почему́ он говори́т так серди́то?", "fonetica": "pa-chi-MU on ga-va-RIT tak sier-DI-ta", "es": "¿Por qué habla con tanto enojo?"},
+        {"de": "yo", "ru": "Потому́ что сейча́с ра́но.", "fonetica": "pa-ta-MU shta sie-CHAS RA-na", "es": "Porque ahora es temprano.", "opciones": [
+          {"ru": "Потому́ что сейча́с ра́но.", "fonetica": "pa-ta-MU shta sie-CHAS RA-na", "correcta": true, "porque": "¡Muy bien! ра́но = temprano. Y серди́то no es «cerdito», es «con enojo»."},
+          {"ru": "Потому́ что сейча́с ра́на.", "fonetica": "pa-ta-MU shta sie-CHAS RA-na", "correcta": false, "porque": "ра́на es una herida; temprano es ра́но."},
+          {"ru": "Почему́ сейча́с ра́но.", "fonetica": "pa-chi-MU sie-CHAS RA-na", "correcta": false, "porque": "почему́ es la pregunta «por qué»; para contestar se usa потому́ что."}
+        ]},
+        {"de": "Света", "ru": "Да, о́чень ра́но!", "fonetica": "da, O-chin' RA-na", "es": "¡Sí, muy temprano!"}
+      ]
     }
   ],
   "cajas": [
@@ -66,6 +91,25 @@
         {"ru": "Э́то ра́на.", "caja": "herida", "porque": "Es una herida."},
         {"ru": "Здесь ра́но.", "caja": "temprano", "porque": "Dice que es temprano."},
         {"ru": "Там ра́на.", "caja": "herida", "porque": "Dice que hay una herida."}
+      ]
+    },
+    {
+      "id": "falsos-amigos-c3",
+      "pregunta": "он o она́: ¿cómo dices «él» o «ella»? Fíjate también en lo que significa cada palabra.",
+      "cajas": ["он", "она́"],
+      "cajas_es": ["él (masculino)", "ella (femenino)"],
+      "cajas_uso": ["Para palabras masculinas: casi siempre terminan en consonante.", "Para palabras femeninas: casi siempre terminan en -а o -я."],
+      "items": [
+        {"ru": "класс", "caja": "он", "porque": "Es el salón o el grupo (la lección es уро́к). Termina en consonante: он.", "es": "salón de clases"},
+        {"ru": "го́лос", "caja": "он", "porque": "No es «goloso», es la voz. Termina en consonante: он.", "es": "voz"},
+        {"ru": "вид", "caja": "он", "porque": "No es la vid (planta), es la vista o el aspecto. Termina en consonante: он.", "es": "vista"},
+        {"ru": "карте́ль", "caja": "он", "porque": "Es un acuerdo entre empresas. Termina en -ь, pero es masculino: он.", "es": "cártel"},
+        {"ru": "ко́фе", "caja": "он", "porque": "Es la bebida. Termina en -е, pero es masculino: он.", "es": "café"},
+        {"ru": "коло́ния", "caja": "она́", "porque": "Tu colonia de la ciudad es райо́н. коло́ния termina en -я: она́.", "es": "colonia (territorio)"},
+        {"ru": "рука́", "caja": "она́", "porque": "Una sola palabra para mano y brazo. Termina en -а: она́.", "es": "mano / brazo"},
+        {"ru": "фами́лия", "caja": "она́", "porque": "Es el apellido, no la familia (семья́). Termina en -я: она́.", "es": "apellido"},
+        {"ru": "ра́на", "caja": "она́", "porque": "Es una herida, no una rana. Termina en -а: она́.", "es": "herida"},
+        {"ru": "ка́рта", "caja": "она́", "porque": "Es un mapa o una tarjeta; la carta que se envía es письмо́. Termina en -а: она́.", "es": "mapa / tarjeta"}
       ]
     }
   ]

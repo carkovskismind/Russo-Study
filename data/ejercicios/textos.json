@@ -57,6 +57,39 @@
         {"ru": "… статья́", "caja": "моя́", "porque": "статья́ es femenina: моя́ статья́."},
         {"ru": "… запи́ска", "caja": "моя́", "porque": "запи́ска es femenina: моя́ запи́ска."}
       ]
+    },
+    {
+      "id": "textos-c2",
+      "pregunta": "¿Para qué sirve cada texto? Elige la caja.",
+      "cajas": ["para reír", "para pagar", "papeles oficiales", "avisos"],
+      "items": [
+        {"ru": "анекдо́т", "caja": "para reír", "porque": "Falso amigo: анекдо́т es un chiste, no una anécdota."},
+        {"ru": "шу́тка", "caja": "para reír", "porque": "шу́тка es una broma."},
+        {"ru": "счёт", "caja": "para pagar", "porque": "счёт es la cuenta o la factura que pagas."},
+        {"ru": "квита́нция", "caja": "para pagar", "porque": "квита́нция es el recibo que te dan cuando pagas."},
+        {"ru": "зако́н", "caja": "papeles oficiales", "porque": "зако́н es una ley."},
+        {"ru": "контра́кт", "caja": "papeles oficiales", "porque": "контра́кт es un contrato: se firma."},
+        {"ru": "заявле́ние", "caja": "papeles oficiales", "porque": "заявле́ние es una solicitud formal («a quien corresponda»)."},
+        {"ru": "объявле́ние", "caja": "avisos", "porque": "объявле́ние es un anuncio, por ejemplo en la pared o en internet."},
+        {"ru": "оповеще́ние", "caja": "avisos", "porque": "оповеще́ние es un aviso o alerta para mucha gente."},
+        {"ru": "уведомле́ние", "caja": "avisos", "porque": "уведомле́ние es una notificación, por ejemplo la del celular."}
+      ]
+    },
+    {
+      "id": "textos-c3",
+      "pregunta": "¿Uno o varios? Algunas palabras son plural en ruso aunque en español no lo parezcan.",
+      "cajas": ["мой / моя́", "мои́"],
+      "cajas_es": ["mi (una cosa)", "mis (varias cosas)"],
+      "cajas_uso": ["Para una sola cosa: мой si es masculina, моя́ si es femenina.", "Para varias cosas, sin importar el género."],
+      "items": [
+        {"ru": "… стихи́", "caja": "мои́", "porque": "En ruso no se dice «poesía», sino «versos», varios: мои́ стихи́.", "es": "versos, poesía"},
+        {"ru": "… пра́вила", "caja": "мои́", "porque": "Son «las reglas», varias: мои́ пра́вила.", "es": "reglas, reglamento"},
+        {"ru": "… перегово́ры", "caja": "мои́", "porque": "Esta palabra solo existe en plural: мои́ перегово́ры.", "es": "negociaciones"},
+        {"ru": "… диало́г", "caja": "мой / моя́", "porque": "Es uno solo y masculino: мой диало́г.", "es": "diálogo"},
+        {"ru": "… разгово́р", "caja": "мой / моя́", "porque": "Es una sola conversación, y la palabra es masculina: мой разгово́р.", "es": "conversación"},
+        {"ru": "… конве́рт", "caja": "мой / моя́", "porque": "Es un solo sobre: мой конве́рт.", "es": "sobre"},
+        {"ru": "… фотогра́фия", "caja": "мой / моя́", "porque": "Es una sola foto, y la palabra es femenina: моя́ фотогра́фия.", "es": "fotografía"}
+      ]
     }
   ]
 }

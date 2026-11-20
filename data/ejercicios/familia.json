@@ -39,6 +39,30 @@
         ]},
         {"de": "Лена", "ru": "О́чень прия́тно! До свида́ния!", "fonetica": "O-chin' pri-IAT-na! da svi-DA-ni-ia", "es": "¡Mucho gusto! ¡Hasta luego!"}
       ]
+    },
+    {
+      "id": "familia-d3",
+      "titulo": "En la fiesta",
+      "mensajes": [
+        {"de": "Лена", "ru": "Кто э́то? Хозя́йка?", "fonetica": "kto E-ta? ja-ZIAI-ka", "es": "¿Quién es ella? ¿La anfitriona?"},
+        {"de": "yo", "ru": "Да, она́ хозя́йка. А он хозя́ин.", "fonetica": "da, a-NA ja-ZIAI-ka. a on ja-ZIA-in", "es": "Sí, ella es la anfitriona. Y él es el anfitrión.", "opciones": [
+          {"ru": "Да, она́ хозя́йка. А он хозя́ин.", "fonetica": "da, a-NA ja-ZIAI-ka. a on ja-ZIA-in", "correcta": true, "porque": "¡Bien! Para ella, хозя́йка; para él, хозя́ин."},
+          {"ru": "Да, она́ хозя́ин. А он хозя́йка.", "fonetica": "da, a-NA ja-ZIA-in. a on ja-ZIAI-ka", "correcta": false, "porque": "Quedaron al revés: ella es хозя́йка (con -ка, femenino) y él es хозя́ин."},
+          {"ru": "Нет, она́ хозя́йка. А он хозя́ин.", "fonetica": "niet, a-NA ja-ZIAI-ka. a on ja-ZIA-in", "correcta": false, "porque": "Ле́на acertó, así que la respuesta empieza con да."}
+        ]},
+        {"de": "Лена", "ru": "А э́то твоя́ знако́мая?", "fonetica": "a E-ta tva-IA zna-KO-ma-ia", "es": "¿Y ella es tu conocida?"},
+        {"de": "yo", "ru": "Нет, э́то моя́ ро́дственница.", "fonetica": "niet, E-ta ma-IA ROTST-vien-ni-tsa", "es": "No, es mi pariente.", "opciones": [
+          {"ru": "Нет, э́то моя́ ро́дственница.", "fonetica": "niet, E-ta ma-IA ROTST-vien-ni-tsa", "correcta": true, "porque": "¡Eso! ро́дственница es una mujer: моя́."},
+          {"ru": "Нет, э́то мой ро́дственница.", "fonetica": "niet, E-ta moi ROTST-vien-ni-tsa", "correcta": false, "porque": "ро́дственница es femenina: моя́ ро́дственница."},
+          {"ru": "Нет, э́то моя́ ро́дственник.", "fonetica": "niet, E-ta ma-IA ROTST-vien-nik", "correcta": false, "porque": "ро́дственник es un hombre; para una mujer se dice ро́дственница."}
+        ]},
+        {"de": "Лена", "ru": "А она́? Твоя́ сосе́дка?", "fonetica": "a a-NA? tva-IA sa-SIET-ka", "es": "¿Y ella? ¿Tu vecina?"},
+        {"de": "yo", "ru": "Да, моя́ сосе́дка.", "fonetica": "da, ma-IA sa-SIET-ka", "es": "Sí, mi vecina.", "opciones": [
+          {"ru": "Да, моя́ сосе́дка.", "fonetica": "da, ma-IA sa-SIET-ka", "correcta": true, "porque": "¡Muy bien! сосе́дка es femenina: моя́."},
+          {"ru": "Да, мой сосе́дка.", "fonetica": "da, moi sa-SIET-ka", "correcta": false, "porque": "сосе́дка es femenina: моя́ сосе́дка."},
+          {"ru": "Да, моя́ сосе́д.", "fonetica": "da, ma-IA sa-SIED", "correcta": false, "porque": "сосе́д es un vecino (hombre); para una mujer: сосе́дка."}
+        ]}
+      ]
     }
   ],
   "cajas": [
@@ -56,6 +80,94 @@
         {"ru": "… де́душка", "caja": "мой", "porque": "де́душка es masculino aunque termine en -а: мой де́душка."},
         {"ru": "… ба́бушка", "caja": "моя́", "porque": "ба́бушка es femenina: моя́ ба́бушка."},
         {"ru": "… семья́", "caja": "моя́", "porque": "семья́ es femenina: моя́ семья́."}
+      ]
+    },
+    {
+      "id": "familia-c2",
+      "pregunta": "он u она́: ¿de quién se habla? Ojo con las terminaciones.",
+      "cajas": ["он", "она́"],
+      "cajas_es": ["él", "ella"],
+      "cajas_uso": ["Para hablar de un hombre o un niño.", "Para hablar de una mujer o una niña."],
+      "items": [
+        {"ru": "оте́ц", "caja": "он", "porque": "оте́ц es «padre»: он.", "es": "padre"},
+        {"ru": "мать", "caja": "она́", "porque": "мать termina en -ь, pero es «madre»: она́.", "es": "madre"},
+        {"ru": "сын", "caja": "он", "porque": "сын es «hijo»: он.", "es": "hijo"},
+        {"ru": "дочь", "caja": "она́", "porque": "дочь termina en -ь, pero es «hija»: она́.", "es": "hija"},
+        {"ru": "дя́дя", "caja": "он", "porque": "дя́дя termina en -я, pero es «tío»: он.", "es": "tío"},
+        {"ru": "тётя", "caja": "она́", "porque": "тётя es «tía»: она́.", "es": "tía"},
+        {"ru": "мужчи́на", "caja": "он", "porque": "мужчи́на termina en -а, pero es «hombre»: он.", "es": "hombre"},
+        {"ru": "же́нщина", "caja": "она́", "porque": "же́нщина es «mujer»: она́.", "es": "mujer"}
+      ]
+    },
+    {
+      "id": "familia-c3",
+      "pregunta": "¿En qué parte de la familia va cada pariente?",
+      "cajas": ["padres e hijos", "abuelos y nietos", "tíos, primos y sobrinos"],
+      "diccionario": [
+        {"forma": "по отцу́", "dic": "оте́ц", "tag": "frase fija", "es": "por parte del papá (paterno)"},
+        {"forma": "по ма́тери", "dic": "мать", "tag": "frase fija", "es": "por parte de la mamá (materno)"}
+      ],
+      "items": [
+        {"ru": "сыно́к", "caja": "padres e hijos", "porque": "сыно́к es «hijito», la forma cariñosa de сын."},
+        {"ru": "до́чка", "caja": "padres e hijos", "porque": "до́чка es «hijita», la forma cariñosa de дочь."},
+        {"ru": "дед по отцу́", "caja": "abuelos y nietos", "porque": "дед es «abuelo»; по отцу́ quiere decir «por parte del papá»."},
+        {"ru": "ба́бушка по ма́тери", "caja": "abuelos y nietos", "porque": "ба́бушка por parte de la mamá: la abuela materna."},
+        {"ru": "внук", "caja": "abuelos y nietos", "porque": "внук es «nieto»."},
+        {"ru": "вну́чка", "caja": "abuelos y nietos", "porque": "вну́чка es «nieta»."},
+        {"ru": "племя́нник", "caja": "tíos, primos y sobrinos", "porque": "племя́нник es «sobrino»."},
+        {"ru": "племя́нница", "caja": "tíos, primos y sobrinos", "porque": "племя́нница es «sobrina»."},
+        {"ru": "двою́родный брат", "caja": "tíos, primos y sobrinos", "porque": "двою́родный брат es «primo»."},
+        {"ru": "двою́родная сестра́", "caja": "tíos, primos y sobrinos", "porque": "двою́родная сестра́ es «prima»."}
+      ]
+    },
+    {
+      "id": "familia-c4",
+      "pregunta": "¿Es parte de la pareja o de la familia política?",
+      "cajas": ["la pareja", "familia política"],
+      "items": [
+        {"ru": "муж", "caja": "la pareja", "porque": "муж es «esposo»."},
+        {"ru": "жена́", "caja": "la pareja", "porque": "жена́ es «esposa»."},
+        {"ru": "жени́х", "caja": "la pareja", "porque": "жени́х es el novio que se va a casar."},
+        {"ru": "неве́ста", "caja": "la pareja", "porque": "неве́ста es la novia que se va a casar."},
+        {"ru": "тесть", "caja": "familia política", "porque": "тесть es el papá de la esposa."},
+        {"ru": "тёща", "caja": "familia política", "porque": "тёща es la mamá de la esposa."},
+        {"ru": "свёкор", "caja": "familia política", "porque": "свёкор es el papá del esposo."},
+        {"ru": "свекро́вь", "caja": "familia política", "porque": "свекро́вь es la mamá del esposo."},
+        {"ru": "зять", "caja": "familia política", "porque": "зять es «yerno», el esposo de tu hija."},
+        {"ru": "неве́стка", "caja": "familia política", "porque": "неве́стка es «nuera», la esposa de tu hijo. Ojo: неве́ста es la novia."}
+      ]
+    },
+    {
+      "id": "familia-c5",
+      "pregunta": "¿Es un niño o un joven?",
+      "cajas": ["niños", "jóvenes"],
+      "items": [
+        {"ru": "ребёнок", "caja": "niños", "porque": "ребёнок es una criatura, un niño o niña pequeños."},
+        {"ru": "ма́льчик", "caja": "niños", "porque": "ма́льчик es «niño»."},
+        {"ru": "де́вочка", "caja": "niños", "porque": "де́вочка es «niña». Una muchacha ya es де́вушка."},
+        {"ru": "малы́ш", "caja": "niños", "porque": "малы́ш es un bebé o un niño muy pequeño."},
+        {"ru": "малы́шка", "caja": "niños", "porque": "малы́шка es una bebé o una niña muy pequeña."},
+        {"ru": "па́рень", "caja": "jóvenes", "porque": "па́рень es «chico, muchacho»."},
+        {"ru": "де́вушка", "caja": "jóvenes", "porque": "де́вушка es «muchacha, señorita». Una niña es де́вочка."},
+        {"ru": "молодо́й челове́к", "caja": "jóvenes", "porque": "молодо́й челове́к es un hombre joven. También sirve para llamarlo: «¡joven!»."}
+      ]
+    },
+    {
+      "id": "familia-c6",
+      "pregunta": "¿Se pregunta кто o что? Persona o cosa.",
+      "cajas": ["кто", "что"],
+      "cajas_es": ["¿quién?", "¿qué?"],
+      "cajas_uso": ["Se usa para personas (y también para animales).", "Se usa para cosas, ideas y datos."],
+      "items": [
+        {"ru": "граждани́н", "caja": "кто", "porque": "граждани́н es una persona (ciudadano): кто.", "es": "ciudadano"},
+        {"ru": "кум", "caja": "кто", "porque": "кум es el compadre, una persona: кто.", "es": "compadre"},
+        {"ru": "кума́", "caja": "кто", "porque": "кума́ es la comadre, una persona: кто.", "es": "comadre"},
+        {"ru": "крёстный", "caja": "кто", "porque": "Parece adjetivo, pero крёстный es una persona (padrino): кто.", "es": "padrino"},
+        {"ru": "крёстная", "caja": "кто", "porque": "Parece adjetivo, pero крёстная es una persona (madrina): кто.", "es": "madrina"},
+        {"ru": "знако́мый", "caja": "кто", "porque": "Parece adjetivo, pero знако́мый es una persona (conocido): кто.", "es": "conocido"},
+        {"ru": "о́тчество", "caja": "что", "porque": "о́тчество es un dato, el nombre que viene del papá: что.", "es": "patronímico"},
+        {"ru": "фами́лия", "caja": "что", "porque": "фами́лия es el apellido (¡no la familia!): что.", "es": "apellido"},
+        {"ru": "и́мя", "caja": "что", "porque": "и́мя es un dato, el nombre: что.", "es": "nombre"}
       ]
     }
   ]

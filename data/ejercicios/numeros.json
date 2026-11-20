@@ -39,6 +39,44 @@
         ]},
         {"de": "Лена", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
       ]
+    },
+    {
+      "id": "numeros-d3",
+      "titulo": "Los cuartos del hotel",
+      "mensajes": [
+        {"de": "Лена", "ru": "Твой но́мер — пятьдеся́т?", "fonetica": "tvoi NO-mier — pit'-die-SIAT?", "es": "¿Tu cuarto es el cincuenta?"},
+        {"de": "yo", "ru": "Нет, пятьсо́т.", "fonetica": "niet, pit'-SOT", "es": "No, el quinientos.", "opciones": [
+          {"ru": "Нет, пятьсо́т.", "fonetica": "niet, pit'-SOT", "correcta": true, "porque": "¡Bien! Las centenas del 500 al 900 terminan en -сот: пятьсо́т."},
+          {"ru": "Нет, пятьдеся́т.", "fonetica": "niet, pit'-die-SIAT", "correcta": false, "porque": "пятьдеся́т es 50, lo que preguntó Ле́на. Tu cuarto es el 500: пятьсо́т."},
+          {"ru": "Нет, пятна́дцать.", "fonetica": "niet, pit-NA-tsat'", "correcta": false, "porque": "пятна́дцать es 15. Para 500 se dice пятьсо́т."}
+        ]},
+        {"de": "Лена", "ru": "А мой — восемьсо́т?", "fonetica": "a moi — va-siem'-SOT?", "es": "¿Y el mío es el ochocientos?"},
+        {"de": "yo", "ru": "Нет, твой — девятьсо́т.", "fonetica": "niet, tvoi — die-vit'-SOT", "es": "No, el tuyo es el novecientos.", "opciones": [
+          {"ru": "Нет, твой — девятьсо́т.", "fonetica": "niet, tvoi — die-vit'-SOT", "correcta": true, "porque": "¡Eso! 900 = девятьсо́т: también termina en -сот."},
+          {"ru": "Нет, твой — девяно́сто.", "fonetica": "niet, tvoi — die-vi-NOS-ta", "correcta": false, "porque": "девяно́сто es 90. Para 900 se dice девятьсо́т."},
+          {"ru": "Нет, твой — девятна́дцать.", "fonetica": "niet, tvoi — die-vit-NA-tsat'", "correcta": false, "porque": "девятна́дцать es 19. Para 900 se dice девятьсо́т."}
+        ]},
+        {"de": "Лена", "ru": "Спаси́бо!", "fonetica": "spa-SI-ba", "es": "¡Gracias!"}
+      ]
+    },
+    {
+      "id": "numeros-d4",
+      "titulo": "¿Par o impar?",
+      "mensajes": [
+        {"de": "Миша", "ru": "Мой но́мер — со́рок два. А твой?", "fonetica": "moi NO-mier — SO-rak dva. a tvoi?", "es": "Mi cuarto es el cuarenta y dos. ¿Y el tuyo?"},
+        {"de": "yo", "ru": "Мой — со́рок пять.", "fonetica": "moi — SO-rak piat'", "es": "El mío es el cuarenta y cinco.", "opciones": [
+          {"ru": "Мой — со́рок пять.", "fonetica": "moi — SO-rak piat'", "correcta": true, "porque": "¡Bien! Hablas de tu но́мер, que es masculino: мой."},
+          {"ru": "Моя́ — со́рок пять.", "fonetica": "ma-IA — SO-rak piat'", "correcta": false, "porque": "но́мер es masculino: мой."},
+          {"ru": "Мой — со́рок два.", "fonetica": "moi — SO-rak dva", "correcta": false, "porque": "со́рок два es el cuarto de Ми́ша; el tuyo es el 45: со́рок пять."}
+        ]},
+        {"de": "Миша", "ru": "Со́рок два — чётный но́мер. А со́рок пять?", "fonetica": "SO-rak dva — CHIOT-nyi NO-mier. a SO-rak piat'?", "es": "Cuarenta y dos es un número par. ¿Y cuarenta y cinco?"},
+        {"de": "yo", "ru": "Нечётный.", "fonetica": "nie-CHIOT-nyi", "es": "Impar.", "opciones": [
+          {"ru": "Нечётный.", "fonetica": "nie-CHIOT-nyi", "correcta": true, "porque": "¡Eso! 45 termina en 5, así que es impar: нечётный."},
+          {"ru": "Чётный.", "fonetica": "CHIOT-nyi", "correcta": false, "porque": "чётный es «par»; 45 es impar: нечётный."},
+          {"ru": "Пя́тый.", "fonetica": "PIA-tyi", "correcta": false, "porque": "пя́тый es «quinto». Aquí la pregunta es si es par o impar: нечётный."}
+        ]},
+        {"de": "Миша", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
+      ]
     }
   ],
   "cajas": [
@@ -72,6 +110,98 @@
         {"ru": "де́вять", "base": "9", "caja": "нечётный", "porque": "9 es impar."},
         {"ru": "де́сять", "base": "10", "caja": "чётный", "porque": "10 es par."},
         {"ru": "двена́дцать", "base": "12", "caja": "чётный", "porque": "12 es par."}
+      ]
+    },
+    {
+      "id": "numeros-c3",
+      "pregunta": "¿Del 11 al 19 o una decena? Fíjate en el final.",
+      "cajas": ["11–19", "decenas"],
+      "items": [
+        {"ru": "трина́дцать", "base": "13", "caja": "11–19", "porque": "трина́дцать = 13. Del 11 al 19 terminan en -на́дцать."},
+        {"ru": "три́дцать", "base": "30", "caja": "decenas", "porque": "три́дцать = 30. No lleva -на-: es decena."},
+        {"ru": "пятна́дцать", "base": "15", "caja": "11–19", "porque": "пятна́дцать = 15: termina en -на́дцать."},
+        {"ru": "пятьдеся́т", "base": "50", "caja": "decenas", "porque": "пятьдеся́т = 50: del 50 al 80 terminan en -десят."},
+        {"ru": "шестна́дцать", "base": "16", "caja": "11–19", "porque": "шестна́дцать = 16: termina en -на́дцать."},
+        {"ru": "шестьдеся́т", "base": "60", "caja": "decenas", "porque": "шестьдеся́т = 60: termina en -десят."},
+        {"ru": "семна́дцать", "base": "17", "caja": "11–19", "porque": "семна́дцать = 17: termina en -на́дцать."},
+        {"ru": "се́мьдесят", "base": "70", "caja": "decenas", "porque": "се́мьдесят = 70: termina en -десят."},
+        {"ru": "восемна́дцать", "base": "18", "caja": "11–19", "porque": "восемна́дцать = 18: termina en -на́дцать."},
+        {"ru": "во́семьдесят", "base": "80", "caja": "decenas", "porque": "во́семьдесят = 80: termina en -десят."}
+      ]
+    },
+    {
+      "id": "numeros-c4",
+      "pregunta": "¿Qué tan grande es el número? Elige la caja.",
+      "cajas": ["menos de 100", "100–999", "1000 o más"],
+      "items": [
+        {"ru": "ноль", "base": "0", "caja": "menos de 100", "porque": "ноль = 0."},
+        {"ru": "оди́ннадцать", "base": "11", "caja": "menos de 100", "porque": "оди́ннадцать = 11."},
+        {"ru": "четы́рнадцать", "base": "14", "caja": "menos de 100", "porque": "четы́рнадцать = 14 (-на́дцать)."},
+        {"ru": "со́рок", "base": "40", "caja": "menos de 100", "porque": "со́рок = 40. Es una forma especial: no se parece a четы́ре."},
+        {"ru": "девяно́сто", "base": "90", "caja": "menos de 100", "porque": "девяно́сто = 90, otra forma especial."},
+        {"ru": "четы́реста", "base": "400", "caja": "100–999", "porque": "четы́реста = 400. No lo confundas con со́рок (40)."},
+        {"ru": "шестьсо́т", "base": "600", "caja": "100–999", "porque": "шестьсо́т = 600: -сот marca las centenas."},
+        {"ru": "семьсо́т", "base": "700", "caja": "100–999", "porque": "семьсо́т = 700: -сот marca las centenas."},
+        {"ru": "ты́сяча", "base": "1000", "caja": "1000 o más", "porque": "ты́сяча = 1000."},
+        {"ru": "миллио́н", "base": "1 000 000", "caja": "1000 o más", "porque": "миллио́н = 1 000 000."}
+      ]
+    },
+    {
+      "id": "numeros-c5",
+      "pregunta": "Los ordinales cambian como los adjetivos. ¿Van con он, она́, оно́ u они́? Mira la terminación.",
+      "cajas": ["он", "она́", "оно́", "они́"],
+      "cajas_es": ["él (masculino)", "ella (femenino)", "neutro", "ellos, ellas (plural)"],
+      "cajas_uso": ["Terminan en -ый, -ой o -ий: пе́рвый, второ́й, тре́тий.", "Terminan en -ая o -ья: пе́рвая, тре́тья.", "Terminan en -ое o -ье: пе́рвое, тре́тье.", "Terminan en -ые o -ьи: пе́рвые, тре́тьи."],
+      "items": [
+        {"ru": "нулево́й", "caja": "он", "porque": "нулево́й termina en -ой: masculino.", "es": "cero (ordinal)"},
+        {"ru": "тре́тий", "caja": "он", "porque": "тре́тий termina en -ий: masculino. Es un poco irregular.", "es": "tercero"},
+        {"ru": "тре́тья", "caja": "она́", "porque": "тре́тья termina en -ья: femenino.", "es": "tercera"},
+        {"ru": "тре́тье", "caja": "оно́", "porque": "тре́тье termina en -ье: neutro.", "es": "tercero (neutro)"},
+        {"ru": "тре́тьи", "caja": "они́", "porque": "тре́тьи termina en -ьи: plural.", "es": "terceros, terceras"},
+        {"ru": "пе́рвая", "caja": "она́", "porque": "пе́рвая termina en -ая: femenino.", "es": "primera"},
+        {"ru": "пе́рвое", "caja": "оно́", "porque": "пе́рвое termina en -ое: neutro.", "es": "primero (neutro)"},
+        {"ru": "втора́я", "caja": "она́", "porque": "втора́я termina en -ая: femenino.", "es": "segunda"},
+        {"ru": "вторы́е", "caja": "они́", "porque": "вторы́е termina en -ые: plural.", "es": "segundos, segundas"}
+      ]
+    },
+    {
+      "id": "numeros-c6",
+      "pregunta": "¿Dice cuántos (ско́лько) o en qué lugar va (како́й)?",
+      "cajas": ["ско́лько", "како́й"],
+      "cajas_es": ["¿cuántos?", "¿cuál? (en qué lugar)"],
+      "cajas_uso": ["Responde con una cantidad: четы́ре, шесть, де́сять.", "Responde con un orden: четвёртый, пя́тый… Se ven como adjetivos."],
+      "items": [
+        {"ru": "четы́ре", "caja": "ско́лько", "porque": "четы́ре = 4, una cantidad.", "es": "cuatro"},
+        {"ru": "четвёртый", "caja": "како́й", "porque": "четвёртый = cuarto: dice el lugar en orden.", "es": "cuarto"},
+        {"ru": "пя́тый", "caja": "како́й", "porque": "пя́тый = quinto: dice el orden.", "es": "quinto"},
+        {"ru": "шесть", "caja": "ско́лько", "porque": "шесть = 6, una cantidad.", "es": "seis"},
+        {"ru": "шесто́й", "caja": "како́й", "porque": "шесто́й = sexto: dice el orden.", "es": "sexto"},
+        {"ru": "седьмо́й", "caja": "како́й", "porque": "седьмо́й = séptimo: dice el orden.", "es": "séptimo"},
+        {"ru": "восьмо́й", "caja": "како́й", "porque": "восьмо́й = octavo: dice el orden.", "es": "octavo"},
+        {"ru": "девя́тый", "caja": "како́й", "porque": "девя́тый = noveno: dice el orden.", "es": "noveno"},
+        {"ru": "де́сять", "caja": "ско́лько", "porque": "де́сять = 10, una cantidad.", "es": "diez"},
+        {"ru": "деся́тый", "caja": "како́й", "porque": "деся́тый = décimo: dice el orden.", "es": "décimo"}
+      ]
+    },
+    {
+      "id": "numeros-c7",
+      "pregunta": "El 1 y el 2 cambian con el género. ¿Está bien o hay un error?",
+      "cajas": ["está bien", "hay un error"],
+      "diccionario": [
+        {"forma": "письмо́", "es": "carta"},
+        {"forma": "и́мя", "es": "nombre (de pila)"},
+        {"forma": "сестры́", "dic": "сестра́", "tag": "después de 2, 3, 4", "es": "hermana"},
+        {"forma": "бра́та", "dic": "брат", "tag": "después de 2, 3, 4", "es": "hermano"}
+      ],
+      "items": [
+        {"ru": "одна́ ма́ма", "caja": "está bien", "porque": "ма́ма es femenina: одна́ ма́ма. ¡Bien!"},
+        {"ru": "одно́ письмо́", "caja": "está bien", "porque": "письмо́ termina en -о, es neutro: одно́ письмо́."},
+        {"ru": "одно́ и́мя", "caja": "está bien", "porque": "и́мя termina en -мя y es neutro: одно́ и́мя."},
+        {"ru": "две сестры́", "caja": "está bien", "porque": "сестра́ es femenina: две сестры́."},
+        {"ru": "одна́ па́па", "caja": "hay un error", "porque": "па́па es masculino aunque termine en -а: оди́н па́па."},
+        {"ru": "одно́ подру́га", "caja": "hay un error", "porque": "подру́га es femenina: одна́ подру́га."},
+        {"ru": "два сестры́", "caja": "hay un error", "porque": "сестра́ es femenina, así que va две: две сестры́."},
+        {"ru": "две бра́та", "caja": "hay un error", "porque": "брат es masculino, así que va два: два бра́та."}
       ]
     }
   ]
