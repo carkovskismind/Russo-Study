@@ -1631,3 +1631,4 @@ body.no-fon .sheet :is(.fon, .w-fon, .ex-fon:not(.keep), .dic-fon) { display: no
 .cdic-row .cdic-expl { background: #151515; color: #f4f1ea; }
 .cdic-row .cdic-gram { border: 2px solid #f4f1ea; background: #4af2d5; color: #0b0b0c; min-height: 44px; padding: 0 16px; }
 .sheet-title .h-sec-head { display: inline-flex; }
+.tm-tile.open .t-big { position: static; }
