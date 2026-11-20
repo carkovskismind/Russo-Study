@@ -697,8 +697,8 @@ function finSuggestions() {
   return out.map(({ key, deck, idx, hit }) => {
     const ws = hit.slice(0, 3).join(", ");
     if (key === "frases") return { key, deck, idx, kind: "Uso de las palabras", title: `Armar frases · ${deck.title}`, desc: `Usa ${ws} en frases` };
-    if (key === "cajas") return { key, deck, idx, kind: "Gramática", title: `Cajas · ${deck.title}`, desc: `Acomoda ${ws} en su caja` };
-    return { key, deck, idx, kind: "Uso de las palabras", title: `Mini diálogo · ${deck.title}`, desc: `Usa ${ws} en una conversación corta` };
+    if (key === "cajas") return { key, deck, idx, kind: "Gramática", title: `Cajas · ${deck.title}`, desc: `Relaciona ${ws}` };
+    return { key, deck, idx, kind: "Uso de las palabras", title: `Mini diálogo · ${deck.title}`, desc: "Úsalas en una conversación corta" };
   });
 }
 

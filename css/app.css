@@ -528,11 +528,12 @@ svg { display: block; }
 .beta-tag {
   position: fixed; z-index: 999; pointer-events: none;
   top: calc(env(safe-area-inset-top, 0px) + 6px); left: 50%; transform: translateX(-50%);
-  font-family: var(--f-ui); font-size: 10px; font-weight: 800; letter-spacing: 0.14em;
-  padding: 3px 9px; border-radius: 999px;
-  color: var(--accent-ink); background: var(--accent);
-  opacity: 0.9;
+  font-family: var(--f-ui); font-size: 11px; font-weight: 800; letter-spacing: .08em;
+  padding: 3px 10px; border-radius: 999px; line-height: normal;
+  color: #0b0b0c; background: #4af2d5;
 }
+/* Maquetas: en claro la etiqueta lleva marco negro (salvo en el Mapa) */
+:root[data-theme="light"] body:not(.on-mapa) .beta-tag { border: 1.5px solid #151515; }
 
 /* ---------- 3.0 · Frases: error explicado y Diccionario ---------- */
 :root { --accent-text: #4af2d5; --chip-bg: #18181b; --sheet-bg: #18181b; --row-line: #3a3a40; }
@@ -1202,10 +1203,10 @@ body.no-fon .sheet :is(.fon, .w-fon, .ex-fon:not(.keep), .dic-fon) { display: no
 
 /* ---------- 4.2.0 · ¡Lo lograste! (fin de las palabras del día) ---------- */
 .view-fin:not([hidden]) { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; box-sizing: border-box; }
-.view-fin { padding-top: 22px; padding-bottom: calc(20px + env(safe-area-inset-bottom)); gap: 12px; }
+.view-fin { line-height: normal; padding-top: 22px; padding-bottom: calc(20px + env(safe-area-inset-bottom)); gap: 12px; }
 .fin-head { display: flex; flex-direction: column; gap: 2px; line-height: 1.05; margin-top: 6px; }
 .fin-ru { font-family: var(--f-ru); font-size: 14px; font-weight: 700; color: var(--muted); }
-.fin-title { margin: 0; font-family: "Unbounded", sans-serif; font-weight: 900; font-size: 28px; letter-spacing: -.01em; line-height: 1.1; }
+.fin-title { margin: 0; font-family: "Unbounded", sans-serif; font-weight: 900; font-size: 28px; letter-spacing: -.01em; line-height: 1.05; }
 .fin-stage { position: relative; height: 196px; flex: none; }
 .fin-party { position: absolute; left: 0; top: 0; bottom: 0; width: 200px; overflow: hidden; }
 .fin-monito { position: absolute; left: 0; bottom: 0; width: 126px; aspect-ratio: 381 / 492; background: var(--h-monito) center / 100% 100% no-repeat; }
@@ -1247,7 +1248,7 @@ body.no-fon .sheet :is(.fon, .w-fon, .ex-fon:not(.keep), .dic-fon) { display: no
   box-shadow: 0 0 0 1.5px #f3efe6, 4px 5px 0 1.5px #0b0b0c, 4px 5px 0 3px #f3efe6; transform: rotate(-1deg); }
 .fin-opt:nth-child(2) { transform: rotate(.8deg); }
 .fin-opt:nth-child(3) { transform: rotate(-.6deg); }
-:root[data-theme="light"] .fin-opts { gap: 16px; }
+:root[data-theme="light"] .fin-opts { gap: 16px; margin-top: 0; }
 :root[data-theme="light"] .fin-opt { border: 1.5px solid #151515; box-shadow: 3px 3px 0 #151515; }
 .fin-frases { background: #aa94fc; --fin-ink: #4936e0; }
 .fin-cajas { background: #e9b293; --fin-ink: #f04e12; }
@@ -1263,6 +1264,9 @@ body.no-fon .sheet :is(.fon, .w-fon, .ex-fon:not(.keep), .dic-fon) { display: no
 .fin-end-ru { font-family: var(--f-ru); font-size: 15px; font-weight: 700; opacity: .8; }
 :root[data-theme="light"] .fin-end { background: #111; color: var(--accent); border-color: #111; }
 .home3 { gap: 10px; }
+.view-fin.home3 { gap: 12px; }
+/* Maqueta FinDia: el botón queda a 20 px del borde (sin el espacio extra de las pantallas sin barra) */
+body:not(.no-rep) .view.view-fin.home3 { padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
 
 /* ---------- 4.2.0 · Sombra 3D (oscuro: doble marco crema; claro: marco negro) ---------- */
 .sh3d { border: 2px solid #0b0b0c; box-shadow: 0 0 0 1.5px #f3efe6, 4px 5px 0 1.5px #0b0b0c, 4px 5px 0 3px #f3efe6; }
