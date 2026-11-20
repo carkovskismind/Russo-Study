@@ -1270,10 +1270,14 @@ body:not(.no-rep) .view.view-fin.home3 { padding-bottom: calc(20px + env(safe-ar
 /* ---------- 4.2.0 · Sombra 3D (oscuro: doble marco crema; claro: marco negro) ---------- */
 .sh3d { border: 2px solid #0b0b0c; box-shadow: 0 0 0 1.5px #f3efe6, 4px 5px 0 1.5px #0b0b0c, 4px 5px 0 3px #f3efe6; }
 :root[data-theme="light"] .sh3d { border: 1.5px solid #151515; box-shadow: 3px 3px 0 #151515; }
-.tm-sigue { position: absolute; z-index: 2; top: -11px; right: 16px; background: #4af2d5; color: #0b0b0c; font-size: 11px; font-weight: 800; letter-spacing: .02em; padding: 3px 9px; border-radius: 999px; border: 1.5px solid #0b0b0c; white-space: nowrap; transform: rotate(3deg); pointer-events: none; }
+.tm-sigue { position: absolute; z-index: 2; top: -11px; right: 18px; background: #4af2d5; color: #0b0b0c; font-size: 11px; font-weight: 800; letter-spacing: .02em; padding: 3px 9px; border-radius: 999px; border: 1.5px solid #0b0b0c; white-space: nowrap; transform: rotate(3deg); pointer-events: none; }
 
 /* ---------- 4.2.0 · Temas A2 ---------- */
-.tm-head { display: flex; align-items: center; gap: 12px; margin-top: 6px; }
+.tm-head { display: flex; align-items: center; gap: 12px; margin-top: 12px; height: 46px; flex: none; }
+/* Maquetas A2 (Temas): 12 px entre bloques e interlineado normal */
+#view-temas { gap: 12px; line-height: normal; }
+#view-temas .h-search { height: 49px; }
+.tm-chips { padding-bottom: 0; }
 .tm-head .circle-btn, .ms-top .circle-btn { flex: none; width: 46px; height: 46px; border: 1.5px solid #3a3a40; background: #18181b; }
 :root[data-theme="light"] .tm-head .circle-btn, :root[data-theme="light"] .ms-top .circle-btn { border-color: #d6d0c3; background: #fff; }
 .tm-ttl { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
@@ -1293,12 +1297,18 @@ body:not(.no-rep) .view.view-fin.home3 { padding-bottom: calc(20px + env(safe-ar
 .tm-tile:nth-child(even) { rotate: .8deg; }
 :root[data-theme="light"] .tm-tile { border: 1.5px solid #151515; box-shadow: 3px 3px 0 #151515; }
 .tm-tile > .t-body { gap: 0; }
+.tm-tile > .t-body > * { flex-shrink: 0; }
 .ti-ico { position: absolute; right: -4px; top: -3px; color: var(--ink); pointer-events: none; }
 .ti-ico svg { width: 40px; height: 40px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 .ti-num { font-size: 26px; color: var(--ink-red); right: -2px; top: -5px; }
 .ti-n { font-size: 11.5px; font-weight: 800; color: var(--ink); }
 .pal-red .ti-n, .pal-red .ti-ru, .pal-red .tb-ru { color: #3a3a3a; }
-.ti-title { padding-right: 34px; margin-top: 4px; font-size: 15px; font-weight: 800; line-height: 1.2; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.ti-title { padding-right: 34px; margin-top: 4px; font-size: 15px; font-weight: 800; line-height: 1.2; }
+.ms-card .tm-sigue { right: 16px; }
+/* Tema sugerido cerrado (maqueta A2Temas): «Sigue aquí», número y ruso en gris, dibujo un poco más abajo */
+.tm-tile .t-body .tm-sigue { top: -24px; right: -2px; }
+.tm-tile.sug .t-body .ti-n, .tm-tile.sug .t-body .ti-ru { color: #3a3a3a; }
+.tm-tile.sug .t-body .ti-ico:not(.ti-num) { top: 3px; }
 .ti-ru { margin-top: 3px; font-family: var(--f-ru); font-weight: 700; font-size: 15px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ti-foot { margin-top: auto; display: flex; flex-direction: column; gap: 5px; }
 .ti-meta { font-size: 12px; font-weight: 700; color: #3a3a3a; }

@@ -961,8 +961,9 @@ function tileHtml(deck) {
   const forToday = words && !words.off ? todayWords(deck) : 0;
   const small = extra.map((m) => `<button class="tm-ej" type="button" data-mode="${m.key}" data-deck="${esc(deck.id)}"${m.off ? " disabled" : ""}><b>${esc(m.full || m.label)}</b><span>${esc(m.sub)}</span></button>`);
   if (dudasFor(deck)) small.push(`<button class="tm-ej" type="button" data-act="dudas" data-deck="${esc(deck.id)}"><b>Dudas</b><span>gramática</span></button>`);
-  return `<article class="tile tm-tile card-frame pal-${v.pal}${open ? " open" : ""}" data-tile="${esc(deck.id)}" tabindex="${open ? -1 : 0}" role="button" aria-expanded="${open}" aria-label="${esc(deck.title)}, ${s.total} ${unit}, ${s.pct}%">
+  return `<article class="tile tm-tile card-frame pal-${v.pal}${open ? " open" : ""}${sug ? " sug" : ""}" data-tile="${esc(deck.id)}" tabindex="${open ? -1 : 0}" role="button" aria-expanded="${open}" aria-label="${esc(deck.title)}, ${s.total} ${unit}, ${s.pct}%">
     <div class="t-body">
+      ${sug ? `<span class="tm-sigue">Sigue aquí</span>` : ""}
       ${temaIco(deck)}
       <span class="ti-n">${num}</span>
       <span class="ti-title">${esc(deck.title)}</span>
