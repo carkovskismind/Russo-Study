@@ -1151,7 +1151,7 @@ body.no-fon .sheet :is(.fon, .w-fon, .ex-fon:not(.keep), .dic-fon) { display: no
 .cdic-arrow { color: var(--muted); font-weight: 700; }
 .cdic-words .dic-forma { font-family: var(--f-ru); }
 .cdic-tag { font-size: 11.5px; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: var(--pal-lav, #ece7ff); color: var(--ink-lav, #4936e0); }
-.cdic-q { position: relative; width: 44px; height: 44px; margin: -10px -10px -10px -8px; border: 0; background: transparent; color: var(--text); font-size: 13px; font-weight: 800; cursor: pointer; }
+.cdic-q { position: relative; width: 44px; height: 44px; margin: -10px; border: 0; background: transparent; color: var(--text); font-size: 13px; font-weight: 800; cursor: pointer; }
 .cdic-q::before { content: ""; position: absolute; inset: 10px; border-radius: 999px; border: 1.5px solid currentColor; }
 .cdic-q[aria-expanded="true"]::before { background: var(--line-soft, rgba(127,127,127,.15)); }
 .cdic-es { font-size: 14px; font-weight: 700; }
@@ -1647,3 +1647,59 @@ body:not(.no-rep) .view.view-fin.home3 { padding-bottom: calc(20px + env(safe-ar
 .cdic-row .cdic-gram { border: 2px solid #f4f1ea; background: #4af2d5; color: #0b0b0c; min-height: 44px; padding: 0 16px; }
 .sheet-title .h-sec-head { display: inline-flex; }
 .tm-tile.open .t-big { position: static; }
+
+/* ---------- 4.2.0 · Fidelidad a la maqueta Cajas K4 (Reto Palabras básicas) ---------- */
+#view-cajas, #view-gram { gap: 12px; line-height: normal; }
+.a2-head .practice-head { margin-top: 12px; height: 46px; flex: none; }
+#cajas-body.cajas-wrap { gap: 12px; }
+.cx-dic-hint { margin: -10px 0 2px; }
+#cajas-body .cboxes { align-items: stretch; }
+#cajas-body .cbox-wrap { display: flex; }
+#cajas-body .cbox-wrap .cbox { flex: 1; }
+#cajas-body .cbox.ready { outline: 0; }
+#cajas-body .cbox-name { line-height: normal; }
+#cajas-body .cx-pick { min-height: 44px; }
+
+:root[data-theme="light"] #cajas-body .cbox { box-shadow: 3px 3px 0 #151515; }
+:root[data-theme="light"] #cajas-body .cx-pick.on { border: 2px solid #151515; background: #4af2d5; color: #0b0b0c; box-shadow: 3px 3px 0 #151515; }
+.a2-steps .cx-q-ico { width: 20px; height: 20px; margin: -2px 2px 0; font-size: 11px; line-height: 1; border-color: var(--ink); color: var(--ink); }
+.a2-ru .cx-tag { border: 1.5px solid #151515; rotate: -4deg; }
+.cx-intro { gap: 16px; }
+
+/* ---------- Fidelidad a la maqueta Cajas K5 (Diccionario de Cajas) ---------- */
+body.sheet-on .beta-tag { z-index: 30; }
+#cajas-dic.on { background: #4af2d5; border-color: #4af2d5; color: #0b0b0c; }
+:root[data-theme="light"] #cajas-dic.on { border-color: #151515; }
+.sheet-cdic .sheet { height: calc(100vh - 102px); height: calc(100dvh - 102px); max-height: none; line-height: normal; }
+.sheet-cdic .sheet > .row-between { margin-top: -4px; gap: 12px; }
+.sheet-cdic #sheet-close { width: 44px; height: 44px; border: 1.5px solid #3a3a40; background: transparent; }
+:root[data-theme="light"] .sheet-cdic #sheet-close { border-color: #d6d0c3; }
+.sheet-cdic .sheet-sub { margin: 0; }
+.sheet-cdic .sheet-body { flex: 1; min-height: 0; padding: 2px 14px 24px 4px; -webkit-mask-image: linear-gradient(#000 88%, transparent); mask-image: linear-gradient(#000 88%, transparent); }
+.cdic-row { padding: 8px 14px; gap: 4px; }
+.cdic-row:not(.open) .dic-forma { color: var(--text); }
+.cdic-row:not(.open) .dic-from, .cdic-row:not(.open) .cdic-arrow { color: var(--muted); }
+.cdic-row:not(.open) .cdic-q { color: var(--text); }
+.cdic-row.open { padding: 10px 14px 12px; gap: 6px; }
+.cdic-row.open .cdic-q { margin-left: auto; }
+.cdic-row.open .cdic-q::before { background: rgba(0, 0, 0, .08); }
+:root[data-theme="light"] .cdic-row.open { box-shadow: 3px 3px 0 #151515; }
+.cdic-row .cdic-tag { padding: 2px 8px; }
+.cdic-row .cdic-expl { gap: 10px; margin-top: 2px; }
+.cdic-expl b { font-weight: 800; color: #4af2d5; }
+.cdic-expl [lang="ru"] { font-family: var(--f-ru); font-weight: 700; }
+.cdic-row .cdic-gram { min-height: 48px; }
+
+/* ---------- Fidelidad a las maquetas Cajas K0 (intro) y K6 (Gramática) ---------- */
+:root[data-theme="light"] .a2-card { border: 2px solid #151515; box-shadow: none; }
+:root[data-theme="light"] .gram-card.a2-card { box-shadow: 4px 4px 0 #151515; }
+:root[data-theme="light"] .a2-sticker { box-shadow: 3px 3px 0 #151515; }
+:root[data-theme="light"] .a2-ru { border-color: #d6d0c3; }
+.gram-card.a2-card { padding: 22px 20px 24px; }
+.gram-card .a2-h-b { font-size: 24px; }
+.gram-card .a2-chip.c1 [lang="ru"] { color: #4a5288; }
+body:not(.no-rep) .view#view-gram { padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+#gram-done { min-height: 52px; border: 2px solid #f4f1ea; font-size: 16px; font-weight: 800; flex: none; }
+:root[data-theme="light"] #gram-done { border-color: #151515; }
+#view-cajas.cx-at-intro .rep-row { display: none; }
+body:not(.no-rep) .view#view-cajas { padding-bottom: calc(20px + env(safe-area-inset-bottom)); }

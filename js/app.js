@@ -2355,6 +2355,9 @@ function closeSheet() {
   for (const el of $$(".view, #nav")) el.inert = false;
   state.dic = null;
   state.cdic = null;
+  wrap.classList.remove("sheet-cdic");
+  const cdb = $("#cajas-dic");
+  if (cdb) cdb.classList.remove("on");
   const done = () => { wrap.hidden = true; };
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce) done(); else setTimeout(done, 260);
@@ -2665,7 +2668,7 @@ function cajaHasHelp(e) {
 
 // Diccionario de Cajas: explicación corta de cada forma (botón ? junto a la etiqueta).
 const GRAM_TAGS = {
-  "dativo": "Dativo: la forma de la persona a quien le pasa algo. я cambia a мне: мне стра́шно = me da miedo.",
+  "dativo": "Dativo: la forma de la persona a quien le pasa algo. мне стра́шно = me da miedo.",
   "у + genitivo": "Después de у, я cambia a меня́. У меня́ есть… = tengo…",
   "palabra de estado": "Palabra de estado: dice cómo te sientes. Va con мне: мне смешно́ = me da risa.",
   "neutro": "Neutro: la forma para cosas neutras (las que terminan en -о o -е). мой cambia a моё: э́то моё письмо́ = es mi carta.",
@@ -2682,8 +2685,19 @@ function openCajasDic() {
   const e = cj.list[cj.ci];
   if (!cajaHasDic(e)) return;
   state.cdic = { entries: e.diccionario, open: null };
+  cj.dicSeen = true; // maqueta K5: la flecha «búscala aquí» ya no sale después de abrirlo
+  $("#cajas-dic-hint").hidden = true;
+  $("#cajas-dic").classList.add("on");
+  $("#sheet").classList.add("sheet-cdic");
   openSheet("Diccionario", cajasDicHtml(), "Si una palabra cambió, primero va su forma de diccionario.");
   $("#sheet-title").innerHTML = `<span class="h-sec-head"><span class="h-sec-t">Diccionario<svg viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5c12-4 22 3 36 0s24-4 38-1 26 3 42-1"/></svg></span><span class="h-sec-ru" lang="ru">слова́рь</span></span>`;
+}
+
+// «Dativo: la forma…» → etiqueta en negritas y el ruso con su letra.
+function gramTagHtml(t) {
+  const m = String(t).match(/^([^:]{1,30}):\s*(.*)$/);
+  const ru = (x) => esc(x).replace(/[а-яё\u0301]+(?:\s+[а-яё\u0301]+)*/gi, (w) => `<span lang="ru">${w}</span>`);
+  return m ? `<b>${esc(m[1])}:</b> ${ru(m[2])}` : ru(t);
 }
 
 function cajasDicHtml() {
@@ -2691,10 +2705,10 @@ function cajasDicHtml() {
   return `<div class="dic-list">${entries.map((d, i) => {
     const tag = d.tag && GRAM_TAGS[d.tag] ? d.tag : (d.tag || "");
     const isOpen = open === i && GRAM_TAGS[tag];
-    return `<div class="dic-row cdic-row card-frame pal-${BOX_PALS[i % BOX_PALS.length]}">
+    return `<div class="dic-row cdic-row${isOpen ? ` open card-frame pal-${BOX_PALS[i % BOX_PALS.length]}` : ""}">
       <span class="cdic-words">${d.dic ? `<span class="dic-from" lang="ru">${esc(d.dic)}</span><span class="cdic-arrow" aria-hidden="true">→</span>` : ""}<span class="dic-forma" lang="ru">${esc(d.forma)}</span>${tag ? `<span class="cdic-tag">${esc(tag)}</span>` : ""}${tag && GRAM_TAGS[tag] ? `<button class="cdic-q" type="button" data-ctag="${i}" aria-expanded="${!!isOpen}" aria-label="Qué quiere decir ${esc(tag)}">?</button>` : ""}</span>
       <span class="cdic-es">= ${esc(d.es)}</span>
-      ${isOpen ? `<div class="cdic-expl" role="status"><span>${esc(GRAM_TAGS[tag])}</span><button class="cdic-gram" type="button" data-cgram="${i}">Repasar gramática →</button></div>` : ""}
+      ${isOpen ? `<div class="cdic-expl" role="status"><span>${gramTagHtml(GRAM_TAGS[tag])}</span><button class="cdic-gram" type="button" data-cgram="${i}">Repasar gramática →</button></div>` : ""}
     </div>`;
   }).join("")}</div>`;
 }
@@ -2752,7 +2766,7 @@ function renderCajasIntro() {
   const steps = [];
   steps.push(es ? `<b>Hazlo en español.</b> ¿Quieres un reto extra? ¡En ruso!` : `<b>Toca una palabra</b> y luego su caja.`);
   if (help) steps.push(`<b>¿Dudas?</b> Toca <span class="cx-q-ico" aria-hidden="true">?</span> para ver el significado.`);
-  if (cajaHasDic(e)) steps.push(`<b>¿No conoces alguna palabra?</b> Búscala en el Diccionario <span class="cx-q-ico cx-book-ico" aria-hidden="true">${BOOK_ICO}</span> de arriba.`);
+  // Maqueta K0: el Diccionario se señala con la flecha de arriba (sin paso aparte).
   steps.push(`<b>Tómate tu tiempo.</b> Si descansas, tu progreso se queda guardado. <span class="a2-easy">Take it easy!</span>`);
   $("#cajas-body").innerHTML = `<div class="cx-intro">
       <section class="cx-intro-card a2-card pal-pk">
@@ -2766,12 +2780,14 @@ function renderCajasIntro() {
         : `<button class="btn btn-primary btn-wide a2-go" type="button" data-cstart="ru">Empezar</button>`}
     </div>`;
   $("#cajas-dic-hint").hidden = true;
+  $("#view-cajas").classList.add("cx-at-intro"); // maqueta K0: sin «Reportar falla» antes de empezar
 }
 
 function beginCaja(lang) {
   const cj = state.cj;
   const e = cj.list[cj.ci];
   cj.stage = "play";
+  $("#view-cajas").classList.remove("cx-at-intro");
   cj.cur = {
     e,
     lang: lang === "es" && cajaHasEs(e) ? "es" : "ru",
@@ -2815,7 +2831,7 @@ function renderCajas() {
   const total = e.items.length;
   const hasEs = cajaHasHelp(e);
   $("#cajas-dic").hidden = !cajaHasDic(e);
-  $("#cajas-dic-hint").hidden = !cajaHasDic(e) || c.done > 0;
+  $("#cajas-dic-hint").hidden = !cajaHasDic(e) || c.done === total || !!cj.dicSeen; // maquetas K4/K5: visible mientras juegas, hasta abrir el Diccionario
   const wordLang = c.lang === "es" ? "" : ' lang="ru"';
   $("#cajas-title").textContent = "Cajas";
   $("#cajas-sub").textContent = cj.deck && cj.deck.title ? cj.deck.title : "";
@@ -2852,7 +2868,7 @@ function renderCajas() {
   }
   const hint = finished
     ? (c.fail ? "Listo. Repásalo cuando quieras." : "¡Todo en su caja!")
-    : esc(e.pregunta) + " Toca una palabra y luego su caja.";
+    : `Toca una ${e.items.some((it) => /…|\s/.test(String(cajaWord(c, it)).trim())) ? "frase" : "palabra"} y luego su caja.`;
   $("#cajas-body").innerHTML = `${countRow}<p class="cx-hint cx-hint-main">${hint}</p>
     <div class="cboxes" style="--n:${e.cajas.length}">${boxes}</div>
     ${msg}
