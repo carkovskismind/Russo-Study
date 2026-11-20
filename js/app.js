@@ -621,35 +621,84 @@ const FIN_ICO = {
 };
 
 // Hasta 3 sugerencias (frases, cajas, diálogo) de los temas que viste hoy; primero lo que no has terminado.
+// Palabras de hoy en forma comparable: sin acento, minúsculas, ё → е.
+function normRu(t) {
+  return String(t || "").normalize("NFD").replace(/\u0301/g, "").normalize("NFC").toLowerCase().replace(/ё/g, "е");
+}
+function ruTokens(t) {
+  return normRu(t).split(/[^а-яa-z-]+/).filter(Boolean);
+}
+// Las palabras que estudiaste hoy (de la práctica del día), listas para buscar en los ejercicios.
+function hoyWords(h) {
+  const out = [];
+  for (const ids of Object.values(h.decks)) {
+    for (const id of ids) {
+      const c = findCard(id);
+      if (!c || !c.ru) continue;
+      for (const part of String(c.ru).split(/[\/,;()]+/)) {
+        const toks = ruTokens(part);
+        if (toks.length) out.push({ ru: part.trim(), toks });
+      }
+    }
+  }
+  return out;
+}
+// ¿Aparece la palabra en el texto? Una palabra sola acepta su forma cambiada (Москва́ → Москве́).
+function textHas(toks, w) {
+  if (w.toks.length > 1) return normRu(toks.join(" ")).includes(w.toks.join(" "));
+  const x = w.toks[0];
+  if (x.length < 4) return toks.includes(x);
+  const stem = x.slice(0, -1);
+  return toks.some((t) => t === x || (t.startsWith(stem) && t.length <= x.length + 2));
+}
+function wordsIn(text, words) {
+  const toks = ruTokens(text);
+  const hit = [];
+  for (const w of words) if (textHas(toks, w) && !hit.includes(w.ru)) hit.push(w.ru);
+  return hit;
+}
+
 function finSuggestions() {
   const h = hoyLog();
-  const ids = Object.keys(h.decks).sort((a, b) => h.decks[b].length - h.decks[a].length);
-  const decks = ids.map((id) => state.deckById.get(id)).filter((d) => d && !d.mine);
-  const td = todayTopic();
-  if (!decks.length) { const alt = td || state.currentDeck || suggestedDeck(); if (alt && !alt.mine) decks.push(alt); }
-  const out = [];
-  const pick = (key, test) => {
-    const cands = decks.filter(test);
-    if (!cands.length) return;
-    const fresh = cands.find((d) => {
-      if (key === "frases") return d.frases.some((f) => !store.frase(`${d.id}:${f.id}`));
-      const list = key === "cajas" ? ejOf(d).cajas : ejOf(d).dialogos;
-      return ejDone(list) < list.length;
-    });
-    out.push({ key, deck: fresh || cands[0] });
+  const words = hoyWords(h);
+  if (!words.length) return [];
+  // Primero los temas que estudiaste hoy; después los demás.
+  const today = Object.keys(h.decks).sort((a, b) => h.decks[b].length - h.decks[a].length);
+  const decks = [...today.map((id) => state.deckById.get(id)), ...state.decks.filter((d) => !today.includes(d.id))]
+    .filter((d) => d && !d.mine && deckEnabled(d));
+  const textOf = {
+    frases: (f) => [f.texto, ...(f.fichas || [])].join(" "),
+    cajas: (e) => (e.items || []).map((it) => `${it.ru || ""} ${it.base || ""}`).join(" "),
+    dialogo: (d) => (d.mensajes || []).map((m) => [m.ru, ...((m.opciones || []).map((o) => o.ru))].join(" ")).join(" "),
   };
-  pick("frases", (d) => d.frases && d.frases.length);
-  pick("cajas", (d) => ejOf(d).cajas.length);
-  pick("dialogo", (d) => ejOf(d).dialogos.length);
-  return out.map(({ key, deck }) => {
-    const seen = (h.decks[deck.id] || []).map((id) => findCard(id)).filter(Boolean).map((c) => c.ru).slice(0, 3);
-    if (key === "frases") return { key, deck, kind: "Uso de las palabras", title: `Armar frases · ${deck.title}`, desc: seen.length ? `Usa ${seen.join(", ")} en frases` : "Usa tus palabras en frases" };
-    if (key === "cajas") {
-      const e = ejOf(deck).cajas.find((x) => { const r = store.ejer(x.id); return !(r && r.ok > 0); }) || ejOf(deck).cajas[0];
-      const ru = e.cajas.every((n) => /[а-яё]/i.test(n));
-      return { key, deck, kind: "Gramática", title: `Cajas · ${deck.title}`, desc: ru ? `Relaciona ${e.cajas.join(", ")}` : "Acomoda las palabras en su caja" };
+  const listOf = {
+    frases: (d) => d.frases || [],
+    cajas: (d) => ejOf(d).cajas,
+    dialogo: (d) => ejOf(d).dialogos,
+  };
+  const doneOf = {
+    frases: (d, f) => !!store.frase(`${d.id}:${f.id}`),
+    cajas: (d, e) => { const r = store.ejer(e.id); return !!(r && r.ok > 0); },
+    dialogo: (d, e) => { const r = store.ejer(e.id); return !!(r && r.ok > 0); },
+  };
+  const out = [];
+  for (const key of ["frases", "cajas", "dialogo"]) {
+    let best = null;
+    for (const d of decks) {
+      listOf[key](d).forEach((item, idx) => {
+        const hit = wordsIn(textOf[key](item), words);
+        if (!hit.length) return;
+        const score = hit.length * 10 + (doneOf[key](d, item) ? 0 : 5);
+        if (!best || score > best.score) best = { key, deck: d, idx, hit, score };
+      });
     }
-    return { key, deck, kind: "Uso de las palabras", title: `Mini diálogo · ${deck.title}`, desc: "Úsalas en una conversación corta" };
+    if (best) out.push(best);
+  }
+  return out.map(({ key, deck, idx, hit }) => {
+    const ws = hit.slice(0, 3).join(", ");
+    if (key === "frases") return { key, deck, idx, kind: "Uso de las palabras", title: `Armar frases · ${deck.title}`, desc: `Usa ${ws} en frases` };
+    if (key === "cajas") return { key, deck, idx, kind: "Gramática", title: `Cajas · ${deck.title}`, desc: `Acomoda ${ws} en su caja` };
+    return { key, deck, idx, kind: "Uso de las palabras", title: `Mini diálogo · ${deck.title}`, desc: `Usa ${ws} en una conversación corta` };
   });
 }
 
@@ -676,7 +725,10 @@ function openFin() {
       <span class="fin-txt"><span class="fin-kind">${esc(s.kind)}</span><span class="fin-t">${esc(s.title)}</span><span class="fin-d">${esc(s.desc)}</span></span>
       <svg class="fin-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
     </button>`).join("");
-  $(".fin-ask").hidden = !sug.length;
+  $(".fin-ask h2").hidden = !sug.length;
+  $(".fin-ask p").textContent = sug.length
+    ? "Es opcional: tu avance de hoy ya está guardado."
+    : "Por ahora ningún ejercicio usa las palabras de hoy. Tu avance ya está guardado: ¡nos vemos mañana!";
   show("fin");
 }
 
@@ -1015,13 +1067,13 @@ function markCurrent(deck) {
 }
 
 // Inicia un modo de práctica de un tema.
-function startMode(deck, key) {
+function startMode(deck, key, first) {
   state.currentDeck = deck;
   markCurrent(deck);
   if (key === "words") return startDeck(deck);
-  if (key === "frases") return startFrases(deck);
-  if (key === "dialogo") return startDialogo(deck);
-  if (key === "cajas") return startCajas(deck);
+  if (key === "frases") return startFrases(deck, first);
+  if (key === "dialogo") return startDialogo(deck, first);
+  if (key === "cajas") return startCajas(deck, first);
   if (key === "reto") return openReto(deck);
   if (key === "audio") return startAudio(deck);
 }
@@ -1950,9 +2002,12 @@ function backTo(where) {
 
 const AUTO_MS = 1000;
 
-function startFrases(deck) {
+function startFrases(deck, first) {
   if (!deck.frases.length) return;
-  const queue = shuffle(deck.frases).map((f) => ({ f, failed: false }));
+  let list = shuffle(deck.frases);
+  // Desde «¡Lo lograste!»: primero la frase que usa tus palabras de hoy.
+  if (Number.isInteger(first) && deck.frases[first]) list = [deck.frases[first], ...list.filter((f) => f !== deck.frases[first])];
+  const queue = list.map((f) => ({ f, failed: false }));
   state.fr = { deck, queue, ok: 0, bad: 0, resolved: 0, results: [], total: queue.length, returnTo: state.view === "tema" ? "tema" : state.view, timer: null };
   show("frase");
   newFraseItem();
@@ -2421,10 +2476,11 @@ function backFrom(where) {
   return where === "tema" || where === "temas" || where === "mapa" ? where : "home";
 }
 
-function startDialogo(deck) {
+function startDialogo(deck, first) {
   const list = ejOf(deck).dialogos;
   if (!list.length) return;
-  state.dl = { deck, list, di: 0, ok: 0, bad: 0, es: false, timer: null, returnTo: state.view === "tema" ? "tema" : state.view };
+  const di = Number.isInteger(first) && list[first] ? first : 0;
+  state.dl = { deck, list, di, ok: 0, bad: 0, es: false, timer: null, returnTo: state.view === "tema" ? "tema" : state.view };
   $("#dialogo-es").setAttribute("aria-pressed", "false");
   show("dialogo");
   beginDialog();
@@ -2521,6 +2577,10 @@ function renderDialogo() {
     foot = `<div class="chat-foot"><p class="chat-end">${c.fail ? "Diálogo terminado. Lo repasas cuando quieras." : "¡Diálogo completo!"}</p><button class="btn btn-primary btn-wide" type="button" data-dnext="2">${last ? "Terminar" : "Siguiente diálogo"}</button></div>`;
   }
   $("#dialogo-body").innerHTML = `<div class="chat" aria-live="polite">${bubbles}${typing}${mine}</div>${foot}`;
+  // Solo se anima la burbuja nueva; las que ya estaban no vuelven a aparecer (antes todo el chat parpadeaba).
+  const seen = c.seenN || 0;
+  $$("#dialogo-body .bubble").forEach((el, i) => { if (i < seen) el.style.animation = "none"; });
+  c.seenN = c.shown.length;
   const f = $("#dialogo-body .chat-foot");
   if (f) f.scrollIntoView({ block: "end", behavior: REDUCE() ? "auto" : "smooth" });
 }
@@ -2665,12 +2725,13 @@ function cajaHasEs(e) {
   return Array.isArray(e.cajas_es) && e.cajas_es.length === e.cajas.length && e.items.every((it) => it.es);
 }
 
-function startCajas(deck) {
+function startCajas(deck, first) {
   const list = ejOf(deck).cajas;
   if (!list.length) return;
   // Empieza en el primer ejercicio que aún no terminas: el avance se queda guardado.
   let ci = list.findIndex((x) => { const r = store.ejer(x.id); return !(r && r.ok > 0); });
   if (ci < 0) ci = 0;
+  if (Number.isInteger(first) && list[first]) ci = first;
   state.cj = { deck, list, ci, ok: 0, bad: 0, stage: "intro", returnTo: state.view === "tema" ? "tema" : state.view };
   show("cajas");
   renderCajasIntro();
@@ -3709,7 +3770,7 @@ function bind() {
     if (!s) return;
     state.currentDeck = s.deck;
     markCurrent(s.deck);
-    startMode(s.deck, s.key);
+    startMode(s.deck, s.key, s.idx);
   });
   // Buscador del inicio
   $("#h-q").addEventListener("input", renderSearch);
