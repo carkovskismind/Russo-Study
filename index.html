@@ -89,44 +89,53 @@ setTimeout(window.hideSplash,10000)})();
     <span class="h-dots" id="h-dots" aria-hidden="true"></span>
   </div>
 
-  <section class="h-stage" aria-label="Tu práctica de hoy">
+  <section class="h-stage" id="h-stage" aria-label="Tu práctica de hoy">
     <div class="h-monito" id="h-monito" aria-hidden="true"><span class="h-eye h-eye-l"></span><span class="h-eye h-eye-r"></span></div>
+    <div class="h-confeti" aria-hidden="true">
+      <span class="cf" style="left: 8px; width: 14px; height: 6px; background: #f2c14e; animation-duration: 3.6s; animation-delay: 0s"></span>
+      <span class="cf" style="left: 34px; width: 10px; height: 10px; background: #4af2d5; animation-duration: 4.4s; animation-delay: -1.2s"></span>
+      <span class="cf" style="left: 60px; width: 14px; height: 6px; background: #f5a3b5; animation-duration: 3.2s; animation-delay: -2.1s"></span>
+      <span class="cf" style="left: 92px; width: 10px; height: 10px; background: #aa94fc; animation-duration: 4s; animation-delay: -.6s"></span>
+      <span class="cf" style="left: 118px; width: 14px; height: 6px; background: #4af2d5; animation-duration: 3.8s; animation-delay: -2.8s"></span>
+      <span class="cf" style="left: 146px; width: 10px; height: 10px; background: #f2c14e; animation-duration: 4.6s; animation-delay: -1.7s"></span>
+      <span class="cf" style="left: 52px; width: 14px; height: 6px; background: #f5a3b5; animation-duration: 3.4s; animation-delay: -3.3s"></span>
+      <span class="cf" style="left: 22px; width: 8px; height: 8px; background: #99acfc; animation-duration: 5s; animation-delay: -3.9s"></span>
+      <span class="cf" style="left: 80px; width: 8px; height: 8px; background: #f2c14e; animation-duration: 4.2s; animation-delay: -.3s"></span>
+      <span class="cf" style="left: 132px; width: 8px; height: 8px; background: #f5a3b5; animation-duration: 4.8s; animation-delay: -2.4s"></span>
+    </div>
     <button class="h-card" id="start-card" type="button">
       <span class="h-card-in h-card-todo">
-        <span class="h-card-hi" aria-hidden="true">Hoy nos toca…</span>
-        <span class="h-card-tema" id="h-tema" aria-hidden="true">…</span>
-        <span class="h-card-n" aria-hidden="true"><span class="h-ring num" id="h-count">0</span><span class="h-card-sub">palabras<br>tu fila del día</span></span>
+        <span class="h-card-hi" aria-hidden="true">Hoy nos toca <span class="h-card-hi-ru" lang="ru">· сего́дня</span></span>
+        <span class="h-card-mid" aria-hidden="true"><span class="h-card-tag num" id="h-num" hidden></span><span class="h-card-tema" id="h-tema">…</span></span>
+        <span class="h-card-n" aria-hidden="true"><span class="h-ring num" id="h-count">0</span><span class="h-card-sub"><span class="h-card-sub-t">palabras para hoy</span><b class="h-card-go" id="h-card-go">Empezar →</b></span></span>
       </span>
       <span class="h-card-in h-card-done" hidden>
-        <span class="h-card-hi h-card-felic" aria-hidden="true">¡Felicidades!<br>Terminaste tu lección diaria.</span>
-        <span class="h-card-n" aria-hidden="true"><span class="h-ring h-ring-ok"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span class="h-card-repasa">Repasa su uso y gramática</span></span>
+        <span class="h-card-hi" aria-hidden="true">¡Hoy cumpliste!</span>
+        <span class="h-card-mid" aria-hidden="true"><span class="h-card-listo" lang="ru">Гото́во!</span><span class="h-card-tag">¡hecho!</span></span>
+        <span class="h-card-n" aria-hidden="true"><b class="h-card-go">Ver resumen →</b></span>
       </span>
     </button>
+    <div class="h-hint" id="h-hint" aria-hidden="true"><svg viewBox="0 0 26 24"><path d="M3 21c8 1 15-4 17-15"/><path d="M15 9l5-4 2 6"/></svg><span>tu práctica del día:<br>repaso + nuevas</span></div>
   </section>
 
-  <button class="pill h-sigue" id="h-sigue" type="button">Sigue con…</button>
-
-  <div class="h-grid">
-    <div class="h-left">
-      <div class="h-block" id="h-next-block">
-        <p class="h-small">O continúa en…</p>
-        <button class="pill" id="h-next" type="button">Familia</button>
-      </div>
-      <div class="h-block">
-        <p class="h-ask">Consulta tu ruta de aprendizaje</p>
-        <button class="pill" id="h-mapa" type="button">Abrir mapa</button>
+  <section class="h-sec">
+    <div class="h-sec-head"><h2 class="h-sec-t">Mis caminos<svg viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5c12-4 22 3 36 0s24-4 38-1 26 3 42-1"/></svg></h2><span class="h-sec-ru" lang="ru">мои́ пути́</span></div>
+    <div class="h-caminos">
+      <button class="h-globo" id="h-temas" type="button" data-go="modulos"><span class="h-globo-t">Cuando tú quieras, repasa</span><b class="h-globo-b">Tus temas →</b><span class="h-globo-n"><span class="num" id="h-mazos">0</span> mazos de palabras</span></button>
+      <div class="h-pills">
+        <button class="h-pill h-pill-sigue" id="h-sigue" type="button"><span class="h-pill-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h12"/><path d="M12 6l6 6-6 6"/></svg></span><span class="h-pill-txt"><span class="h-pill-s">Sigue donde ibas</span><b class="h-pill-b" id="h-sigue-t">Tus temas</b></span></button>
+        <button class="h-pill h-pill-ruta" id="h-mapa" type="button"><span class="h-pill-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg></span><span class="h-pill-txt"><span class="h-pill-s">Ruta de unidades</span><b class="h-pill-b">Abrir ruta</b></span></button>
       </div>
     </div>
-    <div class="h-right">
-      <button class="h-globo" id="h-temas" type="button" data-go="modulos"><span class="h-globo-t">Cuando tú quieras, repasa</span><b class="h-globo-b">Tus temas</b></button>
-      <button class="pill pill-go" id="start-today" type="button">Empezar →</button>
-    </div>
-  </div>
+  </section>
 
-  <div class="h-keys">
-    <button class="h-key h-azul" id="h-leer" type="button"><span class="h-key-t">Aprende a leer</span><span class="h-alt" aria-hidden="true">alt</span></button>
-    <button class="h-key h-naranja" id="h-gram" type="button"><span class="h-key-t">Aprende un poco de gramática</span><span class="h-alt" aria-hidden="true">supr</span></button>
-  </div>
+  <section class="h-sec h-sec-aparte">
+    <div class="h-sec-head"><h2 class="h-sec-t">Aprende aparte<svg viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5c12-4 22 3 36 0s24-4 38-1 26 3 42-1"/></svg></h2><span class="h-sec-ru" lang="ru">учи́ отде́льно</span></div>
+    <div class="h-keys">
+      <button class="h-key h-azul" id="h-leer" type="button"><span class="h-key-in"><b class="h-key-t">Aprende a leer</b><span class="h-key-s">Alfabeto y cómo suena cada letra</span></span><span class="h-key-ru" lang="ru" aria-hidden="true">Аа Бб</span></button>
+      <button class="h-key h-naranja" id="h-gram" type="button"><span class="h-key-in"><b class="h-key-t">Aprende un poco de gramática</b><span class="h-key-s">Reglas cortas con ejemplos</span></span><span class="h-key-ru" lang="ru" aria-hidden="true">-а / -я</span></button>
+    </div>
+  </section>
 </main>
 
 <!-- MAPA -->
@@ -353,7 +362,6 @@ setTimeout(window.hideSplash,10000)})();
 <!-- FIN DE LAS PALABRAS DEL DÍA (4.2.0) -->
 <main id="view-fin" class="view view-fin home3" hidden>
   <div class="fin-head">
-    <span class="fin-ru" lang="ru">Молоде́ц! · ma-la-DIETS</span>
     <h1 class="fin-title" id="fin-title">¡Lo lograste!</h1>
   </div>
   <section class="fin-stage" aria-label="Tu avance de hoy">
@@ -373,14 +381,15 @@ setTimeout(window.hideSplash,10000)})();
       <span class="fin-cf" style="left: 80px; width: 8px; height: 8px; background: #f2c14e; animation-duration: 4.2s; animation-delay: -.3s"></span>
       <span class="fin-cf" style="left: 132px; width: 8px; height: 8px; background: #f5a3b5; animation-duration: 4.8s; animation-delay: -2.4s"></span>
     </div>
+    <div class="fin-hint" aria-hidden="true"><svg viewBox="0 0 26 24"><path d="M3 21c8 1 15-4 17-15"/><path d="M15 9l5-4 2 6"/></svg><span>tu día en números</span></div>
     <div class="fin-donas" id="fin-donas"></div>
   </section>
   <div class="fin-ask">
-    <h2>¿Quieres usar lo que viste hoy?</h2>
+    <h2>¿Quieres usar <span class="fin-u">lo que viste hoy?<svg viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5c12-4 22 3 36 0s24-4 38-1 26 3 42-1"/></svg></span> <span class="fin-ask-ru" lang="ru">Хо́чешь испо́льзовать сего́дняшние слова́?</span></h2>
     <p>Es opcional: tu avance de hoy ya está guardado.</p>
   </div>
   <div class="fin-opts" id="fin-opts"></div>
-  <button class="btn btn-wide fin-end" id="fin-end" type="button">Terminar por hoy</button>
+  <button class="btn btn-wide fin-end" id="fin-end" type="button">Terminar por hoy<span class="fin-end-ru" lang="ru">· на сего́дня всё</span></button>
 </main>
 
 <main id="view-done" class="view view-done" hidden>

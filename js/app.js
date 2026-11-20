@@ -609,7 +609,7 @@ function markHoy(c) {
 function finDona(val, tot, label, color, sub = true) {
   const r = 26, c = 2 * Math.PI * r, f = tot > 0 ? c * Math.min(val / tot, 1) : 0;
   return `<div class="fin-dona">
-    <div class="fin-ring"><svg viewBox="0 0 64 64" aria-hidden="true"><circle class="fin-track" cx="32" cy="32" r="${r}"/>${f > 0 ? `<circle cx="32" cy="32" r="${r}" stroke="${color}" stroke-dasharray="${f.toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 32 32)"/>` : ""}</svg><span class="num">${val}</span></div>
+    <div class="fin-ring"><svg viewBox="0 0 64 64" aria-hidden="true"><circle class="fin-track" cx="32" cy="32" r="${r}"/>${f > 0 ? `<circle cx="32" cy="32" r="${r}" stroke="${color}" stroke-dasharray="${f.toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 32 32)"/>` : ""}<circle class="fin-edge" cx="32" cy="32" r="30.5"/><circle class="fin-edge" cx="32" cy="32" r="21.5"/></svg><span class="num">${val}</span></div>
     <span class="fin-lab">${label}${sub && tot > 0 ? `<br><span class="fin-de">de <span class="num">${tot}</span></span>` : ""}</span>
   </div>`;
 }
@@ -727,38 +727,41 @@ function renderHome() {
   // 4.2.0: con la lección del día terminada, la tarjeta abre «¡Lo lograste!».
   const doneToday = forToday === 0 && store.newToday(today) + store.revToday(today) > 0;
   state.doneToday = doneToday;
-  $("#start-card").classList.toggle("done", doneToday);
+  const card = $("#start-card");
+  card.classList.toggle("done", doneToday);
+  $("#h-stage").classList.toggle("done", doneToday);
   $("#start-card .h-card-todo").hidden = doneToday;
   $("#start-card .h-card-done").hidden = !doneToday;
-  $("#start-today").textContent = doneToday ? "Repasar otra vez →" : "Empezar →";
+  $("#h-hint").hidden = doneToday;
 
-  // Tarjeta roja: tema del día y N real
+  // Nota roja: tema del día (con su número en la ruta) y N real
   const td = todayTopic();
   const tema = td ? td.title : forToday ? "Tu práctica" : "Todo al día";
+  const pos = td && state.ruta ? rutaPos(td.id) : null;
+  $("#h-num").hidden = !pos;
+  if (pos) $("#h-num").textContent = pos.label;
   $("#h-tema").textContent = tema;
   $("#h-count").textContent = forToday;
-  const card = $("#start-card");
+  $("#h-card-go").textContent = forToday ? "Empezar →" : "Todo al día";
   card.setAttribute("aria-label", forToday
-    ? `Hoy nos toca: ${tema}, ${forToday} ${forToday === 1 ? "palabra" : "palabras"}, tu fila del día`
+    ? `Hoy nos toca${pos ? " " + pos.label : ""}: ${tema}, ${forToday} ${forToday === 1 ? "palabra" : "palabras"} para hoy. Empezar`
     : "Hoy no hay práctica pendiente. Todo al día");
   card.setAttribute("aria-disabled", String(forToday === 0 && !doneToday));
-  $("#start-today").setAttribute("aria-disabled", String(forToday === 0 && !doneToday));
-  $("#start-today").setAttribute("aria-label", forToday ? `Empezar la práctica de hoy: ${forToday} palabras` : doneToday ? "Repasar otra vez las palabras de hoy" : "Hoy no hay práctica pendiente");
-  if (doneToday) card.setAttribute("aria-label", "¡Felicidades! Terminaste tu lección diaria. Repasa su uso y gramática");
+  if (doneToday) card.setAttribute("aria-label", "¡Hoy cumpliste! Ver tu resumen del día");
 
-  // Sigue con… / O continúa en…
-  const cur = suggestedDeck();
-  const sigue = $("#h-sigue");
-  if (cur) { sigue.textContent = `Sigue con ${cur.title}`; sigue.dataset.deck = cur.id; }
-  else { sigue.textContent = "Mira todos tus temas"; sigue.dataset.deck = ""; }
-  const nx = nextRutaTema();
-  $("#h-next-block").hidden = !nx;
-  if (nx) {
-    const b = $("#h-next");
-    b.textContent = cap(nx.es);
-    b.dataset.deck = nx.deck.id;
-    b.setAttribute("aria-label", `Continúa en ${nx.deck.title}`);
+  // Mis caminos: Tus temas (N mazos) y «Sigue donde ibas»
+  $("#h-mazos").textContent = state.decks.filter((d) => !d.mine).length;
+  let cur = suggestedDeck();
+  let sigueOpen = false;
+  if (cur && td && cur === td) {
+    const nx = nextRutaTema();
+    if (nx) { cur = nx.deck; sigueOpen = true; }
   }
+  const sigue = $("#h-sigue");
+  sigue.dataset.deck = cur ? cur.id : "";
+  sigue.dataset.open = sigueOpen ? "1" : "";
+  $("#h-sigue-t").textContent = cur ? cur.title : "Tus temas";
+  sigue.setAttribute("aria-label", cur ? `Sigue donde ibas: ${cur.title}` : "Mira todos tus temas");
   $("#h-gram").hidden = !gramaticaDeck();
 }
 
@@ -3629,18 +3632,9 @@ function bind() {
 
   // Portada
   const startIfAny = () => {
-    if ($("#start-today").getAttribute("aria-disabled") === "true") return toast("Hoy no hay práctica pendiente. ¡Todo al día!");
+    if ($("#start-card").getAttribute("aria-disabled") === "true") return toast("Hoy no hay práctica pendiente. ¡Todo al día!");
     startToday();
   };
-  $("#start-today").addEventListener("click", () => {
-    if (state.doneToday) {
-      const h = hoyLog();
-      const id = Object.keys(h.decks).sort((a, b) => h.decks[b].length - h.decks[a].length)[0];
-      const deck = state.deckById.get(id || "") || todayTopic();
-      if (deck) { state.currentDeck = deck; return startCram(deck); }
-    }
-    startIfAny();
-  });
   $("#start-card").addEventListener("click", () => (state.doneToday ? openFin() : startIfAny()));
   $("#fin-end").addEventListener("click", finEnd);
   $("#fin-opts").addEventListener("click", (e) => {
@@ -3665,13 +3659,11 @@ function bind() {
     if (t) return openTema(t.dataset.stema);
   });
   $("#h-sigue").addEventListener("click", (e) => {
-    const deck = state.deckById.get(e.currentTarget.dataset.deck || "");
+    const t = e.currentTarget;
+    const deck = state.deckById.get(t.dataset.deck || "");
+    if (deck && t.dataset.open) return openTema(deck.id);
     if (deck) { state.currentDeck = deck; markCurrent(deck); return startDeck(deck); }
     go("modulos");
-  });
-  $("#h-next").addEventListener("click", (e) => {
-    const deck = state.deckById.get(e.currentTarget.dataset.deck || "");
-    if (deck) openTema(deck.id);
   });
   $("#h-mapa").addEventListener("click", openMapa);
   $("#h-leer").addEventListener("click", openLeer);
@@ -4065,7 +4057,7 @@ async function main() {
     await loadDecks();
   } catch (e) {
     console.error(e);
-    $("#h-sigue").textContent = "No se pudieron cargar los temas";
+    $("#h-sigue-t").textContent = "No se pudieron cargar los temas";
   }
   renderHome();
   openShortcut();
