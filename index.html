@@ -121,7 +121,7 @@ setTimeout(window.hideSplash,10000)})();
   <section class="h-sec">
     <div class="h-sec-head"><h2 class="h-sec-t">Mis caminos<svg viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5c12-4 22 3 36 0s24-4 38-1 26 3 42-1"/></svg></h2><span class="h-sec-ru" lang="ru">мои́ пути́</span></div>
     <div class="h-caminos">
-      <button class="h-globo" id="h-temas" type="button" data-go="modulos"><span class="h-globo-t">Cuando tú quieras, repasa</span><b class="h-globo-b">Tus temas →</b><span class="h-globo-n"><span class="num" id="h-mazos">0</span> mazos de palabras</span></button>
+      <button class="h-globo" id="h-temas" type="button" data-go="temas"><span class="h-globo-t">Cuando tú quieras, repasa</span><b class="h-globo-b">Tus temas →</b><span class="h-globo-n"><span class="num" id="h-mazos">0</span> mazos de palabras</span></button>
       <div class="h-pills">
         <button class="h-pill h-pill-sigue" id="h-sigue" type="button"><span class="h-pill-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h12"/><path d="M12 6l6 6-6 6"/></svg></span><span class="h-pill-txt"><span class="h-pill-s">Sigue donde ibas</span><b class="h-pill-b" id="h-sigue-t">Tus temas</b></span></button>
         <button class="h-pill h-pill-ruta" id="h-mapa" type="button"><span class="h-pill-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg></span><span class="h-pill-txt"><span class="h-pill-s">Ruta de unidades</span><b class="h-pill-b">Abrir ruta</b></span></button>
@@ -139,30 +139,41 @@ setTimeout(window.hideSplash,10000)})();
 </main>
 
 <!-- MAPA -->
-<main id="view-mapa" class="view view-mapa" hidden>
+<main id="view-mapa" class="view view-mapa has-nav" hidden>
   <div id="mapa-stage"></div>
 </main>
 
-<!-- MÓDULOS -->
-<main id="view-modulos" class="view has-nav" hidden>
-  <header class="row-between">
-    <h1 class="page-title">Tus temas</h1>
-    <button class="link-btn" type="button" data-go="mapa">Ver mapa</button>
+<!-- MÓDULO (4.2.0 · A2) -->
+<main id="view-modulo" class="view has-nav" hidden>
+  <header class="tm-head">
+    <button class="circle-btn" type="button" id="mod-back" aria-label="Volver a la Ruta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div class="tm-ttl">
+      <div class="h-sec-head"><h1 class="h-sec-t">Módulo <span class="num" id="mod-n">1</span><svg viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5c12-4 22 3 36 0s24-4 38-1 26 3 42-1"/></svg></h1><span class="h-sec-ru" lang="ru">мо́дуль <span class="num" id="mod-n-ru">1</span></span></div>
+      <span class="tm-sub" id="mod-sub"></span>
+    </div>
   </header>
-  <div class="mods" id="mods-list"></div>
+  <div class="mod-felic" id="mod-felic"></div>
+  <p class="mod-note">Cada tema trae sus palabras y su gramática. Puedes abrir cualquiera.</p>
+  <div class="mod-list" id="mod-list"></div>
 </main>
 
-<!-- TEMAS (los mazos de un módulo) -->
+<!-- TEMAS (4.2.0 · A2: todos los mazos en el orden de la Ruta) -->
 <main id="view-temas" class="view has-nav" hidden>
-  <header class="row-between">
-    <div class="th-left">
-      <button class="circle-btn" type="button" id="temas-back" aria-label="Volver a los módulos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
-      <h1 class="page-title" id="temas-title">Tus temas</h1>
+  <header class="tm-head">
+    <button class="circle-btn" type="button" id="temas-back" aria-label="Volver al inicio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div class="tm-ttl">
+      <div class="h-sec-head"><h1 class="h-sec-t">Tus temas<svg viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5c12-4 22 3 36 0s24-4 38-1 26 3 42-1"/></svg></h1><span class="h-sec-ru" lang="ru">твои́ те́мы</span></div>
+      <span class="tm-sub"><span class="num" id="temas-n">0</span> mazos · en el orden de la Ruta</span>
     </div>
-    <button class="link-btn" type="button" data-go="mapa">Ver mapa</button>
+    <button class="tm-ruta" type="button" id="temas-ruta">Ver ruta</button>
   </header>
-  <div class="chips" id="temas-chips" role="tablist" aria-label="Filtrar temas"></div>
-  <div class="tiles" id="temas-grid"><p class="loading">Cargando temas…</p></div>
+  <div class="h-search tm-search" role="search">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+    <input id="temas-q" type="search" placeholder="Busca un tema o una palabra…" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search" aria-label="Buscar un tema o una palabra">
+    <button class="h-q-clear" id="temas-q-clear" type="button" aria-label="Borrar búsqueda" hidden>×</button>
+  </div>
+  <div class="chips tm-chips" id="temas-chips" role="group" aria-label="Filtrar temas"></div>
+  <div class="tiles tm-tiles" id="temas-grid"><p class="loading">Cargando temas…</p></div>
 </main>
 
 <!-- TEMA -->
@@ -495,7 +506,7 @@ setTimeout(window.hideSplash,10000)})();
   <button type="button" data-go="settings" aria-label="Ajustes">
     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>
   </button>
-  <button type="button" data-go="modulos" aria-label="Temas">
+  <button type="button" data-go="temas" aria-label="Temas">
     <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>
   </button>
   <button type="button" data-go="home" aria-label="Inicio">
