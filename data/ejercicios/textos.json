@@ -18,18 +18,18 @@
           {"ru": "Да, э́то ко́микс.", "fonetica": "da, E-ta KO-miks", "correcta": false, "porque": "Ella pregunta si es una revista; no lo es: нет."},
           {"ru": "Нет, э́то журна́л.", "fonetica": "niet, E-ta zhur-NAL", "correcta": false, "porque": "Dices нет pero nombras lo mismo; es ко́микс."}
         ]},
-        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-ti-RIES-na", "es": "¡Qué interesante!"}
+        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
       ]
     },
     {
       "id": "textos-d2",
       "titulo": "Mensajes",
       "mensajes": [
-        {"de": "Лена", "ru": "Э́то твоё сообще́ние?", "fonetica": "E-ta tva-IO sa-ap-SHIE-nie", "es": "¿Es tu mensaje?"},
-        {"de": "yo", "ru": "Да, э́то моё сообще́ние.", "fonetica": "da, E-ta ma-IO sa-ap-SHIE-nie", "es": "Sí, es mi mensaje.", "opciones": [
-          {"ru": "Да, э́то моё сообще́ние.", "fonetica": "da, E-ta ma-IO sa-ap-SHIE-nie", "correcta": true, "porque": "¡Bien! сообще́ние es neutro: моё."},
-          {"ru": "Да, э́то мой сообще́ние.", "fonetica": "da, E-ta moi sa-ap-SHIE-nie", "correcta": false, "porque": "сообще́ние es neutro: моё."},
-          {"ru": "Да, э́то моя́ сообще́ние.", "fonetica": "da, E-ta ma-IA sa-ap-SHIE-nie", "correcta": false, "porque": "сообще́ние es neutro: моё."}
+        {"de": "Лена", "ru": "Э́то твоё сообще́ние?", "fonetica": "E-ta tva-IO sa-ap-SHCHE-ni-ie", "es": "¿Es tu mensaje?"},
+        {"de": "yo", "ru": "Да, э́то моё сообще́ние.", "fonetica": "da, E-ta ma-IO sa-ap-SHCHE-ni-ie", "es": "Sí, es mi mensaje.", "opciones": [
+          {"ru": "Да, э́то моё сообще́ние.", "fonetica": "da, E-ta ma-IO sa-ap-SHCHE-ni-ie", "correcta": true, "porque": "¡Bien! сообще́ние es neutro: моё."},
+          {"ru": "Да, э́то мой сообще́ние.", "fonetica": "da, E-ta moi sa-ap-SHCHE-ni-ie", "correcta": false, "porque": "сообще́ние es neutro: моё."},
+          {"ru": "Да, э́то моя́ сообще́ние.", "fonetica": "da, E-ta ma-IA sa-ap-SHCHE-ni-ie", "correcta": false, "porque": "сообще́ние es neutro: моё."}
         ]},
         {"de": "Лена", "ru": "А чьё э́то письмо́?", "fonetica": "a chio E-ta pis'-MO", "es": "¿Y de quién es esta carta?"},
         {"de": "yo", "ru": "Э́то твоё письмо́.", "fonetica": "E-ta tva-IO pis'-MO", "es": "Es tu carta.", "opciones": [

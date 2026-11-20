@@ -10,7 +10,7 @@
     {"pregunta": "Sustantivos terminados en -о / -е / -ё", "respuesta": "Neutro (оно́): окно́, мо́ре."},
     {"pregunta": "Sustantivos terminados en -ь", "respuesta": "Pueden ser masculinos o femeninos: день (m), ночь (f).\nHay que aprender el género de cada palabra."},
     {"pregunta": "Excepciones: palabras en -а / -я que son masculinas", "respuesta": "Las que nombran a hombres: па́па, де́душка, дя́дя, мужчи́на, судья́, Го́ша.\nEl adjetivo va en masculino: мой па́па."},
-    {"pregunta": "Excepciones: palabras en -мя", "respuesta": "Son neutras: и́мя, вре́мя, зна́мя.\nPlural en -ена́: имена́, времена́, знамёна."},
+    {"pregunta": "Excepciones: palabras en -мя", "respuesta": "Son neutras: и́мя, вре́мя, зна́мя.\nPlural en -ена́: имена́, времена́. Ojo: зна́мя → знамёна (con ё)."},
     {"pregunta": "¿De qué género es ко́фе?", "respuesta": "Masculino, aunque termina en -е: чёрный ко́фе.\nNo cambia en ningún caso."},
     {"pregunta": "¿Hay género anatómico y gramatical?", "respuesta": "Sí. Las personas tienen género anatómico (мужчи́на es hombre).\nLos objetos tienen solo género gramatical (стол es masculino, ла́мпа femenina).\nTodas las palabras en singular tienen género."},
     {"id": "genero:terminaciones del adjetivo según el género", "pregunta": "Adjetivo masculino: terminaciones", "respuesta": "-ый / -ий / -ой (m): но́вый, си́ний, большо́й."},
