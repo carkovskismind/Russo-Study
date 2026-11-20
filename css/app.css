@@ -1354,7 +1354,7 @@ body.no-fon .sheet :is(.fon, .w-fon, .ex-fon:not(.keep), .dic-fon) { display: no
 .ms-map { position: relative; overflow: hidden; border-radius: 26px; background: #0b0b0c; margin-right: 6px; flex: none;
   border: 2px solid #0b0b0c; box-shadow: 0 0 0 1.5px #f3efe6, 4px 5px 0 1.5px #0b0b0c, 4px 5px 0 3px #f3efe6; transition: height .3s ease; }
 :root[data-theme="light"] .ms-map { background: #f4f1ea; border: 1.5px solid #151515; box-shadow: 3px 3px 0 #151515; }
-.ms-bg { position: absolute; left: -1.5%; top: -10px; width: 103%; aspect-ratio: 345 / 522; background: url("../img/mapa/mapa-oscuro-a3.svg") 0 0 / 100% 100% no-repeat; opacity: .2; filter: url(#mapa-boost) grayscale(.5); pointer-events: none; }
+.ms-bg { position: absolute; left: -1.5%; top: -10px; width: 103%; aspect-ratio: 345 / 522; background: url("../img/mapa/mapa-oscuro-a3.svg") 0 0 / 100% 100% no-repeat; opacity: .2; filter: grayscale(.5); pointer-events: none; }
 :root[data-theme="light"] .ms-bg { background-image: url("../img/mapa/mapa-claro-a3.svg"); opacity: .22; }
 .ms-path { position: absolute; left: 0; top: 0; width: 100%; z-index: 2; overflow: visible; }
 .ms-path path { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; }
