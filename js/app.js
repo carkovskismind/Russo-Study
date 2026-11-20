@@ -502,7 +502,7 @@ function logActivity() {
 function todayTopic() {
   const today = dateKey(Date.now());
   const plan = dailyPlan();
-  const queue = buildQueue(state.decks.filter(deckEnabled), plan.n, plan.r);
+  const queue = buildQueue(dailyDecks(), plan.n, plan.r);
   const counts = new Map();
   for (const it of queue) counts.set(it.card.deckId, (counts.get(it.card.deckId) || 0) + 1);
   const sug = suggestedDeck();
@@ -1270,6 +1270,19 @@ function dailyPlan() {
   return { p, n, r };
 }
 
+// 4.2.0: la práctica del día toma las palabras nuevas en el orden de la Ruta
+// (1.1, 1.2, 1.3…); los temas que no están en la Ruta van al final.
+function dailyDecks() {
+  const order = new Map();
+  let i = 0;
+  for (const m of rutaMods()) for (const t of m.temas || []) if (!t.leer && !order.has(t.id)) order.set(t.id, i++);
+  return state.decks
+    .filter(deckEnabled)
+    .map((d, k) => ({ d, o: order.has(d.id) ? order.get(d.id) : 100000 + k }))
+    .sort((a, b) => a.o - b.o)
+    .map((x) => x.d);
+}
+
 function buildQueue(decks, newLimit, revLimit = Infinity) {
   const now = Date.now();
   const eod = endOfDay(now);
@@ -1297,7 +1310,7 @@ function buildQueue(decks, newLimit, revLimit = Infinity) {
 
 function startToday() {
   const plan = dailyPlan();
-  const queue = buildQueue(state.decks.filter(deckEnabled), plan.n, plan.r);
+  const queue = buildQueue(dailyDecks(), plan.n, plan.r);
   // Palabras elegidas a mano («+ Hoy»), dentro del tope del día; las que no caben salen mañana.
   const inQueue = new Set(queue.map((it) => it.key));
   for (const c of pickedCards().slice(0, plan.p)) {
