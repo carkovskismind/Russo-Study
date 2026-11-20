@@ -326,7 +326,7 @@ function shuffle(arr) {
   return a;
 }
 
-const TURTLE = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 16c0-5 3.6-8.5 8-8.5s8 3.5 8 8.5z"/><path d="M11.5 7.5V16M7.5 16c0-3.2 1.6-6.3 4-8.2M15.5 16c0-3.2-1.6-6.3-4-8.2" stroke-width="1.5"/><path d="M19.5 13.5c.9-1.6 2.7-1.7 3.2-.4.4 1.2-.8 2.4-3.2 2.9"/><path d="M7 16v2.5M16 16v2.5M3.5 16l-1.7 1.6"/><circle cx="21.6" cy="13" r=".6" fill="currentColor" stroke="none"/></svg>`;
+const TURTLE = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 15.5c0-4.4 3.6-7.5 8-7.5s8 3.1 8 7.5z"/><path d="M7.5 12.5l4 3 4-3"/><path d="M19.5 13.5h1.2a1.8 1.8 0 0 0 0-3.6h-.7"/><path d="M6.5 15.5v2.5M10 15.5v2.5M13 15.5v2.5M16.5 15.5v2.5"/></svg>`;
 const SPEAKER = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>`;
 const ARROW = `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>`;
 
@@ -1591,6 +1591,12 @@ function ruBlock(text, fon) {
   return `<div class="big-ru" lang="ru">${esc(text)}</div>${sound}${cursive}`;
 }
 
+// «qué / cuál (fem.)»: lo que va entre paréntesis al final, más chico y gris (maqueta A2 Repaso).
+function esPar(t) {
+  const m = String(t).match(/^(.*\S)\s+(\([^()]*\))$/);
+  return m ? `${esc(m[1])} <span class="st-par">${esc(m[2])}</span>` : esc(t);
+}
+
 function extras(card) {
   const parts = (card.tag ? `<span class="tag">${esc(card.tag)}</span>` : "") +
     (card.nota ? `<div class="note">${esc(card.nota)}</div>` : "");
@@ -1666,6 +1672,7 @@ function renderItem() {
   const pos = deck && state.ruta ? rutaPos(deck.id) : null;
   $("#study-sub").innerHTML = deck ? `${pos ? `Tema <span class="num">${pos.label}</span> · ` : ""}${esc(deck.title)}` : "";
   $("#study-exit").hidden = learn;
+  $("#view-study").classList.toggle("st-quiz", !learn); // maqueta A2 Repaso · pregunta: «Salir» abajo, sin «Reportar falla»
   $("#card-badge").hidden = false;
   $("#card-badge").className = "card-badge" + (it.phase === "learn" ? "" : " q");
   $("#card-badge").textContent = it.phase === "learn" ? (c.kind === "qa" ? "Regla nueva" : "Palabra nueva") : it.dir === "es" ? "¿Cómo se dice?" : it.dir === "audio" ? "Escucha" : it.dir === "qa" ? "Pregunta" : "¿Qué significa?";
@@ -1688,7 +1695,7 @@ function renderItem() {
       const ej = c.ejemplo && c.ejemplo.ru
         ? `<div class="learn-ex st-ex"><div class="st-ex-t"><span class="learn-ex-label">EJEMPLO</span><span class="ex-ru" lang="ru">${esc(c.ejemplo.ru)}</span>${c.ejemplo.fonetica ? `<span class="ex-fon">${esc(c.ejemplo.fonetica)}</span>` : ""}${c.ejemplo.es ? `<span class="st-ex-es">${esc(c.ejemplo.es)}</span>` : ""}</div>${sp ? `${slowBtn(c.ejemplo.ru, "st-ex-btn")}<button class="audio-btn st-ex-btn" type="button" data-say="${esc(c.ejemplo.ru)}" aria-label="Escuchar el ejemplo">${SPEAKER}</button>` : ""}</div>`
         : "";
-      back.innerHTML = `<span class="st-div" aria-hidden="true"></span><div class="big-es">${esc(c.es)}</div>` + extras(c) + ej;
+      back.innerHTML = `<span class="st-div" aria-hidden="true"></span><div class="big-es">${esPar(c.es)}</div>` + extras(c) + ej;
       speakBtn.hidden = !canSpeak();
       if (store.settings.autoSpeak) speak(c.ru);
     }
@@ -1708,14 +1715,14 @@ function renderItem() {
 
   if (it.dir === "audio") {
     front.innerHTML = `<span class="learn-label">Solo audio</span><div class="audio-prompt"><span class="audio-ic" aria-hidden="true">${SPEAKER}</span><p>Escucha y elige el significado</p><button class="btn btn-ghost audio-repeat" id="audio-repeat" type="button">${SPEAKER}<span>Repetir palabra</span></button></div>`;
-    back.innerHTML = ruBlock(c.ru, c.fonetica) + `<div class="big-es">${esc(c.es)}</div>` + extras(c);
+    back.innerHTML = ruBlock(c.ru, c.fonetica) + `<div class="big-es">${esPar(c.es)}</div>` + extras(c);
     if (canSpeak()) speak(c.ru);
   } else if (it.dir === "es") {
-    front.innerHTML = `<div class="big-es">${esc(c.es)}</div>`;
+    front.innerHTML = `<div class="big-es">${esPar(c.es)}</div>`;
     back.innerHTML = ruBlock(c.ru, c.fonetica) + extras(c);
   } else {
     front.innerHTML = ruBlock(c.ru, c.fonetica);
-    back.innerHTML = `<div class="big-es">${esc(c.es)}</div>` + extras(c);
+    back.innerHTML = `<div class="big-es">${esPar(c.es)}</div>` + extras(c);
     speakBtn.hidden = !canSpeak();
     if (store.settings.autoSpeak) speak(c.ru);
   }
@@ -1878,7 +1885,7 @@ function renderNoteBox(editing = false) {
   box.innerHTML = text
     ? `<span class="note-label">Tu nota</span><p class="note-mine">${esc(text)}</p>
        <button class="link-btn" type="button" data-note="edit">Editar nota</button>`
-    : `<button class="st-note-add" type="button" data-note="edit"><span class="st-note-plus" aria-hidden="true">+</span><span>Tu nota: algo que te ayude a recordarla <span class="st-opt">(opcional)</span></span></button>`;
+    : `<button class="st-note-add" type="button" data-note="edit"><span class="st-note-plus" aria-hidden="true">+</span><span>Tu nota: algo que te ayude a recordarla</span><span class="st-opt">(opcional)</span></button>`;
   box.hidden = false;
 }
 

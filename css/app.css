@@ -1543,7 +1543,7 @@ body:not(.no-rep) .view.view-fin.home3 { padding-bottom: calc(20px + env(safe-ar
 .st-hint-t b { font-size: 14px; font-weight: 800; }
 .st-hint-t span { font-size: 12px; font-weight: 600; line-height: 1.3; color: var(--muted); }
 .a2-study .menu-quiet { text-align: center; color: var(--muted); }
-.a2-study .rep-row { margin-top: 14px; }
+.a2-study .rep-row { margin-top: 10px; }
 .a2-study .rep-btn { height: 50px; padding: 0 24px; border: 1.5px solid #3a3a40; background: #18181b; color: var(--text); }
 :root[data-theme="light"] .a2-study .rep-btn { border: 1.5px dashed #8f8a7e; background: transparent; color: var(--muted); }
 .a2-study .menu-item { border-bottom: 0 !important; }
@@ -1728,3 +1728,18 @@ body:not(.no-rep) .view#view-cajas { padding-bottom: calc(20px + env(safe-area-i
 :root[data-theme="light"] .ml-done { stroke: #0b7d6c; }
 :root[data-theme="light"] .ml-rest { stroke: #151515; }
 :root[data-theme="light"] .mod-list { gap: 20px; }
+
+/* ---------- Fidelidad a las maquetas A2 Repaso (nueva y pregunta) ---------- */
+#view-study.a2-study { line-height: normal; }
+.a2-study .practice-head { margin-top: 12px; height: 46px; flex: none; }
+.st-par { font-size: 17px; font-weight: 700; color: #3a3a3a; }
+:root[data-theme="light"] .a2-study .rep-btn { border: 1.5px solid #151515; background: #fff; color: #151515; }
+:root[data-theme="light"] .st-prog .progress-fill { box-shadow: inset 0 0 0 1.5px #151515; }
+#view-study.st-quiz .rep-row { display: none; }
+#view-study.st-quiz #study-menu { flex: 1; }
+#view-study.st-quiz #study-exit { margin-top: auto; }
+.a2-study .study-card:not(.st-learn) .card-front .fon-big { padding-bottom: 2px; }
+body:not(.no-rep) .view#view-study.st-quiz { padding-bottom: calc(14px + env(safe-area-inset-bottom)); }
+#view-study.st-quiz #study-exit { min-height: 44px; height: 44px; padding-top: 0; padding-bottom: 0; }
+.a2-study #study-menu .st-hint { margin-top: 0; }
+.a2-study .menu-item.st-hint { border: 1.5px dashed var(--muted) !important; }
