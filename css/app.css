@@ -1712,3 +1712,19 @@ body:not(.no-rep) .view#view-cajas { padding-bottom: calc(20px + env(safe-area-i
 .h-avatar img { width: 56px; height: 56px; margin: 0; object-fit: cover; border-radius: 50%; }
 :root[data-theme="light"] .h-avatar { border: 2px solid #151515; box-shadow: 2px 2px 0 #151515; }
 :root[data-theme="light"] .h-avatar img { width: 100%; height: 100%; }
+
+/* ---------- Fidelidad a la maqueta A2Modulo ---------- */
+#view-modulo { gap: 12px; line-height: normal; }
+.ml-item .ms-go { min-height: 48px; }
+.ml-item .tm-sigue { right: 14px; }
+.ml-item.cur .ml-ru { color: #3a3a3a; }
+.ml-item .ms-row-t [lang="ru"] { font-family: var(--f-ru); font-weight: 700; font-size: 13px; color: var(--ink); }
+.ml-item.cur .ms-row-t [lang="ru"] { color: #3a3a3a; }
+.ml-item .ms-row-n { min-width: 30px; }
+.ml-item .ml-head + .ms-row .ms-row-n { min-width: 52px; }
+:root[data-theme="light"] .mod-felic { box-shadow: 3px 3px 0 #151515; }
+:root[data-theme="light"] .ml-num { border-color: #d6d0c3; }
+:root[data-theme="light"] .ml-item.cur .ml-num { border-color: #151515; }
+:root[data-theme="light"] .ml-done { stroke: #0b7d6c; }
+:root[data-theme="light"] .ml-rest { stroke: #151515; }
+:root[data-theme="light"] .mod-list { gap: 20px; }

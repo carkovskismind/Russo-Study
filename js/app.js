@@ -2693,6 +2693,11 @@ function openCajasDic() {
   $("#sheet-title").innerHTML = `<span class="h-sec-head"><span class="h-sec-t">Diccionario<svg viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5c12-4 22 3 36 0s24-4 38-1 26 3 42-1"/></svg></span><span class="h-sec-ru" lang="ru">слова́рь</span></span>`;
 }
 
+// Texto mixto: las palabras en ruso van con su letra (PT Sans) y en un <span lang="ru">.
+function ruSpans(t) {
+  return esc(t).replace(/[а-яё\u0301]+(?:[\s,?!]+[а-яё\u0301]+)*[?!]?/gi, (w) => `<span lang="ru">${w}</span>`);
+}
+
 // «Dativo: la forma…» → etiqueta en negritas y el ruso con su letra.
 function gramTagHtml(t) {
   const m = String(t).match(/^([^:]{1,30}):\s*(.*)$/);
@@ -3552,7 +3557,7 @@ function renderModulo() {
       ${isCur ? `<span class="tm-sigue">Sigue aquí</span>` : ""}
       <span class="ml-head"><b>${esc(d.title)}</b><span class="ml-ru" lang="ru">${esc(RU_NAME[d.id] || "")}</span></span>
       <span class="ms-row"><span class="ms-row-l">Palabras</span><span class="bar"><span style="width:${st.pct}%"></span></span><span class="ms-row-n"><span class="num">${st.learned}</span>/<span class="num">${st.total}</span></span></span>
-      ${g.titulo || g.total ? `<span class="ms-row"><span class="ms-row-l">Gramática</span><span class="ms-row-t">${esc(g.titulo || "Cajas y retos")}</span>${g.total ? `<span class="ms-row-n"><span class="num">${g.done}</span>/<span class="num">${g.total}</span></span>` : ""}</span>` : ""}
+      ${g.titulo || g.total ? `<span class="ms-row"><span class="ms-row-l">Gramática</span><span class="ms-row-t">${ruSpans(g.titulo || "Cajas y retos")}</span>${g.total ? `<span class="ms-row-n"><span class="num">${g.done}</span>/<span class="num">${g.total}</span></span>` : ""}</span>` : ""}
       ${isCur ? `<button class="ms-go" type="button" data-mword="${esc(d.id)}">${n ? `Seguir · <span class="num">${n}</span> palabras para hoy →` : "Seguir con este tema →"}</button>` : ""}
     </div>`;
   }).join("");
@@ -3564,9 +3569,13 @@ function renderModulo() {
     if (!ln || !items.length) return;
     const top = list.getBoundingClientRect().top;
     const it = items[Math.max(0, curIdx)];
-    const y = curIdx > 0 ? it.getBoundingClientRect().top - top + 18 : 0;
+    // Maqueta A2Modulo: turquesa hasta dentro del círculo del tema actual; la punteada sigue después de él.
+    const num = it.querySelector(".ml-num").getBoundingClientRect();
+    const y = curIdx > 0 ? num.top - top + 33 : 0;
     ln.setAttribute("y1", "30");
     ln.setAttribute("y2", String(Math.max(30, y)));
+    const rest = list.querySelector(".ml-rest");
+    if (rest) rest.setAttribute("y1", String(curIdx > 0 ? num.bottom - top + 5 : 30));
   });
 }
 
