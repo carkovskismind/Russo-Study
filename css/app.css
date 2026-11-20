@@ -477,10 +477,12 @@ svg { display: block; }
 .version { text-align: center; font-size: 12px; }
 
 /* ---------- Barra inferior ---------- */
+/* 4.0.0: barra más delgada y ancha, un poco transparente (maqueta de Carol). */
 .nav {
-  position: fixed; left: calc(12px + env(safe-area-inset-left)); bottom: calc(14px + env(safe-area-inset-bottom));
-  display: flex; gap: 6px; padding: 5px; border-radius: 999px; z-index: 20;
-  background: var(--nav-bg); border: 2px solid var(--nav-bg); box-shadow: 0 6px 20px rgba(0, 0, 0, .3);
+  position: fixed; left: calc(34px + env(safe-area-inset-left)); bottom: calc(18px + env(safe-area-inset-bottom));
+  display: flex; justify-content: space-between; align-items: center; gap: 6px;
+  width: 208px; height: 48px; padding: 6px; border-radius: 999px; z-index: 20; opacity: .88;
+  background: var(--nav-bg); box-shadow: 0 6px 20px rgba(0, 0, 0, .3);
 }
 .nav button {
   width: 44px; height: 44px; border-radius: 50%; border: 0; background: transparent; color: var(--nav-ink);
@@ -494,6 +496,23 @@ svg { display: block; }
   background: var(--text); color: var(--bg); border-radius: 999px; padding: 10px 16px;
   font-size: 14px; font-weight: 700; z-index: 50; max-width: calc(100vw - 32px); text-align: center;
 }
+
+/* 4.0.0 · Aviso de audio (sin internet / sin voz rusa): azul pastel, se cierra con la X. */
+.audio-note {
+  position: fixed; z-index: 45; top: calc(84px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%);
+  width: min(calc(100vw - 32px), 420px); display: flex; gap: 12px; align-items: flex-start;
+  background: #e6ebff; color: #2433a0; border: 1.5px solid #f4f1ea; border-radius: 18px; padding: 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .25);
+}
+:root[data-theme="light"] .audio-note { border-color: #151515; box-shadow: none; }
+.audio-note[hidden] { display: none; }
+.an-ic { flex: none; width: 24px; height: 24px; margin-top: 1px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.an-txt { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.an-t { margin: 0; font-size: 15px; font-weight: 800; }
+.an-d { margin: 0; font-size: 13.5px; line-height: 1.4; font-weight: 600; }
+.an-x { flex: none; width: 44px; height: 44px; margin: -10px -10px 0 0; border: 0; background: transparent; color: #2433a0; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.an-x svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+.an-x:focus-visible { outline: 3px solid #2433a0; outline-offset: -4px; border-radius: 12px; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
@@ -822,9 +841,11 @@ body:not(.no-rep) .view-mapa { padding-bottom: calc(76px + env(safe-area-inset-b
 .c-lav { background: var(--ink-lav); } .c-kh { background: var(--ink-kh); } .c-bl { background: var(--ink-bl); }
 .c-li { background: var(--ink-li); } .c-pk { background: var(--ink-pk); } .c-aq { background: var(--ink-aq); }
 .mp-stop2:focus-visible { outline: 3px solid var(--mp-sel); outline-offset: 3px; }
-.mp-pin2 { position: absolute; z-index: 6; display: block; pointer-events: none; aspect-ratio: 40 / 52; transition: left .7s cubic-bezier(.4, .1, .2, 1), top .7s cubic-bezier(.4, .1, .2, 1); }
-.mapa-map .mp-pin2 img { position: static; width: 100%; height: auto; }
-:root:not([data-theme="light"]) .mp-pin2 { filter: drop-shadow(0 0 1px rgba(243, 239, 230, .95)) drop-shadow(0 0 1px rgba(243, 239, 230, .7)); }
+.mp-pin2 { position: absolute; z-index: 6; display: block; pointer-events: none; height: 8.046%; }
+.mp-pin2.drop { animation: mp-drop .45s cubic-bezier(.3, 1.4, .5, 1) both; }
+@keyframes mp-drop { from { transform: translateY(-14px); opacity: 0; } to { transform: none; opacity: 1; } }
+.mapa-map .mp-pin2 img { position: static; width: 100%; height: 100%; object-fit: contain; }
+:root:not([data-theme="light"]) .mapa-map .mp-pin2 img { filter: drop-shadow(0 0 1px rgba(243, 239, 230, .95)); }
 .mp-cruz { z-index: 6; }
 .mp-casa { z-index: 3; }
 .mapa-card {
@@ -852,7 +873,7 @@ body:not(.no-rep) .view-mapa { padding-bottom: calc(76px + env(safe-area-inset-b
 .mapa-bar { display: flex; gap: 10px; }
 .mapa-list { width: 60px; height: 52px; flex-shrink: 0; border-radius: 18px; border: 1.5px solid var(--mp-line); background: transparent; color: var(--mp-ink); display: flex; align-items: center; justify-content: center; }
 .mapa-go { flex: 1; min-width: 0; height: 52px; border-radius: 18px; border: 0; background: #4af2d5; color: #0b0b0c; font-size: 17px; font-weight: 800; }
-@media (prefers-reduced-motion: reduce) { .mp-pin2 { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .mp-pin2.drop { animation: none; } }
 
 /* ---------- 3.0 · Ejemplo en la tarjeta nueva ---------- */
 .learn-ex { width: 100%; margin: 12px 0 4px; padding: 10px 14px; border-radius: 16px; background: rgba(255, 255, 255, .6); color: var(--ink, #222); display: flex; flex-direction: column; gap: 2px; text-align: left; }
@@ -1036,18 +1057,32 @@ body:not(.no-rep) .view-mapa { padding-bottom: calc(76px + env(safe-area-inset-b
 .audio-repeat svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 
 /* ---------- 3.3 · Reportar falla ---------- */
-.rep-chip {
-  position: fixed; z-index: 19; right: calc(10px + env(safe-area-inset-right)); bottom: calc(14px + env(safe-area-inset-bottom));
-  width: 64px; height: 52px; padding: 4px 2px; border-radius: 16px; border: 1.5px solid var(--line); background: var(--surface); color: var(--muted);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
-  font-family: inherit; font-size: 12px; font-weight: 700; line-height: 1.1; cursor: pointer; touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
+/* 4.0.0 · «Reportar falla» ya no flota (el letrero de Netlify lo tapaba): va al final
+   de cada práctica y en el pie de Ajustes. Oscuro: píldora lila; claro: borde punteado. */
+.rep-row { display: flex; justify-content: center; margin-top: 18px; }
+.rep-btn, .pill-link {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; padding: 0 16px;
+  border-radius: 999px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
 }
-.rep-chip svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.rep-chip:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-:root[data-theme="light"] .rep-chip { border-color: #151515; color: #151515; }
-:root[data-theme="light"] .rep-chip:focus-visible { outline-color: #111; }
-body.sheet-on .rep-chip { display: none; }
+.rep-btn svg, .pill-link svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.pill-link { border: 1.5px solid var(--line); background: var(--surface); color: var(--text); }
+.rep-btn { border: 1.5px solid var(--line); background: #ece7ff; color: #4936e0; }
+:root[data-theme="light"] .pill-link { border-color: #151515; }
+:root[data-theme="light"] .rep-btn { border: 1.5px dashed #8f8a7e; background: transparent; color: var(--muted); padding: 0 18px; }
+.rep-btn:focus-visible, .pill-link:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+:root[data-theme="light"] .rep-btn:focus-visible, :root[data-theme="light"] .pill-link:focus-visible { outline-color: #111; }
+
+/* Pie de Ajustes */
+.set-foot { display: flex; flex-direction: column; align-items: center; gap: 12px; padding-top: 6px; text-align: center; }
+.set-foot .version { margin: 0; }
+.set-foot-line { width: 48px; height: 1.5px; border-radius: 2px; background: var(--line); }
+.set-dev { margin: 0; font-size: 13px; }
+.set-dev b { font-weight: 800; }
+.set-links { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.priv h3 { margin: 14px 0 4px; font-size: 15px; font-weight: 800; }
+.priv p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--text); }
+.priv h3:first-child { margin-top: 0; }
 .rep-form { display: flex; flex-direction: column; gap: 10px; }
 .rep-label { font-size: 15px; font-weight: 800; }
 .rep-form textarea {
@@ -1059,7 +1094,7 @@ body.sheet-on .rep-chip { display: none; }
 .rep-msg { min-height: 18px; }
 .rep-actions { display: flex; gap: 10px; }
 .rep-actions .btn { flex: 1; }
-/* En pantallas sin barra inferior, deja un espacio para que el chip no tape contenido */
+/* En pantallas sin barra inferior, deja espacio para que el letrero de Netlify no tape contenido */
 body:not(.no-rep) .view:not(.has-nav) { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
 
 /* ---------- 3.7 · Reto de gramática por bloques ---------- */

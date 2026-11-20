@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "3.9.8";
+const APP_VERSION = "4.0.1";
 // Botón «Reportar falla». Está activo en la beta; para activarlo también en la versión real, cambia a true.
 const REPORT_BUTTON = IS_BETA || false;
 
@@ -142,6 +142,7 @@ const NAV_VIEWS = { home: "home", modulos: "modulos", temas: "modulos", settings
 
 function show(view) {
   state.view = view;
+  hideAudioNote();
   for (const v of VIEWS) $(`#view-${v}`).hidden = v !== view;
   const navOn = NAV_VIEWS[view];
   $("#nav").hidden = !navOn;
@@ -174,6 +175,7 @@ let inPop = false;
 let lastArm = "—";
 const topN = () => (history.state && history.state.app === "top" ? history.state.n || 1 : 0);
 
+// La línea de diagnóstico del historial se quitó de Ajustes en 4.0.0; sin elemento, esto no hace nada.
 function showHistDiag() {
   const el = document.getElementById("hist-diag");
   if (!el) return;
@@ -497,8 +499,8 @@ function logActivity() {
 // Tema del que más tarjetas trae la fila de hoy (la que arma «Empezar»).
 function todayTopic() {
   const today = dateKey(Date.now());
-  const newLeft = Math.max(0, store.settings.newPerDay - store.newToday(today));
-  const queue = buildQueue(state.decks.filter(deckEnabled), newLeft);
+  const plan = dailyPlan();
+  const queue = buildQueue(state.decks.filter(deckEnabled), plan.n, plan.r);
   const counts = new Map();
   for (const it of queue) counts.set(it.card.deckId, (counts.get(it.card.deckId) || 0) + 1);
   const sug = suggestedDeck();
@@ -539,8 +541,9 @@ function renderHome() {
     due += s.due;
     fresh += s.fresh;
   }
-  const newLeft = Math.max(0, store.settings.newPerDay - store.newToday(today));
-  const forToday = due + Math.min(newLeft, fresh) + pickedCards().length;
+  // 4.0.1: tope de 30 palabras al día (lo atrasado sale los días siguientes).
+  const plan = dailyPlan();
+  const forToday = plan.p + plan.n + plan.r;
 
   const name = (store.settings.name || "").trim().replace(/!+$/, "");
   $("#greet-name").textContent = name ? `${name}!` : "¡Hola!";
@@ -1075,7 +1078,30 @@ function renderPalabra(editingNote = false) {
 // preguntan con 4 opciones. Si fallas, la palabra pierde su progreso y
 // vuelve a la fila del día hasta que la contestes bien.
 
-function buildQueue(decks, newLimit) {
+// 4.0.1 · Tope diario de la «Práctica de hoy»: 30 palabras en total (dayMax).
+// Solo cuenta lo que se practica desde «Hoy nos toca»; un tema aparte («Continúa en…») no suma.
+// Reparto: primero lo de «+ Hoy», luego hasta 15 nuevas (newPerDay) y el resto, repasos.
+function dailyPlan() {
+  const now = Date.now();
+  const today = dateKey(now);
+  const max = store.settings.dayMax || 30;
+  let left = Math.max(0, max - store.newToday(today) - store.revToday(today));
+  let due = 0, fresh = 0;
+  for (const d of state.decks) {
+    if (!deckEnabled(d)) continue;
+    const s = deckStats(d, now);
+    due += s.due;
+    fresh += s.fresh;
+  }
+  const p = Math.min(pickedCards().length, left);
+  left -= p;
+  const n = Math.min(Math.max(0, store.settings.newPerDay - store.newToday(today)), fresh, left);
+  left -= n;
+  const r = Math.min(due, left);
+  return { p, n, r };
+}
+
+function buildQueue(decks, newLimit, revLimit = Infinity) {
   const now = Date.now();
   const eod = endOfDay(now);
   const reviews = [];
@@ -1088,6 +1114,7 @@ function buildQueue(decks, newLimit) {
     }
   }
   reviews.sort((a, b) => a.due - b.due);
+  reviews.splice(Math.max(0, revLimit));
   const news = fresh.slice(0, Math.max(0, newLimit));
   const queue = [];
   let n = 0;
@@ -1100,12 +1127,11 @@ function buildQueue(decks, newLimit) {
 }
 
 function startToday() {
-  const today = dateKey(Date.now());
-  const newLeft = Math.max(0, store.settings.newPerDay - store.newToday(today));
-  const queue = buildQueue(state.decks.filter(deckEnabled), newLeft);
-  // Palabras elegidas a mano: extra, mezcladas con las demás.
+  const plan = dailyPlan();
+  const queue = buildQueue(state.decks.filter(deckEnabled), plan.n, plan.r);
+  // Palabras elegidas a mano («+ Hoy»), dentro del tope del día; las que no caben salen mañana.
   const inQueue = new Set(queue.map((it) => it.key));
-  for (const c of pickedCards()) {
+  for (const c of pickedCards().slice(0, plan.p)) {
     for (const key of keysFor(c)) {
       if (inQueue.has(key)) {
         queue.find((it) => it.key === key).picked = true;
@@ -1116,6 +1142,7 @@ function startToday() {
     }
   }
   startSession(queue, "Práctica de hoy", false, "home");
+  if (state.session && state.session.queue === queue) state.session.daily = true;
 }
 
 function startDeck(deck) {
@@ -1179,7 +1206,58 @@ function canSpeak() {
   return "speechSynthesis" in window || typeof Audio !== "undefined";
 }
 
+// 4.0.0 · Aviso de audio: sin internet o sin voz rusa en el dispositivo. Sale una vez por apertura de la app.
+const AUDIO_NOTES = {
+  red: {
+    t: "Sin conexión a internet",
+    d: "El audio puede presentar fallas. Las palabras que ya escuchaste antes sí van a sonar.",
+    ic: '<path d="M2 8.8a15 15 0 0 1 4.2-2.6M9.5 5.2A15 15 0 0 1 22 8.8M5 12.5a10 10 0 0 1 3.6-2.1M15.5 10.6A10 10 0 0 1 19 12.5M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1"/><path d="M3 3l18 18"/>'
+  },
+  voz: {
+    t: "Tu dispositivo no tiene voz en ruso",
+    d: "Algunas palabras pueden no sonar. Puedes instalar la voz rusa en los ajustes de texto a voz de tu celular.",
+    ic: '<path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M22 9l-6 6M16 9l6 6"/>'
+  }
+};
+const audioNoteShown = {};
+let audioNoteTimer = null;
+
+function showAudioNote(kind) {
+  const n = AUDIO_NOTES[kind];
+  const el = $("#audio-note");
+  if (!n || !el || audioNoteShown[kind]) return;
+  if (!el.hidden) return; // ya hay un aviso a la vista; el otro sale la próxima vez que suene algo
+  audioNoteShown[kind] = true;
+  $("#audio-note-ic").innerHTML = n.ic;
+  $("#audio-note-t").textContent = n.t;
+  $("#audio-note-d").textContent = n.d;
+  el.hidden = false;
+  clearTimeout(audioNoteTimer);
+  audioNoteTimer = setTimeout(hideAudioNote, 10000);
+}
+
+function hideAudioNote() {
+  clearTimeout(audioNoteTimer);
+  const el = $("#audio-note");
+  if (el) el.hidden = true;
+}
+
+function hasRuVoice() {
+  return window.speechSynthesis.getVoices().some((v) => v.lang && v.lang.toLowerCase().startsWith("ru"));
+}
+
+// Revisa si hay voz rusa; las voces pueden tardar en cargar, así que espera a «voiceschanged».
+function checkRuVoice() {
+  if (!("speechSynthesis" in window)) { showAudioNote("voz"); return; }
+  const ss = window.speechSynthesis;
+  if (ss.getVoices().length) { if (!hasRuVoice()) showAudioNote("voz"); return; }
+  const once = () => { ss.removeEventListener("voiceschanged", once); if (!hasRuVoice()) showAudioNote("voz"); };
+  ss.addEventListener("voiceschanged", once);
+  setTimeout(() => { ss.removeEventListener("voiceschanged", once); if (!ss.getVoices().length) showAudioNote("voz"); }, 1500);
+}
+
 function speakFallback(clean, rate, btn) {
+  checkRuVoice();
   if (!("speechSynthesis" in window)) return;
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(clean);
@@ -1200,6 +1278,7 @@ function speak(text, rate = 0.9) {
   if (!canSpeak()) return;
   const clean = plain(text).replace(/\(.*?\)/g, "").replace(/[/·]/g, ",").replace(/—/g, ",").trim();
   if (!clean) return;
+  if (navigator.onLine === false) showAudioNote("red");
   loadAudioIndex();
   const btn = clickedBtn;
   clickedBtn = null;
@@ -1563,7 +1642,12 @@ function settle(ok) {
   else s.bad++;
   if (!s.cram) {
     const prev = store.card(it.key);
-    if (!prev) store.countNew(dateKey(now));
+    // Solo la «Práctica de hoy» cuenta para el tope del día; una vez por palabra.
+    if (s.daily && !it.dayCounted) {
+      it.dayCounted = true;
+      if (!prev) store.countNew(dateKey(now));
+      else store.countReview(dateKey(now));
+    }
     const rating = ok ? (it.hint && !it.failed ? 2 : 3) : 1;
     logActivity();
     store.setCard(it.key, schedule(prev, rating, now));
@@ -2854,8 +2938,10 @@ function mapaStageHtml() {
   const to = mapaPinTo(sel, mod); // el pin va con el tema seleccionado
   let pin = "";
   if (to) {
-    const from = lastPin && lastPin.mod === mod.id ? lastPin.to : to;
-    pin = `<span class="mp-pin2" data-to="${to[0]},${to[1]}" style="left:${pctX(from[0])};top:${pctY(from[1])};width:${r1(PIN_W / MAP_W * 100)}%">${mapaImg("pin", "mp-pin-img", 0, 0, PIN_W).replace(/ style="[^"]*"/g, "")}</span>`;
+    // 4.0.0: el pin ya no cruza el mapa en línea recta (parecía saltar entre puntos): aparece en su
+    // anillo con una pequeña caída solo cuando cambia de tema.
+    const moved = !lastPin || lastPin.mod !== mod.id || lastPin.to[0] !== to[0] || lastPin.to[1] !== to[1];
+    pin = `<span class="mp-pin2${moved ? " drop" : ""}" style="left:${pctX(to[0])};top:${pctY(to[1])};width:${r1(PIN_W / MAP_W * 100)}%">${mapaImg("pin", "mp-pin-img", 0, 0, PIN_W).replace(/ style="[^"]*"/g, "")}</span>`;
     m.pinTo = to;
   } else m.pinTo = null;
 
@@ -2924,20 +3010,8 @@ function renderMapa() {
   }
   const stage = $("#mapa-stage");
   stage.innerHTML = mapaStageHtml();
-  const pin = stage.querySelector(".mp-pin2");
   const m = state.mapa;
-  if (pin && m.pinTo) {
-    const to = m.pinTo;
-    const prev = lastPin && lastPin.mod === m.mod ? lastPin.to : to;
-    if (prev[0] !== to[0] || prev[1] !== to[1]) {
-      void pin.offsetWidth;
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        pin.style.left = pctX(to[0]);
-        pin.style.top = pctY(to[1]);
-      }));
-    }
-    lastPin = { mod: m.mod, to };
-  }
+  if (m.pinTo) lastPin = { mod: m.mod, to: m.pinTo };
   mapaHits();
 }
 
@@ -3083,11 +3157,6 @@ function renderSettings() {
   $("#reset-confirm").hidden = true;
   $("#reset-ask").hidden = false;
   $("#app-version").textContent = `Ruso de bolsillo ${APP_VERSION}${IS_BETA ? " · beta (progreso de prueba)" : ""}`;
-  let hd = document.getElementById("hist-diag");
-  if (IS_BETA) {
-    if (!hd) { hd = document.createElement("p"); hd.id = "hist-diag"; hd.className = "version muted"; $("#app-version").after(hd); }
-    showHistDiag();
-  } else if (hd) hd.remove();
   $("#deck-toggles").innerHTML = state.decks
     .map((d) => `<label class="deck-toggle" for="en-${esc(d.id)}"><span>${esc(d.title)}</span>
       <input class="switch" type="checkbox" id="en-${esc(d.id)}" data-toggle="${esc(d.id)}" ${deckEnabled(d) ? "checked" : ""}></label>`)
@@ -3134,18 +3203,19 @@ function reportEnv() {
   };
 }
 
-function openReport() {
+function openReport(kind = "falla") {
   const pantalla = screenInfo();
-  state.report = { pantalla };
-  openSheet("Reportar falla", `<form class="rep-form" id="rep-form" novalidate>
-      <label class="rep-label" for="rep-text">¿Qué pasó?</label>
-      <textarea id="rep-text" rows="5" maxlength="${REPORT_MAX}" placeholder="Cuéntanos qué viste y qué esperabas ver" aria-describedby="rep-count rep-msg"></textarea>
+  const com = kind === "comentario";
+  state.report = { pantalla, kind };
+  openSheet(com ? "Comentarios" : "Reportar falla", `<form class="rep-form" id="rep-form" novalidate>
+      <label class="rep-label" for="rep-text">${com ? "¿Qué te gustaría decirnos?" : "¿Qué pasó?"}</label>
+      <textarea id="rep-text" rows="5" maxlength="${REPORT_MAX}" placeholder="${com ? "Ideas, sugerencias o lo que te gusta de la app" : "Cuéntanos qué viste y qué esperabas ver"}" aria-describedby="rep-count rep-msg"></textarea>
       <div class="rep-meta"><span class="rep-msg" id="rep-msg" role="status"></span><span class="rep-count" id="rep-count"><span class="num">0</span>/<span class="num">${REPORT_MAX}</span></span></div>
       <div class="rep-actions">
         <button class="btn btn-primary" type="submit">Enviar</button>
         <button class="btn btn-ghost" type="button" data-sheet-close>Cancelar</button>
       </div>
-    </form>`, "Con tu mensaje enviamos la pantalla y la versión en que estás.");
+    </form>`, com ? "Con tu mensaje enviamos la versión en que estás." : "Con tu mensaje enviamos la pantalla y la versión en que estás.");
   requestAnimationFrame(() => $("#rep-text") && $("#rep-text").focus());
 }
 
@@ -3156,22 +3226,40 @@ async function submitReport() {
   if (!text) { msg.textContent = "Escribe unas palabras para que podamos ayudarte."; ta.focus(); return; }
   if (Date.now() - lastReportAt < REPORT_GAP_MS) { msg.textContent = "Espera unos segundos para enviar otro reporte."; return; }
   lastReportAt = Date.now();
+  const kind = (state.report && state.report.kind) || "falla";
   const entry = {
+    tipo: kind,
     pantalla: (state.report && state.report.pantalla) || screenInfo(),
     version: APP_VERSION,
     descripcion: text.slice(0, REPORT_MAX),
     entorno: reportEnv()
   };
   closeSheet();
-  toast("¡Gracias! Recibimos tu reporte");
+  toast(kind === "comentario" ? "¡Gracias! Recibimos tu comentario" : "¡Gracias! Recibimos tu reporte");
   try { await store.reportFalla(entry); } catch (e) { console.warn("reporte", e); }
+}
+
+// ---------- Privacidad (mismo texto que docs/privacidad.md) ----------
+const PRIVACIDAD = [
+  ["Qué se guarda", "Si creas una cuenta: tu correo y tu progreso de estudio (palabras vistas, repasos, listas, notas y ajustes). Se guardan en Supabase para que puedas continuar en otro dispositivo. Sin cuenta, el progreso se queda solo en tu dispositivo."],
+  ["Qué no se hace", "No se venden ni se comparten tus datos, no hay anuncios y no se usan cookies de seguimiento."],
+  ["Visitas", "La versión 2.0 cuenta visitas de forma anónima con GoatCounter (sin cookies ni datos personales). La beta no las cuenta."],
+  ["Reportes", "Si usas «Reportar falla» o «Mi respuesta también es correcta», se guarda lo que escribes y tu cuenta, para poder revisarlo."],
+  ["Usuarios beta", "Para ser usuario beta hace falta registrarte con una cuenta. Así tu avance y tu uso de la app ayudan a optimizar los datos y a mejorar la aplicación. Para eso se revisa el avance de las personas que prueban la beta con un seudónimo (por ejemplo «Beta 1»), sin mostrar tu correo."],
+  ["Borrar tus datos", "Escribe desde «Reportar falla» o a carkovskismind en GitHub y se borra tu cuenta y tu progreso. Cuando la información se haya borrado, se te avisará por correo electrónico."]
+];
+
+function openPrivacidad() {
+  openSheet("Privacidad", `<div class="priv">${PRIVACIDAD.map(([h, p]) => `<h3>${esc(h)}</h3><p>${esc(p)}</p>`).join("")}</div>`);
 }
 
 // ---------- Eventos ----------
 function bind() {
-  const chip = $("#rep-chip");
-  chip.hidden = !REPORT_BUTTON;
-  chip.addEventListener("click", openReport);
+  $("#audio-note-x").addEventListener("click", hideAudioNote);
+  for (const b of $$("[data-report]")) b.hidden = !REPORT_BUTTON;
+  document.addEventListener("click", (e) => { if (e.target.closest("[data-report]")) openReport("falla"); });
+  $("#open-comentarios").addEventListener("click", () => openReport("comentario"));
+  $("#open-privacidad").addEventListener("click", openPrivacidad);
   $("#sheet-body").addEventListener("input", (e) => {
     if (e.target.id !== "rep-text") return;
     $("#rep-count .num").textContent = e.target.value.length;
