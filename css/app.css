@@ -1341,7 +1341,7 @@ body.no-fon .sheet :is(.fon, .w-fon, .ex-fon:not(.keep), .dic-fon) { display: no
 .ms-tabs button::after { content: ""; position: absolute; inset: -7px -2px; } /* zona táctil de 44 px */
 .ms-tabs button[aria-selected="true"] { background: #f5a3b5; color: #0b0b0c; border: 2px solid #0b0b0c; box-shadow: 0 0 0 1.5px #f3efe6; }
 :root[data-theme="light"] .ms-tabs button[aria-selected="true"] { border: 1.5px solid #151515; box-shadow: none; }
-.ms-mod { display: flex; flex-direction: column; gap: 6px; width: 100%; padding: 2px 0; border: 0; background: transparent; color: var(--text); text-align: left; font-family: inherit; cursor: pointer; min-height: 44px; }
+.ms-mod { display: flex; flex-direction: column; gap: 6px; width: 100%; padding: 2px 0; margin: 8px 0 6px; border: 0; background: transparent; color: var(--text); text-align: left; font-family: inherit; cursor: pointer; min-height: 44px; }
 .ms-mod-top { display: flex; align-items: baseline; gap: 8px; }
 .ms-mod-top b { font-size: 15px; font-weight: 800; }
 .ms-mod-sub { font-size: 12px; font-weight: 600; color: var(--muted); }
@@ -1354,8 +1354,8 @@ body.no-fon .sheet :is(.fon, .w-fon, .ex-fon:not(.keep), .dic-fon) { display: no
 .ms-map { position: relative; overflow: hidden; border-radius: 26px; background: #0b0b0c; margin-right: 6px; flex: none;
   border: 2px solid #0b0b0c; box-shadow: 0 0 0 1.5px #f3efe6, 4px 5px 0 1.5px #0b0b0c, 4px 5px 0 3px #f3efe6; transition: height .3s ease; }
 :root[data-theme="light"] .ms-map { background: #f4f1ea; border: 1.5px solid #151515; box-shadow: 3px 3px 0 #151515; }
-.ms-bg { position: absolute; left: -1.5%; top: -10px; width: 103%; aspect-ratio: 345 / 522; background: url("../img/mapa/mapa-oscuro.svg") 0 0 / 100% 100% no-repeat; opacity: .2; filter: grayscale(.5); pointer-events: none; }
-:root[data-theme="light"] .ms-bg { background-image: url("../img/mapa/mapa-claro.svg"); opacity: .3; }
+.ms-bg { position: absolute; left: -1.5%; top: -10px; width: 103%; aspect-ratio: 345 / 522; background: url("../img/mapa/mapa-oscuro-a3.svg") 0 0 / 100% 100% no-repeat; opacity: .2; filter: url(#mapa-boost) grayscale(.5); pointer-events: none; }
+:root[data-theme="light"] .ms-bg { background-image: url("../img/mapa/mapa-claro-a3.svg"); opacity: .22; }
 .ms-path { position: absolute; left: 0; top: 0; width: 100%; z-index: 2; overflow: visible; }
 .ms-path path { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; }
 .ms-rest { stroke: #f3efe6; stroke-opacity: .7; stroke-width: 2.4; stroke-dasharray: 1 8; }
