@@ -426,29 +426,29 @@ setTimeout(window.hideSplash,10000)})();
 </main>
 
 <!-- AJUSTES -->
-<main id="view-settings" class="view has-nav" hidden>
-  <h1 class="page-title">Ajustes</h1>
+<main id="view-settings" class="view has-nav set-a2" hidden>
+  <header class="set-head"><div class="h-sec-head"><h1 class="h-sec-t">Ajustes<svg viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5c12-4 22 3 36 0s24-4 38-1 26 3 42-1"/></svg></h1><span class="h-sec-ru" lang="ru">настро́йки</span></div></header>
 
-  <section class="panel" aria-labelledby="acc-title">
-    <h2 id="acc-title" class="label">Cuenta y sincronización</h2>
+  <section class="panel set-sec" style="--sc: #4af2d5" aria-labelledby="acc-title">
+    <h2 id="acc-title" class="label set-h"><i aria-hidden="true"></i>Cuenta y sincronización</h2>
     <div id="account-box"></div>
   </section>
 
-  <section class="panel" aria-labelledby="me-title">
-    <h2 id="me-title" class="label">Tú</h2>
+  <section class="panel set-sec" style="--sc: #f5a3b5" aria-labelledby="me-title">
+    <h2 id="me-title" class="label set-h"><i aria-hidden="true"></i>Tú</h2>
     <label class="field field-row" for="opt-name">
       <span>Tu nombre para el saludo</span>
       <input type="text" id="opt-name" maxlength="24" placeholder="Carol" autocomplete="given-name">
     </label>
-    <fieldset class="field">
+    <fieldset class="field set-seg">
       <legend>Apariencia</legend>
       <label class="radio"><input type="radio" name="theme" id="theme-dark" value="dark"> Oscuro</label>
       <label class="radio"><input type="radio" name="theme" id="theme-light" value="light"> Claro</label>
     </fieldset>
   </section>
 
-  <section class="panel" aria-labelledby="studyset-title">
-    <h2 id="studyset-title" class="label">Estudio</h2>
+  <section class="panel set-sec" style="--sc: #aa94fc" aria-labelledby="studyset-title">
+    <h2 id="studyset-title" class="label set-h"><i aria-hidden="true"></i>Estudio</h2>
     <fieldset class="field">
       <legend>Dirección de las tarjetas de vocabulario</legend>
       <label class="radio"><input type="radio" name="dir" id="dir-ru" value="ru"> Ruso → español</label>
@@ -478,14 +478,14 @@ setTimeout(window.hideSplash,10000)})();
     </label>
   </section>
 
-  <section class="panel" aria-labelledby="decks-title">
-    <h2 id="decks-title" class="label">Temas en tu práctica diaria</h2>
+  <section class="panel set-sec" style="--sc: #f2c14e" aria-labelledby="decks-title">
+    <h2 id="decks-title" class="label set-h"><i aria-hidden="true"></i>Temas en tu práctica diaria</h2>
     <p class="muted">Los temas marcados entran en «para hoy».</p>
     <div id="deck-toggles"></div>
   </section>
 
-  <section class="panel" aria-labelledby="danger-title">
-    <h2 id="danger-title" class="label">Progreso</h2>
+  <section class="panel set-sec" style="--sc: #f5a3b5" aria-labelledby="danger-title">
+    <h2 id="danger-title" class="label set-h"><i aria-hidden="true"></i>Progreso</h2>
     <p class="muted">Borra todo tu historial de repaso en este dispositivo y en la nube.</p>
     <button class="btn btn-bad" id="reset-ask" type="button">Reiniciar progreso</button>
     <div class="confirm" id="reset-confirm" hidden>
