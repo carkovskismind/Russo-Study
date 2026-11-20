@@ -230,31 +230,37 @@ setTimeout(window.hideSplash,10000)})();
 </main>
 
 <!-- ESTUDIO CON TARJETAS -->
-<main id="view-study" class="view view-study" hidden>
-  <header class="practice-head">
+<main id="view-study" class="view view-study a2-study" hidden>
+  <header class="practice-head st-head">
     <button class="circle-btn" id="study-close" type="button" aria-label="Terminar sesión">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
-    <h1 class="practice-title" id="study-title">Práctica</h1>
-    <div class="counters" aria-label="Progreso de la sesión">
-      <span class="counter" title="Pendientes"><b id="cnt-due">0</b><span class="visually-hidden"> pendientes</span></span>
-      <span class="counter counter-ok" title="Correctas">✓ <b id="cnt-ok">0</b><span class="visually-hidden"> correctas</span></span>
-      <span class="counter counter-bad" title="Errores">✗ <b id="cnt-bad">0</b><span class="visually-hidden"> errores</span></span>
+    <div class="tm-ttl">
+      <div class="h-sec-head"><h1 class="h-sec-t" id="study-title">Práctica<svg viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5c12-4 22 3 36 0s24-4 38-1 26 3 42-1"/></svg></h1><span class="h-sec-ru" lang="ru">пра́ктика</span></div>
+      <span class="tm-sub" id="study-sub"></span>
     </div>
   </header>
-  <div class="progress" aria-hidden="true"><div class="progress-fill" id="study-progress"></div></div>
+  <div class="st-prog">
+    <div class="progress" aria-hidden="true"><div class="progress-fill" id="study-progress"></div></div>
+    <span class="st-count" role="status" id="st-count"><span class="st-pos"><span class="num" id="cnt-pos">1</span> de <span class="num" id="cnt-tot">1</span></span><span class="st-ok"><i></i><span class="num" id="cnt-ok">0</span> bien</span><span class="st-bad"><i></i><span class="num" id="cnt-bad">0</span> para repetir</span><span class="visually-hidden"><span id="cnt-due">0</span> pendientes</span></span>
+  </div>
 
   <article class="card card-frame pal-lav study-card" id="card" aria-live="polite">
+    <span class="st-chev st-chev-l" aria-hidden="true">‹</span><span class="st-chev st-chev-r" aria-hidden="true">›</span>
     <div class="card-meta">
-      <span class="card-deck" id="card-deck"></span>
       <span class="card-badge" id="card-badge" hidden>Nueva</span>
+      <span class="card-deck" id="card-deck" hidden></span>
+      <button class="speak-btn" id="card-speak" type="button" aria-label="Escuchar en ruso" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+      </button>
     </div>
     <div class="card-front" id="card-front"></div>
     <div class="card-back" id="card-back" hidden></div>
-    <button class="speak-btn" id="card-speak" type="button" aria-label="Escuchar en ruso" hidden>
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>
-    </button>
   </article>
+  <div class="st-taps" id="st-taps" aria-hidden="true" hidden>
+    <span class="st-tap-l"><svg viewBox="0 0 26 24"><path d="M3 21c8 1 15-4 17-15"/><path d="M15 9l5-4 2 6"/></svg><span>toca a la izquierda:<br>ya la conozco</span></span>
+    <span class="st-tap-r"><span>toca a la derecha:<br>continuar para estudiarla</span><svg viewBox="0 0 26 24"><path d="M3 21c8 1 15-4 17-15"/><path d="M15 9l5-4 2 6"/></svg></span>
+  </div>
 
   <aside class="hint-box" id="hint-box" hidden>
     <span class="label">Pista</span>
@@ -262,18 +268,19 @@ setTimeout(window.hideSplash,10000)})();
     <p class="hint-mine" id="hint-mine" hidden><b>Tu nota:</b> <span id="hint-mine-text"></span></p>
   </aside>
   <p class="feedback" id="feedback" role="status" hidden></p>
+  <p class="st-ask" id="st-ask" hidden>Elige su significado.</p>
   <div class="options" id="options" hidden></div>
 
   <div class="note-box" id="note-box" hidden></div>
 
   <div class="menu" id="study-menu">
-    <button class="menu-item" id="btn-learned" type="button" hidden>Entendido, ahora pregúntame</button>
+    <button class="menu-item visually-hidden" id="btn-learned" type="button" hidden>Continuar para estudiarla</button>
     <button class="menu-item" id="btn-reveal" type="button" hidden>Mostrar respuesta</button>
     <div class="selfcheck" id="selfcheck" hidden>
       <button class="btn btn-bad" id="btn-didnt" type="button">No lo sabía</button>
       <button class="btn btn-primary" id="btn-knew" type="button">Lo sabía</button>
     </div>
-    <button class="menu-item" id="btn-hint" type="button" hidden>No sé, dame una pista</button>
+    <button class="menu-item st-hint" id="btn-hint" type="button" hidden></button>
     <button class="btn btn-primary btn-wide" id="btn-next" type="button" hidden>Continuar</button>
     <button class="menu-item menu-quiet" id="study-exit" type="button">Salir de la práctica</button>
   </div>

@@ -1446,3 +1446,91 @@ body.no-fon .sheet :is(.fon, .w-fon, .ex-fon:not(.keep), .dic-fon) { display: no
 .ml-head b { font-size: 15px; font-weight: 800; line-height: 1.2; }
 .ml-ru { flex: none; font-family: var(--f-ru); font-weight: 700; font-size: 14px; color: var(--ink); }
 .ml-item .ms-go { margin-top: 6px; }
+
+/* ---------- 4.2.0 · Repaso A2 (palabra nueva y pregunta) ---------- */
+.a2-study { gap: 10px; }
+.st-head { gap: 12px; margin-top: 6px; }
+.st-head .circle-btn { flex: none; width: 46px; height: 46px; border: 1.5px solid #3a3a40; background: #18181b; }
+:root[data-theme="light"] .st-head .circle-btn { border-color: #d6d0c3; background: #fff; }
+.st-prog { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.st-prog .progress { height: 8px; border-radius: 8px; background: #2a2a2f; }
+:root[data-theme="light"] .st-prog .progress { background: #e4dfd3; }
+.st-count { display: flex; align-items: center; gap: 14px; font-size: 13px; font-weight: 700; color: var(--muted); }
+.st-pos { color: var(--text); }
+.st-ok { margin-left: auto; }
+.st-ok, .st-bad { display: inline-flex; align-items: center; gap: 6px; }
+.st-ok i, .st-bad i { width: 10px; height: 10px; border-radius: 50%; background: #4af2d5; display: inline-block; }
+.st-bad i { background: #f5a3b5; }
+:root[data-theme="light"] .st-ok i, :root[data-theme="light"] .st-bad i { border: 1.5px solid #151515; }
+.a2-study .study-card { margin-top: 6px; padding: 16px; border-radius: 28px; color: #151515; min-height: 0; display: flex; flex-direction: column; gap: 6px; }
+.a2-study .study-card.card-frame { border-color: #0b0b0c; }
+:root[data-theme="light"] .a2-study .study-card.card-frame { border-color: #151515; }
+.a2-study .card-meta { justify-content: space-between; }
+.a2-study .card-badge { font-size: 12px; font-weight: 800; padding: 4px 10px; background: var(--ink); color: var(--soft); }
+.a2-study .card-badge.q { background: rgba(255, 255, 255, .7); color: var(--ink); border: 1.5px solid var(--ink); }
+.a2-study .speak-btn { position: static; flex: none; width: 48px; height: 48px; border-radius: 50%; background: #fff; border: 2px solid #151515; color: #151515; display: grid; place-items: center; }
+.a2-study .speak-btn[hidden] { display: none; }
+.a2-study .speak-btn svg { width: 22px; height: 22px; }
+.a2-study .card-front, .a2-study .card-back { text-align: center; display: flex; flex-direction: column; gap: 6px; align-items: center; }
+.a2-study .card-back { border-top: 0; padding-top: 0; margin-top: 0; }
+.a2-study .card-front { margin-top: 0; }
+.a2-study .big-ru { font-size: 52px; line-height: 1.05; padding: 0; margin-top: -6px; color: #151515; }
+.a2-study .fon-big { font-size: 18px; font-weight: 700; letter-spacing: .03em; color: var(--ink); }
+.a2-study .big-es { font-size: 24px; font-weight: 800; line-height: 1.15; }
+.a2-study .card-front .big-es { margin: 10px 0; }
+.st-div { align-self: stretch; height: 1.5px; background: rgba(0, 0, 0, .14); margin: 8px 0 4px; }
+.a2-study .tag { margin-top: 0; font-size: 11.5px; font-weight: 800; padding: 3px 9px; border-color: var(--ink); color: var(--ink); }
+.a2-study .note { font-size: 13px; color: #3a3a3a; }
+.a2-study .notes-empty { display: none; }
+.st-ex { margin-top: 10px; flex-direction: row !important; align-items: center; gap: 10px; padding: 10px 10px 10px 14px; border-radius: 18px; background: rgba(255, 255, 255, .7); }
+.st-ex-t { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; text-align: left; }
+.st-ex .learn-ex-label { letter-spacing: .08em; color: var(--ink); }
+.st-ex .ex-ru { font-family: var(--f-ru); font-weight: 700; font-size: 19px; color: #151515; }
+.st-ex .ex-fon { font-size: 13px; font-weight: 700; color: var(--ink); }
+.st-ex-es { font-size: 13.5px; font-weight: 700; color: #3a3a3a; }
+.st-ex-btn { flex: none; width: 44px !important; height: 44px !important; border-radius: 50% !important; background: #fff !important; border: 2px solid #151515 !important; color: #151515 !important; display: grid !important; place-items: center; padding: 0; }
+.st-ex-btn svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.st-chev { display: none; position: absolute; top: 46%; font-size: 30px; font-weight: 800; line-height: 1; color: rgba(0, 0, 0, .28); pointer-events: none; }
+.st-chev-l { left: 4px; } .st-chev-r { right: 4px; }
+.st-learn .st-chev { display: block; }
+.st-learn { cursor: pointer; }
+.st-learn:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+.st-taps { display: flex; justify-content: space-between; align-items: flex-start; margin: 2px 4px 0; color: #4af2d5; }
+:root[data-theme="light"] .st-taps { color: #0b7d6c; }
+.st-taps[hidden] { display: none; }
+.st-taps > span { display: flex; align-items: flex-start; gap: 4px; }
+.st-tap-l { transform: rotate(-3deg); }
+.st-tap-r { transform: rotate(3deg); text-align: right; }
+.st-taps svg { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.st-tap-l svg { transform: scaleX(-1) rotate(-20deg); }
+.st-tap-r svg { transform: rotate(-20deg); }
+.st-taps span span { font-size: 12.5px; font-weight: 800; line-height: 1.2; padding-top: 10px; }
+.a2-study .note-box { margin-top: 10px; }
+.st-note-add { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 52px; padding: 0 16px; border-radius: 16px; border: 1.5px dashed #3a3a40; background: transparent; color: var(--muted); font: 700 14px/1.3 var(--f-ui); text-align: left; cursor: pointer; }
+:root[data-theme="light"] .st-note-add { border-color: #8f8a7e; }
+.st-note-plus { font-size: 18px; font-weight: 800; color: var(--text); }
+.st-opt { font-weight: 600; opacity: .8; }
+.st-ask { margin: 8px 0 0; font-size: 15px; font-weight: 700; }
+.a2-study .options { gap: 8px; }
+.a2-study .option { min-height: 44px; padding: 0 12px; gap: 10px; border-radius: 14px; border: 1.5px solid #3a3a40; background: #18181b; color: var(--text); font-size: 14.5px; font-weight: 700; }
+:root[data-theme="light"] .a2-study .option { border-color: #d6d0c3; background: #fff; }
+.a2-study .option .key { width: 24px; height: 24px; border: 1.5px solid #3a3a40; font-family: var(--f-num); font-weight: 900; font-size: 12px; color: var(--muted); background: transparent; }
+.a2-study .option.correct { border: 2px solid var(--accent); background: var(--accent-soft); }
+.a2-study .option.correct .key { background: var(--accent); border-color: var(--accent); color: #111; }
+.a2-study .option.wrong { border: 2px solid var(--bad); }
+.a2-study .option.wrong .key { background: var(--bad); border-color: var(--bad); color: #111; }
+.a2-study .menu { border: 0; background: transparent; }
+.a2-study .menu-item { border-top: 0 !important; }
+.st-hint { display: flex !important; align-items: center; gap: 10px; min-height: 48px; margin-top: 4px; padding: 6px 12px !important; border-radius: 14px; border: 1.5px dashed var(--muted) !important; background: transparent; color: var(--text); text-align: left; width: 100%; }
+.st-hint[hidden] { display: none !important; }
+.st-hint-q { flex: none; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid currentColor; display: grid; place-items: center; font-size: 13px; font-weight: 800; }
+.st-hint-t { display: flex; flex-direction: column; gap: 2px; }
+.st-hint-t b { font-size: 14px; font-weight: 800; }
+.st-hint-t span { font-size: 12px; font-weight: 600; line-height: 1.3; color: var(--muted); }
+.a2-study .menu-quiet { text-align: center; color: var(--muted); }
+.a2-study .rep-row { margin-top: 14px; }
+.a2-study .rep-btn { height: 50px; padding: 0 24px; border: 1.5px solid #3a3a40; background: #18181b; color: var(--text); }
+:root[data-theme="light"] .a2-study .rep-btn { border: 1.5px dashed #8f8a7e; background: transparent; color: var(--muted); }
+.a2-study .menu-item { border-bottom: 0 !important; }
+:root[data-theme="light"] .a2-study .option.correct { border-color: #151515; background: #d8f7f2; }
+:root[data-theme="light"] .a2-study .option.wrong { border-color: #151515; background: #fde4ea; }

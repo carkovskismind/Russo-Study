@@ -1365,7 +1365,7 @@ function startSession(queue, title, cram, returnTo) {
     return;
   }
   state.session = { queue, title, cram, ok: 0, bad: 0, resolved: 0, answered: false, requeue: false, timer: null, returnTo };
-  $("#study-title").textContent = title;
+  $("#study-close").setAttribute("aria-label", `Terminar ${title || "la práctica"}`);
   show("study");
   renderItem();
 }
@@ -1571,8 +1571,12 @@ function buildOptions(it) {
   ]);
 }
 
+function hintBtnHtml(t, d) {
+  return `<span class="st-hint-q" aria-hidden="true">?</span><span class="st-hint-t"><b>${t}</b><span>${d}</span></span>`;
+}
+
 function hideAllControls() {
-  for (const id of ["btn-learned", "btn-reveal", "selfcheck", "btn-hint", "btn-next", "options", "feedback", "card-back", "hint-box", "note-box"]) {
+  for (const id of ["btn-learned", "btn-reveal", "selfcheck", "btn-hint", "btn-next", "options", "feedback", "card-back", "hint-box", "note-box", "st-taps", "st-ask"]) {
     $(`#${id}`).hidden = true;
   }
 }
@@ -1583,6 +1587,8 @@ function updateCounters() {
   $("#cnt-ok").textContent = s.ok;
   $("#cnt-bad").textContent = s.bad;
   const total = s.resolved + s.queue.length;
+  $("#cnt-pos").textContent = Math.min(total, s.resolved + 1);
+  $("#cnt-tot").textContent = total;
   $("#study-progress").style.width = `${total ? Math.round((s.resolved / total) * 100) : 0}%`;
 }
 
@@ -1597,13 +1603,21 @@ function renderItem() {
   hideAllControls();
   updateCounters();
 
-  $("#card").className = `card card-frame study-card pal-${deck ? visFor(deck).pal : "lav"}`;
+  const learn = it.phase === "learn" && c.kind !== "qa";
+  const cardEl = $("#card");
+  cardEl.className = `card card-frame study-card sh3d pal-${deck ? visFor(deck).pal : "lav"}${learn ? " st-learn" : ""}`;
+  // 4.2.0: la palabra nueva se pasa tocando la tarjeta (las dos mitades continúan)
+  if (learn) { cardEl.tabIndex = 0; cardEl.setAttribute("role", "group"); cardEl.setAttribute("aria-label", "Palabra nueva. Toca la tarjeta para continuar"); }
+  else { cardEl.removeAttribute("tabindex"); cardEl.removeAttribute("role"); cardEl.removeAttribute("aria-label"); }
   $("#card-deck").textContent = deck ? deck.title : "";
-  $("#card-badge").hidden = it.phase !== "learn";
-  $("#card-badge").textContent = "Nueva";
+  const pos = deck && state.ruta ? rutaPos(deck.id) : null;
+  $("#study-sub").innerHTML = deck ? `${pos ? `Tema <span class="num">${pos.label}</span> · ` : ""}${esc(deck.title)}` : "";
+  $("#study-exit").hidden = learn;
+  $("#card-badge").hidden = false;
+  $("#card-badge").className = "card-badge" + (it.phase === "learn" ? "" : " q");
+  $("#card-badge").textContent = it.phase === "learn" ? (c.kind === "qa" ? "Regla nueva" : "Palabra nueva") : it.dir === "es" ? "¿Cómo se dice?" : it.dir === "audio" ? "Escucha" : it.dir === "qa" ? "Pregunta" : "¿Qué significa?";
   if (it.failed && it.phase !== "learn") {
-    $("#card-badge").hidden = false;
-    $("#card-badge").textContent = "Repetir";
+    $("#card-badge").textContent = "Repetir · " + $("#card-badge").textContent;
   }
 
   const front = $("#card-front");
@@ -1616,16 +1630,18 @@ function renderItem() {
       front.innerHTML = `<span class="learn-label">Regla nueva</span><div class="qa-text">${esc(c.q)}</div>`;
       back.innerHTML = `<div class="qa-text answer">${esc(c.a)}</div>`;
     } else {
-      front.innerHTML = `<span class="learn-label">Palabra nueva</span>${ruBlock(c.ru, c.fonetica)}`;
+      front.innerHTML = ruBlock(c.ru, c.fonetica);
+      const sp = canSpeak();
       const ej = c.ejemplo && c.ejemplo.ru
-        ? `<div class="learn-ex"><span class="learn-ex-label">Ejemplo</span><span class="ex-ru" lang="ru">${esc(c.ejemplo.ru)}</span><span class="ex-fon keep">${[fonOn() ? c.ejemplo.fonetica : "", c.ejemplo.es].filter(Boolean).map(esc).join(" · ")}</span></div>`
+        ? `<div class="learn-ex st-ex"><div class="st-ex-t"><span class="learn-ex-label">EJEMPLO</span><span class="ex-ru" lang="ru">${esc(c.ejemplo.ru)}</span>${c.ejemplo.fonetica ? `<span class="ex-fon">${esc(c.ejemplo.fonetica)}</span>` : ""}${c.ejemplo.es ? `<span class="st-ex-es">${esc(c.ejemplo.es)}</span>` : ""}</div>${sp ? `${slowBtn(c.ejemplo.ru, "st-ex-btn")}<button class="audio-btn st-ex-btn" type="button" data-say="${esc(c.ejemplo.ru)}" aria-label="Escuchar el ejemplo">${SPEAKER}</button>` : ""}</div>`
         : "";
-      back.innerHTML = `<div class="big-es">${esc(c.es)}</div>` + ej + extras(c);
+      back.innerHTML = `<span class="st-div" aria-hidden="true"></span><div class="big-es">${esc(c.es)}</div>` + extras(c) + ej;
       speakBtn.hidden = !canSpeak();
       if (store.settings.autoSpeak) speak(c.ru);
     }
     back.hidden = false;
     $("#btn-learned").hidden = false;
+    $("#st-taps").hidden = !learn;
     renderNoteBox();
     return;
   }
@@ -1642,10 +1658,10 @@ function renderItem() {
     back.innerHTML = ruBlock(c.ru, c.fonetica) + `<div class="big-es">${esc(c.es)}</div>` + extras(c);
     if (canSpeak()) speak(c.ru);
   } else if (it.dir === "es") {
-    front.innerHTML = `<div class="big-es">${esc(c.es)}</div><div class="prompt-blank">___</div>`;
+    front.innerHTML = `<div class="big-es">${esc(c.es)}</div>`;
     back.innerHTML = ruBlock(c.ru, c.fonetica) + extras(c);
   } else {
-    front.innerHTML = ruBlock(c.ru, c.fonetica) + `<div class="prompt-blank">___</div>`;
+    front.innerHTML = ruBlock(c.ru, c.fonetica);
     back.innerHTML = `<div class="big-es">${esc(c.es)}</div>` + extras(c);
     speakBtn.hidden = !canSpeak();
     if (store.settings.autoSpeak) speak(c.ru);
@@ -1657,8 +1673,10 @@ function renderItem() {
     .map((o, i) => `<button class="option${it.dir === "es" ? " ru" : ""}" type="button" data-opt="${i}"${it.dir === "es" ? ' lang="ru"' : ""}><span class="key">${i + 1}</span><span class="opt-text"><span>${esc(o.text)}</span>${o.fon ? `<span class="fon">${esc(o.fon)}</span>` : ""}</span></button>`)
     .join("");
   box.hidden = false;
+  $("#st-ask").textContent = it.dir === "es" ? "Elige cómo se dice en ruso." : "Elige su significado.";
+  $("#st-ask").hidden = false;
   const hint = $("#btn-hint");
-  hint.textContent = "No sé, dame una pista";
+  hint.innerHTML = hintBtnHtml("Dame una pista", "Te da una idea, no la respuesta. La palabra vuelve al final de hoy.");
   hint.hidden = false;
 }
 
@@ -1764,7 +1782,7 @@ function useHint() {
     $("#hint-mine").hidden = !mine;
     $("#hint-mine-text").textContent = mine;
     $("#hint-box").hidden = false;
-    $("#btn-hint").textContent = "No sé, muéstrame la respuesta";
+    $("#btn-hint").innerHTML = hintBtnHtml("No sé, muéstrame la respuesta", "Cuenta como error y la palabra vuelve al final de hoy.");
     return;
   }
   s.answered = true;
@@ -1807,7 +1825,7 @@ function renderNoteBox(editing = false) {
   box.innerHTML = text
     ? `<span class="note-label">Tu nota</span><p class="note-mine">${esc(text)}</p>
        <button class="link-btn" type="button" data-note="edit">Editar nota</button>`
-    : `<button class="link-btn" type="button" data-note="edit">+ Agregar una nota personal</button>`;
+    : `<button class="st-note-add" type="button" data-note="edit"><span class="st-note-plus" aria-hidden="true">+</span><span>Tu nota: algo que te ayude a recordarla <span class="st-opt">(opcional)</span></span></button>`;
   box.hidden = false;
 }
 
@@ -3846,6 +3864,19 @@ function bind() {
 
   // Estudio con tarjetas
   $("#btn-learned").addEventListener("click", markLearned);
+  // 4.2.0: palabra nueva: tocar la tarjeta (izquierda «ya la conozco», derecha «continuar»).
+  // Todavía no hay una acción de repaso propia para «ya la conozco»: las dos mitades continúan.
+  $("#card").addEventListener("click", (e) => {
+    if (!$("#card").classList.contains("st-learn")) return;
+    const say = e.target.closest("[data-say]");
+    if (say) return speak(say.dataset.say);
+    if (e.target.closest("button, a, [data-slow]")) return;
+    markLearned();
+  });
+  $("#card").addEventListener("keydown", (e) => {
+    if (!$("#card").classList.contains("st-learn") || e.target !== $("#card")) return;
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); markLearned(); }
+  });
   $("#btn-reveal").addEventListener("click", revealQA);
   $("#btn-knew").addEventListener("click", () => selfCheck(true));
   $("#btn-didnt").addEventListener("click", () => selfCheck(false));
