@@ -294,19 +294,20 @@ setTimeout(window.hideSplash,10000)})();
 </main>
 
 <!-- ARMAR FRASES -->
-<main id="view-frase" class="view view-study" hidden>
-  <header class="practice-head">
+<main id="view-frase" class="view view-study a2-study fr-a2" hidden>
+  <header class="practice-head st-head">
     <button class="circle-btn" id="frase-close" type="button" aria-label="Terminar práctica">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
-    <h1 class="practice-title">Práctica</h1>
-    <div class="counters">
-      <span class="counter"><b id="fr-left">0</b><span class="visually-hidden"> pendientes</span></span>
-      <span class="counter counter-ok">✓ <b id="fr-ok">0</b></span>
-      <span class="counter counter-bad">✗ <b id="fr-bad">0</b></span>
+    <div class="tm-ttl">
+      <div class="h-sec-head"><h1 class="h-sec-t">Práctica<svg viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5c12-4 22 3 36 0s24-4 38-1 26 3 42-1"/></svg></h1><span class="h-sec-ru" lang="ru">пра́ктика</span></div>
+      <span class="tm-sub" id="fr-sub"></span>
     </div>
   </header>
-  <div class="segments" id="fr-segments" aria-hidden="true"></div>
+  <div class="st-prog">
+    <div class="progress" aria-hidden="true"><div class="progress-fill" id="fr-progress"></div></div>
+    <span class="st-count" role="status" id="fr-count"><span class="st-pos"><span class="num" id="fr-pos">1</span> de <span class="num" id="fr-tot">1</span></span><span class="st-ok"><i></i><span class="num" id="fr-ok">0</span> bien</span><span class="st-bad"><i></i><span class="num" id="fr-bad">0</span> para repetir</span></span>
+  </div>
   <div id="frase-body"></div>
   <div class="rep-row"><button class="rep-btn" type="button" data-report hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4M5 4h12l-2 4 2 4H5"/></svg><span>Reportar falla</span></button></div>
 </main>

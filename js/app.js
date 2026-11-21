@@ -642,9 +642,9 @@ function renderSearch() {
   const say = (t) => speakOk ? `<button class="h-res-say" type="button" data-say="${esc(t)}" aria-label="Escuchar ${esc(t)}">${SPEAKER}</button>` : "";
   const lab = (t) => `<h2 class="h-res-lab">${t}</h2>`;
   let html = "";
-  if (words.length) html += lab("Palabras") + words.slice(0, 6).map(({ c, d }) => `<div class="h-res-row"><button class="h-res-main" type="button" data-sword="${esc(c.id)}"><span class="h-res-bar card-frame pal-${visFor(d).pal}" aria-hidden="true"></span><span class="h-res-txt"><span><span class="h-res-ru" lang="ru">${esc(c.ru)}</span>${c.fonetica && fonOn() ? ` <span class="h-res-fon">${esc(c.fonetica)}</span>` : ""}</span><span class="h-res-es">${esc(c.es)}</span><span class="h-res-where">${esc(d.title)}</span></span></button>${say(c.ru)}</div>`).join("");
+  if (words.length) html += lab("Palabras") + words.slice(0, 6).map(({ c, d }, i) => `<div class="h-res-row" style="--rb:${["#f1eddf", "#f1eddf", "#cefbc8"][i % 3]}"><button class="h-res-main" type="button" data-sword="${esc(c.id)}"><span class="h-res-bar card-frame pal-${visFor(d).pal}" aria-hidden="true"></span><span class="h-res-txt"><span><span class="h-res-ru" lang="ru">${esc(c.ru)}</span>${c.fonetica && fonOn() ? ` <span class="h-res-fon">${esc(c.fonetica)}</span>` : ""}</span><span class="h-res-es">${esc(c.es)}</span><span class="h-res-where">${esc(d.title)}</span></span></button>${say(c.ru)}</div>`).join("");
   if (temas.length) html += lab("Temas") + temas.slice(0, 4).map((d) => `<button class="h-res-tema card-frame pal-${visFor(d).pal}" type="button" data-stema="${esc(d.id)}"><span><b>${esc(d.title)}</b><span class="h-res-sub">Mazo · <span class="num">${(d.cards || []).length}</span> palabras</span></span><span class="h-res-open">Abrir →</span></button>`).join("");
-  if (frases.length) html += lab("Frases") + frases.slice(0, 3).map(({ f, d }) => `<div class="h-res-row"><button class="h-res-main" type="button" data-stema="${esc(d.id)}"><span class="h-res-txt"><span class="h-res-ru h-res-frase" lang="ru">${esc(f.texto)}</span><span class="h-res-where">${esc(f.es)} · ${esc(d.title)}</span></span></button>${say(f.texto)}</div>`).join("");
+  if (frases.length) html += lab("Frases") + frases.slice(0, 3).map(({ f, d }, i) => `<div class="h-res-row" style="--rb:${["#ece7ff", "#e6ebff"][i % 2]}"><button class="h-res-main" type="button" data-stema="${esc(d.id)}"><span class="h-res-txt"><span class="h-res-ru h-res-frase" lang="ru">${esc(f.texto)}</span><span class="h-res-where">${esc(f.es)} · ${esc(d.title)}</span></span></button>${say(f.texto)}</div>`).join("");
   if (!html) html = `<p class="h-res-hint">No encontré «${esc(raw.trim())}». Prueba en español, en ruso o como suena (sa-BA-ka).</p>`;
   else html += `<p class="h-res-hint">Puedes escribir en español, en ruso o como suena (sa-BA-ka).</p>`;
   box.innerHTML = html;
@@ -2335,15 +2335,16 @@ function newFraseItem() {
 
 function fraseCounters() {
   const fr = state.fr;
-  $("#fr-left").textContent = fr.queue.length;
+  // 4.2.0: encabezado y avance como en la práctica (maqueta Frases_Enfasis).
+  const total = fr.resolved + fr.queue.length;
+  $("#fr-pos").textContent = Math.min(total, fr.resolved + 1);
+  $("#fr-tot").textContent = total;
   $("#fr-ok").textContent = fr.ok;
   $("#fr-bad").textContent = fr.bad;
-  let seg = "";
-  for (let i = 0; i < fr.total; i++) {
-    const r = fr.results[i];
-    seg += `<span class="${r === true ? "on" : r === false ? "bad" : ""}"></span>`;
-  }
-  $("#fr-segments").innerHTML = seg;
+  $("#fr-progress").style.width = `${total ? Math.round(((fr.resolved + 1) / total) * 100) : 0}%`;
+  $("#fr-count").setAttribute("aria-label", `Frase ${Math.min(total, fr.resolved + 1)} de ${total}. ${fr.ok} bien, ${fr.bad} para repetir`);
+  const pos = state.ruta ? rutaPos(fr.deck.id) : null;
+  $("#fr-sub").innerHTML = `${pos ? `Tema <span class="num">${pos.label}</span> · ` : ""}Frases`;
 }
 
 function builtTokens(cur) {
@@ -2439,6 +2440,44 @@ function frFoot(f, main, extra = "") {
   return `<div class="fr-foot">${extra}<div class="fr-actions${dic ? "" : " one"}">${dic}${main}</div></div>`;
 }
 
+// 4.2.0 · Nota de énfasis: con un orden válido distinto al principal se explica qué resalta;
+// con el orden principal (si la frase tiene otros órdenes) se explica el orden más común.
+function enfasisText(t) {
+  return esc(t)
+    .replace(/[а-яё\u0301]+(?:\s+[а-яё\u0301]+)*/gi, (w) => `<span class="fr-tk" lang="ru">${w}</span>`)
+    .replace(/«([^»]+)»/g, "<i>«$1»</i>")
+    .replace(/\b(énfasis|contraste)\b/g, "<b>$1</b>");
+}
+function enfasisHtml(f, cur) {
+  const list = Array.isArray(f.enfasis) ? f.enfasis : [];
+  if (list.length < 2) return "";
+  const built = normSentence(builtSentence(cur));
+  const mainTxt = f.texto || f.validas[0];
+  const isMain = built === normSentence(mainTxt);
+  const hit = list.find((x) => normSentence(x.ru) === built);
+  const stk = `<span class="fr-enf-ru" lang="ru">поря́док слов</span>`;
+  if (isMain) {
+    const nota = (hit || list[0]).nota || "";
+    const m = nota.match(/^Orden neutro:\s*(.+)$/i);
+    if (!m) return "";
+    return `<section class="fr-enf fr-enf-main" aria-label="El orden más común"><b class="fr-enf-stk">¡El orden más común!</b>${stk}<p>Así lo dice casi todo el mundo: ${enfasisText(m[1])}</p><p class="fr-enf-foot">Otro orden también vale: solo cambia el énfasis.</p></section>`;
+  }
+  const nota = hit ? hit.nota : "Este orden también se entiende; solo cambia el énfasis.";
+  return `<section class="fr-enf" aria-label="Tu orden también vale"><b class="fr-enf-stk">¡Tu orden también vale!</b>${stk}<p>${enfasisText(nota)}</p><p class="fr-enf-foot">Lo más común: <span lang="ru">${esc(String(mainTxt).replace(/[.!?]+$/, ""))}</span></p></section>`;
+}
+// Fonética en el orden que armaste (si cada palabra tiene su pedazo de fonética).
+function builtFon(f, cur) {
+  if (!f.fonetica) return "";
+  const main = f.texto || f.validas[0];
+  const words = normSentence(main).split(" ");
+  const fon = String(f.fonetica).replace(/[.,!?¿¡]/g, "").split(/\s+/).filter(Boolean);
+  const built = normSentence(builtSentence(cur)).split(" ");
+  if (normSentence(builtSentence(cur)) === normSentence(main)) return f.fonetica;
+  if (fon.length !== words.length) return "";
+  const used = new Set();
+  return built.map((w) => { const i = words.findIndex((x, k) => x === w && !used.has(k)); if (i < 0) return "?"; used.add(i); return fon[i]; }).join(" ");
+}
+
 function renderFrase() {
   const fr = state.fr;
   const cur = fr.cur;
@@ -2479,10 +2518,19 @@ function renderFrase() {
     const msg = cur.checked
       ? (cur.ok1 ? `<p class="fr-msg ok" role="status">¡Bien armada!</p>` : "")
       : `<p class="fr-msg">Cualquier orden correcto cuenta. Toca una ficha para quitarla.</p>`;
-    body.innerHTML = `<div class="idea card-frame pal-lav"><div><span class="label">Arma la frase · paso <span class="num">1</span> de <span class="num">2</span></span><span class="idea-text">${esc(f.idea)}</span></div></div>
-      <div class="answer-zone${zoneCls}" aria-label="Tu frase">${placed}</div>
-      ${msg}${extra}
-      <div class="bank${cur.checked ? " spent" : ""}">${bank}</div>${foot}`;
+    const okDone = cur.checked && cur.ok1;
+    const enf = okDone && !cur.hint ? enfasisHtml(f, cur) : "";
+    cur.enf = !!enf;
+    const fon = okDone && fonOn() ? builtFon(f, cur) : "";
+    body.innerHTML = `<article class="fr-card card-frame pal-bl sh3d">
+        <span class="fr-card-top"><span class="fr-badge">Arma la frase · paso <span class="num">1</span> de <span class="num">2</span></span>${okDone && canSpeak() ? `<button class="speak-btn fr-say" type="button" data-fr="say" aria-label="Escuchar en ruso"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></button>` : ""}</span>
+        <span class="fr-idea">${esc(f.idea)}</span>
+        <span class="fr-div" aria-hidden="true"></span>
+        <div class="answer-zone${zoneCls}" aria-label="Tu frase">${placed}</div>
+        ${fon ? `<span class="fr-fon">${esc(fon)}</span>` : ""}
+      </article>
+      ${msg}${enf}${extra}
+      ${okDone ? "" : `<div class="bank${cur.checked ? " spent" : ""}">${bank}</div>`}${foot}`;
     return;
   }
   // Paso 2
@@ -2574,7 +2622,7 @@ function fraseClick(e) {
     playSound(cur.ok1);
     renderFrase();
     // Al acertar (sin pista) pasa solo al paso 2.
-    if (cur.ok1 && !cur.hint) fr.timer = setTimeout(() => { if (state.fr === fr && fr.cur === cur && cur.step === 1 && $("#sheet").hidden) goStep2(); }, AUTO_MS);
+    if (cur.ok1 && !cur.hint && !cur.enf) fr.timer = setTimeout(() => { if (state.fr === fr && fr.cur === cur && cur.step === 1 && $("#sheet").hidden) goStep2(); }, AUTO_MS);
     return;
   }
   if (act === "step2") return goStep2();
@@ -2836,6 +2884,11 @@ function stepDialog() {
   }, REDUCE() ? 0 : mine ? 300 : 650);
 }
 
+// QA (acento): la vocal fuerte (letra + acento) va marcada; й nunca se marca.
+function accentHtml(t) {
+  return esc(t).replace(/([аеёиоуыэюяАЕЁИОУЫЭЮЯ]\u0301)/g, `<span class="acc">$1</span>`);
+}
+
 function bubbleHtml(b, dl, first) {
   const m = b.m;
   const speakOk = canSpeak();
@@ -2865,7 +2918,7 @@ function renderDialogo() {
         if (o.correcta) { cls += " correct"; key = "✓"; }
         else if (i === c.choice) cls += " wrong";
       }
-      return `<button class="${cls}" type="button" data-dopt="${i}"${answered ? " disabled" : ""}><span class="num key">${key}</span><span class="opt-text"><span class="ru-t" lang="ru">${esc(o.ru)}</span>${o.fonetica ? `<span class="fon">${esc(o.fonetica)}</span>` : ""}</span></button>`;
+      return `<button class="${cls}" type="button" data-dopt="${i}"${answered ? " disabled" : ""} style="--ob:${["#ece7ff", "#e6ebff", "#f1eddf"][i % 3]};rotate:${[-0.6, 0.5, -0.4][i % 3]}deg"><span class="num key">${key}</span><span class="opt-text"><span class="ru-t" lang="ru">${accentHtml(o.ru)}</span>${o.fonetica ? `<span class="fon">${esc(o.fonetica)}</span>` : ""}</span></button>`;
     }).join("");
     let why = "";
     if (answered && c.fail) {
@@ -2874,7 +2927,8 @@ function renderDialogo() {
         <section class="fr-ok-note"><span class="label">La correcta</span><p>${esc(c.wait.opts.find((x) => x.correcta).porque || "")}</p></section>
         <button class="btn btn-primary btn-wide" type="button" data-dnext="1">Continuar</button>`;
     }
-    foot = `<div class="chat-foot"><span class="chat-q">${c.wait.send ? "Toca tu mensaje para enviarlo" : "¿Qué le contestas?"}</span>${opts}${why}</div>`;
+    const accNote = !answered && c.wait.opts.some((o) => /и\u0301/.test(o.ru)) ? `<p class="chat-acc">La vocal fuerte va en color para que <span lang="ru">и\u0301</span> no se confunda con <span lang="ru">й</span>.</p>` : "";
+    foot = `<div class="chat-foot"><span class="chat-q${c.wait.send ? "" : " chat-stk"}">${c.wait.send ? "Toca tu mensaje para enviarlo" : "¿Qué le contestas?"}</span>${opts}${accNote}${why}</div>`;
   } else if (c.hold) {
     foot = `<div class="chat-foot"><button class="btn btn-primary btn-wide" type="button" data-dnext="3">Continuar</button></div>`;
   } else if (c.finished) {
@@ -3090,7 +3144,7 @@ function renderCajasIntro() {
   steps.push(es ? `<b>Hazlo en español.</b> ¿Quieres un reto extra? ¡En ruso!` : `<b>Toca una palabra</b> y luego su caja.`);
   if (help) steps.push(`<b>¿Dudas?</b> Toca <span class="cx-q-ico" aria-hidden="true">?</span> para ver el significado.`);
   // Maqueta K0: el Diccionario se señala con la flecha de arriba (sin paso aparte).
-  steps.push(`<b>Tómate tu tiempo.</b> Si descansas, tu progreso se queda guardado. <span class="a2-easy">Take it easy!</span>`);
+  steps.push(`<b>Tómate tu tiempo.</b> Cada ejercicio terminado se guarda; uno a medias vuelve a empezar. <span class="a2-easy">Take it easy!</span>`);
   $("#cajas-body").innerHTML = `<div class="cx-intro">
       <section class="cx-intro-card a2-card pal-pk">
         <div class="a2-kicker"><span class="a2-kic-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="9" width="8" height="11" rx="1.5"/><rect x="13" y="9" width="8" height="11" rx="1.5"/><path d="M7 5v4M17 5v4"/></svg></span><span>ANTES DE EMPEZAR</span></div>
