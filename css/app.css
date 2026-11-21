@@ -2146,3 +2146,4 @@ body:not(.no-rep) .view#view-study.st-quiz { padding-bottom: calc(14px + env(saf
 .ayudas-reset svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .set-sec .ayudas-reset { min-height: 44px; height: 44px; padding: 0 18px; font-size: 14px; font-weight: 700; color: var(--muted); background: transparent; border: var(--dash); border-radius: 999px; }
 .set-sec label[for="opt-ayudas"] { margin-top: 6px; padding-top: 10px; border-top: 1px solid var(--line-soft); }
+.pd-h-b { letter-spacing: -.012em; }
