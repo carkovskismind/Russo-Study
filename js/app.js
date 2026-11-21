@@ -532,6 +532,17 @@ function logActivity() {
   activityCache = null;
 }
 
+// 4.2.0 · Notas de ayuda con flecha: se apagan en Ajustes; cada una se va sola cuando ya
+// usaste lo que señala (se guarda en este dispositivo).
+const AYUDA_KEY = (IS_BETA ? "russo-beta-" : "russo-") + "ayudas-vistas";
+function ayudaVista(id) {
+  try { return !!(JSON.parse(localStorage.getItem(AYUDA_KEY) || "{}") || {})[id]; } catch { return false; }
+}
+function marcarAyuda(id) {
+  try { const j = JSON.parse(localStorage.getItem(AYUDA_KEY) || "{}") || {}; j[id] = 1; localStorage.setItem(AYUDA_KEY, JSON.stringify(j)); } catch { /* sin almacenamiento */ }
+}
+const ayudaOn = (id) => store.settings.ayudas !== false && !ayudaVista(id);
+
 // ---------- Inicio (portada 3.1) ----------
 // Tema del que más tarjetas trae la fila de hoy (la que arma «Empezar»).
 function todayTopic() {
@@ -860,7 +871,8 @@ function renderHome() {
   $("#h-stage").classList.toggle("done", doneToday);
   $("#start-card .h-card-todo").hidden = doneToday;
   $("#start-card .h-card-done").hidden = !doneToday;
-  $("#h-hint").hidden = doneToday;
+  $("#h-hint").hidden = doneToday || !ayudaOn("inicio");
+  $("#h-stage").classList.toggle("sin-ayuda", !doneToday && !ayudaOn("inicio"));
 
   // Nota roja: tema del día (con su número en la ruta) y N real
   const td = todayTopic();
@@ -1961,7 +1973,7 @@ function renderItem() {
     }
     back.hidden = false;
     $("#btn-learned").hidden = false;
-    $("#st-taps").hidden = !learn;
+    $("#st-taps").hidden = !learn || !ayudaOn("taps");
     renderNoteBox();
     return;
   }
@@ -2001,6 +2013,7 @@ function renderItem() {
 }
 
 function markLearned() {
+  marcarAyuda("taps");
   const s = state.session;
   const it = s.queue.shift();
   it.phase = "quiz";
@@ -3040,6 +3053,7 @@ function openCajasDic() {
   const e = cj.list[cj.ci];
   if (!cajaHasDic(e)) return;
   state.cdic = { entries: e.diccionario, open: null };
+  marcarAyuda("cajas-dic");
   cj.dicSeen = true; // maqueta K5: la flecha «búscala aquí» ya no sale después de abrirlo
   $("#cajas-dic-hint").hidden = true;
   $("#cajas-dic").classList.add("on");
@@ -3208,7 +3222,7 @@ function renderCajas() {
   const total = e.items.length;
   const hasEs = cajaHasHelp(e);
   $("#cajas-dic").hidden = !cajaHasDic(e);
-  $("#cajas-dic-hint").hidden = !cajaHasDic(e) || c.done === total || !!cj.dicSeen; // maquetas K4/K5: visible mientras juegas, hasta abrir el Diccionario
+  $("#cajas-dic-hint").hidden = !cajaHasDic(e) || c.done === total || !!cj.dicSeen || !ayudaOn("cajas-dic"); // maquetas K4/K5: visible mientras juegas, hasta abrir el Diccionario
   const wordLang = c.lang === "es" ? "" : ' lang="ru"';
   $("#cajas-title").textContent = "Cajas";
   $("#cajas-sub").textContent = cj.deck && cj.deck.title ? cj.deck.title : "";
@@ -4526,6 +4540,7 @@ function renderSettings() {
   $("#opt-autospeak").checked = !!s.autoSpeak;
   $("#opt-sound").checked = s.sound !== false;
   $("#opt-fon").checked = s.fonetica !== false;
+  $("#opt-ayudas").checked = s.ayudas !== false;
   $("#opt-name").value = s.name || "";
   $(`#theme-${s.theme === "light" ? "light" : "dark"}`).checked = true;
   $("#reset-confirm").hidden = true;
@@ -4687,7 +4702,7 @@ function bind() {
     if ($("#start-card").getAttribute("aria-disabled") === "true") return toast("Hoy no hay práctica pendiente. ¡Todo al día!");
     startToday();
   };
-  $("#start-card").addEventListener("click", () => (state.doneToday ? openFin() : startIfAny()));
+  $("#start-card").addEventListener("click", () => { if (!state.doneToday) marcarAyuda("inicio"); return state.doneToday ? openFin() : startIfAny(); });
   $("#h-aviso-go").addEventListener("click", () => { if (state.aviso) openParada(state.aviso.id, { from: "home" }); });
   $("#h-aviso-skip").addEventListener("click", () => { if (state.aviso) saltarParada(state.aviso.id); startIfAny(); });
   $("#fin-end").addEventListener("click", finEnd);
@@ -5020,6 +5035,13 @@ function bind() {
   $("#opt-cursive").addEventListener("change", (e) => store.setSetting("cursive", e.target.checked));
   $("#opt-autospeak").addEventListener("change", (e) => store.setSetting("autoSpeak", e.target.checked));
   $("#opt-fon").addEventListener("change", (e) => { store.setSetting("fonetica", e.target.checked); applyFon(); });
+  $("#opt-ayudas").addEventListener("change", (e) => store.setSetting("ayudas", e.target.checked));
+  $("#ayudas-reset").addEventListener("click", () => {
+    try { localStorage.removeItem(AYUDA_KEY); } catch { /* sin almacenamiento */ }
+    store.setSetting("ayudas", true);
+    $("#opt-ayudas").checked = true;
+    toast("Las notas de ayuda vuelven a salir");
+  });
   $("#opt-sound").addEventListener("change", (e) => {
     store.setSetting("sound", e.target.checked);
     if (e.target.checked) playSound(true);

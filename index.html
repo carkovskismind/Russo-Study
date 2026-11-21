@@ -448,6 +448,12 @@ setTimeout(window.hideSplash,10000)})();
       <label class="radio"><input type="radio" name="theme" id="theme-dark" value="dark"> Oscuro</label>
       <label class="radio"><input type="radio" name="theme" id="theme-light" value="light"> Claro</label>
     </fieldset>
+    <label class="field field-row switch-row" for="opt-ayudas">
+      <span>Notas de ayuda con flecha<small>Notas a mano que explican cada pantalla. Cada una se va sola cuando ya usaste lo que señala.</small></span>
+      <input type="checkbox" id="opt-ayudas" class="switch">
+    </label>
+    <div class="fon-preview ayudas-preview" aria-hidden="true"><span class="muted">Se ven así:</span><span class="h-hint ayudas-hint"><svg viewBox="0 0 26 24"><path d="M3 21c8 1 15-4 17-15"/><path d="M15 9l5-4 2 6"/></svg><span>tu práctica del día:<br>repaso + nuevas</span></span></div>
+    <button class="btn btn-ghost ayudas-reset" id="ayudas-reset" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.5-5.8"/><path d="M4 4v4.5h4.5"/></svg>Volver a mostrar las ayudas</button>
   </section>
 
   <section class="panel set-sec" style="--sc: #aa94fc" aria-labelledby="studyset-title">

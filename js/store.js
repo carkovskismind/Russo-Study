@@ -37,6 +37,7 @@ export const DEFAULT_SETTINGS = {
   fonetica: true,
   theme: "dark",
   name: "",
+  ayudas: true, // 4.2.0: notas de ayuda con flecha
   disabled: {}
 };
 
@@ -98,6 +99,7 @@ export function normalizeSettings(raw) {
     fonetica: bool(s.fonetica, d.fonetica),
     theme: s.theme === "light" ? "light" : "dark",
     name: typeof s.name === "string" ? s.name : d.name,
+    ayudas: bool(s.ayudas, d.ayudas),
     disabled,
     t: typeof s.t === "number" && Number.isFinite(s.t) ? s.t : 0
   };
