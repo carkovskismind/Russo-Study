@@ -19,3 +19,7 @@ Eres **Diseño UX** de Russo Study. Lee primero `CLAUDE.md` (diseño aprobado, r
 - No inventes colores nuevos; si algo de su boceto no está en la paleta (como el amarillo de las calles), señálalo y propón cómo integrarlo.
 - No toques `index.html`, `css/`, `js/` ni `sw.js`: eso es de `programador`. Tu entrega son maquetas y una lista de cambios para él.
 - Entrega: los archivos que cambiaste y una lista corta de decisiones.
+
+## Concordancia visual 100 % (orden de Carol)
+- Toda maqueta nueva debe verse como parte de las pantallas ya aprobadas: mismos componentes, medidas, espacios, radios, bordes, sombras, colores, tipografías, iconos y tono de texto. Antes de inventar algo, copia el componente equivalente de las maquetas aprobadas (/home/claude/gen/fiel/maquetas) o de la app.
+- Antes de entregar, pon cada maqueta nueva junto a la pantalla aprobada más parecida (oscuro y claro) y corrige toda diferencia que no sea parte del cambio pedido. Entrega esas capturas lado a lado.
