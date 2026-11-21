@@ -663,10 +663,12 @@ function finSuggestions() {
   const h = hoyLog();
   const words = hoyWords(h);
   if (!words.length) return [];
-  // Primero los temas que estudiaste hoy; después los demás.
+  // Primero los temas que estudiaste hoy; solo si en ellos no hay un ejercicio
+  // con las palabras de hoy se busca en los demás temas.
   const today = Object.keys(h.decks).sort((a, b) => h.decks[b].length - h.decks[a].length);
-  const decks = [...today.map((id) => state.deckById.get(id)), ...state.decks.filter((d) => !today.includes(d.id))]
-    .filter((d) => d && !d.mine && deckEnabled(d));
+  const ok = (d) => d && !d.mine && deckEnabled(d);
+  const todayDecks = today.map((id) => state.deckById.get(id)).filter(ok);
+  const otherDecks = state.decks.filter((d) => !today.includes(d.id)).filter(ok);
   const textOf = {
     frases: (f) => [f.texto, ...(f.fichas || [])].join(" "),
     cajas: (e) => (e.items || []).map((it) => `${it.ru || ""} ${it.base || ""}`).join(" "),
@@ -685,13 +687,16 @@ function finSuggestions() {
   const out = [];
   for (const key of ["frases", "cajas", "dialogo"]) {
     let best = null;
-    for (const d of decks) {
-      listOf[key](d).forEach((item, idx) => {
-        const hit = wordsIn(textOf[key](item), words);
-        if (!hit.length) return;
-        const score = hit.length * 10 + (doneOf[key](d, item) ? 0 : 5);
-        if (!best || score > best.score) best = { key, deck: d, idx, hit, score };
-      });
+    for (const group of [todayDecks, otherDecks]) {
+      for (const d of group) {
+        listOf[key](d).forEach((item, idx) => {
+          const hit = wordsIn(textOf[key](item), words);
+          if (!hit.length) return;
+          const score = hit.length * 10 + (doneOf[key](d, item) ? 0 : 5);
+          if (!best || score > best.score) best = { key, deck: d, idx, hit, score };
+        });
+      }
+      if (best) break;
     }
     if (best) out.push(best);
   }
@@ -1078,9 +1083,9 @@ function markCurrent(deck) {
 }
 
 // Inicia un modo de práctica de un tema.
-function startMode(deck, key, first) {
+function startMode(deck, key, first, keepCurrent) {
   state.currentDeck = deck;
-  markCurrent(deck);
+  if (!keepCurrent) markCurrent(deck);
   if (key === "words") return startDeck(deck);
   if (key === "frases") return startFrases(deck, first);
   if (key === "dialogo") return startDialogo(deck, first);
@@ -2005,6 +2010,8 @@ function backTo(where) {
   if (where === "reto" && state.reto) {
     renderReto();
     show("reto");
+  } else if (where === "fin") {
+    openFin();
   } else if (where === "tema" && state.currentDeck) {
     renderTema();
     show("tema");
@@ -3812,9 +3819,8 @@ function bind() {
     if (!b || !state.finSug) return;
     const s = state.finSug[Number(b.dataset.fin)];
     if (!s) return;
-    state.currentDeck = s.deck;
-    markCurrent(s.deck);
-    startMode(s.deck, s.key, s.idx);
+    // Una sugerencia no cambia el tema actual ni «Sigue donde ibas».
+    startMode(s.deck, s.key, s.idx, true);
   });
   // Buscador del inicio
   $("#h-q").addEventListener("input", renderSearch);
