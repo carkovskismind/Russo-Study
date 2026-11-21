@@ -1009,6 +1009,7 @@ function renderTemas() {
     state.openSet = true;
   }
   $("#temas-q-clear").hidden = !$("#temas-q").value;
+  state.tileCol = (ordered.findIndex((d) => d.id === state.openTile) + (showLeer && f.has("Lectura") ? 1 : 0)) % 2;
   $("#temas-grid").innerHTML = ordered.length || showLeer
     ? (showLeer && f.has("Lectura") ? leerTileHtml() : "") + ordered.map(tileHtml).join("")
     : `<p class="loading">No encontré temas con eso.</p>`;
@@ -1043,32 +1044,41 @@ function tileHtml(deck) {
   const s = deckStats(deck);
   const v = visFor(deck);
   const ru = RU_NAME[deck.id] || "";
-  const open = deck.id === state.openTile;
+  const open = deck.id === state.openTile && !deck.__anchor;
   const pos = state.ruta ? rutaPos(deck.id) : null;
   const num = deck.mine ? "Personal" : pos ? `Tema <span class="num">${pos.label}</span>` : "Biblioteca";
   const qa = deck.cards.some((c) => c.kind === "qa");
+  const nExtra = deck.cards.filter((c) => c.extra).length;
   const unit = qa ? "tarjetas" : "palabras";
   const sug = state.ruta && baseOf(suggestedDeck()) === deck;
   const modes = modesList(deck);
   const words = modes.find((m) => m.key === "words");
   const extra = modes.filter((m) => m.key !== "words");
   const forToday = words && !words.off ? todayWords(deck) : 0;
-  const small = extra.map((m) => `<button class="tm-ej" type="button" data-mode="${m.key}" data-deck="${esc(deck.id)}"${m.off ? " disabled" : ""}><b>${esc(m.full || m.label)}</b><span>${esc(m.sub)}</span></button>`);
-  if (dudasFor(deck)) small.push(`<button class="tm-ej" type="button" data-act="dudas" data-deck="${esc(deck.id)}"><b>Dudas</b><span>gramática</span></button>`);
-  return `<article class="tile tm-tile card-frame pal-${v.pal}${open ? " open" : ""}${sug ? " sug" : ""}" data-tile="${esc(deck.id)}" tabindex="${open ? -1 : 0}" role="button" aria-expanded="${open}" aria-label="${esc(deck.title)}, ${s.total} ${unit}, ${s.pct}%">
+  // QA: cada ejercicio con su color de marcador; «Solo audio» bloqueado va punteado con candado.
+  const EJ_MARK = { frases: "#aa94fc", dialogo: "#99acfc", cajas: "#e9b293", reto: "#4af2d5", audio: "#4af2d5", dudas: "#f2c14e" };
+  const small = extra.map((m) => m.key === "audio" && m.off
+    ? `<button class="tm-ej tm-ej-lock" type="button" data-mode="audio" data-deck="${esc(deck.id)}"><b>${LOCK}${esc(m.full || m.label)}</b><span>Se abre al memorizar palabras</span></button>`
+    : `<button class="tm-ej" type="button" data-mode="${m.key}" data-deck="${esc(deck.id)}"${m.off ? " disabled" : ""}><b style="--mk:${EJ_MARK[m.key] || "#f2c14e"}">${esc(m.full || m.label)}</b><span>${esc(m.sub)}</span></button>`);
+  if (dudasFor(deck)) small.push(`<button class="tm-ej" type="button" data-act="dudas" data-deck="${esc(deck.id)}"><b style="--mk:${EJ_MARK.dudas}">Dudas</b><span>gramática</span></button>`);
+  // QA (Temas abierto): el tema abierto se queda en su lugar (marcado) y se abre debajo de su fila.
+  const anchor = open ? tileHtml({ ...deck, __anchor: true }) : "";
+  const col = state.tileCol || 0;
+  return `${anchor}<article class="tile tm-tile card-frame pal-${v.pal}${open ? " open" : ""}${deck.__anchor ? " tm-anchor" : ""}${sug ? " sug" : ""}" data-tile="${esc(deck.id)}" tabindex="${open ? -1 : 0}" role="button" aria-expanded="${open}" aria-label="${esc(deck.title)}, ${s.total} ${unit}, ${s.pct}%">
+    ${open ? `<span class="tb-notch" aria-hidden="true" style="left:${col ? 262 : 78}px"></span>` : ""}
     <div class="t-body">
       ${sug ? `<span class="tm-sigue">Sigue aquí</span>` : ""}
       ${temaIco(deck)}
       <span class="ti-n">${num}</span>
       <span class="ti-title">${esc(deck.title)}</span>
       ${ru ? `<span class="ti-ru" lang="ru">${esc(ru)}</span>` : ""}
-      <span class="ti-foot"><span class="ti-meta"><span class="num">${s.total}</span> ${unit}</span><span class="ti-bar"><span class="bar"><span style="width:${s.pct}%"></span></span><span class="pct">${s.pct}%</span></span></span>
+      <span class="ti-foot"><span class="ti-meta"><span class="num">${s.total}</span> ${unit}${nExtra ? ` · <span class="ti-x">+<span class="num">${nExtra}</span> extra</span>` : ""}</span><span class="ti-bar"><span class="bar"><span style="width:${s.pct}%"></span></span><span class="pct">${s.pct}%</span></span></span>
     </div>
     <div class="t-big">
       ${sug ? `<span class="tm-sigue">Sigue aquí</span>` : ""}
-      <span class="tb-top"><span class="ti-n">${num}${sug ? " · Sugerido" : ""}</span><span class="pct">${s.pct}%</span></span>
+      <span class="tb-top"><span class="ti-n tb-tag">${num}</span><span class="pct tb-pct">${s.pct}%</span></span>
       ${temaIco(deck).replace('class="ti-ico', 'class="ti-ico tb-ico')}
-      <span class="tb-title">${esc(deck.title)}</span>
+      <span class="tb-title"><span class="tq-hl">${esc(deck.title)}</span></span>
       ${ru ? `<span class="tb-ru" lang="ru">${esc(ru)}</span>` : ""}
       <span class="tb-prog"><span class="tb-meta"><span class="num">${s.learned}</span> de <span class="num">${s.total}</span> ${unit}</span><span class="bar"><span style="width:${s.pct}%"></span></span></span>
       <span class="tb-main">
@@ -1216,44 +1226,20 @@ function startMode(deck, key, first, keepCurrent) {
 // deslizándose (técnica FLIP: solo se animan transform y clip-path).
 function openTileAnimated(id) {
   if (id === state.openTile) return;
-  const grid = $("#temas-grid");
-  const tiles = Array.from(grid.querySelectorAll(".tile"));
-  const first = new Map(tiles.map((t) => [t.dataset.tile, t.getBoundingClientRect()]));
-  for (const t of tiles) {
-    const on = t.dataset.tile === id;
-    t.classList.toggle("open", on);
-    t.classList.toggle("opening", on);
-    t.setAttribute("aria-expanded", on);
-    t.tabIndex = on ? -1 : 0;
-  }
   state.openTile = id;
+  renderTemas();
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const opened = grid.querySelector(".tile.open");
+  const opened = $("#temas-grid .tile.open");
+  if (!opened) return;
   const r0 = opened.getBoundingClientRect();
-  if (r0.top < 70 || r0.bottom > window.innerHeight - 100) {
-    window.scrollBy({ top: r0.top - 90, behavior: reduce ? "auto" : "smooth" });
+  if (r0.top < 220 || r0.bottom > window.innerHeight - 100) {
+    window.scrollBy({ top: r0.top - 250, behavior: reduce ? "auto" : "smooth" });
   }
-  if (reduce || !Element.prototype.animate) return;
-  const opts = { duration: 260, easing: "cubic-bezier(.2,.9,.3,1)" };
-  for (const t of tiles) {
-    const a = first.get(t.dataset.tile);
-    const b = t.getBoundingClientRect();
-    const dx = a.left - b.left;
-    const dy = a.top - b.top;
-    // Lo que queda fuera de la pantalla no se anima.
-    if (t.dataset.tile !== id && (a.bottom < 0 && b.bottom < 0 || a.top > innerHeight && b.top > innerHeight)) continue;
-    if (t.dataset.tile === id) {
-      const r = Math.max(0, b.width - a.width);
-      const btm = Math.max(0, b.height - a.height);
-      t.animate([
-        { transform: `translate(${dx}px, ${dy}px)`, clipPath: `inset(0 ${r}px ${btm}px 0 round 22px)` },
-        { transform: "none", clipPath: "inset(0 0 0 0 round 28px)" }
-      ], opts);
-    } else if (dx || dy) {
-      t.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: "none" }], opts);
-    }
+  if (!reduce && Element.prototype.animate) {
+    opened.animate([{ opacity: 0, transform: "translateY(-8px)" }, { opacity: 1, transform: "none" }], { duration: 220, easing: "cubic-bezier(.2,.9,.3,1)" });
   }
-
+  const b = opened.querySelector(".tb-btn");
+  if (b) b.focus({ preventScroll: true });
 }
 
 // ---------- Tema ----------
@@ -1274,20 +1260,101 @@ function openTema(id) {
   show("tema");
 }
 
+// 4.2.0 · Pantalla del tema (maquetas QA_Tema, QA_TemaPalabras, Ruta_TemaAntes, Ruta_PalabrasExtraA).
+// Colores fijos de cada modo: [color de tinta, color pop]; en filas se alternan pop y beige.
+const MODE_POP = { words: ["#1f5c38", "#f2c14e"], frases: ["#f04e12", "#e9b293"], reto: ["#10504b", "#4af2d5"], dialogo: ["#2433a0", "#99acfc"], cajas: ["#501043", "#aa94fc"], audio: ["#0b5e52", "#4af2d5"] };
+const LOCK = `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>`;
+const DOT_COLORS = ["#aa94fc", "#f2c14e", "#4af2d5", "#e9b293"];
+const CHIP_COLORS = ["#aa94fc", "#99acfc", "#4af2d5", "#f2c14e"];
+
+// Parada de gramática que prepara un tema (o uno de sus bloques).
+function paradaDeTema(deck) {
+  const id = baseOf(deck).id;
+  return rutaItems().find((t) => t.kind === "parada" && t.antes && (t.antes === id || t.antes.startsWith(id + ":"))) || null;
+}
+
+// «De qué trata»: «Título: para X (a, b), Y (c) y Z (d). Final.» → título resaltado, filas con fichas y pie.
+function introHtml(text) {
+  const t = String(text || "");
+  const m = t.match(/^([^:]{6,60}):\s*(.+)$/);
+  let title = "", body = t;
+  if (m) { title = m[1]; body = m[2]; }
+  const groups = [];
+  const re = /(?:^|,|\sy\s)\s*(?:para\s+)?([a-záéíóúñü ]{3,30}?)\s*\(([^)]+)\)/gi;
+  let mm, last = 0;
+  while ((mm = re.exec(body))) {
+    const items = mm[2].split(",").map((x) => x.trim()).filter(Boolean);
+    if (!items.every((x) => /[а-яё]/i.test(x))) { groups.length = 0; break; }
+    groups.push({ label: cap(`para ${mm[1].trim()}`), items });
+    last = re.lastIndex;
+  }
+  let foot = "";
+  if (groups.length >= 2) {
+    const rest = body.slice(last).replace(/^[\s.]+/, "");
+    foot = rest;
+  }
+  const words = title.split(/\s+/);
+  const tHtml = title
+    ? words.length >= 4 ? `${esc(words[0])} <span class="tq-mark">${esc(words.slice(1, -2).join(" "))}</span> ${esc(words.slice(-2).join(" "))}` : `<span class="tq-mark">${esc(title)}</span>`
+    : "";
+  if (groups.length >= 2) {
+    return `${tHtml ? `<p class="tq-ttl">${tHtml}</p>` : ""}${groups.map((g, i) => `<div class="tq-grp"><span class="tq-grp-l">${esc(g.label)}</span>${g.items.map((x) => `<span class="tq-chip" lang="ru" style="background:${CHIP_COLORS[i % CHIP_COLORS.length]}">${esc(x)}</span>`).join("")}</div>`).join("")}${foot ? `<p class="tq-foot">${ruSpans(foot)}</p>` : ""}`;
+  }
+  return `${tHtml ? `<p class="tq-ttl">${tHtml}</p>` : ""}<p class="tq-txt">${ruSpans(body)}</p>`;
+}
+
+// «La regla»: «Encabezado: ejemplos» → título (ruso grande o texto), explicación y ejemplos abajo.
+function reglaHtml(r, i) {
+  const t = String(r);
+  const k = t.indexOf(":");
+  const head = k > 0 ? t.slice(0, k) : t;
+  const ex = k > 0 ? t.slice(k + 1).trim() : "";
+  const ruTitle = (head.match(/[А-ЯЁа-яё́]+\?/g) || []);
+  let titleHtml = "", bodyHtml = "";
+  if (ruTitle.length) { titleHtml = `<span class="tq-r-ru" lang="ru">${esc(ruTitle.join(" "))}</span>`; bodyHtml = ruSpans(head).replace(/(<span lang="ru">[^<]*\?<\/span>)/g, "<b>$1</b>") + "."; }
+  else if (head.length <= 34) titleHtml = `<span class="tq-r-t">${ruSpans(head)}</span>`;
+  else bodyHtml = ruSpans(head) + (ex ? ":" : "");
+  const exHtml = ex ? ex.split(/(?<=[.!?])\s+(?=[А-ЯЁ])/).map((x) => ruSpans(x).replace(/ — /g, ` <span class="tq-dash">—</span><br>`)).join("<br>") : "";
+  return `<section class="tq-card tq-regla" aria-label="La regla" style="--tq-bg:${i % 2 ? "#e6ebff" : "#ece7ff"};rotate:${i % 2 ? 0.8 : -0.8}deg"><b class="tq-stk">La regla</b>${titleHtml}${bodyHtml ? `<p class="tq-r-p">${bodyHtml}</p>` : ""}${exHtml ? `<p class="tq-r-ex">${exHtml}</p>` : ""}</section>`;
+}
+
+function tipHtml(tip) {
+  const m = String(tip).match(/^([а-яё́]+)\s+(.*)$/i);
+  const body = m ? m[2] : tip;
+  const rich = ruSpans(body).replace(/«([a-záéíóúñ]+)»/i, `<b class="tq-tip-b">«$1»</b>`).replace(/(«¿[^»]+»)/, "<i>$1</i>");
+  return `<section class="tq-card tq-tip" aria-label="Tip de memoria"><b class="tq-stk tq-stk-tip">Tip de memoria</b>${m ? `<span class="tq-tip-ru" lang="ru">${esc(m[1])}</span>` : ""}<p>${m ? cap(rich) : rich}</p></section>`;
+}
+
+function antesHtml(d, dd, open) {
+  const p = paradaDeTema(d);
+  const tt = String(dd.titulo || "");
+  const k = tt.indexOf(":");
+  const tEs = k > 0 ? tt.slice(0, k + 1) : tt;
+  const tRu = k > 0 ? tt.slice(k + 1).trim() : "";
+  const speakOk = canSpeak();
+  const body = `<div class="ta-card"><b class="tq-stk ta-stk">La regla</b>
+      <b class="ta-ttl"><span class="ta-es">${ruSpans(tEs)}</span>${tRu ? `<span class="ta-ru" lang="ru">${esc(tRu)}</span>` : ""}</b>
+      <ul class="ta-pts">${(dd.puntos || []).map((x, i) => `<li><i style="background:${DOT_COLORS[i % DOT_COLORS.length]}"></i>${ruSpans(x)}</li>`).join("")}</ul>
+      ${(dd.ejemplos || []).map((x) => `<div class="ta-ex"><div class="ta-ex-t"><span class="ta-ex-ru" lang="ru">${esc(x.ru)}</span>${x.fonetica ? `<span class="ta-ex-fon">${esc(x.fonetica)}</span>` : ""}<span>${esc(x.es)}</span></div>${speakOk ? `<span class="pd-ex-b"><button class="pd-au pd-au-n" type="button" data-say="${esc(x.ru)}" aria-label="Escuchar el ejemplo">${SPEAKER}</button><button class="pd-au ta-slow" type="button" data-say-slow="${esc(x.ru)}" aria-label="Escuchar más lento">${TURTLE}</button></span>` : ""}</div>`).join("")}
+      ${dd.ojo ? `<p class="ta-ojo"><b>Ojo:</b> ${ruSpans(dd.ojo)}</p>` : ""}
+      <div class="ta-acts"><button class="ms-go ta-ok" type="button" data-antes="ok">Entendido</button>${p ? `<button class="ta-link" type="button" data-antes-par="${esc(p.id)}">Practicar la regla →</button>` : ""}</div>
+    </div>`;
+  const CHEV_D = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${open ? "M6 15l6-6 6 6" : "M6 9l6 6 6-6"}"/></svg>`;
+  return `<button class="dudas-btn ta-btn" type="button" id="dudas-toggle" aria-expanded="${open}"><span class="q ta-q" aria-hidden="true">?</span><span class="ta-bt"><b>Antes de empezar</b><small>${open ? `La regla de este tema · <span class="num">2</span> min` : `Ya la viste · ${ruSpans(tt)}`}</small></span>${CHEV_D}</button><div class="dudas-body ta-body"${open ? "" : " hidden"}>${body}</div>`;
+}
+
 function renderTema() {
   const d = state.currentDeck;
   if (!d) return;
   const s = deckStats(d);
-  const v = visFor(d);
   const ru = RU_NAME[d.id] || "";
   const head = $("#tema-head");
-  head.className = `tema-head card-frame pal-${v.pal}`;
-  head.innerHTML = `<span class="t-tag">${deckNumber(d)}</span>
-    <h1 class="tema-title">${esc(d.title)}</h1>
+  head.className = "tema-head tq-head";
+  head.innerHTML = `<span class="t-tag tq-tag">${deckNumber(d)}</span>
+    <h1 class="tema-title"><span class="tq-hl">${esc(d.title)}</span></h1>
     ${ru ? `<span class="tema-ru" lang="ru">${esc(ru)}</span>` : ""}
     <div class="tema-prog"><span class="bar"><span style="width:${s.pct}%"></span></span><span class="tema-prog-n"><span class="num">${s.learned}</span> de <span class="num">${s.total}</span> memorizadas</span></div>`;
 
-  const pals = { words: "kh", frases: "pe", reto: "li", dialogo: "bl", cajas: "pk", audio: "aq" };
   const ICON = {
     words: `<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5"/>`,
     frases: `<rect x="3" y="7" width="7" height="7" rx="1.5"/><rect x="14" y="7" width="7" height="7" rx="1.5"/>`,
@@ -1296,30 +1363,47 @@ function renderTema() {
     audio: `<path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/>`,
     reto: `<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>`
   };
-  $("#tema-modes").innerHTML = modesList(d).map((m) => `<button class="mode card-frame pal-${pals[m.key]}" type="button" data-mode="${m.key}"${m.off ? " disabled" : ""}>
-      <span class="mode-top"><span class="mode-ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[m.key]}</svg></span><span class="num mode-num">${m.key === "words" ? `${m.num} hoy` : m.num}</span></span>
+  const modes = modesList(d);
+  const memo = audioWords(d).length;
+  let html = modes.map((m, i) => {
+    const [ink, pop] = MODE_POP[m.key] || MODE_POP.words;
+    const locked = m.key === "audio" && m.off;
+    const bg = i % 2 && !locked ? pop : "#f1eddf";
+    const ic = `<span class="mode-ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[m.key]}</svg></span>`;
+    const st = `--m-ink:${ink};--m-bg:${bg};--m-ic:${pop}`;
+    if (locked) {
+      const aviso = `<div class="tq-aviso" role="note"><span class="tq-aviso-ic">${LOCK}</span><span class="tq-aviso-t"><b>Solo audio se abre pronto</b><span>Escuchas las palabras que ya memorizaste. Practica en <b>Palabras</b> y se abre sola.</span></span></div>`;
+      return `${i % 2 ? aviso : ""}<button class="mode tq-mode tq-locked" type="button" data-mode="audio" aria-disabled="true" style="${st}">
+        <span class="mode-top">${ic}<span class="tq-por">${LOCK}Por abrir</span></span>
+        <span class="mode-name">${m.full || m.label}</span><span class="mode-sub">Se abre al memorizar palabras</span>
+        <span class="tq-llevas">Llevas <span class="num">${memo}</span> memorizadas.</span></button>${i % 2 ? "" : aviso}`;
+    }
+    return `<button class="mode tq-mode${m.key === "frases" ? " tq-pe" : ""}" type="button" data-mode="${m.key}"${m.off ? " disabled" : ""} style="${st}">
+      <span class="mode-top">${ic}<span class="num mode-num">${m.key === "words" ? `${m.num} hoy` : m.num}</span></span>
       <span class="mode-name">${m.full || m.label}</span><span class="mode-sub">${m.sub}</span>
-      <span class="bar"><span style="width:${m.pct}%"></span></span></button>`).join("");
+      <span class="bar"><span style="width:${m.pct}%"></span></span></button>`;
+  }).join("");
+  $("#tema-modes").innerHTML = html;
+  $("#tema-modes").classList.add("tq-modes");
 
-  // Introducción, reglas y tip del tema
+  // De qué trata, reglas y tip del tema
   const ap = d.aprender || {};
   let intro = "";
   if (ap.intro || d.desc) {
-    intro = `<div class="intro card-frame pal-${v.pal}">
-      <span class="label">De qué trata</span>
-      <p>${esc(ap.intro || d.desc || "")}</p>
-    </div>`;
+    intro = `<section class="tq-card tq-intro" aria-label="De qué trata"><b class="tq-stk tq-stk-de">De qué trata</b><span class="tq-oche" lang="ru">о чём?</span>${introHtml(ap.intro || d.desc || "")}</section>`;
   }
-  const rules = (ap.reglas || []).map((r) => `<div class="rule card-frame pal-bl"><span class="label">La regla</span><p>${esc(r)}</p></div>`);
-  if (ap.tip) rules.push(`<div class="rule card-frame pal-li"><span class="label">Tip de memoria</span><p>${esc(ap.tip)}</p></div>`);
-  if (rules.length % 2 === 1) rules[rules.length - 1] = rules[rules.length - 1].replace('class="rule ', 'class="rule wide ');
-  if (rules.length) intro += `<div class="rules">${rules.join("")}</div>`;
+  const rules = (ap.reglas || []).map(reglaHtml);
+  if (rules.length) intro += `<div class="tq-rules${rules.length % 2 ? " odd" : ""}">${rules.join("")}</div>`;
+  if (ap.tip) intro += tipHtml(ap.tip);
   $("#tema-intro").innerHTML = intro;
-  $("#tema-count").textContent = d.cards.length;
+  const core = d.cards.filter((c) => !c.extra).length;
+  const ext = d.cards.length - core;
+  $("#tema-count").innerHTML = ext ? `<span class="num">${core}</span> + <span class="num">${ext}</span> extra` : `<span class="num">${d.cards.length}</span>`;
+  // «Antes de empezar»: la duda del tema arriba (abierta la primera vez; luego plegada en una línea).
   const dd = dudasFor(d);
-  $("#tema-dudas").innerHTML = dd
-    ? `<button class="dudas-btn" type="button" id="dudas-toggle" aria-expanded="false"><span class="q" aria-hidden="true">?</span><span><b>¿Dudas de gramática?</b><small>${esc(dd.titulo)}</small></span></button><div class="dudas-body" hidden>${dudasHtml(d)}</div>`
-    : "";
+  const seen = !!store.ejer(`antes:${d.id}`);
+  if (state.antesOpen === undefined || state.antesDeck !== d.id) { state.antesOpen = !seen; state.antesDeck = d.id; }
+  $("#tema-dudas").innerHTML = dd ? antesHtml(d, dd, state.antesOpen) : "";
   $("#tema-cram").hidden = !d.cards.length;
   renderWords();
 }
@@ -1363,17 +1447,19 @@ function renderWords() {
     return;
   }
   const sections = [];
+  // 4.2.0: primero las palabras núcleo (por sección); las extra van al final, juntas y con su marca.
   for (const c of list) {
-    const name = c.seccion || "";
+    const name = c.extra ? "\u0000extra" : c.seccion || "";
     let sec = sections.find((x) => x.name === name);
     if (!sec) sections.push((sec = { name, cards: [] }));
     sec.cards.push(c);
   }
+  sections.sort((a, b) => Number(a.name === "\u0000extra") - Number(b.name === "\u0000extra"));
   let i = 0;
   host.innerHTML = sections
     .map((sec) => {
       const rows = sec.cards.map((c) => wordRow(c, PALS[i++ % 6])).join("");
-      return `${sec.name ? `<h3 class="label sec-title">${esc(sec.name)}</h3>` : ""}<div class="wlist">${rows}</div>`;
+      return `${sec.name && sec.name !== "\u0000extra" ? `<h3 class="label sec-title">${esc(sec.name)}</h3>` : ""}<div class="wlist">${rows}</div>`;
     })
     .join("");
 }
@@ -1387,9 +1473,9 @@ function wordRow(c, pal) {
     return `<div class="wrow qa-row card-frame pal-${pal}" data-word="${esc(c.id)}" role="button" tabindex="0">
       <span class="w-main"><span class="w-ru">${esc(c.q)}</span></span>${right}</div>`;
   }
-  return `<div class="wrow card-frame pal-${pal}" data-word="${esc(c.id)}" role="button" tabindex="0">
+  return `<div class="wrow card-frame pal-${pal}${c.extra ? " extra" : ""}" data-word="${esc(c.id)}" role="button" tabindex="0">
     <span class="w-main"><span class="w-ru" lang="ru">${esc(c.ru)}</span>${c.fonetica ? `<span class="w-fon">${esc(c.fonetica)}</span>` : ""}</span>
-    <span class="w-es">${esc(c.es)}</span>${right}</div>`;
+    <span class="w-es">${c.extra ? `<span class="w-extra">extra</span>` : ""}${esc(c.es)}</span>${right}</div>`;
 }
 
 // ---------- Palabra ----------
@@ -4633,13 +4719,23 @@ function bind() {
     if (m && !m.disabled) startMode(state.currentDeck, m.dataset.mode);
   });
   $("#tema-dudas").addEventListener("click", (e) => {
+    const sl = e.target.closest("[data-say-slow]");
+    if (sl) return speak(sl.dataset.saySlow, 0.6);
     const say = e.target.closest("[data-say]");
     if (say) return speak(say.dataset.say);
+    const d = state.currentDeck;
+    if (e.target.closest("[data-antes]")) {
+      store.setEjer(`antes:${d.id}`, true);
+      state.antesOpen = false;
+      renderTema();
+      return;
+    }
+    const pa = e.target.closest("[data-antes-par]");
+    if (pa) { store.setEjer(`antes:${d.id}`, true); return openParada(pa.dataset.antesPar, { from: "tema" }); }
     const t = e.target.closest("#dudas-toggle");
     if (!t) return;
-    const body = $("#tema-dudas .dudas-body");
-    body.hidden = !body.hidden;
-    t.setAttribute("aria-expanded", String(!body.hidden));
+    state.antesOpen = !state.antesOpen;
+    renderTema();
   });
   $("#tema-cram").addEventListener("click", () => startCram(state.currentDeck));
   $("#deck-search").addEventListener("input", renderWords);
