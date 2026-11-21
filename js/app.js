@@ -864,7 +864,7 @@ function renderHome() {
 
   // Nota roja: tema del día (con su número en la ruta) y N real
   const td = todayTopic();
-  const tema = td ? td.title : forToday ? "Tu práctica" : "Todo al día";
+  const tema = td ? baseOf(td).title : forToday ? "Tu práctica" : "Todo al día";
   const pos = td && state.ruta ? rutaPos(unitKeyOf(td)) : null;
   $("#h-num").hidden = !pos;
   if (pos) $("#h-num").textContent = pos.label;
@@ -900,6 +900,15 @@ function renderHome() {
   $("#h-sigue-t").textContent = cur ? cur.title : noDecks ? "Sin temas cargados" : "Tus temas";
   sigue.setAttribute("aria-label", cur ? `Sigue donde ibas: ${cur.title}` : "Mira todos tus temas");
   $("#h-gram").hidden = !gramaticaDeck() && !(state.paradas && state.paradas.size);
+  // 4.2.0: aviso «Antes: 2 minutos de gramática» (la primera palabra nueva tiene una parada pendiente).
+  const av = !doneToday && forToday ? avisoParada() : null;
+  state.aviso = av;
+  $("#h-aviso").hidden = !av;
+  if (av) {
+    $("#h-aviso-t").innerHTML = gramText(av.parada.titulo, "t");
+    $("#h-aviso-ru").textContent = av.parada.ru || "";
+    $("#h-aviso-ru").hidden = !av.parada.ru;
+  }
 }
 
 // Parpadeo del monito: cada 3 a 5 s, solo en el inicio y sin movimiento reducido.
@@ -4539,6 +4548,8 @@ function bind() {
     startToday();
   };
   $("#start-card").addEventListener("click", () => (state.doneToday ? openFin() : startIfAny()));
+  $("#h-aviso-go").addEventListener("click", () => { if (state.aviso) openParada(state.aviso.id, { from: "home" }); });
+  $("#h-aviso-skip").addEventListener("click", () => { if (state.aviso) saltarParada(state.aviso.id); startIfAny(); });
   $("#fin-end").addEventListener("click", finEnd);
   $("#fin-opts").addEventListener("click", (e) => {
     const b = e.target.closest("[data-fin]");

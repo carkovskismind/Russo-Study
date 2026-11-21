@@ -1933,3 +1933,13 @@ body:not(.no-rep) .view#view-study.st-quiz { padding-bottom: calc(14px + env(saf
 .ml-pmin { flex: none; font-size: 11px; font-weight: 800; }
 .ml-pmin svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 .ml-pgo { flex: 0 0 100%; margin: 0 !important; min-height: 44px !important; font-size: 13px; }
+/* Inicio: aviso «Antes: 2 minutos de gramática» (Ruta_InicioAviso) */
+.h-aviso { --h-pill-c: #f2c14e; transform: rotate(-.6deg); border-radius: 22px; flex-direction: column; align-items: stretch; gap: 10px; padding: 12px 14px; margin-top: 4px; min-height: 0; cursor: default; }
+.h-aviso[hidden] { display: none; }
+.h-aviso-top { display: flex; align-items: center; gap: 10px; }
+.h-aviso .h-pill-txt { flex: 1; }
+.h-aviso .h-pill-b { white-space: normal; }
+.h-aviso-ru { flex: none; padding: 3px 9px; border-radius: 10px; background: #fff; color: #2433a0; border: 1.5px solid #151515; font-family: var(--f-ru); font-size: 14px; font-weight: 700; rotate: -3deg; }
+.h-aviso-acts { display: flex; align-items: center; gap: 8px; }
+.h-aviso-go { flex: 0 0 auto; width: auto; margin: 0; padding: 0 18px; min-height: 44px; font-size: 14px; }
+.h-aviso-skip { flex: 1; min-height: 44px; padding: 0 4px; border: 0; background: none; color: var(--muted); font: 700 14px/1.2 var(--f-ui); text-align: center; cursor: pointer; }
