@@ -4095,8 +4095,11 @@ function bind() {
   document.addEventListener("keydown", (e) => {
     const s = state.session;
     if (state.view !== "study" || !s || e.target.closest("input, textarea")) return;
+    // La tarjeta de palabra nueva ya atendió la tecla (Enter/Espacio): no avanzar dos veces.
+    if (e.defaultPrevented) return;
     const it = s.queue[0];
-    if (e.key === "Escape") return closeSession();
+    // Escape pregunta igual que el botón Atrás del celular.
+    if (e.key === "Escape") { e.preventDefault(); return openDlg("repaso"); }
     if (s.answered) {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); next(); }
       return;
