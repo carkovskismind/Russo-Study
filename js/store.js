@@ -232,6 +232,12 @@ export class Store {
     return !!this.sb;
   }
 
+  // Hay datos de Supabase en config.js (aunque la librería no haya cargado).
+  get syncWanted() {
+    const cfg = window.RUSSO_CONFIG || {};
+    return !!(cfg.supabaseUrl && cfg.supabaseAnonKey);
+  }
+
   async init() {
     if (!this.sb) {
       this.setStatus("local");

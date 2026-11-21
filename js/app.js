@@ -3647,7 +3647,9 @@ function renderSync() {
 function renderAccount() {
   const box = $("#account-box");
   if (!store.syncConfigured) {
-    box.innerHTML = `<p class="muted">La sincronización todavía no está configurada, así que tu progreso se guarda solo en este dispositivo.</p>`;
+    box.innerHTML = store.syncWanted
+      ? `<p class="muted">No se pudo conectar con la sincronización. Tu progreso se guarda en este dispositivo y se volverá a intentar la próxima vez que abras la app.</p>`
+      : `<p class="muted">La sincronización todavía no está configurada, así que tu progreso se guarda solo en este dispositivo.</p>`;
     return;
   }
   if (store.user) {
