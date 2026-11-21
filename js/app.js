@@ -1941,7 +1941,7 @@ function renderItem() {
   if (learn) { cardEl.tabIndex = 0; cardEl.setAttribute("role", "group"); cardEl.setAttribute("aria-label", "Palabra nueva. Toca la tarjeta para continuar"); }
   else { cardEl.removeAttribute("tabindex"); cardEl.removeAttribute("role"); cardEl.removeAttribute("aria-label"); }
   $("#card-deck").textContent = deck ? deck.title : "";
-  const pos = deck && state.ruta ? rutaPos(deck.id) : null;
+  const pos = deck && state.ruta ? rutaPos(cardUnitKey(c)) : null;
   $("#study-sub").innerHTML = deck ? `${pos ? `Tema <span class="num">${pos.label}</span> · ` : ""}${esc(deck.title)}` : "";
   $("#study-exit").hidden = learn;
   $("#view-study").classList.toggle("st-quiz", !learn); // maqueta A2 Repaso · pregunta: «Salir» abajo, sin «Reportar falla»
@@ -1965,7 +1965,7 @@ function renderItem() {
       front.innerHTML = ruBlock(c.ru, c.fonetica);
       const sp = canSpeak();
       const ej = c.ejemplo && c.ejemplo.ru
-        ? `<div class="learn-ex st-ex"><div class="st-ex-t"><span class="learn-ex-label">EJEMPLO</span><span class="ex-ru" lang="ru">${esc(c.ejemplo.ru)}</span>${c.ejemplo.fonetica ? `<span class="ex-fon">${esc(c.ejemplo.fonetica)}</span>` : ""}${c.ejemplo.es ? `<span class="st-ex-es">${esc(c.ejemplo.es)}</span>` : ""}</div>${sp ? `${slowBtn(c.ejemplo.ru, "st-ex-btn")}<button class="audio-btn st-ex-btn" type="button" data-say="${esc(c.ejemplo.ru)}" aria-label="Escuchar el ejemplo">${SPEAKER}</button>` : ""}</div>`
+        ? `<div class="learn-ex st-ex"><div class="st-ex-t"><span class="learn-ex-label">EJEMPLO</span><span class="ex-ru" lang="ru">${esc(c.ejemplo.ru)}</span>${c.ejemplo.fonetica ? `<span class="ex-fon">${esc(c.ejemplo.fonetica)}</span>` : ""}${c.ejemplo.es ? `<span class="st-ex-es">${esc(c.ejemplo.es)}</span>` : ""}</div>${sp ? `<button class="audio-btn st-ex-btn" type="button" data-say="${esc(c.ejemplo.ru)}" aria-label="Escuchar el ejemplo">${SPEAKER}</button>${slowBtn(c.ejemplo.ru, "st-ex-btn")}` : ""}</div>`
         : "";
       back.innerHTML = `<span class="st-div" aria-hidden="true"></span><div class="big-es">${esPar(c.es)}</div>` + extras(c) + ej;
       speakBtn.hidden = !canSpeak();
@@ -4262,7 +4262,8 @@ function gramBack() {
   state.gram = null;
   if (from === "cajas") return show("cajas");
   if (from === "study" && state.session) return show("study");
-  backTo(from === "modulo" ? "modulo" : from);
+  if (from === "modulo") return go("modulo");
+  backTo(from);
 }
 
 function renderGram() {
