@@ -422,7 +422,8 @@ async function loadDecks() {
       state.ej[id] = { dialogos: j.dialogos || [], cajas: j.cajas || [] };
     } catch (e) { console.warn(`ejercicios/${id}`, e); }
   }));
-  if (broken.length) toast(`No se pudo leer: ${broken.join(", ")}`);
+  if (broken.length && broken.length === files.length) toast("No se cargaron los temas. Revisa tu conexión y vuelve a abrir la app.");
+  else if (broken.length) toast(`No se pudo leer: ${broken.join(", ")}`);
 }
 
 function keysFor(card) {
@@ -800,6 +801,15 @@ function renderHome() {
     : "Hoy no hay práctica pendiente. Todo al día");
   card.setAttribute("aria-disabled", String(forToday === 0 && !doneToday));
   if (doneToday) card.setAttribute("aria-label", "¡Hoy cumpliste! Ver tu resumen del día");
+  // Sin temas cargados (p. ej. sin conexión en la primera visita): aviso claro en vez de «Todo al día».
+  const noDecks = !state.decks.some((d) => !d.mine);
+  state.noDecks = noDecks;
+  if (noDecks) {
+    $("#h-num").hidden = true;
+    $("#h-tema").textContent = "No se cargaron los temas";
+    $("#h-card-go").textContent = "Revisa tu conexión";
+    card.setAttribute("aria-label", "No se cargaron los temas. Revisa tu conexión y vuelve a abrir la app.");
+  }
 
   // Mis caminos: Tus temas (N mazos) y «Sigue donde ibas»
   $("#h-mazos").textContent = state.decks.filter((d) => !d.mine).length;
@@ -812,7 +822,7 @@ function renderHome() {
   const sigue = $("#h-sigue");
   sigue.dataset.deck = cur ? cur.id : "";
   sigue.dataset.open = sigueOpen ? "1" : "";
-  $("#h-sigue-t").textContent = cur ? cur.title : "Tus temas";
+  $("#h-sigue-t").textContent = cur ? cur.title : noDecks ? "Sin temas cargados" : "Tus temas";
   sigue.setAttribute("aria-label", cur ? `Sigue donde ibas: ${cur.title}` : "Mira todos tus temas");
   $("#h-gram").hidden = !gramaticaDeck();
 }
@@ -3791,6 +3801,7 @@ function bind() {
 
   // Portada
   const startIfAny = () => {
+    if (state.noDecks) return toast("No se cargaron los temas. Revisa tu conexión y vuelve a abrir la app.");
     if ($("#start-card").getAttribute("aria-disabled") === "true") return toast("Hoy no hay práctica pendiente. ¡Todo al día!");
     startToday();
   };
