@@ -451,13 +451,19 @@ function deckEnabled(deck) {
 function deckStats(deck, now = Date.now()) {
   const eod = endOfDay(now);
   let due = 0, learned = 0, fresh = 0, total = 0, last = 0;
-  for (const it of itemsFor(deck)) {
-    total++;
-    const st = store.card(it.key);
-    if (!st) { fresh++; continue; }
-    if (st.ivl >= 1) learned++;
-    if (st.due <= eod) due++;
-    if ((st.t || 0) > last) last = st.t;
+  // «Nuevas» se cuentan por palabra (en «Ambas» una palabra tiene dos tarjetas);
+  // la otra dirección de una palabra ya vista cuenta como repaso pendiente.
+  for (const card of deck.cards) {
+    const keys = keysFor(card);
+    const sts = keys.map((k) => store.card(k));
+    total += keys.length;
+    if (sts.every((st) => !st)) { fresh++; continue; }
+    for (const st of sts) {
+      if (!st) { due++; continue; }
+      if (st.ivl >= 1) learned++;
+      if (st.due <= eod) due++;
+      if ((st.t || 0) > last) last = st.t;
+    }
   }
   for (const f of deck.frases) {
     const fs = store.frase(`${deck.id}:${f.id}`);
@@ -1016,7 +1022,8 @@ function modesList(deck) {
   const s = deckStats(deck);
   const ej = ejOf(deck);
   const out = [];
-  if (deck.cards.length) out.push({ key: "words", label: "Palabras", num: String(s.due + s.fresh), sub: "Nuevas y repaso", pct: s.pct, off: s.due + s.fresh === 0 });
+  const nHoy = s.due + Math.min(s.fresh, NEW_PER_DECK_SESSION, newLeftToday());
+  if (deck.cards.length) out.push({ key: "words", label: "Palabras", num: String(nHoy), sub: "Nuevas y repaso", pct: s.pct, off: nHoy === 0 });
   if (deck.frases.length) {
     const done = deck.frases.filter((f) => store.frase(`${deck.id}:${f.id}`)).length;
     out.push({ key: "frases", label: "Frases", num: `${done}/${deck.frases.length}`, sub: "Arma y traduce", pct: Math.round((done / deck.frases.length) * 100) });
@@ -1371,21 +1378,30 @@ function dailyDecks() {
     .map((x) => x.d);
 }
 
+// newLimit cuenta palabras nuevas, no tarjetas: en «Ambas» la palabra nueva se
+// muestra una sola vez y su otra dirección se pregunta al final, sin contar doble.
 function buildQueue(decks, newLimit, revLimit = Infinity) {
   const now = Date.now();
   const eod = endOfDay(now);
   const reviews = [];
   const fresh = [];
   for (const d of decks) {
-    for (const it of itemsFor(d)) {
-      const st = store.card(it.key);
-      if (!st) fresh.push({ ...it, phase: "learn" });
-      else if (st.due <= eod) reviews.push({ ...it, phase: "quiz", due: st.due });
+    for (const card of d.cards) {
+      const its = keysFor(card).map((key) => ({ card, key, dir: key.split("|").pop() }));
+      const sts = its.map((it) => store.card(it.key));
+      if (sts.every((st) => !st)) { fresh.push(its); continue; }
+      its.forEach((it, i) => {
+        const st = sts[i];
+        if (!st) reviews.push({ ...it, phase: "quiz", due: 0 });
+        else if (st.due <= eod) reviews.push({ ...it, phase: "quiz", due: st.due });
+      });
     }
   }
   reviews.sort((a, b) => a.due - b.due);
   reviews.splice(Math.max(0, revLimit));
-  const news = fresh.slice(0, Math.max(0, newLimit));
+  const picked = fresh.slice(0, Math.max(0, newLimit));
+  const news = picked.map((its) => ({ ...its[0], phase: "learn" }));
+  const extra = picked.flatMap((its) => its.slice(1).map((it) => ({ ...it, phase: "quiz", dayCounted: true })));
   const queue = [];
   let n = 0;
   reviews.forEach((r, i) => {
@@ -1393,7 +1409,13 @@ function buildQueue(decks, newLimit, revLimit = Infinity) {
     if ((i + 1) % 3 === 0 && n < news.length) queue.push(news[n++]);
   });
   while (n < news.length) queue.push(news[n++]);
+  queue.push(...extra);
   return queue.map((it) => ({ ...it, failed: false, hint: 0 }));
+}
+
+// Palabras nuevas que todavía caben hoy (tope «nuevas por día»).
+function newLeftToday() {
+  return Math.max(0, (store.settings.newPerDay || 0) - store.newToday(dateKey(Date.now())));
 }
 
 function startToday() {
@@ -1402,21 +1424,25 @@ function startToday() {
   // Palabras elegidas a mano («+ Hoy»), dentro del tope del día; las que no caben salen mañana.
   const inQueue = new Set(queue.map((it) => it.key));
   for (const c of pickedCards().slice(0, plan.p)) {
-    for (const key of keysFor(c)) {
+    // En «Ambas» la palabra nueva se muestra una vez; la otra dirección solo se pregunta.
+    const fresh = keysFor(c).every((k) => !store.card(k));
+    keysFor(c).forEach((key, i) => {
       if (inQueue.has(key)) {
         queue.find((it) => it.key === key).picked = true;
-        continue;
+        return;
       }
-      const item = { card: c, key, dir: key.split("|").pop(), phase: store.card(key) ? "quiz" : "learn", failed: false, hint: 0, picked: true };
+      const item = { card: c, key, dir: key.split("|").pop(), phase: fresh && i === 0 ? "learn" : "quiz", failed: false, hint: 0, picked: true };
+      if (fresh && i > 0) { item.dayCounted = true; queue.push(item); return; }
       queue.splice(Math.floor(Math.random() * (queue.length + 1)), 0, item);
-    }
+    });
   }
   startSession(queue, "Práctica de hoy", false, "home");
   if (state.session && state.session.queue === queue) state.session.daily = true;
 }
 
 function startDeck(deck) {
-  const queue = buildQueue([deck], NEW_PER_DECK_SESSION);
+  // La práctica por tema respeta lo que queda del tope de nuevas del día.
+  const queue = buildQueue([deck], Math.min(NEW_PER_DECK_SESSION, newLeftToday()));
   startSession(queue, deck.title, false, state.view === "tema" ? "tema" : state.view);
 }
 
@@ -1937,12 +1963,18 @@ function settle(ok) {
   else s.bad++;
   if (!s.cram) {
     const prev = store.card(it.key);
-    // Solo la «Práctica de hoy» cuenta para el tope del día; una vez por palabra.
+    // Nueva = ninguna dirección de la palabra se había visto (en «Ambas» cuenta una vez).
+    const isNew = !prev && keysFor(it.card).every((k) => !store.card(k));
+    // La «Práctica de hoy» cuenta para el tope del día; una vez por palabra.
     if (s.daily && !it.dayCounted) {
       it.dayCounted = true;
-      if (!prev) store.countNew(dateKey(now));
+      if (isNew) store.countNew(dateKey(now));
       else store.countReview(dateKey(now));
       markHoy(it.card);
+    } else if (!s.daily && isNew && !it.dayCounted) {
+      // Las palabras nuevas de un tema aparte también gastan el tope de nuevas del día.
+      it.dayCounted = true;
+      store.countNew(dateKey(now));
     }
     const rating = ok ? (it.hint && !it.failed ? 2 : 3) : 1;
     logActivity();
@@ -3306,7 +3338,7 @@ function modWords(mod) {
 // Palabras de hoy en un tema (lo que arma «Seguir con»).
 function todayWords(deck) {
   const s = deckStats(deck);
-  return s.due + Math.min(s.fresh, NEW_PER_DECK_SESSION);
+  return s.due + Math.min(s.fresh, NEW_PER_DECK_SESSION, newLeftToday());
 }
 
 function rutaPos(deckId) {
