@@ -73,6 +73,32 @@ function writeLocal(p) {
   }
 }
 
+// Ajustes: cada campo con su tipo; lo que venga vacío, null o con otro tipo
+// (copia vieja o dañada, o de la nube) se cambia por el valor por omisión.
+export function normalizeSettings(raw) {
+  const d = DEFAULT_SETTINGS;
+  const s = raw && typeof raw === "object" && !Array.isArray(raw) ? raw : {};
+  const num = (v, def, min, max) => (typeof v === "number" && Number.isFinite(v) ? Math.max(min, Math.min(max, Math.round(v))) : def);
+  const bool = (v, def) => (typeof v === "boolean" ? v : def);
+  const disabled = {};
+  if (s.disabled && typeof s.disabled === "object" && !Array.isArray(s.disabled)) {
+    for (const [k, v] of Object.entries(s.disabled)) if (v) disabled[k] = true;
+  }
+  return {
+    dir: ["ru", "es", "both"].includes(s.dir) ? s.dir : d.dir,
+    newPerDay: num(s.newPerDay, d.newPerDay, 0, 200),
+    dayMax: num(s.dayMax, d.dayMax, 1, 500),
+    cursive: bool(s.cursive, d.cursive),
+    autoSpeak: bool(s.autoSpeak, d.autoSpeak),
+    sound: bool(s.sound, d.sound),
+    fonetica: bool(s.fonetica, d.fonetica),
+    theme: s.theme === "light" ? "light" : "dark",
+    name: typeof s.name === "string" ? s.name : d.name,
+    disabled,
+    t: typeof s.t === "number" && Number.isFinite(s.t) ? s.t : 0
+  };
+}
+
 function normalize(p) {
   const base = emptyProgress();
   if (!p || typeof p !== "object") return base;
@@ -89,8 +115,8 @@ function normalize(p) {
     ejer: p.ejer && typeof p.ejer === "object" ? p.ejer : {},
     lectura: p.lectura && typeof p.lectura === "object" ? p.lectura : {},
     current: p.current && typeof p.current === "object" && p.current.deck ? p.current : null,
-    settings: { ...base.settings, ...(p.settings || {}) },
-    resetAt: p.resetAt || 0
+    settings: normalizeSettings(p.settings),
+    resetAt: typeof p.resetAt === "number" && Number.isFinite(p.resetAt) ? p.resetAt : 0
   };
 }
 
@@ -109,22 +135,26 @@ export function merge(a, b) {
     }
   }
   const resetDay = resetAt ? dateKey(resetAt) : "";
+  // Los contadores por día no llevan hora: del día del reinicio solo valen los de
+  // una copia que ya conoce ese reinicio (lo de esa mañana antes de reiniciar se descarta).
+  const skipDay = (src, day) => !!resetDay && (day < resetDay || (day === resetDay && src.resetAt < resetAt));
+  const count = (n) => (typeof n === "number" && Number.isFinite(n) && n > 0 ? n : 0);
   for (const src of [a, b]) {
     for (const [day, n] of Object.entries(src.newLog)) {
-      if (resetDay && day < resetDay) continue;
-      out.newLog[day] = Math.max(out.newLog[day] || 0, n);
+      if (skipDay(src, day)) continue;
+      out.newLog[day] = Math.max(out.newLog[day] || 0, count(n));
     }
     // Repasos hechos por día (tope diario de repasos, 4.0.1).
     for (const [day, n] of Object.entries(src.revLog)) {
-      if (resetDay && day < resetDay) continue;
-      out.revLog[day] = Math.max(out.revLog[day] || 0, n);
+      if (skipDay(src, day)) continue;
+      out.revLog[day] = Math.max(out.revLog[day] || 0, count(n));
     }
   }
   // Actividad por día (para la racha y la gráfica de la semana).
   for (const src of [a, b]) {
     for (const [day, n] of Object.entries(src.days)) {
-      if (resetDay && day < resetDay) continue;
-      out.days[day] = Math.max(out.days[day] || 0, n);
+      if (skipDay(src, day)) continue;
+      out.days[day] = Math.max(out.days[day] || 0, count(n));
     }
   }
   // Frases para armar: gana el intento más reciente.
