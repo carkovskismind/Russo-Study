@@ -6,38 +6,38 @@
       "id": "ideas-d1",
       "titulo": "¿Cómo te sientes?",
       "mensajes": [
-        {"de": "Лена", "ru": "Тебе́ стра́шно?", "fonetica": "tie-BIE STRASH-na", "es": "¿Tienes miedo?"},
+        {"de": "Ле́на", "ru": "Тебе́ стра́шно?", "fonetica": "tie-BIE STRASH-na", "es": "¿Tienes miedo?"},
         {"de": "yo", "ru": "Нет, мне смешно́.", "fonetica": "niet, mnie smiesh-NO", "es": "No, me da risa.", "opciones": [
-          {"ru": "Нет, мне смешно́.", "fonetica": "niet, mnie smiesh-NO", "correcta": true, "porque": "¡Bien! Para sentimientos se usa мне."},
-          {"ru": "Нет, я смешно́.", "fonetica": "niet, ia smiesh-NO", "correcta": false, "porque": "Para sentimientos se usa мне: мне смешно́."},
+          {"ru": "Нет, мне смешно́.", "fonetica": "niet, mnie smiesh-NO", "correcta": true, "porque": "¡Bien! Con стра́шно, смешно́, ску́чно, гру́стно se usa мне."},
+          {"ru": "Нет, я смешно́.", "fonetica": "niet, ia smiesh-NO", "correcta": false, "porque": "Con стра́шно, смешно́, ску́чно, гру́стно se usa мне, no я: мне смешно́."},
           {"ru": "Да, мне смешно́.", "fonetica": "da, mnie smiesh-NO", "correcta": false, "porque": "Ella pregunta si da miedo; a ti te da risa: нет."}
         ]},
-        {"de": "Лена", "ru": "Почему́?", "fonetica": "pa-chi-MU", "es": "¿Por qué?"},
+        {"de": "Ле́на", "ru": "Почему́?", "fonetica": "pa-chi-MU", "es": "¿Por qué?"},
         {"de": "yo", "ru": "Потому́ что э́то смешно́.", "fonetica": "pa-ta-MU shta E-ta smiesh-NO", "es": "Porque es gracioso.", "opciones": [
           {"ru": "Потому́ что э́то смешно́.", "fonetica": "pa-ta-MU shta E-ta smiesh-NO", "correcta": true, "porque": "¡Eso! потому́ что = porque."},
           {"ru": "Заче́м э́то смешно́.", "fonetica": "za-CHIEM E-ta smiesh-NO", "correcta": false, "porque": "заче́м es «para qué»; para responder «porque» se usa потому́ что."},
           {"ru": "Потому́ что э́то ску́чно.", "fonetica": "pa-ta-MU shta E-ta SKUSH-na", "correcta": false, "porque": "ску́чно es «aburrido»; la idea es que da risa: смешно́."}
         ]},
-        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
+        {"de": "Ле́на", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
       ]
     },
     {
       "id": "ideas-d2",
       "titulo": "Mi sueño",
       "mensajes": [
-        {"de": "Лена", "ru": "У тебя́ есть мечта́?", "fonetica": "u tie-BIA iest' miech-TA", "es": "¿Tienes un sueño (anhelo)?"},
+        {"de": "Ле́на", "ru": "У тебя́ есть мечта́?", "fonetica": "u tie-BIA iest' miech-TA", "es": "¿Tienes un sueño (anhelo)?"},
         {"de": "yo", "ru": "Да, у меня́ есть мечта́.", "fonetica": "da, u mie-NIA iest' miech-TA", "es": "Sí, tengo un sueño.", "opciones": [
           {"ru": "Да, у меня́ есть мечта́.", "fonetica": "da, u mie-NIA iest' miech-TA", "correcta": true, "porque": "¡Bien! «Tengo» = у меня́ есть."},
           {"ru": "Да, у меня́ есть сон.", "fonetica": "da, u mie-NIA iest' son", "correcta": false, "porque": "сон es el sueño al dormir; el anhelo es мечта́."},
           {"ru": "Да, я есть мечта́.", "fonetica": "da, ia iest' miech-TA", "correcta": false, "porque": "Para decir «tengo» se usa у меня́ есть."}
         ]},
-        {"de": "Лена", "ru": "А что э́то?", "fonetica": "a shto E-ta", "es": "¿Y qué es?"},
+        {"de": "Ле́на", "ru": "А что э́то?", "fonetica": "a shto E-ta", "es": "¿Y qué es?"},
         {"de": "yo", "ru": "Э́то дру́жба и ра́дость.", "fonetica": "E-ta DRUZH-ba i RA-dast'", "es": "Es amistad y alegría.", "opciones": [
           {"ru": "Э́то дру́жба и ра́дость.", "fonetica": "E-ta DRUZH-ba i RA-dast'", "correcta": true, "porque": "¡Eso! и une las dos cosas."},
           {"ru": "Э́то дру́жба и́ли ра́дость.", "fonetica": "E-ta DRUZH-ba I-li RA-dast'", "correcta": false, "porque": "и́ли es «o»; quieres decir las dos cosas: и."},
           {"ru": "Э́то война́ и ложь.", "fonetica": "E-ta vai-NA i lozh", "correcta": false, "porque": "Eso es «guerra y mentira»; lo que sueñas es дру́жба и ра́дость."}
         ]},
-        {"de": "Лена", "ru": "Как краси́во!", "fonetica": "kak kra-SI-va", "es": "¡Qué bonito!"}
+        {"de": "Ле́на", "ru": "Как краси́во!", "fonetica": "kak kra-SI-va", "es": "¡Qué bonito!"}
       ]
     }
   ],
@@ -46,6 +46,17 @@
       "id": "ideas-c1",
       "pregunta": "¿Es algo bueno o algo malo? Elige la caja.",
       "cajas": ["bueno", "malo"],
+      "diccionario": [
+        {"forma": "ра́дость", "es": "alegría"},
+        {"forma": "дру́жба", "es": "amistad"},
+        {"forma": "любо́вь", "es": "amor"},
+        {"forma": "смешно́", "tag": "palabra de estado", "es": "da risa"},
+        {"forma": "война́", "es": "guerra"},
+        {"forma": "ложь", "es": "mentira"},
+        {"forma": "у́жас", "es": "horror"},
+        {"forma": "ску́чно", "tag": "palabra de estado", "es": "da aburrimiento (me aburro)"},
+        {"forma": "гру́стно", "tag": "palabra de estado", "es": "da tristeza"}
+      ],
       "items": [
         {"ru": "ра́дость", "caja": "bueno", "porque": "La alegría es algo bueno."},
         {"ru": "дру́жба", "caja": "bueno", "porque": "La amistad es algo bueno."},
@@ -62,14 +73,29 @@
       "id": "ideas-c2",
       "pregunta": "мне o у меня́: completa la frase.",
       "cajas": ["мне", "у меня́"],
+      "cajas_es": ["a mí, me", "tengo (con есть)"],
+      "cajas_uso": ["Se usa para decir a quién le pasa algo o quién siente algo.", "Se usa con есть para decir que tienes algo."],
+      "diccionario": [
+        {"forma": "мне", "dic": "я", "tag": "dativo", "es": "a mí, me"},
+        {"forma": "у меня́", "dic": "я", "tag": "у + genitivo", "es": "yo tengo (con есть)"},
+        {"forma": "смешно́", "tag": "palabra de estado", "es": "da risa"},
+        {"forma": "есть", "es": "hay (у меня́ есть = tengo)"},
+        {"forma": "мечта́", "es": "sueño, anhelo"},
+        {"forma": "стра́шно", "tag": "palabra de estado", "es": "da miedo"},
+        {"forma": "иде́я", "es": "idea"},
+        {"forma": "ску́чно", "tag": "palabra de estado", "es": "da aburrimiento (me aburro)"},
+        {"forma": "хо́бби", "es": "pasatiempo"},
+        {"forma": "гру́стно", "tag": "palabra de estado", "es": "da tristeza"},
+        {"forma": "пробле́ма", "es": "problema"}
+      ],
       "items": [
-        {"ru": "… смешно́", "caja": "мне", "porque": "Los sentimientos se dicen con мне: мне смешно́."},
+        {"ru": "… смешно́", "caja": "мне", "porque": "Con стра́шно, смешно́, ску́чно, гру́стно se usa мне: мне смешно́."},
         {"ru": "… есть мечта́", "caja": "у меня́", "porque": "«Tengo» se dice у меня́ есть."},
-        {"ru": "… стра́шно", "caja": "мне", "porque": "Los sentimientos se dicen con мне: мне стра́шно."},
+        {"ru": "… стра́шно", "caja": "мне", "porque": "Con стра́шно, смешно́, ску́чно, гру́стно se usa мне: мне стра́шно."},
         {"ru": "… есть иде́я", "caja": "у меня́", "porque": "«Tengo» se dice у меня́ есть."},
-        {"ru": "… ску́чно", "caja": "мне", "porque": "Los sentimientos se dicen con мне: мне ску́чно."},
+        {"ru": "… ску́чно", "caja": "мне", "porque": "Con стра́шно, смешно́, ску́чно, гру́стно se usa мне: мне ску́чно."},
         {"ru": "… есть хо́бби", "caja": "у меня́", "porque": "«Tengo» se dice у меня́ есть."},
-        {"ru": "… гру́стно", "caja": "мне", "porque": "Los sentimientos se dicen con мне: мне гру́стно."},
+        {"ru": "… гру́стно", "caja": "мне", "porque": "Con стра́шно, смешно́, ску́чно, гру́стно se usa мне: мне гру́стно."},
         {"ru": "… есть пробле́ма", "caja": "у меня́", "porque": "«Tengo» se dice у меня́ есть."}
       ]
     }

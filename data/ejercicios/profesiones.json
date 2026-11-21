@@ -6,38 +6,80 @@
       "id": "profesiones-d1",
       "titulo": "¿Quién es?",
       "mensajes": [
-        {"de": "Лена", "ru": "Кто он? Он врач?", "fonetica": "kto on? on vrach", "es": "¿Quién es él? ¿Es médico?"},
+        {"de": "Ле́на", "ru": "Кто он? Он врач?", "fonetica": "kto on? on vrach", "es": "¿Quién es él? ¿Es médico?"},
         {"de": "yo", "ru": "Нет, он не врач, он учи́тель.", "fonetica": "niet, on nie vrach, on u-CHI-tiel'", "es": "No, no es médico, es maestro.", "opciones": [
           {"ru": "Нет, он не врач, он учи́тель.", "fonetica": "niet, on nie vrach, on u-CHI-tiel'", "correcta": true, "porque": "¡Bien! не niega врач y luego dices lo que sí es."},
           {"ru": "Да, он не врач, он учи́тель.", "fonetica": "da, on nie vrach, on u-CHI-tiel'", "correcta": false, "porque": "Si dices que no es médico, empiezas con нет."},
           {"ru": "Нет, он не врач, он студе́нтка.", "fonetica": "niet, on nie vrach, on stu-DIENT-ka", "correcta": false, "porque": "студе́нтка es la forma de mujer y aquí hablas de él; además él es maestro: учи́тель."}
         ]},
-        {"de": "Лена", "ru": "А она́?", "fonetica": "a a-NA", "es": "¿Y ella?"},
+        {"de": "Ле́на", "ru": "А она́?", "fonetica": "a a-NA", "es": "¿Y ella?"},
         {"de": "yo", "ru": "Она́ медсестра́.", "fonetica": "a-NA miet-sies-TRA", "es": "Ella es enfermera.", "opciones": [
           {"ru": "Она́ медсестра́.", "fonetica": "a-NA miet-sies-TRA", "correcta": true, "porque": "¡Eso! Para ella: медсестра́."},
           {"ru": "Она́ медбра́т.", "fonetica": "a-NA mied-BRAT", "correcta": false, "porque": "медбра́т es enfermero (hombre); ella es медсестра́."},
           {"ru": "Он медсестра́.", "fonetica": "on mied-sies-TRA", "correcta": false, "porque": "Hablas de ella: она́."}
         ]},
-        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
+        {"de": "Ле́на", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
       ]
     },
     {
       "id": "profesiones-d2",
       "titulo": "¿Y tú, qué eres?",
       "mensajes": [
-        {"de": "Лена", "ru": "А кто ты?", "fonetica": "a kto ty", "es": "¿Y tú, qué eres?"},
+        {"de": "Ле́на", "ru": "А кто ты?", "fonetica": "a kto ty", "es": "¿Y tú, qué eres?"},
         {"de": "yo", "ru": "Я студе́нтка.", "fonetica": "ia stu-DIENT-ka", "es": "Soy estudiante.", "opciones": [
           {"ru": "Я студе́нтка.", "fonetica": "ia stu-DIENT-ka", "correcta": true, "porque": "¡Bien! Una mujer es студе́нтка."},
           {"ru": "Я студе́нт.", "fonetica": "ia stu-DIENT", "correcta": false, "porque": "студе́нт es hombre; tú eres mujer: студе́нтка."},
           {"ru": "Моя́ студе́нтка.", "fonetica": "ma-IA stu-DIENT-ka", "correcta": false, "porque": "Hablas de ti: я студе́нтка."}
         ]},
-        {"de": "Лена", "ru": "А твой брат кто?", "fonetica": "a tvoi brat kto", "es": "¿Y tu hermano qué es?"},
+        {"de": "Ле́на", "ru": "А твой брат кто?", "fonetica": "a tvoi brat kto", "es": "¿Y tu hermano qué es?"},
         {"de": "yo", "ru": "Он программи́ст.", "fonetica": "on pra-gra-MIST", "es": "Es programador.", "opciones": [
           {"ru": "Он программи́ст.", "fonetica": "on pra-gra-MIST", "correcta": true, "porque": "¡Exacto! Hablas de él: он."},
           {"ru": "Она́ программи́ст.", "fonetica": "a-NA pra-gra-MIST", "correcta": false, "porque": "Hablas de tu hermano: он."},
           {"ru": "Он программи́стка.", "fonetica": "on pra-gra-MIST-ka", "correcta": false, "porque": "Para un hombre la palabra queda como программи́ст; -ка es para mujer."}
         ]},
-        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
+        {"de": "Ле́на", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
+      ]
+    },
+    {
+      "id": "profesiones-d3",
+      "titulo": "¿Qué hace tu familia?",
+      "mensajes": [
+        {"de": "Ната́ша", "ru": "Кто твой па́па?", "fonetica": "kto tvoi PA-pa", "es": "¿Qué hace tu papá?"},
+        {"de": "yo", "ru": "Он преподава́тель.", "fonetica": "on prie-pa-da-VA-tiel'", "es": "Es profesor.", "opciones": [
+          {"ru": "Он преподава́тель.", "fonetica": "on prie-pa-da-VA-tiel'", "correcta": true, "porque": "¡Bien! Para él: преподава́тель. Y sin «es»: он преподава́тель."},
+          {"ru": "Он преподава́тельница.", "fonetica": "on prie-pa-da-VA-tiel'-ni-tsa", "correcta": false, "porque": "-ница es la forma de mujer; para tu papá: преподава́тель."},
+          {"ru": "Она́ преподава́тель.", "fonetica": "a-NA prie-pa-da-VA-tiel'", "correcta": false, "porque": "Hablas de tu papá: он."}
+        ]},
+        {"de": "Ната́ша", "ru": "А твоя́ ма́ма?", "fonetica": "a tva-IA MA-ma", "es": "¿Y tu mamá?"},
+        {"de": "yo", "ru": "Она́ промы́шленный диза́йнер.", "fonetica": "a-NA pra-MYSH-lien-nyi di-ZAI-nier", "es": "Es diseñadora industrial.", "opciones": [
+          {"ru": "Она́ промы́шленный диза́йнер.", "fonetica": "a-NA pra-MYSH-lien-nyi di-ZAI-nier", "correcta": true, "porque": "¡Eso! диза́йнер sirve para hombre y mujer, y промы́шленный (industrial) va con диза́йнер."},
+          {"ru": "Он промы́шленный диза́йнер.", "fonetica": "on pra-MYSH-lien-nyi di-ZAI-nier", "correcta": false, "porque": "Hablas de tu mamá: она́."},
+          {"ru": "Она́ пацие́нтка.", "fonetica": "a-NA pa-tsy-IENT-ka", "correcta": false, "porque": "пацие́нтка es «paciente»: no es una profesión."}
+        ]},
+        {"de": "Ната́ша", "ru": "А твой де́душка?", "fonetica": "a tvoi DIE-dush-ka", "es": "¿Y tu abuelito?"},
+        {"de": "yo", "ru": "Он пенсионе́р.", "fonetica": "on pien-si-a-NIER", "es": "Es jubilado.", "opciones": [
+          {"ru": "Он пенсионе́р.", "fonetica": "on pien-si-a-NIER", "correcta": true, "porque": "¡Muy bien! Ya no trabaja: пенсионе́р."},
+          {"ru": "Он пенсионе́рка.", "fonetica": "on pien-si-a-NIER-ka", "correcta": false, "porque": "-ка es la forma de mujer; para tu abuelito: пенсионе́р."},
+          {"ru": "Он шко́льник.", "fonetica": "on SHKOL'-nik", "correcta": false, "porque": "шко́льник es un niño que va a la escuela; tu abuelito es пенсионе́р."}
+        ]}
+      ]
+    },
+    {
+      "id": "profesiones-d4",
+      "titulo": "En el avión",
+      "mensajes": [
+        {"de": "Ма́ша", "ru": "Кто э́то? Стю́ард?", "fonetica": "kto E-ta? STIU-art", "es": "¿Quién es? ¿Un sobrecargo?"},
+        {"de": "yo", "ru": "Нет, он не стю́ард, он пассажи́р.", "fonetica": "niet, on nie STIU-art, on pa-sa-ZHYR", "es": "No, no es sobrecargo, es pasajero.", "opciones": [
+          {"ru": "Нет, он не стю́ард, он пассажи́р.", "fonetica": "niet, on nie STIU-art, on pa-sa-ZHYR", "correcta": true, "porque": "¡Bien! нет contesta, не niega стю́ард y luego dices lo que sí es."},
+          {"ru": "Нет, он не стю́ард, он пассажи́рка.", "fonetica": "niet, on nie STIU-art, on pa-sa-ZHYR-ka", "correcta": false, "porque": "пассажи́рка es la forma de mujer; hablas de él: пассажи́р."},
+          {"ru": "Нет, он нет стю́ард, он пассажи́р.", "fonetica": "niet, on niet STIU-art, on pa-sa-ZHYR", "correcta": false, "porque": "Para negar una palabra dentro de la frase se usa не: не стю́ард."}
+        ]},
+        {"de": "Ма́ша", "ru": "А она́? Стюарде́сса?", "fonetica": "a a-NA? stiu-ar-DE-sa", "es": "¿Y ella? ¿Es azafata?"},
+        {"de": "yo", "ru": "Да, она́ стюарде́сса.", "fonetica": "da, a-NA stiu-ar-DE-sa", "es": "Sí, es azafata.", "opciones": [
+          {"ru": "Да, она́ стюарде́сса.", "fonetica": "da, a-NA stiu-ar-DE-sa", "correcta": true, "porque": "¡Eso! Para ella: стюарде́сса."},
+          {"ru": "Да, она́ стю́ард.", "fonetica": "da, a-NA STIU-art", "correcta": false, "porque": "стю́ард es la forma de hombre; para ella: стюарде́сса."},
+          {"ru": "Да, он стюарде́сса.", "fonetica": "da, on stiu-ar-DE-sa", "correcta": false, "porque": "Hablas de ella: она́."}
+        ]}
       ]
     }
   ],
@@ -76,6 +118,93 @@
         {"ru": "худо́жник", "caja": "arte", "porque": "Crea arte."},
         {"ru": "музыка́нт", "caja": "arte", "porque": "Hace música."},
         {"ru": "писа́тель", "caja": "arte", "porque": "Escribe."}
+      ]
+    },
+    {
+      "id": "profesiones-c3",
+      "pregunta": "¿Sirve solo para él, solo para ella o para los dos? Elige la caja.",
+      "cajas": ["solo él", "solo ella", "él y ella"],
+      "items": [
+        {"ru": "инжене́р", "caja": "él y ella", "porque": "La misma palabra sirve para los dos: она́ инжене́р."},
+        {"ru": "архите́ктор", "caja": "él y ella", "porque": "No cambia para mujer: она́ архите́ктор."},
+        {"ru": "адвока́т", "caja": "él y ella", "porque": "Sirve para los dos: она́ адвока́т."},
+        {"ru": "бухга́лтер", "caja": "él y ella", "porque": "Sirve para los dos: она́ бухга́лтер."},
+        {"ru": "пацие́нт", "caja": "él y ella", "porque": "La forma masculina sirve para los dos: она́ пацие́нт. Para ella también existe пацие́нтка."},
+        {"ru": "пацие́нтка", "caja": "solo ella", "porque": "-ка indica mujer."},
+        {"ru": "домохозя́ин", "caja": "solo él", "porque": "Es el amo de casa: solo se dice de un hombre. Para una mujer siempre es домохозя́йка."},
+        {"ru": "домохозя́йка", "caja": "solo ella", "porque": "Es el ama de casa: termina en -ка."},
+        {"ru": "аспира́нт", "caja": "él y ella", "porque": "La forma masculina sirve para los dos: она́ аспира́нт. Para ella también existe аспира́нтка."},
+        {"ru": "аспира́нтка", "caja": "solo ella", "porque": "-ка indica mujer."}
+      ]
+    },
+    {
+      "id": "profesiones-c4",
+      "pregunta": "¿En qué área trabaja? Elige la caja.",
+      "cajas": ["ciencia", "salud", "seguridad y ley"],
+      "items": [
+        {"ru": "учёный", "caja": "ciencia", "porque": "Investiga y descubre cosas: es la palabra general para científico."},
+        {"ru": "матема́тик", "caja": "ciencia", "porque": "Trabaja con las matemáticas."},
+        {"ru": "фи́зик", "caja": "ciencia", "porque": "Estudia la física."},
+        {"ru": "хи́мик", "caja": "ciencia", "porque": "Estudia la química."},
+        {"ru": "до́ктор", "caja": "salud", "porque": "Es otra forma de decir врач (médico)."},
+        {"ru": "ме́дик", "caja": "salud", "porque": "Es la palabra general para quien trabaja en salud."},
+        {"ru": "терапе́вт", "caja": "salud", "porque": "Es el médico general, el que ves primero."},
+        {"ru": "полице́йский", "caja": "seguridad y ley", "porque": "Cuida el orden en la calle."},
+        {"ru": "пожа́рный", "caja": "seguridad y ley", "porque": "Apaga incendios y rescata personas."},
+        {"ru": "судья́", "caja": "seguridad y ley", "porque": "Decide en un juicio. Ojo: también es el árbitro de un partido."}
+      ]
+    },
+    {
+      "id": "profesiones-c5",
+      "pregunta": "¿Cómo se forma la palabra de mujer? Elige la terminación.",
+      "cajas": ["-ка", "-ница", "-есса"],
+      "items": [
+        {"ru": "пенсионе́рка", "base": "пенсионе́р", "caja": "-ка", "porque": "пенсионе́р + ка."},
+        {"ru": "ассисте́нтка", "base": "ассисте́нт", "caja": "-ка", "porque": "ассисте́нт + ка."},
+        {"ru": "пассажи́рка", "base": "пассажи́р", "caja": "-ка", "porque": "пассажи́р + ка."},
+        {"ru": "журнали́стка", "base": "журнали́ст", "caja": "-ка", "porque": "журнали́ст + ка."},
+        {"ru": "учи́тельница", "base": "учи́тель", "caja": "-ница", "porque": "учи́тель + ница: la ь se queda."},
+        {"ru": "преподава́тельница", "base": "преподава́тель", "caja": "-ница", "porque": "преподава́тель + ница: la ь se queda."},
+        {"ru": "худо́жница", "base": "худо́жник", "caja": "-ница", "porque": "худо́жник: -ник cambia a -ница."},
+        {"ru": "шко́льница", "base": "шко́льник", "caja": "-ница", "porque": "шко́льник: -ник cambia a -ница."},
+        {"ru": "поэте́сса", "base": "поэ́т", "caja": "-есса", "porque": "поэ́т + есса. Muchas mujeres prefieren decirse поэ́т."},
+        {"ru": "стюарде́сса", "base": "стю́ард", "caja": "-есса", "porque": "стю́ард + есса; el acento pasa a -е́сса: stiu-ar-DE-sa."}
+      ]
+    },
+    {
+      "id": "profesiones-c6",
+      "pregunta": "¿En qué área trabaja? Elige la caja.",
+      "cajas": ["arte", "deporte", "oficina", "turismo"],
+      "items": [
+        {"ru": "режиссёр", "caja": "arte", "porque": "Dirige películas u obras de teatro."},
+        {"ru": "компози́тор", "caja": "arte", "porque": "Escribe música."},
+        {"ru": "диза́йнер", "caja": "arte", "porque": "Diseña cómo se ven las cosas."},
+        {"ru": "спортсме́н", "caja": "deporte", "porque": "Hace deporte."},
+        {"ru": "спортсме́нка", "caja": "deporte", "porque": "Hace deporte; -ка indica mujer."},
+        {"ru": "атле́т", "caja": "deporte", "porque": "Es atleta: entrena y compite."},
+        {"ru": "анали́тик", "caja": "oficina", "porque": "Analiza datos, normalmente en una oficina."},
+        {"ru": "аге́нт по недви́жимости", "caja": "oficina", "porque": "Vende y renta casas. недви́жимость = bienes raíces."},
+        {"ru": "гид", "caja": "turismo", "porque": "Te guía en un viaje o en un museo."},
+        {"ru": "экскурсово́д", "caja": "turismo", "porque": "Guía turístico: dirige las excursiones."}
+      ]
+    },
+    {
+      "id": "profesiones-c7",
+      "pregunta": "¿Preguntas con кто o con что? Elige la caja.",
+      "cajas": ["кто?", "что?"],
+      "cajas_es": ["¿quién?", "¿qué?"],
+      "cajas_uso": ["Se usa para personas (y animales).", "Se usa para cosas e ideas."],
+      "items": [
+        {"ru": "профе́ссия", "es": "profesión", "caja": "что?", "porque": "Es una idea, no una persona: Что э́то? — Э́то профе́ссия."},
+        {"ru": "заня́тие", "es": "ocupación, actividad", "caja": "что?", "porque": "Es una actividad, no una persona: что."},
+        {"ru": "рабо́та", "es": "trabajo", "caja": "что?", "porque": "Es el trabajo, no la persona que trabaja: что."},
+        {"ru": "рабо́тник", "es": "trabajador", "caja": "кто?", "porque": "Es la persona que trabaja: кто."},
+        {"ru": "парикма́хер", "es": "peluquero(a)", "caja": "кто?", "porque": "Es una persona: corta el pelo."},
+        {"ru": "лётчик", "es": "piloto", "caja": "кто?", "porque": "Es una persona: maneja el avión."},
+        {"ru": "шофёр", "es": "chofer", "caja": "кто?", "porque": "Es una persona: maneja el coche."},
+        {"ru": "капита́н", "es": "capitán", "caja": "кто?", "porque": "Es una persona: manda en el barco."},
+        {"ru": "профе́ссор", "es": "profesor (título académico)", "caja": "кто?", "porque": "Es una persona: enseña en la universidad."},
+        {"ru": "исто́рик", "es": "historiador(a)", "caja": "кто?", "porque": "Es una persona: estudia la historia."}
       ]
     }
   ]
