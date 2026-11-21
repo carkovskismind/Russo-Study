@@ -6,11 +6,11 @@
       "id": "falsos-amigos-d1",
       "titulo": "En la cafetería",
       "mensajes": [
-        {"de": "Ле́на", "ru": "Где ты сейча́с?", "fonetica": "gdie ty sie-CHAS", "es": "¿Dónde estás ahora?"},
+        {"de": "Ле́на", "ru": "Где ты?", "fonetica": "gdie ty", "es": "¿Dónde estás?"},
         {"de": "yo", "ru": "Я в кафе́.", "fonetica": "ia f ka-FE", "es": "Estoy en la cafetería.", "opciones": [
           {"ru": "Я в кафе́.", "fonetica": "ia f ka-FE", "correcta": true, "porque": "¡Bien! кафе́ es el lugar y no cambia."},
           {"ru": "Я в ко́фе.", "fonetica": "ia f KO-fie", "correcta": false, "porque": "ко́фе es la bebida (café); el lugar es кафе́."},
-          {"ru": "Я в магази́не.", "fonetica": "ia v ma-ga-ZI-nie", "correcta": false, "porque": "магази́н es tienda; la cafetería es кафе́."}
+          {"ru": "Я кафе́.", "fonetica": "ia ka-FE", "correcta": false, "porque": "Falta в: я в кафе́ = estoy en la cafetería. «Я кафе́» diría «yo soy una cafetería»."}
         ]},
         {"de": "Ле́на", "ru": "Там ко́фе?", "fonetica": "tam KO-fie", "es": "¿Hay café allá?"},
         {"de": "yo", "ru": "Да, там ко́фе.", "fonetica": "da, tam KO-fie", "es": "Sí, allá hay café.", "opciones": [
@@ -23,6 +23,7 @@
     },
     {
       "id": "falsos-amigos-d2",
+      "extra": true,
       "titulo": "Roma y Román",
       "mensajes": [
         {"de": "Ле́на", "ru": "Э́то Ро́ма?", "fonetica": "E-ta RO-ma", "es": "¿Este es Román?"},
@@ -42,6 +43,7 @@
     },
     {
       "id": "falsos-amigos-d3",
+      "extra": true,
       "titulo": "¿Los conoces?",
       "mensajes": [
         {"de": "Све́та", "ru": "Вот Ро́ма и Ми́ша. Э́то твои́ друзья́?", "fonetica": "vot RO-ma i MI-sha. E-ta tva-I druz'-IA", "es": "Ahí están Román y Misha. ¿Son tus amigos?"},
@@ -87,7 +89,7 @@
       "items": [
         {"ru": "ра́но", "caja": "temprano", "porque": "Se parece a «rana», pero significa temprano."},
         {"ru": "ра́на", "caja": "herida", "porque": "Es una herida."},
-        {"ru": "Сейча́с ра́но.", "caja": "temprano", "porque": "Dice la hora: es temprano."},
+        {"ru": "Там ра́но.", "caja": "temprano", "porque": "Dice que allá todavía es temprano."},
         {"ru": "Э́то ра́на.", "caja": "herida", "porque": "Es una herida."},
         {"ru": "Здесь ра́но.", "caja": "temprano", "porque": "Dice que es temprano."},
         {"ru": "Там ра́на.", "caja": "herida", "porque": "Dice que hay una herida."}
@@ -103,13 +105,12 @@
         {"ru": "класс", "caja": "он", "porque": "Es el salón o el grupo (la lección es уро́к). Termina en consonante: он.", "es": "salón de clases"},
         {"ru": "го́лос", "caja": "он", "porque": "No es «goloso», es la voz. Termina en consonante: он.", "es": "voz"},
         {"ru": "вид", "caja": "он", "porque": "No es la vid (planta), es la vista o el aspecto. Termina en consonante: он.", "es": "vista"},
-        {"ru": "карте́ль", "caja": "он", "porque": "Es un acuerdo entre empresas. Termina en -ь, pero es masculino: он.", "es": "cártel"},
+        {"ru": "магази́н", "caja": "он", "porque": "No es una revista: es la tienda. Termina en consonante: он.", "es": "tienda"},
         {"ru": "ко́фе", "caja": "он", "porque": "Es la bebida. Termina en -е, pero es masculino: он.", "es": "café"},
-        {"ru": "коло́ния", "caja": "она́", "porque": "Tu colonia de la ciudad es райо́н. коло́ния termina en -я: она́.", "es": "colonia (territorio)"},
         {"ru": "рука́", "caja": "она́", "porque": "Una sola palabra para mano y brazo. Termina en -а: она́.", "es": "mano / brazo"},
         {"ru": "фами́лия", "caja": "она́", "porque": "Es el apellido, no la familia (семья́). Termina en -я: она́.", "es": "apellido"},
         {"ru": "ра́на", "caja": "она́", "porque": "Es una herida, no una rana. Termina en -а: она́.", "es": "herida"},
-        {"ru": "ка́рта", "caja": "она́", "porque": "Es un mapa o una tarjeta; la carta que se envía es письмо́. Termina en -а: она́.", "es": "mapa / tarjeta"}
+        {"ru": "ка́рта", "caja": "она́", "porque": "Es un mapa o una tarjeta, no una carta. Termina en -а: она́.", "es": "mapa / tarjeta"}
       ]
     }
   ]

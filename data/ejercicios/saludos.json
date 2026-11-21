@@ -33,7 +33,7 @@
         {"de": "Ле́на", "ru": "До за́втра!", "fonetica": "da ZAF-tra", "es": "¡Hasta mañana!"},
         {"de": "yo", "ru": "До за́втра!", "fonetica": "da ZAF-tra", "es": "¡Hasta mañana!", "opciones": [
           {"ru": "До за́втра!", "fonetica": "da ZAF-tra", "correcta": true, "porque": "¡Eso! Se responde igual."},
-          {"ru": "Добро́ пожа́ловать!", "fonetica": "dab-RO pa-ZHA-la-vat'", "correcta": false, "porque": "Es una bienvenida: se dice al recibir a alguien, no al despedirse."},
+          {"ru": "До́брое у́тро!", "fonetica": "DOB-ra-ie U-tra", "correcta": false, "porque": "До́брое у́тро es «buenos días», para saludar en la mañana; aquí se están despidiendo."},
           {"ru": "Приве́т!", "fonetica": "pri-VIET", "correcta": false, "porque": "приве́т es para saludar; ella se está despidiendo."}
         ]},
         {"de": "Ле́на", "ru": "Пока́!", "fonetica": "pa-KA", "es": "¡Adiós!"}
@@ -41,6 +41,7 @@
     },
     {
       "id": "saludos-d3",
+      "extra": true,
       "titulo": "¡Perdón!",
       "mensajes": [
         {"de": "Анто́н", "ru": "Извини́!", "fonetica": "iz-vi-NI", "es": "¡Perdón!"},
@@ -65,7 +66,7 @@
         {"de": "yo", "ru": "До́брый ве́чер! Скажи́те, пожа́луйста, как вас зову́т?", "fonetica": "DOB-ryi VIE-chir! ska-ZHY-tie, pa-ZHA-lus-ta, kak vas za-VUT", "es": "¡Buenas noches! Dígame, por favor, ¿cómo se llama?", "opciones": [
           {"ru": "До́брый ве́чер! Скажи́те, пожа́луйста, как вас зову́т?", "fonetica": "DOB-ryi VIE-chir! ska-ZHY-tie, pa-ZHA-lus-ta, kak vas za-VUT", "correcta": true, "porque": "¡Muy bien! скажи́те y вас: todo de usted."},
           {"ru": "До́брый ве́чер! Скажи́, пожа́луйста, как вас зову́т?", "fonetica": "DOB-ryi VIE-chir! ska-ZHY, pa-ZHA-lus-ta, kak vas za-VUT", "correcta": false, "porque": "скажи́ es de tú y вас es de usted; para usted: скажи́те."},
-          {"ru": "Споко́йной но́чи! Скажи́те, пожа́луйста, как вас зову́т?", "fonetica": "spa-KOI-nai NO-chi! ska-ZHY-tie, pa-ZHA-lus-ta, kak vas za-VUT", "correcta": false, "porque": "Споко́йной но́чи es para despedirse antes de dormir; al llegar: до́брый ве́чер."}
+          {"ru": "До свида́ния! Скажи́те, пожа́луйста, как вас зову́т?", "fonetica": "da svi-DA-ni-ia! ska-ZHY-tie, pa-ZHA-lus-ta, kak vas za-VUT", "correcta": false, "porque": "До свида́ния es para despedirse; al llegar en la noche se dice до́брый ве́чер."}
         ]},
         {"de": "Ната́ша", "ru": "Меня́ зову́т Ната́ша.", "fonetica": "mie-NIA za-VUT na-TA-sha", "es": "Me llamo Natasha."}
       ]
@@ -80,11 +81,11 @@
         {"ru": "Здра́вствуйте!", "caja": "al llegar", "porque": "Es un saludo."},
         {"ru": "Приве́т!", "caja": "al llegar", "porque": "Es un saludo informal."},
         {"ru": "До́брое у́тро!", "caja": "al llegar", "porque": "Se dice por la mañana, al encontrarse."},
-        {"ru": "Добро́ пожа́ловать!", "caja": "al llegar", "porque": "Se le dice a quien acaba de llegar."},
+        {"ru": "До́брый день!", "caja": "al llegar", "porque": "Es «buenas tardes»: un saludo al llegar."},
         {"ru": "До свида́ния!", "caja": "al irse", "porque": "Es una despedida."},
         {"ru": "Пока́!", "caja": "al irse", "porque": "Es una despedida informal."},
         {"ru": "До за́втра!", "caja": "al irse", "porque": "Te despides hasta el día siguiente."},
-        {"ru": "Споко́йной но́чи!", "caja": "al irse", "porque": "Se dice al irse a dormir."}
+        {"ru": "До встре́чи!", "caja": "al irse", "porque": "«Hasta la vista»: se dice al despedirse."}
       ]
     },
     {
@@ -98,12 +99,13 @@
         {"ru": "Как вас зову́т?", "caja": "a usted (вы)", "porque": "вас es de вы."},
         {"ru": "Извини́!", "caja": "a un amigo (ты)", "porque": "Sin -те es la forma de ты."},
         {"ru": "Извини́те!", "caja": "a usted (вы)", "porque": "Con -те es la forma de usted."},
-        {"ru": "Прости́!", "caja": "a un amigo (ты)", "porque": "Sin -те es la forma de ты."},
-        {"ru": "Прости́те!", "caja": "a usted (вы)", "porque": "Con -те es la forma de usted."}
+        {"ru": "Пока́!", "caja": "a un amigo (ты)", "porque": "пока́ es un «adiós» de confianza, para amigos y familia."},
+        {"ru": "Скажи́те, пожа́луйста…", "caja": "a usted (вы)", "porque": "Con -те es la forma de usted."}
       ]
     },
     {
       "id": "saludos-c3",
+      "extra": true,
       "pregunta": "¿Cuándo lo dices? Elige la caja.",
       "cajas": ["al llegar", "al irse", "en una fiesta", "al terminar de exponer"],
       "items": [

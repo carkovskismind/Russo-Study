@@ -34,7 +34,7 @@
     {"ru": "ми́нус", "fonetica": "MI-nus", "es": "menos (−)", "pista": "Signo de resta.", "tag": "Masc. · inanim."},
     {"ru": "умноже́ние", "fonetica": "um-na-ZHE-ni-ie", "es": "multiplicación (×)", "pista": "Operación de veces.", "tag": "Neutro · inanim."},
     {"ru": "деле́ние", "fonetica": "die-LIE-ni-ie", "es": "división (÷)", "pista": "Operación de repartir.", "tag": "Neutro · inanim."},
-    {"ru": "равно́", "fonetica": "rav-NO", "es": "igual a (=)", "pista": "Signo de resultado.", "tag": "Adv."},
+    {"ru": "равно́", "fonetica": "rav-NO", "es": "igual a (=)", "pista": "Signo de resultado.", "tag": "Adv.", "nota": "Al hablar: Два плюс три равно́ пять. En matemáticas formales se usa otra forma: равно́ пяти́ (pi-TI)."},
     {"ru": "род", "fonetica": "rod", "es": "género (gramatical)", "pista": "Masculino, femenino o neutro.", "tag": "Masc. · inanim.", "nota": "мужско́й, же́нский, сре́дний род"},
     {"ru": "число́", "fonetica": "chis-LO", "es": "número (cifra / número gramatical)", "pista": "Singular o plural; también una cifra.", "tag": "Neutro · inanim.", "nota": "мно́жественное число́ = plural"},
     {"ru": "паде́ж", "fonetica": "pa-DIEZH", "es": "caso gramatical", "pista": "Forma de una palabra según su función, como el dativo.", "tag": "Masc. · inanim."},

@@ -4,6 +4,7 @@
   "dialogos": [
     {
       "id": "verbos-d1",
+      "desde": "g-acusativo",
       "titulo": "¿Qué haces?",
       "mensajes": [
         {"de": "Ле́на", "ru": "Что ты де́лаешь?", "fonetica": "shto ty DIE-la-iesh", "es": "¿Qué haces?"},
@@ -23,6 +24,7 @@
     },
     {
       "id": "verbos-d2",
+      "desde": "verbos:v1",
       "titulo": "¿Dónde vives y trabajas?",
       "mensajes": [
         {"de": "Ле́на", "ru": "Где ты живёшь?", "fonetica": "gdie ty zhy-VIOSH", "es": "¿Dónde vives?"},
@@ -44,21 +46,23 @@
   "cajas": [
     {
       "id": "verbos-c1",
+      "desde": "g-presente",
       "pregunta": "¿Con quién va esta forma del verbo?",
       "cajas": ["я", "ты", "он / она́", "мы"],
       "items": [
         {"ru": "рабо́таю", "caja": "я", "porque": "Termina en -ю: es la forma de я."},
-        {"ru": "понима́ю", "caja": "я", "porque": "Termina en -ю: es la forma de я."},
+        {"ru": "зна́ю", "caja": "я", "porque": "Termina en -ю: es la forma de я."},
         {"ru": "рабо́таешь", "caja": "ты", "porque": "Termina en -ешь: es la forma de ты."},
-        {"ru": "понима́ешь", "caja": "ты", "porque": "Termina en -ешь: es la forma de ты."},
+        {"ru": "зна́ешь", "caja": "ты", "porque": "Termina en -ешь: es la forma de ты."},
         {"ru": "рабо́тает", "caja": "он / она́", "porque": "Termina en -ет: es la forma de él o ella."},
-        {"ru": "понима́ет", "caja": "он / она́", "porque": "Termina en -ет: es la forma de él o ella."},
-        {"ru": "игра́ем", "caja": "мы", "porque": "Termina en -ем: es la forma de nosotros."},
+        {"ru": "зна́ет", "caja": "он / она́", "porque": "Termina en -ет: es la forma de él o ella."},
+        {"ru": "зна́ем", "caja": "мы", "porque": "Termina en -ем: es la forma de nosotros."},
         {"ru": "рабо́таем", "caja": "мы", "porque": "Termina en -ем: es la forma de nosotros."}
       ]
     },
     {
       "id": "verbos-c2",
+      "desde": "verbos:v1",
       "pregunta": "стои́т, лежи́т, виси́т o сиди́т: elige el verbo.",
       "cajas": ["стои́т", "лежи́т", "виси́т", "сиди́т"],
       "items": [

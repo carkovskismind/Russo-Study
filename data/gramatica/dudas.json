@@ -3,15 +3,14 @@
     "titulo": "Кто? Что? y э́то (sin verbo «ser»)",
     "puntos": [
       "кто pregunta por personas y animales; что, por cosas.",
-      "э́то = «esto es / es». En presente el ruso no usa el verbo «ser»: Э́то дом.",
-      "не va antes de la palabra que niegas; нет es el «no» de la respuesta.",
-      "где = dónde estás · куда́ = a dónde vas · отку́да = de dónde vienes."
+      "э́то = «esto es / es». En presente el ruso no usa el verbo «ser»: Э́то кот.",
+      "не va antes de la palabra que niegas; нет es el «no» de la respuesta."
     ],
     "ejemplos": [
       {
-        "ru": "Кто э́то? — Э́то мой брат.",
-        "fonetica": "kto E-ta? — E-ta moi brat",
-        "es": "¿Quién es? — Es mi hermano."
+        "ru": "Кто э́то? — Э́то ма́ма.",
+        "fonetica": "kto E-ta? — E-ta MA-ma",
+        "es": "¿Quién es? — Es mamá."
       },
       {
         "ru": "Что э́то? — Э́то ка́рта.",
@@ -330,34 +329,29 @@
   "numeros": {
     "titulo": "Números con palabras",
     "puntos": [
-      "оди́н cambia como «mi»: оди́н дом, одна́ ко́мната, одно́ зда́ние.",
-      "два va con palabras masculinas y neutras; две, con femeninas.",
-      "Después de 2, 3 y 4 la palabra cambia un poco (два этажа́, три ко́мнаты); desde 5, otra vez (пять ко́мнат). Al principio basta con reconocerlas.",
-      "Los ordinales son adjetivos: пе́рвый эта́ж, пе́рвая ко́мната."
+      "оди́н copia el género, como мой: оди́н брат, одна́ сестра́, одно́ и́мя.",
+      "два va con он y оно́; две, con она́: два бра́та, две сестры́.",
+      "Después de 2, 3 y 4 la palabra cambia su final: él / ello + -а (два бра́та); ella: -а → -ы, o -и después de к, г, х (две сестры́, три ко́шки).",
+      "De 5 en adelante cambia otra vez: пять лет, пять челове́к. Lo verás con calma en su parada."
     ],
     "ejemplos": [
       {
-        "ru": "Ско́лько? — Три.",
-        "fonetica": "SKOL'-ka? — tri",
-        "es": "¿Cuántos? — Tres."
+        "ru": "Мой но́мер — во́семь пять три.",
+        "fonetica": "moi NO-mier — VO-siem' piat' tri",
+        "es": "Mi número es ocho, cinco, tres."
       },
       {
-        "ru": "Два плюс три — пять.",
-        "fonetica": "dva plius tri — piat'",
-        "es": "Dos más tres, cinco."
+        "ru": "У меня́ оди́н брат и одна́ сестра́.",
+        "fonetica": "u mie-NIA a-DIN brat i ad-NA sies-TRA",
+        "es": "Tengo un hermano y una hermana."
       },
       {
-        "ru": "В до́ме три ко́мнаты.",
-        "fonetica": "v DO-mie tri KOM-na-ty",
-        "es": "En la casa hay tres cuartos."
-      },
-      {
-        "ru": "Я живу́ на пя́том этаже́.",
-        "fonetica": "ia zhy-VU na PIA-tam e-ta-ZHE",
-        "es": "Vivo en el quinto piso."
+        "ru": "У меня́ два бра́та.",
+        "fonetica": "u mie-NIA dva BRA-ta",
+        "es": "Tengo dos hermanos."
       }
     ],
-    "ojo": "«Dos hermanas» es две сестры́: con palabras femeninas va две, no два."
+    "ojo": "«Dos hermanas» es две сестры́: con palabras de она́ va две, no два."
   },
   "colores": {
     "titulo": "Los colores cambian como adjetivos",

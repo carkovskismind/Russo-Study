@@ -4,6 +4,7 @@
   "dialogos": [
     {
       "id": "animales-d1",
+      "desde": "g-u-menya-est",
       "titulo": "Mi mascota",
       "mensajes": [
         {"de": "Ле́на", "ru": "У тебя́ есть живо́тное?", "fonetica": "u tie-BIA iest' zhy-VOT-na-ie", "es": "¿Tienes algún animal?"},
@@ -32,16 +33,17 @@
           {"ru": "Э́то не соба́ка, э́то кот.", "fonetica": "E-ta nie sa-BA-ka, E-ta kot", "correcta": false, "porque": "кот es un gato macho; aquí es una gata: ко́шка."}
         ]},
         {"de": "Ле́на", "ru": "А э́то волк?", "fonetica": "a E-ta volk", "es": "¿Y esto es un lobo?"},
-        {"de": "yo", "ru": "Нет, э́то не волк, э́то пёс.", "fonetica": "niet, E-ta nie volk, E-ta pios", "es": "No, no es un lobo, es un perro.", "opciones": [
-          {"ru": "Нет, э́то не волк, э́то пёс.", "fonetica": "niet, E-ta nie volk, E-ta pios", "correcta": true, "porque": "¡Exacto! Empiezas con нет y luego dices lo que sí es."},
-          {"ru": "Да, э́то не волк, э́то пёс.", "fonetica": "da, E-ta nie volk, E-ta pios", "correcta": false, "porque": "Si lo niegas, empiezas con нет."},
-          {"ru": "Нет, э́то не волк, э́то лев.", "fonetica": "niet, E-ta nie volk, E-ta liev", "correcta": false, "porque": "лев es león; la respuesta es пёс (perro)."}
+        {"de": "yo", "ru": "Нет, э́то не волк, э́то соба́ка.", "fonetica": "niet, E-ta nie volk, E-ta sa-BA-ka", "es": "No, no es un lobo, es un perro.", "opciones": [
+          {"ru": "Нет, э́то не волк, э́то соба́ка.", "fonetica": "niet, E-ta nie volk, E-ta sa-BA-ka", "correcta": true, "porque": "¡Exacto! Empiezas con нет y luego dices lo que sí es."},
+          {"ru": "Да, э́то не волк, э́то соба́ка.", "fonetica": "da, E-ta nie volk, E-ta sa-BA-ka", "correcta": false, "porque": "Si lo niegas, empiezas con нет."},
+          {"ru": "Нет, э́то не волк, э́то лев.", "fonetica": "niet, E-ta nie volk, E-ta liev", "correcta": false, "porque": "лев es león; la respuesta es соба́ка (perro)."}
         ]},
-        {"de": "Ле́на", "ru": "Коне́чно!", "fonetica": "ka-NIESH-na", "es": "¡Claro!"}
+        {"de": "Ле́на", "ru": "А, соба́ка!", "fonetica": "a, sa-BA-ka", "es": "¡Ah, un perro!"}
       ]
     },
     {
       "id": "animales-d3",
+      "extra": true,
       "titulo": "Flora y fauna",
       "mensajes": [
         {"de": "Ди́ма", "ru": "Что э́то? Живо́тное?", "fonetica": "shto E-ta? zhy-VOT-na-ie", "es": "¿Qué es esto? ¿Un animal?"},
@@ -69,12 +71,13 @@
   "cajas": [
     {
       "id": "animales-c1",
+      "desde": "g-moy-moya",
       "pregunta": "мой o моя́: elige la forma para cada animal.",
       "cajas": ["мой", "моя́"],
       "items": [
         {"ru": "… кот", "caja": "мой", "porque": "кот es masculino: мой кот."},
         {"ru": "… ко́шка", "caja": "моя́", "porque": "ко́шка es femenina: моя́ ко́шка."},
-        {"ru": "… пёс", "caja": "мой", "porque": "пёс es masculino: мой пёс."},
+        {"ru": "… пету́х", "caja": "мой", "porque": "пету́х es masculino: мой пету́х."},
         {"ru": "… соба́ка", "caja": "моя́", "porque": "соба́ка es femenina: моя́ соба́ка."},
         {"ru": "… хомя́к", "caja": "мой", "porque": "хомя́к es masculino: мой хомя́к."},
         {"ru": "… ры́ба", "caja": "моя́", "porque": "ры́ба es femenina: моя́ ры́ба."},
@@ -101,6 +104,7 @@
     },
     {
       "id": "animales-c3",
+      "extra": true,
       "pregunta": "¿Animal adulto o bebé / forma cariñosa? Elige la caja.",
       "cajas": ["adulto", "bebé o cariñoso"],
       "items": [
@@ -122,13 +126,13 @@
       "cajas_es": ["él (masculino)", "ella (femenino)"],
       "cajas_uso": ["Para palabras masculinas: casi siempre terminan en consonante.", "Para palabras femeninas: casi siempre terminan en -а o -я."],
       "items": [
-        {"ru": "хорёк", "caja": "он", "porque": "хорёк termina en consonante: он.", "es": "hurón"},
-        {"ru": "ёжик", "caja": "он", "porque": "ёжик termina en consonante: он.", "es": "erizo"},
-        {"ru": "пито́н", "caja": "он", "porque": "пито́н termina en consonante: он.", "es": "pitón"},
-        {"ru": "пау́к", "caja": "он", "porque": "En español es «la araña», pero пау́к termina en consonante: он.", "es": "araña"},
-        {"ru": "кенгуру́", "caja": "он", "porque": "кенгуру́ termina en -у y nunca cambia, pero es masculino: он.", "es": "canguro"},
-        {"ru": "я́щерица", "caja": "она́", "porque": "я́щерица termina en -а: она́.", "es": "lagartija"},
-        {"ru": "морска́я сви́нка", "caja": "она́", "porque": "сви́нка termina en -а, y морска́я también es femenina: она́.", "es": "cobayo"},
+        {"ru": "волк", "caja": "он", "porque": "волк termina en consonante: он.", "es": "lobo"},
+        {"ru": "попуга́й", "caja": "он", "porque": "попуга́й termina en -й: он.", "es": "perico"},
+        {"ru": "слон", "caja": "он", "porque": "слон termina en consonante: он.", "es": "elefante"},
+        {"ru": "черепа́ха", "caja": "она́", "porque": "черепа́ха termina en -а: она́.", "es": "tortuga"},
+        {"ru": "змея́", "caja": "она́", "porque": "змея́ termina en -я: она́.", "es": "serpiente"},
+        {"ru": "пету́х", "caja": "он", "porque": "пету́х termina en consonante: он.", "es": "gallo"},
+        {"ru": "соба́ка", "caja": "она́", "porque": "соба́ка termina en -а: она́, aunque el perro sea macho.", "es": "perro"},
         {"ru": "ло́шадь", "caja": "она́", "porque": "Las palabras en -ь pueden ser de los dos géneros; ло́шадь es femenina: она́.", "es": "caballo"}
       ]
     }

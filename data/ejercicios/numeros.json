@@ -6,7 +6,7 @@
       "id": "numeros-d1",
       "titulo": "Mi número",
       "mensajes": [
-        {"de": "Ле́на", "ru": "Како́й твой но́мер?", "fonetica": "ka-KOI tvoi NO-mier", "es": "¿Cuál es tu número?"},
+        {"de": "Ле́на", "ru": "А твой но́мер?", "fonetica": "a tvoi NO-mier", "es": "¿Y tu número?"},
         {"de": "yo", "ru": "Мой но́мер во́семь пять три.", "fonetica": "moi NO-mier VO-siem' piat' tri", "es": "Mi número es ocho, cinco, tres.", "opciones": [
           {"ru": "Мой но́мер во́семь пять три.", "fonetica": "moi NO-mier VO-siem' piat' tri", "correcta": true, "porque": "¡Bien! Los dígitos van en el orden en que se dicen."},
           {"ru": "Мой но́мер во́семь три пять.", "fonetica": "moi NO-mier VO-siem' tri piat'", "correcta": false, "porque": "Los dígitos van en el mismo orden: 8-5-3, no 8-3-5."},
@@ -23,6 +23,7 @@
     },
     {
       "id": "numeros-d2",
+      "extra": true,
       "titulo": "¿Cuántos?",
       "mensajes": [
         {"de": "Ле́на", "ru": "Ско́лько вас?", "fonetica": "SKOL'-ka vas", "es": "¿Cuántos son ustedes?"},
@@ -42,6 +43,7 @@
     },
     {
       "id": "numeros-d3",
+      "desde": "numeros:n3",
       "titulo": "Los cuartos del hotel",
       "mensajes": [
         {"de": "Ле́на", "ru": "Твой но́мер — пятьдеся́т?", "fonetica": "tvoi NO-mier — pit'-die-SIAT?", "es": "¿Tu cuarto es el cincuenta?"},
@@ -61,6 +63,7 @@
     },
     {
       "id": "numeros-d4",
+      "extra": true,
       "titulo": "¿Par o impar?",
       "mensajes": [
         {"de": "Ми́ша", "ru": "Мой но́мер — со́рок два. А твой?", "fonetica": "moi NO-mier — SO-rak dva. a tvoi?", "es": "Mi cuarto es el cuarenta y dos. ¿Y el tuyo?"},
@@ -82,6 +85,7 @@
   "cajas": [
     {
       "id": "numeros-c1",
+      "desde": "g-numeros-dos",
       "pregunta": "оди́н o одна́: elige la forma que va con cada palabra.",
       "cajas": ["оди́н", "одна́"],
       "items": [
@@ -97,6 +101,7 @@
     },
     {
       "id": "numeros-c2",
+      "extra": true,
       "pregunta": "¿Par o impar? Elige la caja.",
       "cajas": ["чётный", "нечётный"],
       "items": [
@@ -114,6 +119,7 @@
     },
     {
       "id": "numeros-c3",
+      "desde": "numeros:n2",
       "pregunta": "¿Del 11 al 19 o una decena? Fíjate en el final.",
       "cajas": ["11–19", "decenas"],
       "items": [
@@ -131,6 +137,7 @@
     },
     {
       "id": "numeros-c4",
+      "desde": "numeros:n3",
       "pregunta": "¿Qué tan grande es el número? Elige la caja.",
       "cajas": ["menos de 100", "100–999", "1000 o más"],
       "items": [
@@ -143,11 +150,12 @@
         {"ru": "шестьсо́т", "base": "600", "caja": "100–999", "porque": "шестьсо́т = 600: -сот marca las centenas."},
         {"ru": "семьсо́т", "base": "700", "caja": "100–999", "porque": "семьсо́т = 700: -сот marca las centenas."},
         {"ru": "ты́сяча", "base": "1000", "caja": "1000 o más", "porque": "ты́сяча = 1000."},
-        {"ru": "миллио́н", "base": "1 000 000", "caja": "1000 o más", "porque": "миллио́н = 1 000 000."}
+        {"ru": "две́сти", "base": "200", "caja": "100–999", "porque": "две́сти = 200. Ojo: no es два́дцать (20)."}
       ]
     },
     {
       "id": "numeros-c5",
+      "desde": "g-numerales",
       "pregunta": "Los ordinales cambian como los adjetivos. ¿Van con он, она́, оно́ u они́? Mira la terminación.",
       "cajas": ["он", "она́", "оно́", "они́"],
       "cajas_es": ["él (masculino)", "ella (femenino)", "neutro", "ellos, ellas (plural)"],
@@ -166,6 +174,7 @@
     },
     {
       "id": "numeros-c6",
+      "desde": "numeros:n2",
       "pregunta": "¿Dice cuántos (ско́лько) o en qué lugar va (како́й)?",
       "cajas": ["ско́лько", "како́й"],
       "cajas_es": ["¿cuántos?", "¿cuál? (en qué lugar)"],
@@ -185,20 +194,20 @@
     },
     {
       "id": "numeros-c7",
+      "desde": "g-numeros-dos",
       "pregunta": "El 1 y el 2 cambian con el género. Ojo: algunas frases están escritas mal a propósito. Después de 2 la palabra también cambia (сестры́, бра́та); tú fíjate solo en оди́н / одна́ / одно́ y два / две. ¿Está bien o hay un error?",
       "cajas": ["está bien", "hay un error"],
       "diccionario": [
-        {"forma": "письмо́", "es": "carta"},
-        {"forma": "и́мя", "es": "nombre (de pila)"}, {"forma": "мужчи́на", "es": "hombre"},
+        {"forma": "и́мя", "es": "nombre (de pila)"}, {"forma": "па́па", "es": "papá"},
         {"forma": "сестры́", "dic": "сестра́", "tag": "después de 2, 3, 4", "es": "hermana"},
         {"forma": "бра́та", "dic": "брат", "tag": "después de 2, 3, 4", "es": "hermano"}
       ],
       "items": [
         {"ru": "одна́ ма́ма", "caja": "está bien", "porque": "ма́ма es femenina: одна́ ма́ма. ¡Bien!"},
-        {"ru": "одно́ письмо́", "caja": "está bien", "porque": "письмо́ termina en -о, es neutro: одно́ письмо́."},
+        {"ru": "оди́н брат", "caja": "está bien", "porque": "брат es masculino: оди́н брат."},
         {"ru": "одно́ и́мя", "caja": "está bien", "porque": "и́мя termina en -мя y es neutro: одно́ и́мя."},
         {"ru": "две сестры́", "caja": "está bien", "porque": "сестра́ es femenina: две сестры́."},
-        {"ru": "одна́ мужчи́на", "caja": "hay un error", "porque": "Lo correcto es оди́н мужчи́на: мужчи́на es masculino aunque termine en -а."},
+        {"ru": "одна́ па́па", "caja": "hay un error", "porque": "Lo correcto es оди́н па́па: па́па es masculino aunque termine en -а."},
         {"ru": "одно́ подру́га", "caja": "hay un error", "porque": "Lo correcto es одна́ подру́га: подру́га es femenina."},
         {"ru": "два сестры́", "caja": "hay un error", "porque": "Lo correcto es две сестры́: сестра́ es femenina, así que va две."},
         {"ru": "две бра́та", "caja": "hay un error", "porque": "Lo correcto es два бра́та: брат es masculino, así que va два."}

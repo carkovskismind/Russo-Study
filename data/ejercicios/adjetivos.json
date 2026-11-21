@@ -4,6 +4,7 @@
   "dialogos": [
     {
       "id": "adjetivos-d1",
+      "extra": true,
       "titulo": "Mi familia",
       "mensajes": [
         {"de": "Ле́на", "ru": "Како́й у тебя́ брат?", "fonetica": "ka-KOI u tie-BIA brat", "es": "¿Cómo es tu hermano?"},
@@ -23,6 +24,7 @@
     },
     {
       "id": "adjetivos-d2",
+      "extra": true,
       "titulo": "Mi casa",
       "mensajes": [
         {"de": "Ле́на", "ru": "Твой дом большо́й?", "fonetica": "tvoi dom bal'-SHOI", "es": "¿Tu casa es grande?"},
@@ -44,6 +46,7 @@
   "cajas": [
     {
       "id": "adjetivos-c1",
+      "desde": "adjetivos:a2",
       "pregunta": "¿Masculino, femenino o neutro? Mira la terminación del adjetivo.",
       "cajas": ["masculino", "femenino", "neutro"],
       "items": [

@@ -42,6 +42,7 @@
     },
     {
       "id": "familia-d3",
+      "extra": true,
       "titulo": "En la fiesta",
       "mensajes": [
         {"de": "Ле́на", "ru": "Кто э́то? Хозя́йка?", "fonetica": "kto E-ta? ja-ZIAI-ka", "es": "¿Quién es ella? ¿La anfitriona?"},
@@ -95,12 +96,13 @@
         {"ru": "дочь", "caja": "она́", "porque": "дочь termina en -ь, pero es «hija»: она́.", "es": "hija"},
         {"ru": "дя́дя", "caja": "он", "porque": "дя́дя termina en -я, pero es «tío»: он.", "es": "tío"},
         {"ru": "тётя", "caja": "она́", "porque": "тётя es «tía»: она́.", "es": "tía"},
-        {"ru": "мужчи́на", "caja": "он", "porque": "мужчи́на termina en -а, pero es «hombre»: он.", "es": "hombre"},
-        {"ru": "же́нщина", "caja": "она́", "porque": "же́нщина es «mujer»: она́.", "es": "mujer"}
+        {"ru": "де́душка", "caja": "он", "porque": "де́душка termina en -а, pero es «abuelo»: он.", "es": "abuelo"},
+        {"ru": "семья́", "caja": "она́", "porque": "семья́ termina en -я: она́.", "es": "familia"}
       ]
     },
     {
       "id": "familia-c3",
+      "extra": true,
       "pregunta": "¿En qué parte de la familia va cada pariente?",
       "cajas": ["padres e hijos", "abuelos y nietos", "tíos, primos y sobrinos"],
       "diccionario": [
@@ -122,6 +124,7 @@
     },
     {
       "id": "familia-c4",
+      "extra": true,
       "pregunta": "¿Es parte de la pareja o de la familia política?",
       "cajas": ["la pareja", "familia política"],
       "items": [
@@ -139,6 +142,7 @@
     },
     {
       "id": "familia-c5",
+      "extra": true,
       "pregunta": "¿Es un niño o un joven?",
       "cajas": ["niños", "jóvenes"],
       "items": [
@@ -154,6 +158,7 @@
     },
     {
       "id": "familia-c6",
+      "extra": true,
       "pregunta": "¿Se pregunta кто o что? Persona o cosa.",
       "cajas": ["кто", "что"],
       "cajas_es": ["¿quién?", "¿qué?"],
