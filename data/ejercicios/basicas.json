@@ -6,126 +6,126 @@
       "id": "basicas-d1",
       "titulo": "¿Dónde estás?",
       "mensajes": [
-        {"de": "Лена", "ru": "Ты сейча́с здесь?", "fonetica": "ty sie-CHAS zdies'", "es": "¿Estás aquí ahora?"},
+        {"de": "Ле́на", "ru": "Ты сейча́с здесь?", "fonetica": "ty sie-CHAS zdies'", "es": "¿Estás aquí ahora?"},
         {"de": "yo", "ru": "Да, я здесь.", "fonetica": "da, ia zdies'", "es": "Sí, estoy aquí.", "opciones": [
           {"ru": "Да, я здесь.", "fonetica": "da, ia zdies'", "correcta": true, "porque": "¡Bien! здесь = aquí, donde estás."},
           {"ru": "Да, я куда́.", "fonetica": "da, ia ku-DA", "correcta": false, "porque": "куда́ es «a dónde», una pregunta; para decir dónde estás se usa здесь o там."},
           {"ru": "Нет, я здесь.", "fonetica": "niet, ia zdies'", "correcta": false, "porque": "нет es «no»; tú quieres decir «sí»: да."}
         ]},
-        {"de": "Лена", "ru": "А он где?", "fonetica": "a on gdie", "es": "¿Y él dónde?"},
+        {"de": "Ле́на", "ru": "А он где?", "fonetica": "a on gdie", "es": "¿Y él dónde?"},
         {"de": "yo", "ru": "Он там.", "fonetica": "on tam", "es": "Él está allá.", "opciones": [
           {"ru": "Он там.", "fonetica": "on tam", "correcta": true, "porque": "¡Eso! там = allá."},
           {"ru": "Он куда́.", "fonetica": "on ku-DA", "correcta": false, "porque": "куда́ es una pregunta («a dónde»); para responder se usa там."},
           {"ru": "Он никогда́.", "fonetica": "on ni-ka-GDA", "correcta": false, "porque": "никогда́ es «nunca»; la pregunta es dónde: там."}
         ]},
-        {"de": "Лена", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
+        {"de": "Ле́на", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
       ]
     },
     {
       "id": "basicas-d2",
       "titulo": "¿De quién es?",
       "mensajes": [
-        {"de": "Лена", "ru": "Чья э́то?", "fonetica": "chia E-ta", "es": "¿De quién es esto? (algo femenino)"},
+        {"de": "Ле́на", "ru": "Чья э́то?", "fonetica": "chia E-ta", "es": "¿De quién es esto? (algo femenino)"},
         {"de": "yo", "ru": "Э́то моя́.", "fonetica": "E-ta ma-IA", "es": "Es mía.", "opciones": [
           {"ru": "Э́то моя́.", "fonetica": "E-ta ma-IA", "correcta": true, "porque": "¡Muy bien! чья es femenino y la respuesta también: моя́."},
           {"ru": "Э́то мой.", "fonetica": "E-ta moi", "correcta": false, "porque": "чья es femenino; la respuesta también: моя́, no мой."},
           {"ru": "Э́то твоя́.", "fonetica": "E-ta tva-IA", "correcta": false, "porque": "Hablas de ti: моя́ (mía), no твоя́ (tuya)."}
         ]},
-        {"de": "Лена", "ru": "А э́то чьё?", "fonetica": "a E-ta chio", "es": "¿Y esto de quién es? (algo neutro)"},
+        {"de": "Ле́на", "ru": "А э́то чьё?", "fonetica": "a E-ta chio", "es": "¿Y esto de quién es? (algo neutro)"},
         {"de": "yo", "ru": "Э́то твоё.", "fonetica": "E-ta tva-IO", "es": "Es tuyo.", "opciones": [
           {"ru": "Э́то твоё.", "fonetica": "E-ta tva-IO", "correcta": true, "porque": "¡Exacto! чьё es neutro y la respuesta también: твоё."},
           {"ru": "Э́то твой.", "fonetica": "E-ta tvoi", "correcta": false, "porque": "чьё es neutro; la respuesta también: твоё."},
           {"ru": "Э́то наш.", "fonetica": "E-ta nash", "correcta": false, "porque": "наш es «nuestro» y masculino; aquí es de ella y neutro: твоё."}
         ]},
-        {"de": "Лена", "ru": "Коне́чно!", "fonetica": "ka-NIESH-na", "es": "¡Claro!"}
+        {"de": "Ле́на", "ru": "Коне́чно!", "fonetica": "ka-NIESH-na", "es": "¡Claro!"}
       ]
     },
     {
       "id": "basicas-d3",
       "titulo": "¿Por qué?",
       "mensajes": [
-        {"de": "Лена", "ru": "Ты то́лько сего́дня здесь?", "fonetica": "ty TOL'-ka sie-VOD-nia zdies'", "es": "¿Estás aquí solo hoy?"},
+        {"de": "Ле́на", "ru": "Ты то́лько сего́дня здесь?", "fonetica": "ty TOL'-ka sie-VOD-nia zdies'", "es": "¿Estás aquí solo hoy?"},
         {"de": "yo", "ru": "Нет, я здесь и за́втра.", "fonetica": "niet, ia zdies' i ZAF-tra", "es": "No, estoy aquí también mañana.", "opciones": [
           {"ru": "Нет, я здесь и за́втра.", "fonetica": "niet, ia zdies' i ZAF-tra", "correcta": true, "porque": "¡Bien! нет porque no es «solo hoy»."},
           {"ru": "Да, я здесь и за́втра.", "fonetica": "da, ia zdies' i ZAF-tra", "correcta": false, "porque": "да confirma «solo hoy», pero tú estarás también mañana: нет."},
           {"ru": "Нет, я там и за́втра.", "fonetica": "niet, ia tam i ZAF-tra", "correcta": false, "porque": "там es «allá»; dices que estás aquí: здесь."}
         ]},
-        {"de": "Лена", "ru": "Почему́?", "fonetica": "pa-chi-MU", "es": "¿Por qué?"},
+        {"de": "Ле́на", "ru": "Почему́?", "fonetica": "pa-chi-MU", "es": "¿Por qué?"},
         {"de": "yo", "ru": "Потому́ что здесь о́чень краси́во.", "fonetica": "pa-ta-MU shta zdies' O-chin' kra-SI-va", "es": "Porque aquí es muy bonito.", "opciones": [
           {"ru": "Потому́ что здесь о́чень краси́во.", "fonetica": "pa-ta-MU shta zdies' O-chin' kra-SI-va", "correcta": true, "porque": "¡Perfecto! Para responder «por qué» se usa потому́ что."},
           {"ru": "Заче́м здесь о́чень краси́во.", "fonetica": "za-CHIEM zdies' O-chin' kra-SI-va", "correcta": false, "porque": "заче́м es «para qué»; para responder «porque» se usa потому́ что."},
           {"ru": "Почему́ здесь о́чень краси́во.", "fonetica": "pa-chi-MU zdies' O-chin' kra-SI-va", "correcta": false, "porque": "почему́ es la pregunta «por qué»; para responder: потому́ что."}
         ]},
-        {"de": "Лена", "ru": "Да, коне́чно!", "fonetica": "da, ka-NIESH-na", "es": "¡Sí, claro!"}
+        {"de": "Ле́на", "ru": "Да, коне́чно!", "fonetica": "da, ka-NIESH-na", "es": "¡Sí, claro!"}
       ]
     },
     {
       "id": "basicas-d4",
       "titulo": "¿De dónde es usted?",
       "mensajes": [
-        {"de": "Анна Петровна", "ru": "Здра́вствуйте! Отку́да вы?", "fonetica": "ZDRAS-tvui-tie! at-KU-da vy", "es": "¡Buenos días! ¿De dónde es usted?"},
+        {"de": "А́нна Петро́вна", "ru": "Здра́вствуйте! Отку́да вы?", "fonetica": "ZDRAS-tvui-tie! at-KU-da vy", "es": "¡Buenos días! ¿De dónde es usted?"},
         {"de": "yo", "ru": "Я из Ме́ксики.", "fonetica": "ia iz MIEK-si-ki", "es": "Soy de México.", "opciones": [
           {"ru": "Я из Ме́ксики.", "fonetica": "ia iz MIEK-si-ki", "correcta": true, "porque": "¡Muy bien! отку́да pregunta de dónde eres; se contesta con из: из Ме́ксики."},
           {"ru": "Я в Ме́ксике.", "fonetica": "ia v MIEK-si-kie", "correcta": false, "porque": "в Ме́ксике es «en México» y contesta где. Para отку́да se dice из Ме́ксики."},
           {"ru": "Вы из Ме́ксики.", "fonetica": "vy iz MIEK-si-ki", "correcta": false, "porque": "вы es «usted», la persona con quien hablas; para hablar de ti se usa я."}
         ]},
-        {"de": "Анна Петровна", "ru": "А ва́ши роди́тели? Они́ то́же из Ме́ксики?", "fonetica": "a VA-shy ra-DI-tie-li? a-NI TO-zhe iz MIEK-si-ki", "es": "¿Y sus papás? ¿Ellos también son de México?"},
+        {"de": "А́нна Петро́вна", "ru": "А ва́ши роди́тели? Они́ то́же из Ме́ксики?", "fonetica": "a VA-shy ra-DI-tie-li? a-NI TO-zhe iz MIEK-si-ki", "es": "¿Y sus papás? ¿Ellos también son de México?"},
         {"de": "yo", "ru": "Да, они́ то́же из Ме́ксики.", "fonetica": "da, a-NI TO-zhe iz MIEK-si-ki", "es": "Sí, ellos también son de México.", "opciones": [
           {"ru": "Да, они́ то́же из Ме́ксики.", "fonetica": "da, a-NI TO-zhe iz MIEK-si-ki", "correcta": true, "porque": "¡Eso! роди́тели son varias personas: они́."},
           {"ru": "Да, оно́ то́же из Ме́ксики.", "fonetica": "da, a-NO TO-zhe iz MIEK-si-ki", "correcta": false, "porque": "оно́ es para algo neutro, como письмо́. Tus papás son varias personas: они́."},
           {"ru": "Да, вы то́же из Ме́ксики.", "fonetica": "da, vy TO-zhe iz MIEK-si-ki", "correcta": false, "porque": "вы es «usted» o «ustedes», con quien hablas. De tus papás se dice они́."}
         ]},
-        {"de": "Анна Петровна", "ru": "Вы свобо́дно говори́те по-ру́сски!", "fonetica": "vy sva-BOD-na ga-va-RI-tie pa-RUS-ki", "es": "¡Usted habla ruso con fluidez!"},
-        {"de": "yo", "ru": "Спаси́бо, но ещё не свобо́дно.", "fonetica": "spa-SI-ba, no ie-SHCHO nie sva-BOD-na", "es": "Gracias, pero todavía no con fluidez.", "opciones": [
-          {"ru": "Спаси́бо, но ещё не свобо́дно.", "fonetica": "spa-SI-ba, no ie-SHCHO nie sva-BOD-na", "correcta": true, "porque": "¡Bien dicho! ещё не = todavía no."},
-          {"ru": "Спаси́бо, но ещё нет свобо́дно.", "fonetica": "spa-SI-ba, no ie-SHCHO niet sva-BOD-na", "correcta": false, "porque": "Dentro de la frase, para negar una palabra se usa не: ещё не свобо́дно."},
-          {"ru": "Пожа́луйста, но ещё не свобо́дно.", "fonetica": "pa-ZHA-lus-ta, no ie-SHCHO nie sva-BOD-na", "correcta": false, "porque": "Cuando te dicen algo bonito se contesta спаси́бо (gracias); пожа́луйста es «por favor» o «de nada»."}
+        {"de": "А́нна Петро́вна", "ru": "Вы свобо́дно говори́те по-ру́сски!", "fonetica": "vy sva-BOD-na ga-va-RI-tie pa-RUS-ki", "es": "¡Usted habla ruso con fluidez!"},
+        {"de": "yo", "ru": "Спаси́бо, но ещё не о́чень свобо́дно.", "fonetica": "spa-SI-ba, no ie-SHCHO nie O-chin' sva-BOD-na", "es": "Gracias, pero todavía no con mucha fluidez.", "opciones": [
+          {"ru": "Спаси́бо, но ещё не о́чень свобо́дно.", "fonetica": "spa-SI-ba, no ie-SHCHO nie O-chin' sva-BOD-na", "correcta": true, "porque": "¡Bien dicho! ещё не = todavía no, y о́чень lo suaviza: «todavía no con mucha fluidez»."},
+          {"ru": "Спаси́бо, но ещё нет о́чень свобо́дно.", "fonetica": "spa-SI-ba, no ie-SHCHO niet O-chin' sva-BOD-na", "correcta": false, "porque": "Dentro de la frase, para negar una palabra se usa не: ещё не о́чень свобо́дно."},
+          {"ru": "Пожа́луйста, но ещё не о́чень свобо́дно.", "fonetica": "pa-ZHA-lus-ta, no ie-SHCHO nie O-chin' sva-BOD-na", "correcta": false, "porque": "Cuando te dicen algo bonito se contesta спаси́бо (gracias); пожа́луйста es «por favor» o «de nada»."}
         ]},
-        {"de": "Анна Петровна", "ru": "О́чень хорошо́!", "fonetica": "O-chin' ja-ra-SHO", "es": "¡Muy bien!"}
+        {"de": "А́нна Петро́вна", "ru": "О́чень хорошо́!", "fonetica": "O-chin' ja-ra-SHO", "es": "¡Muy bien!"}
       ]
     },
     {
       "id": "basicas-d5",
       "titulo": "¿Dónde está el gato?",
       "mensajes": [
-        {"de": "Миша", "ru": "Где же наш кот?", "fonetica": "gdie zhe nash kot", "es": "¿Pero dónde está nuestro gato?"},
+        {"de": "Ми́ша", "ru": "Где же наш кот?", "fonetica": "gdie zhe nash kot", "es": "¿Pero dónde está nuestro gato?"},
         {"de": "yo", "ru": "Я ничего́ не зна́ю.", "fonetica": "ia ni-chi-VO nie ZNA-iu", "es": "No sé nada.", "opciones": [
           {"ru": "Я ничего́ не зна́ю.", "fonetica": "ia ni-chi-VO nie ZNA-iu", "correcta": true, "porque": "¡Bien! En ruso se niega dos veces: ничего́ + не."},
           {"ru": "Я ничего́ зна́ю.", "fonetica": "ia ni-chi-VO ZNA-iu", "correcta": false, "porque": "Falta не. En ruso se dice ничего́ не зна́ю, con dos negaciones."},
           {"ru": "Я никто́ не зна́ю.", "fonetica": "ia nik-TO nie ZNA-iu", "correcta": false, "porque": "никто́ es «nadie» (una persona); «nada» es ничего́."}
         ]},
-        {"de": "Миша", "ru": "Никто́ не зна́ет. Его́ нигде́ нет: ни здесь, ни там.", "fonetica": "nik-TO nie ZNA-iet. ie-VO ni-GDIE niet: ni zdies', ni tam", "es": "Nadie sabe. No está en ninguna parte: ni aquí ni allá."},
+        {"de": "Ми́ша", "ru": "Никто́ не зна́ет. Его́ нигде́ нет: ни здесь, ни там.", "fonetica": "nik-TO nie ZNA-iet. ie-VO ni-GDIE niet: ni zdies', ni tam", "es": "Nadie sabe. No está en ninguna parte: ni aquí ni allá."},
         {"de": "yo", "ru": "Вон он, наверху́!", "fonetica": "von on, na-vier-JU", "es": "¡Allá está, arriba!", "opciones": [
           {"ru": "Вон он, наверху́!", "fonetica": "von on, na-vier-JU", "correcta": true, "porque": "¡Muy bien! вон señala algo que está lejos: «allá está»."},
           {"ru": "Вон она́, наверху́!", "fonetica": "von a-NA, na-vier-JU", "correcta": false, "porque": "кот es masculino: он."},
-          {"ru": "Вот он, наверху́!", "fonetica": "vot on, na-vier-JU", "correcta": false, "porque": "вот es para algo cerca de ti («aquí está»). El gato está lejos, arriba: вон."}
+          {"ru": "Вон он, внизу́!", "fonetica": "von on, vni-ZU", "correcta": false, "porque": "Dices внизу́ (abajo), pero el gato está arriba: наверху́."}
         ]},
-        {"de": "Миша", "ru": "Ура́! Спаси́бо!", "fonetica": "u-RA! spa-SI-ba", "es": "¡Hurra! ¡Gracias!"}
+        {"de": "Ми́ша", "ru": "Ура́! Спаси́бо!", "fonetica": "u-RA! spa-SI-ba", "es": "¡Hurra! ¡Gracias!"}
       ]
     },
     {
       "id": "basicas-d6",
       "titulo": "El perro de los vecinos",
       "mensajes": [
-        {"de": "Наташа", "ru": "Вот твои́ сосе́ди. Чья э́то соба́ка? Твоя́?", "fonetica": "vot tva-I sa-SIE-di. chia E-ta sa-BA-ka? tva-IA", "es": "Ahí están tus vecinos. ¿De quién es este perro? ¿Tuyo?"},
+        {"de": "Ната́ша", "ru": "Вот твои́ сосе́ди. Чья э́то соба́ка? Твоя́?", "fonetica": "vot tva-I sa-SIE-di. chia E-ta sa-BA-ka? tva-IA", "es": "Ahí están tus vecinos. ¿De quién es este perro? ¿Tuyo?"},
         {"de": "yo", "ru": "Нет, э́то их соба́ка.", "fonetica": "niet, E-ta ij sa-BA-ka", "es": "No, es su perro (de ellos).", "opciones": [
           {"ru": "Нет, э́то их соба́ка.", "fonetica": "niet, E-ta ij sa-BA-ka", "correcta": true, "porque": "¡Bien! их = su (de ellos), y nunca cambia."},
           {"ru": "Нет, э́то они́ соба́ка.", "fonetica": "niet, E-ta a-NI sa-BA-ka", "correcta": false, "porque": "они́ es «ellos»; para decir «su (de ellos)» se usa их."},
           {"ru": "Да, э́то их соба́ка.", "fonetica": "da, E-ta ij sa-BA-ka", "correcta": false, "porque": "El perro no es tuyo, así que empiezas con нет."}
         ]},
-        {"de": "Наташа", "ru": "Она́ ча́сто здесь?", "fonetica": "a-NA CHAS-ta zdies'", "es": "¿Está aquí a menudo?"},
+        {"de": "Ната́ша", "ru": "Она́ ча́сто здесь?", "fonetica": "a-NA CHAS-ta zdies'", "es": "¿Está aquí a menudo?"},
         {"de": "yo", "ru": "Да, о́чень ча́сто.", "fonetica": "da, O-chin' CHAS-ta", "es": "Sí, muy seguido.", "opciones": [
           {"ru": "Да, о́чень ча́сто.", "fonetica": "da, O-chin' CHAS-ta", "correcta": true, "porque": "¡Eso! ча́сто = a menudo, seguido."},
           {"ru": "Да, о́чень ско́ро.", "fonetica": "da, O-chin' SKO-ra", "correcta": false, "porque": "ско́ро es «pronto», algo que va a pasar. La pregunta es si viene seguido: ча́сто."},
           {"ru": "Да, о́чень ра́ньше.", "fonetica": "da, O-chin' RAN'-she", "correcta": false, "porque": "ра́ньше es «antes». Para decir «muy seguido» se usa о́чень ча́сто."}
         ]},
-        {"de": "Наташа", "ru": "А когда́ они́ до́ма?", "fonetica": "a ka-GDA a-NI DO-ma", "es": "¿Y cuándo están ellos en casa?"},
+        {"de": "Ната́ша", "ru": "А когда́ они́ здесь?", "fonetica": "a ka-GDA a-NI zdies'", "es": "¿Y cuándo están ellos aquí?"},
         {"de": "yo", "ru": "Е́сли соба́ка здесь, то они́ то́же здесь.", "fonetica": "IES-li sa-BA-ka zdies', to a-NI TO-zhe zdies'", "es": "Si el perro está aquí, entonces ellos también están aquí.", "opciones": [
           {"ru": "Е́сли соба́ка здесь, то они́ то́же здесь.", "fonetica": "IES-li sa-BA-ka zdies', to a-NI TO-zhe zdies'", "correcta": true, "porque": "¡Muy bien! е́сли… то… = si… entonces…"},
           {"ru": "Е́сли соба́ка здесь, то она́ то́же здесь.", "fonetica": "IES-li sa-BA-ka zdies', to a-NA TO-zhe zdies'", "correcta": false, "porque": "она́ sería el perro otra vez (соба́ка es femenino). Hablas de los vecinos: они́."},
-          {"ru": "Е́сли соба́ка здесь, то они́ то́же там.", "fonetica": "IES-li sa-BA-ka zdies', to a-NI TO-zhe tam", "correcta": false, "porque": "то́же (también) pide el mismo lugar que el perro: здесь."}
+          {"ru": "Е́сли соба́ка здесь, то они́ то́же там.", "fonetica": "IES-li sa-BA-ka zdies', to a-NI TO-zhe tam", "correcta": false, "porque": "Con там dirías que ellos están allá, en otro lugar. то́же es «también»: si el perro está здесь, ellos también están здесь."}
         ]},
-        {"de": "Наташа", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
+        {"de": "Ната́ша", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
       ]
     }
   ],
@@ -248,9 +248,9 @@
         {"ru": "ваш брат", "caja": "он", "porque": "ваш no lleva terminación: es masculino, como брат. Se dice он.", "es": "su hermano (de usted)"},
         {"ru": "чей кот?", "caja": "он", "porque": "чей es la forma masculina, como кот: он.", "es": "¿de quién es el gato?"},
         {"ru": "ва́ша ма́ма", "caja": "она́", "porque": "ва́ша termina en -а, como ма́ма: она́.", "es": "su mamá (de usted)"},
-        {"ru": "кака́я ко́шка?", "caja": "она́", "porque": "кака́я termina en -ая, como ко́шка: она́.", "es": "¿qué gata?"},
-        {"ru": "ва́ше письмо́", "caja": "оно́", "porque": "ва́ше termina en -е, como письмо́: оно́.", "es": "su carta (de usted)"},
-        {"ru": "како́е сообще́ние?", "caja": "оно́", "porque": "како́е termina en -ое, como сообще́ние: оно́.", "es": "¿qué mensaje?"},
+        {"ru": "кака́я ко́шка?", "caja": "она́", "porque": "кака́я es femenina, igual que ко́шка: она́.", "es": "¿qué gata?"},
+        {"ru": "ва́ше письмо́", "caja": "оно́", "porque": "ва́ше es neutra, igual que письмо́: оно́.", "es": "su carta (de usted)"},
+        {"ru": "како́е сообще́ние?", "caja": "оно́", "porque": "како́е es neutra, igual que сообще́ние: оно́.", "es": "¿qué mensaje?"},
         {"ru": "ва́ши де́ти", "caja": "они́", "porque": "ва́ши termina en -и, son varios: они́.", "es": "sus hijos (de usted)"},
         {"ru": "чьи роди́тели?", "caja": "они́", "porque": "чьи es para varios: они́.", "es": "¿de quién son los papás?"},
         {"ru": "каки́е друзья́?", "caja": "они́", "porque": "каки́е termina en -ие, son varios: они́.", "es": "¿qué amigos?"}

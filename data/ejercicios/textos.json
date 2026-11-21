@@ -6,38 +6,38 @@
       "id": "textos-d1",
       "titulo": "¿Qué es esto?",
       "mensajes": [
-        {"de": "Лена", "ru": "Что э́то? Письмо́?", "fonetica": "shto E-ta? pis'-MO", "es": "¿Qué es esto? ¿Una carta?"},
+        {"de": "Ле́на", "ru": "Что э́то? Письмо́?", "fonetica": "shto E-ta? pis'-MO", "es": "¿Qué es esto? ¿Una carta?"},
         {"de": "yo", "ru": "Нет, э́то не письмо́, э́то откры́тка.", "fonetica": "niet, E-ta nie pis'-MO, E-ta at-KRYT-ka", "es": "No, no es una carta, es una postal.", "opciones": [
           {"ru": "Нет, э́то не письмо́, э́то откры́тка.", "fonetica": "niet, E-ta nie pis'-MO, E-ta at-KRYT-ka", "correcta": true, "porque": "¡Bien! нет y luego lo que sí es."},
           {"ru": "Да, э́то не письмо́, э́то откры́тка.", "fonetica": "da, E-ta nie pis'-MO, E-ta at-KRYT-ka", "correcta": false, "porque": "Si niegas la carta, empiezas con нет."},
           {"ru": "Нет, э́то нет письмо́, э́то откры́тка.", "fonetica": "niet, E-ta niet pis'-MO, E-ta at-KRYT-ka", "correcta": false, "porque": "Para negar una palabra se usa не: не письмо́."}
         ]},
-        {"de": "Лена", "ru": "А э́то? Журна́л?", "fonetica": "a E-ta? zhur-NAL", "es": "¿Y esto? ¿Una revista?"},
+        {"de": "Ле́на", "ru": "А э́то? Журна́л?", "fonetica": "a E-ta? zhur-NAL", "es": "¿Y esto? ¿Una revista?"},
         {"de": "yo", "ru": "Нет, э́то ко́микс.", "fonetica": "niet, E-ta KO-miks", "es": "No, es un cómic.", "opciones": [
           {"ru": "Нет, э́то ко́микс.", "fonetica": "niet, E-ta KO-miks", "correcta": true, "porque": "¡Eso! Dices нет y nombras lo que es."},
           {"ru": "Да, э́то ко́микс.", "fonetica": "da, E-ta KO-miks", "correcta": false, "porque": "Ella pregunta si es una revista; no lo es: нет."},
           {"ru": "Нет, э́то журна́л.", "fonetica": "niet, E-ta zhur-NAL", "correcta": false, "porque": "Dices нет pero nombras lo mismo; es ко́микс."}
         ]},
-        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
+        {"de": "Ле́на", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
       ]
     },
     {
       "id": "textos-d2",
       "titulo": "Mensajes",
       "mensajes": [
-        {"de": "Лена", "ru": "Э́то твоё сообще́ние?", "fonetica": "E-ta tva-IO sa-ap-SHCHE-ni-ie", "es": "¿Es tu mensaje?"},
+        {"de": "Ле́на", "ru": "Э́то твоё сообще́ние?", "fonetica": "E-ta tva-IO sa-ap-SHCHE-ni-ie", "es": "¿Es tu mensaje?"},
         {"de": "yo", "ru": "Да, э́то моё сообще́ние.", "fonetica": "da, E-ta ma-IO sa-ap-SHCHE-ni-ie", "es": "Sí, es mi mensaje.", "opciones": [
           {"ru": "Да, э́то моё сообще́ние.", "fonetica": "da, E-ta ma-IO sa-ap-SHCHE-ni-ie", "correcta": true, "porque": "¡Bien! сообще́ние es neutro: моё."},
           {"ru": "Да, э́то мой сообще́ние.", "fonetica": "da, E-ta moi sa-ap-SHCHE-ni-ie", "correcta": false, "porque": "сообще́ние es neutro: моё."},
           {"ru": "Да, э́то моя́ сообще́ние.", "fonetica": "da, E-ta ma-IA sa-ap-SHCHE-ni-ie", "correcta": false, "porque": "сообще́ние es neutro: моё."}
         ]},
-        {"de": "Лена", "ru": "А чьё э́то письмо́?", "fonetica": "a chio E-ta pis'-MO", "es": "¿Y de quién es esta carta?"},
+        {"de": "Ле́на", "ru": "А чьё э́то письмо́?", "fonetica": "a chio E-ta pis'-MO", "es": "¿Y de quién es esta carta?"},
         {"de": "yo", "ru": "Э́то твоё письмо́.", "fonetica": "E-ta tva-IO pis'-MO", "es": "Es tu carta.", "opciones": [
           {"ru": "Э́то твоё письмо́.", "fonetica": "E-ta tva-IO pis'-MO", "correcta": true, "porque": "¡Exacto! письмо́ es neutro: твоё."},
           {"ru": "Э́то твой письмо́.", "fonetica": "E-ta tvoi pis'-MO", "correcta": false, "porque": "письмо́ es neutro: твоё."},
           {"ru": "Э́то моё письмо́.", "fonetica": "E-ta ma-IO pis'-MO", "correcta": false, "porque": "моё es «mío»; aquí es de ella: твоё."}
         ]},
-        {"de": "Лена", "ru": "Спаси́бо!", "fonetica": "spa-SI-ba", "es": "¡Gracias!"}
+        {"de": "Ле́на", "ru": "Спаси́бо!", "fonetica": "spa-SI-ba", "es": "¡Gracias!"}
       ]
     }
   ],
@@ -77,7 +77,7 @@
     },
     {
       "id": "textos-c3",
-      "pregunta": "¿Uno o varios? Algunas palabras son plural en ruso aunque en español no lo parezcan.",
+      "pregunta": "¿Uno o varios? Ojo: стихи́ es plural aunque en español digamos «poesía».",
       "cajas": ["мой / моя́", "мои́"],
       "cajas_es": ["mi (una cosa)", "mis (varias cosas)"],
       "cajas_uso": ["Para una sola cosa: мой si es masculina, моя́ si es femenina.", "Para varias cosas, sin importar el género."],

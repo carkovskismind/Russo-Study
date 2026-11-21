@@ -6,61 +6,61 @@
       "id": "familia-d1",
       "titulo": "Mi familia",
       "mensajes": [
-        {"de": "Лена", "ru": "Э́то твоя́ семья́?", "fonetica": "E-ta tva-IA siem-IA", "es": "¿Esta es tu familia?"},
+        {"de": "Ле́на", "ru": "Э́то твоя́ семья́?", "fonetica": "E-ta tva-IA siem-IA", "es": "¿Esta es tu familia?"},
         {"de": "yo", "ru": "Да, э́то моя́ семья́.", "fonetica": "da, E-ta ma-IA siem-IA", "es": "Sí, esta es mi familia.", "opciones": [
           {"ru": "Да, э́то моя́ семья́.", "fonetica": "da, E-ta ma-IA siem-IA", "correcta": true, "porque": "¡Bien! семья́ es femenina: моя́."},
           {"ru": "Да, э́то мой семья́.", "fonetica": "da, E-ta moi siem-IA", "correcta": false, "porque": "семья́ es femenina: моя́ семья́."},
           {"ru": "Да, э́то мои́ семья́.", "fonetica": "da, E-ta ma-I siem-IA", "correcta": false, "porque": "мои́ es plural; семья́ es una sola: моя́."}
         ]},
-        {"de": "Лена", "ru": "А э́то кто?", "fonetica": "a E-ta kto", "es": "¿Y quién es este?"},
+        {"de": "Ле́на", "ru": "А э́то кто?", "fonetica": "a E-ta kto", "es": "¿Y quién es este?"},
         {"de": "yo", "ru": "Э́то мой брат.", "fonetica": "E-ta moi brat", "es": "Es mi hermano.", "opciones": [
           {"ru": "Э́то мой брат.", "fonetica": "E-ta moi brat", "correcta": true, "porque": "¡Eso! брат es masculino: мой."},
           {"ru": "Э́то моя́ брат.", "fonetica": "E-ta ma-IA brat", "correcta": false, "porque": "брат es masculino: мой брат."},
           {"ru": "Э́то моё брат.", "fonetica": "E-ta ma-IO brat", "correcta": false, "porque": "моё es neutro; брат es masculino: мой."}
         ]},
-        {"de": "Лена", "ru": "О́чень прия́тно! До свида́ния!", "fonetica": "O-chin' pri-IAT-na! da svi-DA-ni-ia", "es": "¡Mucho gusto! ¡Hasta luego!"}
+        {"de": "Ле́на", "ru": "О́чень прия́тно! До свида́ния!", "fonetica": "O-chin' pri-IAT-na! da svi-DA-ni-ia", "es": "¡Mucho gusto! ¡Hasta luego!"}
       ]
     },
     {
       "id": "familia-d2",
       "titulo": "¿Tienes hermanos?",
       "mensajes": [
-        {"de": "Лена", "ru": "У тебя́ есть брат?", "fonetica": "u tie-BIA iest' brat", "es": "¿Tienes un hermano?"},
+        {"de": "Ле́на", "ru": "У тебя́ есть брат?", "fonetica": "u tie-BIA iest' brat", "es": "¿Tienes un hermano?"},
         {"de": "yo", "ru": "Нет, у меня́ есть сестра́.", "fonetica": "niet, u mie-NIA iest' sies-TRA", "es": "No, tengo una hermana.", "opciones": [
           {"ru": "Нет, у меня́ есть сестра́.", "fonetica": "niet, u mie-NIA iest' sies-TRA", "correcta": true, "porque": "¡Muy bien! «Tengo» = у меня́ есть."},
           {"ru": "Да, у меня́ есть сестра́.", "fonetica": "da, u mie-NIA iest' sies-TRA", "correcta": false, "porque": "A «¿tienes un hermano?» no se contesta «sí» y luego «una hermana»: si no tienes hermano, empieza con нет."},
           {"ru": "Нет, я есть сестра́.", "fonetica": "niet, ia iest' sies-TRA", "correcta": false, "porque": "Para decir «tengo» se usa у меня́ есть, no я есть."}
         ]},
-        {"de": "Лена", "ru": "Как её зову́т?", "fonetica": "kak ie-IO za-VUT", "es": "¿Cómo se llama ella?"},
+        {"de": "Ле́на", "ru": "Как её зову́т?", "fonetica": "kak ie-IO za-VUT", "es": "¿Cómo se llama ella?"},
         {"de": "yo", "ru": "Её зову́т Ма́ша.", "fonetica": "ie-IO za-VUT MA-sha", "es": "Se llama Masha.", "opciones": [
           {"ru": "Её зову́т Ма́ша.", "fonetica": "ie-IO za-VUT MA-sha", "correcta": true, "porque": "¡Bien! Hablas de una chica: её."},
           {"ru": "Его́ зову́т Ма́ша.", "fonetica": "ie-VO za-VUT MA-sha", "correcta": false, "porque": "его́ es «de él / a él»; hablas de una chica: её."},
           {"ru": "Меня́ зову́т Ма́ша.", "fonetica": "mie-NIA za-VUT MA-sha", "correcta": false, "porque": "меня́ es «a mí»; hablas de tu hermana, no de ti: её."}
         ]},
-        {"de": "Лена", "ru": "О́чень прия́тно! До свида́ния!", "fonetica": "O-chin' pri-IAT-na! da svi-DA-ni-ia", "es": "¡Mucho gusto! ¡Hasta luego!"}
+        {"de": "Ле́на", "ru": "О́чень прия́тно! До свида́ния!", "fonetica": "O-chin' pri-IAT-na! da svi-DA-ni-ia", "es": "¡Mucho gusto! ¡Hasta luego!"}
       ]
     },
     {
       "id": "familia-d3",
       "titulo": "En la fiesta",
       "mensajes": [
-        {"de": "Лена", "ru": "Кто э́то? Хозя́йка?", "fonetica": "kto E-ta? ja-ZIAI-ka", "es": "¿Quién es ella? ¿La anfitriona?"},
+        {"de": "Ле́на", "ru": "Кто э́то? Хозя́йка?", "fonetica": "kto E-ta? ja-ZIAI-ka", "es": "¿Quién es ella? ¿La anfitriona?"},
         {"de": "yo", "ru": "Да, она́ хозя́йка. А он хозя́ин.", "fonetica": "da, a-NA ja-ZIAI-ka. a on ja-ZIA-in", "es": "Sí, ella es la anfitriona. Y él es el anfitrión.", "opciones": [
           {"ru": "Да, она́ хозя́йка. А он хозя́ин.", "fonetica": "da, a-NA ja-ZIAI-ka. a on ja-ZIA-in", "correcta": true, "porque": "¡Bien! Para ella, хозя́йка; para él, хозя́ин."},
           {"ru": "Да, она́ хозя́ин. А он хозя́йка.", "fonetica": "da, a-NA ja-ZIA-in. a on ja-ZIAI-ka", "correcta": false, "porque": "Quedaron al revés: ella es хозя́йка (con -ка, femenino) y él es хозя́ин."},
           {"ru": "Нет, она́ хозя́йка. А он хозя́ин.", "fonetica": "niet, a-NA ja-ZIAI-ka. a on ja-ZIA-in", "correcta": false, "porque": "Ле́на acertó, así que la respuesta empieza con да."}
         ]},
-        {"de": "Лена", "ru": "А э́то твоя́ знако́мая?", "fonetica": "a E-ta tva-IA zna-KO-ma-ia", "es": "¿Y ella es tu conocida?"},
+        {"de": "Ле́на", "ru": "А э́то твоя́ знако́мая?", "fonetica": "a E-ta tva-IA zna-KO-ma-ia", "es": "¿Y ella es tu conocida?"},
         {"de": "yo", "ru": "Нет, э́то моя́ ро́дственница.", "fonetica": "niet, E-ta ma-IA ROTST-vien-ni-tsa", "es": "No, es mi pariente.", "opciones": [
           {"ru": "Нет, э́то моя́ ро́дственница.", "fonetica": "niet, E-ta ma-IA ROTST-vien-ni-tsa", "correcta": true, "porque": "¡Eso! ро́дственница es una mujer: моя́."},
           {"ru": "Нет, э́то мой ро́дственница.", "fonetica": "niet, E-ta moi ROTST-vien-ni-tsa", "correcta": false, "porque": "ро́дственница es femenina: моя́ ро́дственница."},
           {"ru": "Нет, э́то моя́ ро́дственник.", "fonetica": "niet, E-ta ma-IA ROTST-vien-nik", "correcta": false, "porque": "ро́дственник es un hombre; para una mujer se dice ро́дственница."}
         ]},
-        {"de": "Лена", "ru": "А она́? Твоя́ сосе́дка?", "fonetica": "a a-NA? tva-IA sa-SIET-ka", "es": "¿Y ella? ¿Tu vecina?"},
+        {"de": "Ле́на", "ru": "А она́? Твоя́ сосе́дка?", "fonetica": "a a-NA? tva-IA sa-SIET-ka", "es": "¿Y ella? ¿Tu vecina?"},
         {"de": "yo", "ru": "Да, моя́ сосе́дка.", "fonetica": "da, ma-IA sa-SIET-ka", "es": "Sí, mi vecina.", "opciones": [
           {"ru": "Да, моя́ сосе́дка.", "fonetica": "da, ma-IA sa-SIET-ka", "correcta": true, "porque": "¡Muy bien! сосе́дка es femenina: моя́."},
           {"ru": "Да, мой сосе́дка.", "fonetica": "da, moi sa-SIET-ka", "correcta": false, "porque": "сосе́дка es femenina: моя́ сосе́дка."},
-          {"ru": "Да, моя́ сосе́д.", "fonetica": "da, ma-IA sa-SIED", "correcta": false, "porque": "сосе́д es un vecino (hombre); para una mujer: сосе́дка."}
+          {"ru": "Да, моя́ сосе́д.", "fonetica": "da, ma-IA sa-SIET", "correcta": false, "porque": "сосе́д es un vecino (hombre); para una mujer: сосе́дка."}
         ]}
       ]
     }
@@ -133,8 +133,8 @@
         {"ru": "тёща", "caja": "familia política", "porque": "тёща es la mamá de la esposa."},
         {"ru": "свёкор", "caja": "familia política", "porque": "свёкор es el papá del esposo."},
         {"ru": "свекро́вь", "caja": "familia política", "porque": "свекро́вь es la mamá del esposo."},
-        {"ru": "зять", "caja": "familia política", "porque": "зять es «yerno», el esposo de tu hija."},
-        {"ru": "неве́стка", "caja": "familia política", "porque": "неве́стка es «nuera», la esposa de tu hijo. Ojo: неве́ста es la novia."}
+        {"ru": "зять", "caja": "familia política", "porque": "зять es el esposo de tu hija (yerno) o de tu hermana (cuñado)."},
+        {"ru": "неве́стка", "caja": "familia política", "porque": "неве́стка es la esposa de tu hijo (nuera) o de tu hermano (cuñada). Ojo: неве́ста es la novia."}
       ]
     },
     {

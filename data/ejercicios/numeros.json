@@ -6,76 +6,76 @@
       "id": "numeros-d1",
       "titulo": "Mi número",
       "mensajes": [
-        {"de": "Лена", "ru": "Како́й твой но́мер?", "fonetica": "ka-KOI tvoi NO-mier", "es": "¿Cuál es tu número?"},
+        {"de": "Ле́на", "ru": "Како́й твой но́мер?", "fonetica": "ka-KOI tvoi NO-mier", "es": "¿Cuál es tu número?"},
         {"de": "yo", "ru": "Мой но́мер во́семь пять три.", "fonetica": "moi NO-mier VO-siem' piat' tri", "es": "Mi número es ocho, cinco, tres.", "opciones": [
           {"ru": "Мой но́мер во́семь пять три.", "fonetica": "moi NO-mier VO-siem' piat' tri", "correcta": true, "porque": "¡Bien! Los dígitos van en el orden en que se dicen."},
           {"ru": "Мой но́мер во́семь три пять.", "fonetica": "moi NO-mier VO-siem' tri piat'", "correcta": false, "porque": "Los dígitos van en el mismo orden: 8-5-3, no 8-3-5."},
           {"ru": "Моя́ но́мер во́семь пять три.", "fonetica": "ma-IA NO-mier VO-siem' piat' tri", "correcta": false, "porque": "но́мер es masculino: мой но́мер."}
         ]},
-        {"de": "Лена", "ru": "Во́семь пять три? Да?", "fonetica": "VO-siem' piat' tri? da", "es": "¿Ocho, cinco, tres? ¿Sí?"},
+        {"de": "Ле́на", "ru": "Во́семь пять три? Да?", "fonetica": "VO-siem' piat' tri? da", "es": "¿Ocho, cinco, tres? ¿Sí?"},
         {"de": "yo", "ru": "Да, во́семь пять три.", "fonetica": "da, VO-siem' piat' tri", "es": "Sí, ocho, cinco, tres.", "opciones": [
           {"ru": "Да, во́семь пять три.", "fonetica": "da, VO-siem' piat' tri", "correcta": true, "porque": "¡Eso! Confirmas con да."},
           {"ru": "Нет, во́семь пять три.", "fonetica": "niet, VO-siem' piat' tri", "correcta": false, "porque": "Repites el mismo número, así que confirmas: да."},
           {"ru": "Да, шесть пять три.", "fonetica": "da, shest' piat' tri", "correcta": false, "porque": "Repites los mismos números: во́семь, no шесть."}
         ]},
-        {"de": "Лена", "ru": "Спаси́бо!", "fonetica": "spa-SI-ba", "es": "¡Gracias!"}
+        {"de": "Ле́на", "ru": "Спаси́бо!", "fonetica": "spa-SI-ba", "es": "¡Gracias!"}
       ]
     },
     {
       "id": "numeros-d2",
       "titulo": "¿Cuántos?",
       "mensajes": [
-        {"de": "Лена", "ru": "Ско́лько вас?", "fonetica": "SKOL'-ka vas", "es": "¿Cuántos son ustedes?"},
+        {"de": "Ле́на", "ru": "Ско́лько вас?", "fonetica": "SKOL'-ka vas", "es": "¿Cuántos son ustedes?"},
         {"de": "yo", "ru": "Нас че́тверо.", "fonetica": "nas CHIET-vie-ra", "es": "Somos cuatro.", "opciones": [
           {"ru": "Нас че́тверо.", "fonetica": "nas CHIET-vie-ra", "correcta": true, "porque": "¡Bien! Para decir cuántos son se usa нас."},
           {"ru": "Мы четы́ре.", "fonetica": "my chi-TY-rie", "correcta": false, "porque": "Para decir cuántos son se usa нас: нас четы́ре."},
           {"ru": "Нас два.", "fonetica": "nas dva", "correcta": false, "porque": "два es 2; son 4: четы́ре."}
         ]},
-        {"de": "Лена", "ru": "А ско́лько там?", "fonetica": "a SKOL'-ka tam", "es": "¿Y cuántos hay allá?"},
+        {"de": "Ле́на", "ru": "А ско́лько там?", "fonetica": "a SKOL'-ka tam", "es": "¿Y cuántos hay allá?"},
         {"de": "yo", "ru": "Там две́сти.", "fonetica": "tam DVIES-ti", "es": "Allá hay doscientos.", "opciones": [
           {"ru": "Там две́сти.", "fonetica": "tam DVIES-ti", "correcta": true, "porque": "¡Exacto! 200 = две́сти."},
           {"ru": "Там два́дцать.", "fonetica": "tam DVA-tsat'", "correcta": false, "porque": "два́дцать es 20; doscientos es две́сти."},
           {"ru": "Там три́ста.", "fonetica": "tam TRI-sta", "correcta": false, "porque": "три́ста es 300; son 200: две́сти."}
         ]},
-        {"de": "Лена", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
+        {"de": "Ле́на", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
       ]
     },
     {
       "id": "numeros-d3",
       "titulo": "Los cuartos del hotel",
       "mensajes": [
-        {"de": "Лена", "ru": "Твой но́мер — пятьдеся́т?", "fonetica": "tvoi NO-mier — pit'-die-SIAT?", "es": "¿Tu cuarto es el cincuenta?"},
+        {"de": "Ле́на", "ru": "Твой но́мер — пятьдеся́т?", "fonetica": "tvoi NO-mier — pit'-die-SIAT?", "es": "¿Tu cuarto es el cincuenta?"},
         {"de": "yo", "ru": "Нет, пятьсо́т.", "fonetica": "niet, pit'-SOT", "es": "No, el quinientos.", "opciones": [
           {"ru": "Нет, пятьсо́т.", "fonetica": "niet, pit'-SOT", "correcta": true, "porque": "¡Bien! Las centenas del 500 al 900 terminan en -сот: пятьсо́т."},
           {"ru": "Нет, пятьдеся́т.", "fonetica": "niet, pit'-die-SIAT", "correcta": false, "porque": "пятьдеся́т es 50, lo que preguntó Ле́на. Tu cuarto es el 500: пятьсо́т."},
           {"ru": "Нет, пятна́дцать.", "fonetica": "niet, pit-NA-tsat'", "correcta": false, "porque": "пятна́дцать es 15. Para 500 se dice пятьсо́т."}
         ]},
-        {"de": "Лена", "ru": "А мой — восемьсо́т?", "fonetica": "a moi — va-siem'-SOT?", "es": "¿Y el mío es el ochocientos?"},
+        {"de": "Ле́на", "ru": "А мой — восемьсо́т?", "fonetica": "a moi — va-siem'-SOT?", "es": "¿Y el mío es el ochocientos?"},
         {"de": "yo", "ru": "Нет, твой — девятьсо́т.", "fonetica": "niet, tvoi — die-vit'-SOT", "es": "No, el tuyo es el novecientos.", "opciones": [
           {"ru": "Нет, твой — девятьсо́т.", "fonetica": "niet, tvoi — die-vit'-SOT", "correcta": true, "porque": "¡Eso! 900 = девятьсо́т: también termina en -сот."},
           {"ru": "Нет, твой — девяно́сто.", "fonetica": "niet, tvoi — die-vi-NOS-ta", "correcta": false, "porque": "девяно́сто es 90. Para 900 se dice девятьсо́т."},
           {"ru": "Нет, твой — девятна́дцать.", "fonetica": "niet, tvoi — die-vit-NA-tsat'", "correcta": false, "porque": "девятна́дцать es 19. Para 900 se dice девятьсо́т."}
         ]},
-        {"de": "Лена", "ru": "Спаси́бо!", "fonetica": "spa-SI-ba", "es": "¡Gracias!"}
+        {"de": "Ле́на", "ru": "Спаси́бо!", "fonetica": "spa-SI-ba", "es": "¡Gracias!"}
       ]
     },
     {
       "id": "numeros-d4",
       "titulo": "¿Par o impar?",
       "mensajes": [
-        {"de": "Миша", "ru": "Мой но́мер — со́рок два. А твой?", "fonetica": "moi NO-mier — SO-rak dva. a tvoi?", "es": "Mi cuarto es el cuarenta y dos. ¿Y el tuyo?"},
+        {"de": "Ми́ша", "ru": "Мой но́мер — со́рок два. А твой?", "fonetica": "moi NO-mier — SO-rak dva. a tvoi?", "es": "Mi cuarto es el cuarenta y dos. ¿Y el tuyo?"},
         {"de": "yo", "ru": "Мой — со́рок пять.", "fonetica": "moi — SO-rak piat'", "es": "El mío es el cuarenta y cinco.", "opciones": [
           {"ru": "Мой — со́рок пять.", "fonetica": "moi — SO-rak piat'", "correcta": true, "porque": "¡Bien! Hablas de tu но́мер, que es masculino: мой."},
           {"ru": "Моя́ — со́рок пять.", "fonetica": "ma-IA — SO-rak piat'", "correcta": false, "porque": "но́мер es masculino: мой."},
           {"ru": "Мой — со́рок два.", "fonetica": "moi — SO-rak dva", "correcta": false, "porque": "со́рок два es el cuarto de Ми́ша; el tuyo es el 45: со́рок пять."}
         ]},
-        {"de": "Миша", "ru": "Со́рок два — чётный но́мер. А со́рок пять?", "fonetica": "SO-rak dva — CHIOT-nyi NO-mier. a SO-rak piat'?", "es": "Cuarenta y dos es un número par. ¿Y cuarenta y cinco?"},
+        {"de": "Ми́ша", "ru": "Со́рок два — чётный но́мер. А со́рок пять?", "fonetica": "SO-rak dva — CHIOT-nyi NO-mier. a SO-rak piat'?", "es": "Cuarenta y dos es un número par. ¿Y cuarenta y cinco?"},
         {"de": "yo", "ru": "Нечётный.", "fonetica": "nie-CHIOT-nyi", "es": "Impar.", "opciones": [
           {"ru": "Нечётный.", "fonetica": "nie-CHIOT-nyi", "correcta": true, "porque": "¡Eso! 45 termina en 5, así que es impar: нечётный."},
           {"ru": "Чётный.", "fonetica": "CHIOT-nyi", "correcta": false, "porque": "чётный es «par»; 45 es impar: нечётный."},
           {"ru": "Пя́тый.", "fonetica": "PIA-tyi", "correcta": false, "porque": "пя́тый es «quinto». Aquí la pregunta es si es par o impar: нечётный."}
         ]},
-        {"de": "Миша", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
+        {"de": "Ми́ша", "ru": "Хорошо́!", "fonetica": "ja-ra-SHO", "es": "¡Bien!"}
       ]
     }
   ],
@@ -185,11 +185,11 @@
     },
     {
       "id": "numeros-c7",
-      "pregunta": "El 1 y el 2 cambian con el género. ¿Está bien o hay un error?",
+      "pregunta": "El 1 y el 2 cambian con el género. Ojo: algunas frases están escritas mal a propósito. Después de 2 la palabra también cambia (сестры́, бра́та); tú fíjate solo en оди́н / одна́ / одно́ y два / две. ¿Está bien o hay un error?",
       "cajas": ["está bien", "hay un error"],
       "diccionario": [
         {"forma": "письмо́", "es": "carta"},
-        {"forma": "и́мя", "es": "nombre (de pila)"},
+        {"forma": "и́мя", "es": "nombre (de pila)"}, {"forma": "мужчи́на", "es": "hombre"},
         {"forma": "сестры́", "dic": "сестра́", "tag": "después de 2, 3, 4", "es": "hermana"},
         {"forma": "бра́та", "dic": "брат", "tag": "después de 2, 3, 4", "es": "hermano"}
       ],
@@ -198,10 +198,10 @@
         {"ru": "одно́ письмо́", "caja": "está bien", "porque": "письмо́ termina en -о, es neutro: одно́ письмо́."},
         {"ru": "одно́ и́мя", "caja": "está bien", "porque": "и́мя termina en -мя y es neutro: одно́ и́мя."},
         {"ru": "две сестры́", "caja": "está bien", "porque": "сестра́ es femenina: две сестры́."},
-        {"ru": "одна́ па́па", "caja": "hay un error", "porque": "па́па es masculino aunque termine en -а: оди́н па́па."},
-        {"ru": "одно́ подру́га", "caja": "hay un error", "porque": "подру́га es femenina: одна́ подру́га."},
-        {"ru": "два сестры́", "caja": "hay un error", "porque": "сестра́ es femenina, así que va две: две сестры́."},
-        {"ru": "две бра́та", "caja": "hay un error", "porque": "брат es masculino, así que va два: два бра́та."}
+        {"ru": "одна́ мужчи́на", "caja": "hay un error", "porque": "Lo correcto es оди́н мужчи́на: мужчи́на es masculino aunque termine en -а."},
+        {"ru": "одно́ подру́га", "caja": "hay un error", "porque": "Lo correcto es одна́ подру́га: подру́га es femenina."},
+        {"ru": "два сестры́", "caja": "hay un error", "porque": "Lo correcto es две сестры́: сестра́ es femenina, así que va две."},
+        {"ru": "две бра́та", "caja": "hay un error", "porque": "Lo correcto es два бра́та: брат es masculino, así que va два."}
       ]
     }
   ]

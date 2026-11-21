@@ -6,38 +6,38 @@
       "id": "profesiones-d1",
       "titulo": "¿Quién es?",
       "mensajes": [
-        {"de": "Лена", "ru": "Кто он? Он врач?", "fonetica": "kto on? on vrach", "es": "¿Quién es él? ¿Es médico?"},
+        {"de": "Ле́на", "ru": "Кто он? Он врач?", "fonetica": "kto on? on vrach", "es": "¿Quién es él? ¿Es médico?"},
         {"de": "yo", "ru": "Нет, он не врач, он учи́тель.", "fonetica": "niet, on nie vrach, on u-CHI-tiel'", "es": "No, no es médico, es maestro.", "opciones": [
           {"ru": "Нет, он не врач, он учи́тель.", "fonetica": "niet, on nie vrach, on u-CHI-tiel'", "correcta": true, "porque": "¡Bien! не niega врач y luego dices lo que sí es."},
           {"ru": "Да, он не врач, он учи́тель.", "fonetica": "da, on nie vrach, on u-CHI-tiel'", "correcta": false, "porque": "Si dices que no es médico, empiezas con нет."},
           {"ru": "Нет, он не врач, он студе́нтка.", "fonetica": "niet, on nie vrach, on stu-DIENT-ka", "correcta": false, "porque": "студе́нтка es la forma de mujer y aquí hablas de él; además él es maestro: учи́тель."}
         ]},
-        {"de": "Лена", "ru": "А она́?", "fonetica": "a a-NA", "es": "¿Y ella?"},
+        {"de": "Ле́на", "ru": "А она́?", "fonetica": "a a-NA", "es": "¿Y ella?"},
         {"de": "yo", "ru": "Она́ медсестра́.", "fonetica": "a-NA miet-sies-TRA", "es": "Ella es enfermera.", "opciones": [
           {"ru": "Она́ медсестра́.", "fonetica": "a-NA miet-sies-TRA", "correcta": true, "porque": "¡Eso! Para ella: медсестра́."},
           {"ru": "Она́ медбра́т.", "fonetica": "a-NA mied-BRAT", "correcta": false, "porque": "медбра́т es enfermero (hombre); ella es медсестра́."},
           {"ru": "Он медсестра́.", "fonetica": "on mied-sies-TRA", "correcta": false, "porque": "Hablas de ella: она́."}
         ]},
-        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
+        {"de": "Ле́на", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
       ]
     },
     {
       "id": "profesiones-d2",
       "titulo": "¿Y tú, qué eres?",
       "mensajes": [
-        {"de": "Лена", "ru": "А кто ты?", "fonetica": "a kto ty", "es": "¿Y tú, qué eres?"},
+        {"de": "Ле́на", "ru": "А кто ты?", "fonetica": "a kto ty", "es": "¿Y tú, qué eres?"},
         {"de": "yo", "ru": "Я студе́нтка.", "fonetica": "ia stu-DIENT-ka", "es": "Soy estudiante.", "opciones": [
           {"ru": "Я студе́нтка.", "fonetica": "ia stu-DIENT-ka", "correcta": true, "porque": "¡Bien! Una mujer es студе́нтка."},
           {"ru": "Я студе́нт.", "fonetica": "ia stu-DIENT", "correcta": false, "porque": "студе́нт es hombre; tú eres mujer: студе́нтка."},
           {"ru": "Моя́ студе́нтка.", "fonetica": "ma-IA stu-DIENT-ka", "correcta": false, "porque": "Hablas de ti: я студе́нтка."}
         ]},
-        {"de": "Лена", "ru": "А твой брат кто?", "fonetica": "a tvoi brat kto", "es": "¿Y tu hermano qué es?"},
+        {"de": "Ле́на", "ru": "А твой брат кто?", "fonetica": "a tvoi brat kto", "es": "¿Y tu hermano qué es?"},
         {"de": "yo", "ru": "Он программи́ст.", "fonetica": "on pra-gra-MIST", "es": "Es programador.", "opciones": [
           {"ru": "Он программи́ст.", "fonetica": "on pra-gra-MIST", "correcta": true, "porque": "¡Exacto! Hablas de él: он."},
           {"ru": "Она́ программи́ст.", "fonetica": "a-NA pra-gra-MIST", "correcta": false, "porque": "Hablas de tu hermano: он."},
           {"ru": "Он программи́стка.", "fonetica": "on pra-gra-MIST-ka", "correcta": false, "porque": "Para un hombre la palabra queda como программи́ст; -ка es para mujer."}
         ]},
-        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
+        {"de": "Ле́на", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
       ]
     },
     {
@@ -51,9 +51,9 @@
           {"ru": "Она́ преподава́тель.", "fonetica": "a-NA prie-pa-da-VA-tiel'", "correcta": false, "porque": "Hablas de tu papá: он."}
         ]},
         {"de": "Ната́ша", "ru": "А твоя́ ма́ма?", "fonetica": "a tva-IA MA-ma", "es": "¿Y tu mamá?"},
-        {"de": "yo", "ru": "Она́ промы́шленный диза́йнер.", "fonetica": "a-NA pra-MYSH-lien-nyi di-ZAI-ner", "es": "Es diseñadora industrial.", "opciones": [
-          {"ru": "Она́ промы́шленный диза́йнер.", "fonetica": "a-NA pra-MYSH-lien-nyi di-ZAI-ner", "correcta": true, "porque": "¡Eso! диза́йнер sirve para hombre y mujer, y промы́шленный (industrial) va con диза́йнер."},
-          {"ru": "Он промы́шленный диза́йнер.", "fonetica": "on pra-MYSH-lien-nyi di-ZAI-ner", "correcta": false, "porque": "Hablas de tu mamá: она́."},
+        {"de": "yo", "ru": "Она́ промы́шленный диза́йнер.", "fonetica": "a-NA pra-MYSH-lien-nyi di-ZAI-nier", "es": "Es diseñadora industrial.", "opciones": [
+          {"ru": "Она́ промы́шленный диза́йнер.", "fonetica": "a-NA pra-MYSH-lien-nyi di-ZAI-nier", "correcta": true, "porque": "¡Eso! диза́йнер sirve para hombre y mujer, y промы́шленный (industrial) va con диза́йнер."},
+          {"ru": "Он промы́шленный диза́йнер.", "fonetica": "on pra-MYSH-lien-nyi di-ZAI-nier", "correcta": false, "porque": "Hablas de tu mamá: она́."},
           {"ru": "Она́ пацие́нтка.", "fonetica": "a-NA pa-tsy-IENT-ka", "correcta": false, "porque": "пацие́нтка es «paciente»: no es una profesión."}
         ]},
         {"de": "Ната́ша", "ru": "А твой де́душка?", "fonetica": "a tvoi DIE-dush-ka", "es": "¿Y tu abuelito?"},
@@ -68,16 +68,16 @@
       "id": "profesiones-d4",
       "titulo": "En el avión",
       "mensajes": [
-        {"de": "Ма́ша", "ru": "Кто э́то? Стю́ард?", "fonetica": "kto E-ta? STIU-ard", "es": "¿Quién es? ¿Un sobrecargo?"},
-        {"de": "yo", "ru": "Нет, он не стю́ард, он пассажи́р.", "fonetica": "niet, on nie STIU-ard, on pa-sa-ZHYR", "es": "No, no es sobrecargo, es pasajero.", "opciones": [
-          {"ru": "Нет, он не стю́ард, он пассажи́р.", "fonetica": "niet, on nie STIU-ard, on pa-sa-ZHYR", "correcta": true, "porque": "¡Bien! нет contesta, не niega стю́ард y luego dices lo que sí es."},
-          {"ru": "Нет, он не стю́ард, он пассажи́рка.", "fonetica": "niet, on nie STIU-ard, on pa-sa-ZHYR-ka", "correcta": false, "porque": "пассажи́рка es la forma de mujer; hablas de él: пассажи́р."},
-          {"ru": "Нет, он нет стю́ард, он пассажи́р.", "fonetica": "niet, on niet STIU-ard, on pa-sa-ZHYR", "correcta": false, "porque": "Para negar una palabra dentro de la frase se usa не: не стю́ард."}
+        {"de": "Ма́ша", "ru": "Кто э́то? Стю́ард?", "fonetica": "kto E-ta? STIU-art", "es": "¿Quién es? ¿Un sobrecargo?"},
+        {"de": "yo", "ru": "Нет, он не стю́ард, он пассажи́р.", "fonetica": "niet, on nie STIU-art, on pa-sa-ZHYR", "es": "No, no es sobrecargo, es pasajero.", "opciones": [
+          {"ru": "Нет, он не стю́ард, он пассажи́р.", "fonetica": "niet, on nie STIU-art, on pa-sa-ZHYR", "correcta": true, "porque": "¡Bien! нет contesta, не niega стю́ард y luego dices lo que sí es."},
+          {"ru": "Нет, он не стю́ард, он пассажи́рка.", "fonetica": "niet, on nie STIU-art, on pa-sa-ZHYR-ka", "correcta": false, "porque": "пассажи́рка es la forma de mujer; hablas de él: пассажи́р."},
+          {"ru": "Нет, он нет стю́ард, он пассажи́р.", "fonetica": "niet, on niet STIU-art, on pa-sa-ZHYR", "correcta": false, "porque": "Para negar una palabra dentro de la frase se usa не: не стю́ард."}
         ]},
         {"de": "Ма́ша", "ru": "А она́? Стюарде́сса?", "fonetica": "a a-NA? stiu-ar-DE-sa", "es": "¿Y ella? ¿Es azafata?"},
         {"de": "yo", "ru": "Да, она́ стюарде́сса.", "fonetica": "da, a-NA stiu-ar-DE-sa", "es": "Sí, es azafata.", "opciones": [
           {"ru": "Да, она́ стюарде́сса.", "fonetica": "da, a-NA stiu-ar-DE-sa", "correcta": true, "porque": "¡Eso! Para ella: стюарде́сса."},
-          {"ru": "Да, она́ стю́ард.", "fonetica": "da, a-NA STIU-ard", "correcta": false, "porque": "стю́ард es la forma de hombre; para ella: стюарде́сса."},
+          {"ru": "Да, она́ стю́ард.", "fonetica": "da, a-NA STIU-art", "correcta": false, "porque": "стю́ард es la forma de hombre; para ella: стюарде́сса."},
           {"ru": "Да, он стюарде́сса.", "fonetica": "da, on stiu-ar-DE-sa", "correcta": false, "porque": "Hablas de ella: она́."}
         ]}
       ]
@@ -129,11 +129,11 @@
         {"ru": "архите́ктор", "caja": "él y ella", "porque": "No cambia para mujer: она́ архите́ктор."},
         {"ru": "адвока́т", "caja": "él y ella", "porque": "Sirve para los dos: она́ адвока́т."},
         {"ru": "бухга́лтер", "caja": "él y ella", "porque": "Sirve para los dos: она́ бухга́лтер."},
-        {"ru": "пацие́нт", "caja": "solo él", "porque": "Es el paciente hombre; para mujer: пацие́нтка."},
+        {"ru": "пацие́нт", "caja": "él y ella", "porque": "La forma masculina sirve para los dos: она́ пацие́нт. Para ella también existe пацие́нтка."},
         {"ru": "пацие́нтка", "caja": "solo ella", "porque": "-ка indica mujer."},
-        {"ru": "домохозя́ин", "caja": "solo él", "porque": "Es el amo de casa; para mujer: домохозя́йка."},
+        {"ru": "домохозя́ин", "caja": "solo él", "porque": "Es el amo de casa: solo se dice de un hombre. Para una mujer siempre es домохозя́йка."},
         {"ru": "домохозя́йка", "caja": "solo ella", "porque": "Es el ama de casa: termina en -ка."},
-        {"ru": "аспира́нт", "caja": "solo él", "porque": "Es el estudiante de posgrado hombre; para mujer: аспира́нтка."},
+        {"ru": "аспира́нт", "caja": "él y ella", "porque": "La forma masculina sirve para los dos: она́ аспира́нт. Para ella también existe аспира́нтка."},
         {"ru": "аспира́нтка", "caja": "solo ella", "porque": "-ка indica mujer."}
       ]
     },
@@ -168,7 +168,7 @@
         {"ru": "худо́жница", "base": "худо́жник", "caja": "-ница", "porque": "худо́жник: -ник cambia a -ница."},
         {"ru": "шко́льница", "base": "шко́льник", "caja": "-ница", "porque": "шко́льник: -ник cambia a -ница."},
         {"ru": "поэте́сса", "base": "поэ́т", "caja": "-есса", "porque": "поэ́т + есса. Muchas mujeres prefieren decirse поэ́т."},
-        {"ru": "стюарде́сса", "base": "стю́ард", "caja": "-есса", "porque": "стю́ард + есса; el acento pasa al final: stiu-ar-DE-sa."}
+        {"ru": "стюарде́сса", "base": "стю́ард", "caja": "-есса", "porque": "стю́ард + есса; el acento pasa a -е́сса: stiu-ar-DE-sa."}
       ]
     },
     {
