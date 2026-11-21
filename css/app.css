@@ -1363,7 +1363,7 @@ body:not(.no-rep) .view.view-fin.home3 { padding-bottom: calc(20px + env(safe-ar
 .ms-mod-top b { font-size: 15px; font-weight: 800; }
 .ms-mod-sub { font-size: 12px; font-weight: 600; color: var(--muted); }
 .ms-pct { margin-left: auto; font-family: var(--f-name); font-weight: 900; font-size: 17px; color: #f2c14e; }
-:root[data-theme="light"] .ms-pct { color: #c98a00; }
+:root[data-theme="light"] .ms-pct { color: #151515; background: #f2c14e; border: 1.5px solid #151515; border-radius: 999px; padding: 3px 8px 4px; font-size: 15px; line-height: 1; } /* QA: contraste en claro */
 .ms-mod-go { display: none; width: 14px; height: 14px; align-self: center; fill: none; stroke: var(--muted); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
 .ms-bar { display: block; height: 6px; border-radius: 6px; background: rgba(255, 255, 255, .12); overflow: hidden; }
 :root[data-theme="light"] .ms-bar { background: rgba(0, 0, 0, .1); }
@@ -1903,3 +1903,33 @@ body:not(.no-rep) .view#view-study.st-quiz { padding-bottom: calc(14px + env(saf
 .st-gram .hint-box .label { display: inline; margin-right: 4px; font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .st-gram .hint-text { display: inline; margin: 0; font-size: 13.5px; line-height: 1.45; }
 .st-gram .study-card { margin-top: 6px; }
+/* Mapa: paradas de gramática sobre el camino (Ruta_Mapa) */
+.ms-par { position: absolute; z-index: 5; width: 18px; height: 18px; box-sizing: border-box; padding: 0; display: grid; place-items: center; border-radius: 999px; border: 1.5px solid #0b0b0c; background: #f2c14e; color: #0b0b0c; box-shadow: 0 0 0 1.5px #f3efe6; cursor: pointer; }
+.ms-par::after { content: ""; position: absolute; inset: -13px; } /* zona táctil de 44 px */
+.ms-par svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.ms-par.done { background: #4af2d5; }
+.ms-par.sel { box-shadow: 0 0 0 2px #0b0b0c, 0 0 0 4px #4af2d5; }
+:root[data-theme="light"] .ms-par { border-color: #151515; box-shadow: 1.5px 1.5px 0 #151515; }
+:root[data-theme="light"] .ms-par.sel { box-shadow: 0 0 0 2px #f4f1ea, 0 0 0 4px #0b7566; }
+.ms-par:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.ms-c-book { background: #f2c14e !important; border: 1.5px solid #151515 !important; border-radius: 10px !important; }
+.ms-c-book svg { width: 17px; height: 17px; fill: none; stroke: #151515; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.ms-card-par .ms-c-lab, .ms-card-par .ms-c-ru { color: #2433a0; }
+.ms-card-par .ms-c-ttl b [lang="ru"] { font-family: var(--f-ru); }
+.ms-card-par .ms-row-t [lang="ru"] { font-family: var(--f-ru); font-weight: 700; font-size: 13px; }
+/* Módulo: bloques y paradas de gramática (Ruta_Modulo) */
+.ml-kick { margin-bottom: -3px; font-size: 11px; font-weight: 800; line-height: 1.1; color: var(--ink); }
+.ml-parada { padding: 0; background: none; border: 0; box-shadow: none; rotate: none !important; margin: -10px 0; }
+.ml-parada .ml-num.ml-pn { left: -43px; top: 10px; width: 28px; height: 28px; background: #f2c14e; color: #151515; border-color: var(--frame); }
+.ml-parada .ml-num.ml-pn.on { background: #4af2d5; color: #0b0b0c; }
+.ml-pn svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.ml-parada .tm-sigue { top: -13px; }
+.ml-pbox { position: relative; display: flex; align-items: center; gap: 8px; min-height: 48px; box-sizing: border-box; padding: 4px 14px; border-radius: 14px; background: #f2c14e; color: #151515; }
+.ml-parada.cur .ml-pbox { flex-wrap: wrap; row-gap: 8px; padding: 10px 14px 12px; }
+.ml-pt { flex: 1; min-width: 0; display: flex; flex-direction: column; font-size: 11px; font-weight: 800; line-height: 1.2; }
+.ml-pk [lang="ru"] { font-family: var(--f-ru); font-size: 12.5px; font-weight: 700; }
+.ml-pt b { font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ml-pt b [lang="ru"] { font-family: var(--f-ru); font-weight: 700; }
+.ml-pmin { flex: none; font-size: 11px; font-weight: 800; }
+.ml-pmin svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.ml-pgo { flex: 0 0 100%; margin: 0 !important; min-height: 44px !important; font-size: 13px; }

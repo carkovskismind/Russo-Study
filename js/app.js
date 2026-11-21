@@ -67,6 +67,7 @@ const store = new Store((what) => {
 
 // ---------- Aspecto de cada tema ----------
 const PALS = ["lav", "pe", "kh", "bl", "li", "pk", "mint", "aq"];
+const NEW_DECKS = new Set(["nombres"]);
 const SVG = {
   book: `<svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M32 18c-7-5-16-6-24-4v36c8-2 17-1 24 4zM32 18c7-5 16-6 24-4v36c-8-2-17-1-24 4zM32 18v36"/><text x="20" y="38" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="800" font-size="12" fill="currentColor" stroke="none">Аа</text></svg>`,
   palette: `<svg width="52" height="52" viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M32 8C16 8 6 20 6 32s10 22 22 22c5 0 6-4 4-7s-1-7 4-7h8c8 0 14-6 14-13C58 16 46 8 32 8z"/><circle cx="20" cy="26" r="4.5" fill="currentColor"/><circle cx="32" cy="18" r="4.5" stroke-width="2.5"/><circle cx="44" cy="24" r="4.5" fill="currentColor"/><circle cx="18" cy="39" r="4.5" stroke-width="2.5"/></svg>`,
@@ -76,6 +77,7 @@ SVG.star = `<svg width="50" height="50" viewBox="0 0 64 64" aria-hidden="true" f
 const VIS = {
   familia: { pal: "lav", art: { type: "img", src: "img/familia.png" } },
   saludos: { pal: "pe", art: { type: "head", src: "img/saludos.png" } },
+  nombres: { pal: "pk", art: null },
   numeros: { pal: "red", art: { type: "num", text: "123" } },
   basicas: { pal: "kh", art: { type: "svg", svg: SVG.book } },
   colores: { pal: "li", art: { type: "svg", svg: SVG.palette } },
@@ -88,14 +90,14 @@ const RU_NAME = {
   colores: "Цвета́", adjetivos: "Хара́ктер", ideas: "Иде́и", verbos: "Глаго́лы", juegos: "И́гры",
   instrumentos: "Му́зыка", comida: "Еда́", "ropa-cuerpo": "Оде́жда", escuela: "Шко́ла", textos: "Те́ксты",
   cultura: "Культу́ра", servilismo: "Уго́дник", expresiones: "Фра́зы", paises: "Стра́ны",
-  "reglas-gentilicios": "мексика́нка", "falsos-amigos": "Ло́жные друзья́", casos: "Падежи́", "gramatica-verbos": "я чита́ю", genero: "Род",
+  "reglas-gentilicios": "мексика́нка", nombres: "Имена́", "falsos-amigos": "Ло́жные друзья́", casos: "Падежи́", "gramatica-verbos": "я чита́ю", genero: "Род",
   plurales: "кни́га → кни́ги", posesion: "у меня́ есть", "gramatica-numerales": "две кни́ги"
 };
 
 function visFor(deck) {
   const v = VIS[deck.id];
   if (v) return v;
-  return { pal: PALS[deck.index % PALS.length], art: null };
+  return { pal: PALS[(deck.palIndex ?? deck.index) % PALS.length], art: null };
 }
 
 function artHtml(deck) {
@@ -389,6 +391,8 @@ async function loadDecks() {
     decks.push({
       id,
       index: decks.length,
+      // 4.2.0: los mazos nuevos no mueven el color de los que ya existían.
+      palIndex: decks.filter((d) => !NEW_DECKS.has(d.id)).length,
       title: json.titulo || id,
       group: json.grupo || "Vocabulario",
       desc: json.descripcion || "",
@@ -740,9 +744,9 @@ function finSuggestions() {
     dialogo: (d) => (d.mensajes || []).map((m) => [m.ru, ...((m.opciones || []).map((o) => o.ru))].join(" ")).join(" "),
   };
   const listOf = {
-    frases: (d) => d.frases || [],
-    cajas: (d) => ejOf(d).cajas,
-    dialogo: (d) => ejOf(d).dialogos,
+    frases: (d) => ejRaw(d).frases,
+    cajas: (d) => ejRaw(d).cajas,
+    dialogo: (d) => ejRaw(d).dialogos,
   };
   const doneOf = {
     frases: (d, f) => !!store.frase(`${d.id}:${f.id}`),
@@ -755,6 +759,7 @@ function finSuggestions() {
     for (const group of [todayDecks, otherDecks]) {
       for (const d of group) {
         listOf[key](d).forEach((item, idx) => {
+          if (!ejOk(item, true)) return;
           const hit = wordsIn(textOf[key](item), words);
           if (!hit.length) return;
           const score = hit.length * 10 + (doneOf[key](d, item) ? 0 : 5);
@@ -1068,24 +1073,62 @@ function tileHtml(deck) {
 
 // ----- Modos de un tema: Palabras · Frases · Diálogo · Cajas -----
 // Diálogos y cajas de un tema, de cualquier módulo: los del mazo más los del archivo de ejercicios.
-function ejOf(deck) {
+// 4.2.0: frases, diálogos y cajas con "desde" solo salen cuando ya llegaste a ese paso de la
+// Ruta; con "extra": true no salen en la Ruta (Mapa, Módulo, «¡Lo lograste!»), solo en Temas.
+function rutaStepKeys() {
+  const out = [];
+  for (const m of rutaMods()) for (const t of m.temas || []) out.push(t.tipo === "parada" ? `parada:${t.id}` : t.bloque ? `${t.id}:${t.bloque}` : t.id);
+  return out;
+}
+function ejReached(desde) {
+  const keys = rutaStepKeys();
+  const k = desde.startsWith("g-") ? `parada:${desde}` : desde;
+  const i = keys.indexOf(k);
+  if (i < 0) return true;
+  if (k.startsWith("parada:") && paradaDone(k.slice(7))) return true;
+  let far = -1;
+  const cur = currentItem();
+  if (cur) far = keys.indexOf(cur.key);
+  for (const it of rutaItems()) {
+    const j = keys.indexOf(it.key);
+    if (j <= far) continue;
+    if (it.kind === "parada" ? paradaDone(it.id) : it.deck && deckStats(it.deck).learned > 0) far = j;
+  }
+  return i <= far;
+}
+const ejOk = (x, ruta) => (!x.desde || ejReached(x.desde)) && (!ruta || !x.extra);
+const inRutaView = () => ["mapa", "modulo", "fin", "home"].includes(state.view);
+function frasesOf(deck, ruta = false) {
+  return (deck.frases || []).filter((f) => ejOk(f, ruta));
+}
+function ejOf(deck, ruta = false) {
+  if (deck.unitKey) return { dialogos: [], cajas: [] }; // un bloque de la Ruta: solo palabras
   const f = state.ej[deck.id] || {};
-  return { dialogos: [...(deck.dialogos || []), ...(f.dialogos || [])], cajas: [...(deck.cajas || []), ...(f.cajas || [])] };
+  return {
+    dialogos: [...(deck.dialogos || []), ...(f.dialogos || [])].filter((x) => ejOk(x, ruta)),
+    cajas: [...(deck.cajas || []), ...(f.cajas || [])].filter((x) => ejOk(x, ruta))
+  };
+}
+// Lista completa (sin filtrar) para los índices que vienen de «¡Lo lograste!».
+function ejRaw(deck) {
+  const f = state.ej[deck.id] || {};
+  return { frases: deck.frases || [], dialogos: [...(deck.dialogos || []), ...(f.dialogos || [])], cajas: [...(deck.cajas || []), ...(f.cajas || [])] };
 }
 
 function ejDone(list) {
   return list.filter((x) => { const r = store.ejer(x.id); return r && r.ok > 0; }).length;
 }
 
-function modesList(deck) {
+function modesList(deck, ruta = false) {
   const s = deckStats(deck);
-  const ej = ejOf(deck);
+  const ej = ejOf(deck, ruta);
+  const fr = frasesOf(deck, ruta);
   const out = [];
   const nHoy = s.due + Math.min(s.fresh, NEW_PER_DECK_SESSION, newLeftToday());
   if (deck.cards.length) out.push({ key: "words", label: "Palabras", num: String(nHoy), sub: "Nuevas y repaso", pct: s.pct, off: nHoy === 0 });
-  if (deck.frases.length) {
-    const done = deck.frases.filter((f) => store.frase(`${deck.id}:${f.id}`)).length;
-    out.push({ key: "frases", label: "Frases", num: `${done}/${deck.frases.length}`, sub: "Arma y traduce", pct: Math.round((done / deck.frases.length) * 100) });
+  if (fr.length) {
+    const done = fr.filter((f) => store.frase(`${deck.id}:${f.id}`)).length;
+    out.push({ key: "frases", label: "Frases", num: `${done}/${fr.length}`, sub: "Arma y traduce", pct: Math.round((done / fr.length) * 100) });
   }
   if ((deck.retos || []).length) {
     const n = deck.retos.filter((r) => retoState(deck, r).done).length;
@@ -2164,10 +2207,12 @@ function backTo(where) {
 const AUTO_MS = 1000;
 
 function startFrases(deck, first) {
-  if (!deck.frases.length) return;
-  let list = shuffle(deck.frases);
-  // Desde «¡Lo lograste!»: primero la frase que usa tus palabras de hoy.
-  if (Number.isInteger(first) && deck.frases[first]) list = [deck.frases[first], ...list.filter((f) => f !== deck.frases[first])];
+  const all = frasesOf(deck, inRutaView());
+  if (!all.length) return;
+  let list = shuffle(all);
+  // Desde «¡Lo lograste!»: primero la frase que usa tus palabras de hoy (índice en la lista completa).
+  const want = Number.isInteger(first) ? ejRaw(deck).frases[first] : null;
+  if (want && all.includes(want)) list = [want, ...list.filter((f) => f !== want)];
   const queue = list.map((f) => ({ f, failed: false }));
   state.fr = { deck, queue, ok: 0, bad: 0, resolved: 0, results: [], total: queue.length, returnTo: state.view === "tema" ? "tema" : state.view, timer: null };
   show("frase");
@@ -2641,9 +2686,10 @@ function backFrom(where) {
 }
 
 function startDialogo(deck, first) {
-  const list = ejOf(deck).dialogos;
+  const list = ejOf(deck, inRutaView()).dialogos;
   if (!list.length) return;
-  const di = Number.isInteger(first) && list[first] ? first : 0;
+  const want = Number.isInteger(first) ? ejRaw(deck).dialogos[first] : null;
+  const di = want && list.includes(want) ? list.indexOf(want) : 0;
   state.dl = { deck, list, di, ok: 0, bad: 0, es: false, timer: null, returnTo: state.view === "tema" ? "tema" : state.view };
   $("#dialogo-es").setAttribute("aria-pressed", "false");
   show("dialogo");
@@ -2922,12 +2968,13 @@ function cajaHasEs(e) {
 }
 
 function startCajas(deck, first) {
-  const list = ejOf(deck).cajas;
+  const list = ejOf(deck, inRutaView()).cajas;
   if (!list.length) return;
   // Empieza en el primer ejercicio que aún no terminas: el avance se queda guardado.
   let ci = list.findIndex((x) => { const r = store.ejer(x.id); return !(r && r.ok > 0); });
   if (ci < 0) ci = 0;
-  if (Number.isInteger(first) && list[first]) ci = first;
+  const want = Number.isInteger(first) ? ejRaw(deck).cajas[first] : null;
+  if (want && list.includes(want)) ci = list.indexOf(want);
   state.cj = { deck, list, ci, ok: 0, bad: 0, stage: "intro", returnTo: state.view === "tema" ? "tema" : state.view };
   show("cajas");
   renderCajasIntro();
@@ -3616,7 +3663,7 @@ const pctOf = (a, b) => (b ? Math.round((a / b) * 100) : 0);
 
 // Ejercicios de gramática de un tema (cajas y retos) y su avance.
 function gramOf(deck) {
-  const ej = ejOf(deck);
+  const ej = ejOf(deck, true);
   const total = ej.cajas.length + (deck.retos || []).length;
   const done = ejDone(ej.cajas) + (deck.retos || []).filter((r) => retoState(deck, r).done).length;
   const d = dudasFor(deck);
@@ -3627,7 +3674,7 @@ function gramOf(deck) {
 const EJ_SUB = { frases: "arma frases", cajas: "clasifica", dialogo: "conversa", reto: "descubre la regla", audio: "escucha" };
 function ejButtons(deck, max = 3) {
   const order = ["frases", "cajas", "dialogo", "reto", "audio"];
-  return modesList(deck).filter((m) => m.key !== "words" && !m.off)
+  return modesList(deck, true).filter((m) => m.key !== "words" && !m.off)
     .sort((a, b) => order.indexOf(a.key) - order.indexOf(b.key)).slice(0, max);
 }
 
@@ -3649,18 +3696,41 @@ function mapaPathD(n) {
   return seg;
 }
 
+// Color de cada mazo en el Mapa: los bloques de un mismo mazo van del mismo color.
+const DECK_COLORS = { saludos: "#f5a3b5", basicas: "#f2c14e", animales: "#4af2d5", familia: "#aa94fc", numeros: "#99acfc", verbos: "#e9b293",
+  profesiones: "#ff7a45", nombres: "#aa94fc", adjetivos: "#99acfc", "falsos-amigos": "#c8f25a" };
+const stopColor = (t, i) => DECK_COLORS[t.id] || STOP_COLORS[i % STOP_COLORS.length];
+const MAP_BOOK = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg>`;
+function mapaPt(k) {
+  const r = Math.floor(k / 3), c = k % 3, col = r % 2 ? 2 - c : c;
+  return [MAP_X[col], 58 + 82 * r + (c === 1 ? 28 : 0)];
+}
+// Punto de una parada sobre el camino entre el tema k y el k+1 (fracción f).
+function mapaParadaPt(k, f, n) {
+  const [x1, y1] = mapaPt(Math.max(0, k));
+  if (k < 0) return [x1 - 20 + 20 * f, y1];
+  if (k + 1 >= n) return [x1 > 174 ? x1 + 20 : x1 - 20, y1 + 24 * f];
+  const [x2, y2] = mapaPt(k + 1);
+  if (Math.floor(k / 3) === Math.floor((k + 1) / 3)) return [x1 + (x2 - x1) * f, y1];
+  return [x1 > 174 ? x1 + 20 : x1 - 20, y1 + (y2 - y1) * f];
+}
+
 function mapaStageHtml() {
   const m = state.mapa;
   const mods = rutaMods();
   const mod = mods.find((x) => x.id === m.mod) || mods[0];
-  const T = modTemas(mod).filter((t) => t.deck);
-  const glob = currentTema();
-  let sel = m.sel && T.find((t) => t.id === m.sel.id);
-  if (!sel) sel = (glob && glob.mod === mod ? glob : modFirstOpen(mod)) || T[0] || null;
-  m.sel = sel ? { id: sel.id, mod: mod.id } : null;
-  const selIdx = sel ? T.indexOf(sel) : -1;
-  // «Sigue aquí» y «Tema actual» solo en el tema actual de verdad (no en otros módulos).
-  const selIsCur = !!(sel && glob && glob.mod === mod && glob.id === sel.id);
+  const all = modItems(mod);
+  const T = all.filter((t) => t.kind === "tema");
+  const curIt = currentItem();
+  const glob = curIt && curIt.mod === mod ? curIt : null;
+  let sel = m.sel && all.find((t) => t.key === m.sel.key);
+  if (!sel) sel = glob || modFirstOpen(mod) || T[0] || null;
+  m.sel = sel ? { key: sel.key, mod: mod.id } : null;
+  // «Sigue aquí» y «Tema actual» solo en el punto actual de verdad (no en otros módulos).
+  const selIsCur = !!(sel && glob && glob.key === sel.key);
+  // Índice (en T) del último tema antes o en el punto seleccionado.
+  const before = (it) => { let k = -1; for (const x of all) { if (x.kind === "tema") k++; if (x === it) break; } return it && it.kind === "parada" ? k : T.indexOf(it); };
+  const selK = sel ? before(sel) : -1;
 
   // Avance: palabras acertadas al menos una vez ÷ palabras del módulo (y de toda la ruta)
   let rn = 0, rt = 0;
@@ -3671,12 +3741,12 @@ function mapaStageHtml() {
 
   const tabs = mods.map((x) => `<button type="button" role="tab" class="num" data-mtab="${x.id}" aria-selected="${x.id === mod.id}" aria-label="Módulo ${x.n}">M${x.n}</button>`).join("");
 
-  // Paradas
+  // Paradas de temas y, sobre el camino, las paradas de gramática
   const rows = Math.max(1, Math.ceil(T.length / 3));
   const H = 132 + 82 * (rows - 1);
   const segs = mapaPathD(T.length);
-  const doneSegs = segs.slice(0, Math.max(0, selIdx));
-  const restSegs = segs.slice(Math.max(0, selIdx));
+  let doneSegs = segs.slice(0, Math.max(0, sel && sel.kind === "parada" ? selK : selK));
+  let restSegs = segs.slice(Math.max(0, selK));
   let stops = "";
   T.forEach((t, i) => {
     const r = Math.floor(i / 3), c = i % 3;
@@ -3685,12 +3755,33 @@ function mapaStageHtml() {
     const ru = mapaRu(t);
     const n = `<span class="ms-n num">${i + 1}</span>`;
     const label = `<span>${esc(ru)}</span>`;
-    const isSel = i === selIdx;
+    const isSel = sel === t;
     const done = isMemorized(t.deck);
-    stops += `<button class="ms-stop ms-c${col}${isSel ? " sel" : ""}${done ? " done" : ""}" type="button" lang="ru" data-mp="${esc(t.deck.id)}" aria-pressed="${isSel}" aria-label="Tema ${t.label}, ${esc(ru)}, ${esc(t.deck.title)}${isSel && selIsCur ? ", tema actual" : done ? ", memorizado" : ""}" style="top:${top}px;--sc:${STOP_COLORS[i % STOP_COLORS.length]}">${col === 2 ? label + n : n + label}</button>`;
+    stops += `<button class="ms-stop ms-c${col}${isSel ? " sel" : ""}${done ? " done" : ""}" type="button" lang="ru" data-mp="${esc(t.key)}" aria-pressed="${isSel}" aria-label="Tema ${t.label}, ${esc(ru)}, ${esc(t.deck.title)}${isSel && selIsCur ? ", tema actual" : done ? ", memorizado" : ""}" style="top:${top}px;--sc:${stopColor(t, i)}">${col === 2 ? label + n : n + label}</button>`;
   });
+  // Paradas de gramática: puntos sobre el camino, entre el tema anterior y el siguiente.
+  let k = -1;
+  const groups = new Map();
+  for (const x of all) { if (x.kind === "tema") k++; else if (x.kind === "parada") { if (!groups.has(k)) groups.set(k, []); groups.get(k).push(x); } }
+  for (const [kk, arr] of groups) {
+    arr.forEach((x, j) => {
+      const f = (j + 1) / (arr.length + 1);
+      const [px, py] = mapaParadaPt(kk, f, T.length);
+      const ok = paradaDone(x.id);
+      const isSel = sel === x;
+      if (isSel && kk >= 0) {
+        // Camino hecho hasta la parada seleccionada.
+        const [x1, y1] = mapaPt(kk);
+        const same = kk + 1 < T.length && Math.floor(kk / 3) === Math.floor((kk + 1) / 3);
+        doneSegs = segs.slice(0, kk).concat(same ? [`M${x1} ${y1} H${px}`] : [`M${x1} ${y1} H${px} V${py}`]);
+        restSegs = segs.slice(kk);
+      }
+      stops += `<button class="ms-par${ok ? " done" : ""}${isSel ? " sel" : ""}" type="button" data-mp="${esc(x.key)}" aria-pressed="${isSel}" aria-label="Parada de gramática: ${esc(x.titulo)}${ok ? ", hecha" : isSel && selIsCur ? ", sigue aquí" : ""}" style="left:${px - 9 + 2}px;top:${py - 9 + 2}px">${ok ? ICO_OK : MAP_BOOK}</button>`;
+    });
+  }
   const full = !!m.full;
-  const bgH = full ? Math.max(H, 532) : H;
+  // Mapa pequeño: hasta 3 filas (el resto se ve con «ver mapa completo»).
+  const bgH = full ? Math.max(H, 532) : Math.min(H, 300);
   const map = `<div class="ms-map${full ? " full" : ""}" style="height:${bgH}px" role="group" aria-label="Mapa del Módulo ${mod.n}">
       <span class="ms-bg" aria-hidden="true"></span>
       <svg class="ms-path" viewBox="0 0 ${MAP_VW} ${H}" preserveAspectRatio="none" style="height:${H}px" aria-hidden="true">
@@ -3702,19 +3793,32 @@ function mapaStageHtml() {
       ${full ? "" : `<span class="ms-full-t" aria-hidden="true">ver mapa completo<svg viewBox="0 0 14 10"><path d="M1 5h11M8 1.5L12 5 8 8.5"/></svg></span>`}
     </div>`;
 
-  // Tarjeta del tema actual
+  // Tarjeta del punto seleccionado (tema o parada)
   let card = "";
   if (mod.pronto) card = `<section class="ms-card sh3d"><p class="ms-soon">El ${esc(mod.titulo)} llega pronto.</p></section>`;
-  else if (sel) {
+  else if (sel && sel.kind === "parada") {
+    const p = sel.parada;
+    const at = sel.antes ? deckOfKey(sel.antes) : null;
+    const ex = (p.ejemplos || [])[0];
+    card = `<section class="ms-card ms-card-par sh3d card-frame pal-bl" aria-label="Parada de gramática">
+      ${selIsCur ? `<span class="tm-sigue">Sigue aquí</span>` : ""}
+      <span class="ms-c-head"><span class="ms-c-num ms-c-book" aria-hidden="true">${MAP_BOOK}</span><span class="ms-c-ttl"><span class="ms-c-lab">Parada de gramática · <span class="num">2</span> min</span><b>${gramText(p.titulo, "t")}</b></span>${sel.es ? `<span class="ms-c-ru" lang="ru">${esc(sel.es)}</span>` : ""}</span>
+      ${at ? `<span class="ms-row"><span class="ms-row-l">Prepara</span><span class="ms-row-t">${esc(baseOf(at).title)}${ex ? `: <span lang="ru">${esc(ex.ru)}</span>` : ""}</span></span>` : ""}
+      <span class="ms-row"><span class="ms-row-l">Practica</span><span class="ms-row-t">Elige la forma · <span class="num">${(p.elige || []).length}</span> ejercicios</span></span>
+      <button class="ms-go" type="button" data-mpar="regla">${paradaDone(sel.id) ? "Repasar la regla →" : "Ver la regla →"}</button>
+      <span class="ms-ejs">${at ? `<button class="ms-ej" type="button" data-mpar="saltar"><b>Saltar</b><span>ir a ${esc(shortTitle(at.bloque ? { ...at, title: baseOf(at).title } : at))}</span></button>` : ""}<button class="ms-ej" type="button" data-mpar="indice"><b>Todas las paradas</b><span>índice</span></button></span>
+    </section>`;
+  } else if (sel) {
     const d = sel.deck;
-    const v = visFor(d);
+    const v = visFor(baseOf(d));
     const st = deckStats(d);
     const g = gramOf(d);
     const nToday = todayWords(d);
     const ejs = ejButtons(d);
+    const kick = sel.bloque ? `${esc(baseOf(d).title)} · parte <span class="num">${sel.parte}</span> de <span class="num">${sel.partes}</span>` : "";
     card = `<section class="ms-card sh3d card-frame pal-${v.pal}" aria-label="${selIsCur ? "Tema actual" : `Tema ${sel.label}`}">
       ${selIsCur ? `<span class="tm-sigue">Sigue aquí</span>` : ""}
-      <span class="ms-c-head"><span class="ms-c-num num">${sel.label}</span><span class="ms-c-ttl">${selIsCur ? `<span class="ms-c-lab">Tema actual</span>` : ""}<b>${esc(d.title)}</b></span><span class="ms-c-ru" lang="ru">${esc(mapaRu(sel))}</span></span>
+      <span class="ms-c-head"><span class="ms-c-num num">${sel.label}</span><span class="ms-c-ttl">${selIsCur || kick ? `<span class="ms-c-lab">${selIsCur ? "Tema actual" : ""}${selIsCur && kick ? " · " : ""}${kick}</span>` : ""}<b>${esc(sel.bloque ? d.sub : d.title)}</b></span><span class="ms-c-ru" lang="ru">${esc(RU_NAME[sel.id] || mapaRu(sel))}</span></span>
       <span class="ms-row"><span class="ms-row-l">Palabras</span><span class="bar"><span style="width:${st.pct}%"></span></span><span class="ms-row-n"><span class="num">${st.learned}</span>/<span class="num">${st.total}</span></span></span>
       ${g.titulo || g.total ? `<span class="ms-row"><span class="ms-row-l">Gramática</span><span class="ms-row-t">${esc(g.titulo || "Cajas y retos")}</span>${g.total ? `<span class="ms-row-n"><span class="num">${g.done}</span>/<span class="num">${g.total}</span></span>` : ""}</span>` : ""}
       <button class="ms-go" type="button" data-mc="words">${nToday ? `Palabras · <span class="num">${nToday}</span> para hoy →` : "Repasar palabras →"}</button>
@@ -3725,7 +3829,7 @@ function mapaStageHtml() {
   const leerN = state.lectura ? state.lectura.pasos.length : 0;
   const leerD = state.lectura ? leerDone() : 0;
   const leerOk = leerN && leerD >= leerN;
-  const gd = gramaticaDeck();
+  const gd = gramaticaDeck() || (state.paradas && state.paradas.size);
   return `<header class="ms-top">
       <button class="circle-btn" type="button" data-mgo="home" aria-label="Volver al inicio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
       <div class="tm-ttl">
@@ -3747,7 +3851,8 @@ function mapaStageHtml() {
 }
 
 function mapaRu(t) {
-  return RU_NAME[t.deck ? t.deck.id : ""] || (t.deck ? t.deck.title : "Чита́ть");
+  const base = RU_NAME[t.deck ? t.id : ""] || (t.deck ? t.deck.title : "Чита́ть");
+  return t.bloque && BLOQUE_RU[t.key] ? `${base} · ${BLOQUE_RU[t.key]}` : base;
 }
 
 function renderMapa() {
@@ -3786,18 +3891,32 @@ function mapaClick(e) {
   }
   const st = e.target.closest("[data-mp]");
   if (st && mod) {
-    const t = modTemas(mod).find((x) => x.deck && x.deck.id === st.dataset.mp);
+    const t = modItems(mod).find((x) => x.key === st.dataset.mp);
     if (!t) return;
-    m.sel = { id: t.id, mod: mod.id };
-    markCurrent(t.deck); // la tarjeta y «Sigue aquí» van con el tema tocado
+    m.sel = { key: t.key, mod: mod.id };
+    // la tarjeta y «Sigue aquí» van con el tema (o la parada) tocado
+    if (t.kind === "parada") store.setCurrent(t.key); else markCurrent(t.deck);
     renderMapa();
     const b = $(`#mapa-stage [data-mp="${st.dataset.mp}"]`);
     if (b) b.focus();
     return;
   }
+  const par = e.target.closest("[data-mpar]");
+  if (par && mod && m.sel) {
+    const t = modItems(mod).find((x) => x.key === m.sel.key);
+    if (!t || t.kind !== "parada") return;
+    const a = par.dataset.mpar;
+    if (a === "regla") return openParada(t.id, { from: "mapa" });
+    if (a === "indice") return openGramIndice("mapa");
+    if (a === "saltar") {
+      const at = modItems(mod).find((x) => x.key === t.antes) || rutaItems().find((x) => x.key === t.antes);
+      if (at) { m.mod = at.mod.id; m.sel = { key: at.key, mod: at.mod.id }; markCurrent(at.deck); renderMapa(); }
+    }
+    return;
+  }
   const mc = e.target.closest("[data-mc]");
   if (mc && mod) {
-    const t = modTemas(mod).find((x) => m.sel && x.id === m.sel.id);
+    const t = modItems(mod).find((x) => m.sel && x.key === m.sel.key);
     if (t && t.deck) startMode(t.deck, mc.dataset.mc);
     return;
   }
@@ -3819,36 +3938,51 @@ function renderModulo() {
   const mod = mods.find((x) => x.id === state.modulo) || currentMod() || mods[0];
   if (!mod) return;
   state.modulo = mod.id;
-  const T = modTemas(mod).filter((t) => t.deck);
+  const all = modItems(mod);
+  const T = all.filter((t) => t.kind === "tema");
+  const P = all.filter((t) => t.kind === "parada");
   const w = modWords(mod);
   const pct = pctOf(w.learned, w.total);
-  const glob = currentTema();
-  const cur = glob && glob.mod === mod ? glob : modFirstOpen(mod);
-  const curIdx = cur ? T.indexOf(cur) : -1;
+  const ci = currentItem();
+  const cur = ci && ci.mod === mod ? ci : modFirstOpen(mod);
+  const curIdx = cur ? all.indexOf(cur) : -1;
   $("#mod-n").textContent = mod.n;
   $("#mod-n-ru").textContent = mod.n;
-  $("#mod-sub").innerHTML = `<span class="num">${T.length}</span> temas · <span class="num">${w.learned}</span> de <span class="num">${w.total}</span> palabras`;
+  $("#mod-sub").innerHTML = `<span class="num">${T.length}</span> temas · ${P.length ? `<span class="num">${P.length}</span> ${P.length === 1 ? "parada" : "paradas"} · ` : ""}<span class="num">${w.learned}</span> de <span class="num">${w.total}</span> palabras`;
   $("#mod-felic").innerHTML = `<span class="mf-ico" aria-hidden="true">${CONFETI_ICO}</span>
     <span class="mf-txt"><span class="mf-t">${w.learned ? "¡Felicidades!" : "¡A empezar!"}</span>
     <span class="mf-l">Ya aprendiste <span class="num">${w.learned}</span> ${w.learned === 1 ? "palabra" : "palabras"}</span>
     <span class="mf-s">de <span class="num">${w.total}</span> del módulo · <span class="num">${pct}%</span></span>
     <span class="mf-bar" aria-hidden="true"><span style="width:${pct}%"></span></span></span>`;
-  $("#mod-list").innerHTML = `<svg class="ml-line" aria-hidden="true" width="4" height="100%"><line class="ml-done" x1="2" x2="2" y1="0" y2="0"/><line class="ml-rest" x1="2" x2="2" y1="0" y2="100%"/></svg>` + T.map((t, i) => {
+  $(".mod-note").innerHTML = P.length
+    ? `Cada tema trae sus palabras. Las <b>paradas de gramática</b> (amarillas) van justo antes del tema que las usa. El porcentaje cuenta solo las palabras de los temas.`
+    : "Cada tema trae sus palabras y su gramática. Puedes abrir cualquiera.";
+  $("#mod-list").innerHTML = `<svg class="ml-line" aria-hidden="true" width="4" height="100%"><line class="ml-done" x1="2" x2="2" y1="0" y2="0"/><line class="ml-rest" x1="2" x2="2" y1="0" y2="100%"/></svg>` + all.map((t, i) => {
+    const isCur = i === curIdx;
+    if (t.kind === "parada") {
+      const ok = paradaDone(t.id);
+      return `<div class="ml-item ml-parada${isCur ? " cur" : ""}" role="button" tabindex="0" data-mpar="${esc(t.id)}" aria-label="Parada de gramática: ${esc(t.titulo)}${ok ? ", hecha" : isCur ? ", sigue aquí" : ""}">
+        <span class="ml-num ml-pn${ok || isCur ? " on" : ""}" aria-hidden="true">${ok ? ICO_OK : MAP_BOOK}</span>
+        ${isCur ? `<span class="tm-sigue">Sigue aquí</span>` : ""}
+        <span class="ml-pbox sh3d"><span class="ml-pt"><span class="ml-pk">Gramática${t.es ? ` · <span lang="ru">${esc(t.es)}</span>` : ""}</span><b>${gramText(t.parada.titulo, "t")}</b></span><span class="ml-pmin">${ok ? ICO_OK : `<span class="num">2</span> min`}</span>${isCur ? `<span class="ms-go ml-pgo">${ok ? "Repasar la regla →" : "Ver la regla →"}</span>` : ""}</span>
+      </div>`;
+    }
     const d = t.deck;
     const st = deckStats(d);
     const g = gramOf(d);
-    const isCur = i === curIdx;
     const n = todayWords(d);
-    return `<div class="ml-item card-frame pal-${visFor(d).pal} sh3d${isCur ? " cur" : ""}" role="button" tabindex="0" data-mtema="${esc(d.id)}" aria-label="Tema ${t.label} ${esc(d.title)}${isCur ? ", sigue aquí" : ""}">
+    const kick = t.bloque ? `<span class="ml-kick">${esc(baseOf(d).title)} · parte <span class="num">${t.parte}</span> de <span class="num">${t.partes}</span></span>` : "";
+    return `<div class="ml-item card-frame pal-${visFor(baseOf(d)).pal} sh3d${isCur ? " cur" : ""}" role="button" tabindex="0" data-mtema="${esc(t.key)}" aria-label="Tema ${t.label} ${esc(d.title)}${isCur ? ", sigue aquí" : ""}">
       <span class="ml-num num" aria-hidden="true">${t.label}</span>
       ${isCur ? `<span class="tm-sigue">Sigue aquí</span>` : ""}
-      <span class="ml-head"><b>${esc(d.title)}</b><span class="ml-ru" lang="ru">${esc(RU_NAME[d.id] || "")}</span></span>
+      ${kick}
+      <span class="ml-head"><b>${esc(t.bloque ? d.sub : d.title)}</b><span class="ml-ru" lang="ru">${esc(RU_NAME[t.id] || "")}</span></span>
       <span class="ms-row"><span class="ms-row-l">Palabras</span><span class="bar"><span style="width:${st.pct}%"></span></span><span class="ms-row-n"><span class="num">${st.learned}</span>/<span class="num">${st.total}</span></span></span>
-      ${g.titulo || g.total ? `<span class="ms-row"><span class="ms-row-l">Gramática</span><span class="ms-row-t">${ruSpans(g.titulo || "Cajas y retos")}</span>${g.total ? `<span class="ms-row-n"><span class="num">${g.done}</span>/<span class="num">${g.total}</span></span>` : ""}</span>` : ""}
-      ${isCur ? `<button class="ms-go" type="button" data-mword="${esc(d.id)}">${n ? `Seguir · <span class="num">${n}</span> palabras para hoy →` : "Seguir con este tema →"}</button>` : ""}
+      ${!P.length && (g.titulo || g.total) ? `<span class="ms-row"><span class="ms-row-l">Gramática</span><span class="ms-row-t">${ruSpans(g.titulo || "Cajas y retos")}</span>${g.total ? `<span class="ms-row-n"><span class="num">${g.done}</span>/<span class="num">${g.total}</span></span>` : ""}</span>` : ""}
+      ${isCur ? `<button class="ms-go" type="button" data-mword="${esc(t.key)}">${n ? `Seguir · <span class="num">${n}</span> palabras para hoy →` : "Seguir con este tema →"}</button>` : ""}
     </div>`;
   }).join("");
-  // Línea: turquesa hasta el tema actual, punteada después
+  // Línea: turquesa hasta el punto actual, punteada después
   requestAnimationFrame(() => {
     const list = $("#mod-list");
     const items = list.querySelectorAll(".ml-item");
@@ -3858,7 +3992,7 @@ function renderModulo() {
     const it = items[Math.max(0, curIdx)];
     // Maqueta A2Modulo: turquesa hasta dentro del círculo del tema actual; la punteada sigue después de él.
     const num = it.querySelector(".ml-num").getBoundingClientRect();
-    const y = curIdx > 0 ? num.top - top + 33 : 0;
+    const y = curIdx > 0 ? num.top - top + 26 : 0;
     ln.setAttribute("y1", "30");
     ln.setAttribute("y2", String(Math.max(30, y)));
     const rest = list.querySelector(".ml-rest");
@@ -4376,19 +4510,24 @@ function bind() {
   $("#mod-back").addEventListener("click", () => go("mapa"));
   const modOpen = (e) => {
     const w = e.target.closest("[data-mword]");
-    if (w) { const d = state.deckById.get(w.dataset.mword); if (d) startMode(d, "words"); return; }
+    if (w) { const d = deckOfKey(w.dataset.mword); if (d) startMode(d, "words"); return; }
+    const pa = e.target.closest("[data-mpar]");
+    if (pa) return openParada(pa.dataset.mpar, { from: "modulo" });
     const it = e.target.closest("[data-mtema]");
     if (!it) return;
-    state.openTile = it.dataset.mtema;
+    const unit = deckOfKey(it.dataset.mtema);
+    if (unit) markCurrent(unit);
+    const id = baseOf(unit) ? baseOf(unit).id : it.dataset.mtema;
+    state.openTile = id;
     state.openSet = true;
     state.temaFilters = new Set();
     $("#temas-q").value = "";
     go("temas");
-    const t = $(`#temas-grid [data-tile="${it.dataset.mtema}"]`);
+    const t = $(`#temas-grid [data-tile="${id}"]`);
     if (t) t.scrollIntoView({ block: "center" });
   };
   $("#mod-list").addEventListener("click", modOpen);
-  $("#mod-list").addEventListener("keydown", (e) => { if ((e.key === "Enter" || e.key === " ") && e.target.matches("[data-mtema]")) { e.preventDefault(); modOpen(e); } });
+  $("#mod-list").addEventListener("keydown", (e) => { if ((e.key === "Enter" || e.key === " ") && e.target.matches("[data-mtema], [data-mpar]")) { e.preventDefault(); modOpen(e); } });
   $("#temas-q").addEventListener("input", () => { state.openSet = false; renderTemas(); });
   $("#temas-q").addEventListener("keydown", (e) => { if (e.key === "Escape") { e.target.value = ""; renderTemas(); } });
   $("#temas-q-clear").addEventListener("click", () => { $("#temas-q").value = ""; renderTemas(); $("#temas-q").focus(); });

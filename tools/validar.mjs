@@ -206,6 +206,7 @@ if (ruta3) {
   const usados = new Map();
   const temasRuta = new Set();
   const antes = [];
+  const sinParada = [];
   (ruta3.modulos || []).forEach((m) => {
     if (!m.id || mods.has(m.id)) errores.push(`ruta.json: módulo sin id o repetido (${m.id})`);
     mods.add(m.id);
@@ -222,7 +223,7 @@ if (ruta3) {
         if (usados.has(`parada:${t.id}`)) errores.push(`${d}: la parada ya está en ${usados.get(`parada:${t.id}`)}`);
         usados.set(`parada:${t.id}`, m.id);
         if (t.antes) antes.push([d, t.antes]);
-        if (paradasJson && !t.nuevo && !paradaIds.has(t.id)) avisos.push(`${d}: la parada todavía no está en data/gramatica/paradas.json`);
+        if (paradasJson && !t.nuevo && !paradaIds.has(t.id)) sinParada.push(t.id);
         return;
       }
       if (t.tipo) { errores.push(`${d}: "tipo" desconocido (${t.tipo})`); return; }
@@ -238,6 +239,7 @@ if (ruta3) {
       if (t.bloque && !(bloques.get(t.id) || new Set()).has(t.bloque)) avisos.push(`${d}: ninguna tarjeta núcleo del mazo tiene "bloque": "${t.bloque}"`);
     });
   });
+  if (sinParada.length) avisos.push(`ruta.json: ${sinParada.length} paradas todavía sin contenido en paradas.json (se ven como «pronto»): ${sinParada.join(", ")}`);
   for (const [d, a] of antes) if (!temasRuta.has(a)) avisos.push(`${d}: "antes" apunta a «${a}», que no está en la ruta`);
   // Calendario (meses, días y estaciones) y fiestas abren el Módulo 3, en ese orden.
   const m3 = (ruta3.modulos || []).find((m) => m.id === "m3");
@@ -342,6 +344,26 @@ if (dudas) {
       if (!x.ru || !x.es) errores.push(`dudas.json ${id} ejemplo ${j + 1}: necesita "ru" y "es"`);
       else revisarRuso(x.ru, `dudas.json ${id} ejemplo ${j + 1}`);
     });
+  }
+}
+
+// 4.2.0: "desde" (paso de la Ruta a partir del cual sale el ejercicio) y "extra" en frases, diálogos y cajas.
+if (ruta3) {
+  const pasos = new Set();
+  for (const m of ruta3.modulos || []) for (const t of m.temas || []) pasos.add(t.tipo === "parada" ? t.id : t.bloque ? `${t.id}:${t.bloque}` : t.id);
+  const revisarDesde = (x, d) => {
+    if (x.desde !== undefined && (typeof x.desde !== "string" || !pasos.has(x.desde))) errores.push(`${d}: "desde" («${x.desde}») no es un paso de data/ruta.json`);
+    if (x.extra !== undefined && typeof x.extra !== "boolean") errores.push(`${d}: "extra" debe ser true o false`);
+  };
+  for (const archivo of manifest.mazos || []) {
+    if (!existsSync(`data/${archivo}`)) continue;
+    let mz; try { mz = JSON.parse(readFileSync(`data/${archivo}`, "utf8")); } catch { continue; }
+    (mz.frases || []).forEach((f, i) => revisarDesde(f, `${archivo} frase ${f.id || i + 1}`));
+    for (const k of ["dialogos", "cajas"]) (mz[k] || []).forEach((x, i) => revisarDesde(x, `${archivo} ${k} ${x.id || i + 1}`));
+  }
+  for (const [archivo, ruta, e] of ejercicios) {
+    if (!e) continue;
+    for (const k of ["dialogos", "cajas"]) (e[k] || []).forEach((x, i) => revisarDesde(x, `${ruta} ${k} ${x.id || i + 1}`));
   }
 }
 
