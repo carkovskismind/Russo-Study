@@ -3742,8 +3742,11 @@ async function submitReport() {
     entorno: reportEnv()
   };
   closeSheet();
-  toast(kind === "comentario" ? "¡Gracias! Recibimos tu comentario" : "¡Gracias! Recibimos tu reporte");
-  try { await store.reportFalla(entry); } catch (e) { console.warn("reporte", e); }
+  // El aviso dice la verdad: «Recibimos» solo si llegó; si no, quedó guardado en el teléfono.
+  let sent = false;
+  try { sent = await store.reportFalla(entry); } catch (e) { console.warn("reporte", e); }
+  const what = kind === "comentario" ? "comentario" : "reporte";
+  toast(sent ? `¡Gracias! Recibimos tu ${what}` : `Guardamos tu ${what} en este dispositivo; se enviará cuando haya conexión`);
 }
 
 // ---------- Privacidad (mismo texto que docs/privacidad.md) ----------

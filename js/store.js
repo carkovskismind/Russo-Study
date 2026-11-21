@@ -19,6 +19,10 @@ function readPending() {
   try { return JSON.parse(localStorage.getItem(PENDING_KEY) || "[]"); } catch { return []; }
 }
 
+function newKey() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
 function writePending(list) {
   try { localStorage.setItem(PENDING_KEY, JSON.stringify(list)); } catch { /* sin almacenamiento */ }
 }
@@ -388,45 +392,75 @@ export class Store {
 
   // «Mi respuesta también es correcta»: se guarda en Supabase para revisarla.
   // Sin conexión o sin Supabase se queda en el dispositivo y se envía después.
+  // Devuelve true solo si ESTE reporte llegó.
   async report(entry) {
-    const row = { ...entry, mazo: (IS_BETA ? "beta/" : "") + entry.mazo, user_id: this.user ? this.user.id : null, created_at: new Date().toISOString() };
+    const row = { ...entry, mazo: (IS_BETA ? "beta/" : "") + entry.mazo, user_id: this.user ? this.user.id : null, created_at: new Date().toISOString(), _k: newKey() };
     const pending = readPending();
     pending.push(row);
     writePending(pending);
-    return this.flushReports();
+    const sent = await this.flushReports();
+    return sent.has(row._k);
   }
 
   // «Reportar falla» (botón de la beta). Sin conexión se queda en la cola de pendientes.
+  // Devuelve true solo si ESTE reporte llegó.
   async reportFalla(entry) {
-    const row = { tipo: "falla", ...entry, user_id: this.user ? this.user.id : null, created_at: new Date().toISOString() };
+    const row = { tipo: "falla", ...entry, user_id: this.user ? this.user.id : null, created_at: new Date().toISOString(), _k: newKey() };
     const pending = readPending();
     pending.push(row);
     writePending(pending.slice(-50));
-    this.flushReports();
-    return true;
+    const sent = await this.flushReports();
+    return sent.has(row._k);
   }
 
+  // Envía la cola fila por fila: si una falla, las demás sí llegan. Una fila con
+  // user_id de otra sesión (o guardada con sesión y enviada sin ella) se manda sin
+  // user_id, porque Supabase la rechazaría. Devuelve las claves de las filas enviadas.
   async flushReports() {
-    const pending = readPending();
-    if (!pending.length || !this.sb || this._flushing) return false;
-    this._flushing = true;
-    // Todas las filas con las mismas columnas (los reportes viejos no traen las nuevas).
-    const rows = pending.map((r) => ({
-      tipo: "respuesta", pantalla: null, version: null, descripcion: null, entorno: null,
-      mazo: null, frase_id: null, paso: null, respuesta: null, esperada: null, ...r
-    }));
-    try {
-      const { error } = await this.sb.from(REPORTS).insert(rows);
-      if (error) throw error;
-      // Solo se quitan los enviados; lo que llegó mientras tanto se conserva.
-      writePending(readPending().slice(pending.length));
-      return true;
-    } catch (e) {
-      console.warn("No se pudo enviar el reporte", e);
-      return false;
-    } finally {
-      this._flushing = false;
+    if (this._flushP) {
+      const before = await this._flushP;
+      if (!readPending().some((r) => !r._k || !before.has(r._k))) return before;
+      const again = await this.flushReports();
+      return new Set([...before, ...again]);
     }
+    this._flushP = this._flushOnce();
+    try { return await this._flushP; } finally { this._flushP = null; }
+  }
+
+  async _flushOnce() {
+    const sent = new Set();
+    const pending = readPending().map((r) => (r && r._k ? r : { ...r, _k: newKey() }));
+    if (!pending.length || !this.sb) return sent;
+    writePending(pending);
+    const me = this.user ? this.user.id : null;
+    const done = new Set();
+    for (const r of pending) {
+      const { _k, ...data } = r;
+      // Todas las filas con las mismas columnas (los reportes viejos no traen las nuevas).
+      const row = {
+        tipo: "respuesta", pantalla: null, version: null, descripcion: null, entorno: null,
+        mazo: null, frase_id: null, paso: null, respuesta: null, esperada: null, ...data,
+        user_id: data.user_id && data.user_id === me ? data.user_id : null
+      };
+      try {
+        const { error } = await this.sb.from(REPORTS).insert(row);
+        if (error) {
+          // Datos que Supabase nunca aceptará (p. ej. texto demasiado largo): se descartan.
+          if (/^2[23]/.test(String(error.code || ""))) { done.add(_k); console.warn("Reporte descartado", error); continue; }
+          // Otro rechazo del servidor: esta fila se queda en la cola y se sigue con las demás.
+          if (error.code) { console.warn("No se pudo enviar el reporte", error); continue; }
+          throw error;
+        }
+        done.add(_k);
+        sent.add(_k);
+      } catch (e) {
+        console.warn("No se pudo enviar el reporte", e);
+        break; // sin conexión: lo demás se intenta después
+      }
+    }
+    // Solo se quitan los enviados; lo que llegó mientras tanto se conserva.
+    if (done.size) writePending(readPending().filter((r) => !(r && done.has(r._k))));
+    return sent;
   }
 
   picked(id) {
