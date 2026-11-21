@@ -596,12 +596,13 @@ function streakDays(act, now) {
 }
 
 // ---------- 4.2.0 · Palabras vistas hoy (para «¡Lo lograste!») ----------
-const HOY_KEY = "russo-hoy";
+// Con el mismo prefijo que las demás claves (la beta no se cruza con la app real).
+const HOY_KEY = (IS_BETA ? "russo-beta-" : "russo-") + "hoy";
 function hoyLog() {
   const day = dateKey(Date.now());
   try {
     const h = JSON.parse(localStorage.getItem(HOY_KEY) || "null");
-    if (h && h.day === day && h.decks) return h;
+    if (h && h.day === day && h.decks && typeof h.decks === "object") return h;
   } catch { /* sin almacenamiento */ }
   return { day, decks: {} };
 }
@@ -3427,6 +3428,8 @@ function mapaStageHtml() {
   if (!sel) sel = (glob && glob.mod === mod ? glob : modFirstOpen(mod)) || T[0] || null;
   m.sel = sel ? { id: sel.id, mod: mod.id } : null;
   const selIdx = sel ? T.indexOf(sel) : -1;
+  // «Sigue aquí» y «Tema actual» solo en el tema actual de verdad (no en otros módulos).
+  const selIsCur = !!(sel && glob && glob.mod === mod && glob.id === sel.id);
 
   // Avance: palabras acertadas al menos una vez ÷ palabras del módulo (y de toda la ruta)
   let rn = 0, rt = 0;
@@ -3453,7 +3456,7 @@ function mapaStageHtml() {
     const label = `<span>${esc(ru)}</span>`;
     const isSel = i === selIdx;
     const done = isMemorized(t.deck);
-    stops += `<button class="ms-stop ms-c${col}${isSel ? " sel" : ""}${done ? " done" : ""}" type="button" lang="ru" data-mp="${esc(t.deck.id)}" aria-pressed="${isSel}" aria-label="Tema ${t.label}, ${esc(ru)}, ${esc(t.deck.title)}${isSel ? ", tema actual" : done ? ", memorizado" : ""}" style="top:${top}px;--sc:${STOP_COLORS[i % STOP_COLORS.length]}">${col === 2 ? label + n : n + label}</button>`;
+    stops += `<button class="ms-stop ms-c${col}${isSel ? " sel" : ""}${done ? " done" : ""}" type="button" lang="ru" data-mp="${esc(t.deck.id)}" aria-pressed="${isSel}" aria-label="Tema ${t.label}, ${esc(ru)}, ${esc(t.deck.title)}${isSel && selIsCur ? ", tema actual" : done ? ", memorizado" : ""}" style="top:${top}px;--sc:${STOP_COLORS[i % STOP_COLORS.length]}">${col === 2 ? label + n : n + label}</button>`;
   });
   const full = !!m.full;
   const bgH = full ? Math.max(H, 532) : H;
@@ -3478,9 +3481,9 @@ function mapaStageHtml() {
     const g = gramOf(d);
     const nToday = todayWords(d);
     const ejs = ejButtons(d);
-    card = `<section class="ms-card sh3d card-frame pal-${v.pal}" aria-label="Tema actual">
-      <span class="tm-sigue">Sigue aquí</span>
-      <span class="ms-c-head"><span class="ms-c-num num">${sel.label}</span><span class="ms-c-ttl"><span class="ms-c-lab">Tema actual</span><b>${esc(d.title)}</b></span><span class="ms-c-ru" lang="ru">${esc(mapaRu(sel))}</span></span>
+    card = `<section class="ms-card sh3d card-frame pal-${v.pal}" aria-label="${selIsCur ? "Tema actual" : `Tema ${sel.label}`}">
+      ${selIsCur ? `<span class="tm-sigue">Sigue aquí</span>` : ""}
+      <span class="ms-c-head"><span class="ms-c-num num">${sel.label}</span><span class="ms-c-ttl">${selIsCur ? `<span class="ms-c-lab">Tema actual</span>` : ""}<b>${esc(d.title)}</b></span><span class="ms-c-ru" lang="ru">${esc(mapaRu(sel))}</span></span>
       <span class="ms-row"><span class="ms-row-l">Palabras</span><span class="bar"><span style="width:${st.pct}%"></span></span><span class="ms-row-n"><span class="num">${st.learned}</span>/<span class="num">${st.total}</span></span></span>
       ${g.titulo || g.total ? `<span class="ms-row"><span class="ms-row-l">Gramática</span><span class="ms-row-t">${esc(g.titulo || "Cajas y retos")}</span>${g.total ? `<span class="ms-row-n"><span class="num">${g.done}</span>/<span class="num">${g.total}</span></span>` : ""}</span>` : ""}
       <button class="ms-go" type="button" data-mc="words">${nToday ? `Palabras · <span class="num">${nToday}</span> para hoy →` : "Repasar palabras →"}</button>
@@ -4181,6 +4184,7 @@ function bind() {
   $("#reset-no").addEventListener("click", () => { $("#reset-confirm").hidden = true; $("#reset-ask").hidden = false; });
   $("#reset-yes").addEventListener("click", () => {
     store.reset();
+    try { localStorage.removeItem(HOY_KEY); } catch { /* sin almacenamiento */ }
     activityCache = null;
     $("#reset-confirm").hidden = true;
     $("#reset-ask").hidden = false;
