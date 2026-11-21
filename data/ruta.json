@@ -1,20 +1,34 @@
 {
-  "nota": "Orden sugerido de los temas según las clases de CENLEX. Cada tema aparece una sola vez. «pronto» = módulo que todavía no está listo. Aprende a leer va aparte, como Módulo 0.",
+  "nota": "Orden sugerido de la Ruta (aprobado por Carol, 20 nov 2026). Cada entrada de \"temas\" es: un tema {id, es} (el mazo completo, solo sus palabras núcleo); un bloque de un mazo {id, bloque, es} (las tarjetas del mazo con el mismo \"bloque\"); o una parada de gramática {\"tipo\": \"parada\", id, titulo, es, antes} cuyo contenido va en data/gramatica/paradas.json con el mismo id (\"antes\" = tema o mazo:bloque al que prepara, para el aviso «Antes: 2 minutos de gramática»). \"nuevo\": true = mazo o parada que todavía no existe (no se muestra hasta que exista). Las tarjetas con \"extra\": true no salen solas como nuevas. Aprende a leer va aparte, como Módulo 0. Calendario y Fiestas abren el Módulo 3.",
   "modulos": [
     {
       "id": "m1",
       "n": 1,
       "titulo": "Módulo 1",
       "temas": [
-        { "id": "basicas", "es": "básicas" },
         { "id": "saludos", "es": "saludos" },
-        { "id": "familia", "es": "familia" },
+        { "id": "basicas", "bloque": "b1", "es": "¿quién? ¿qué?" },
+        { "tipo": "parada", "id": "g-kto-chto", "titulo": "Кто? Что? y э́то (sin «ser»)", "es": "кто, что y э́то", "antes": "basicas:b2" },
+        { "id": "basicas", "bloque": "b2", "es": "yo, tú, él" },
+        { "tipo": "parada", "id": "g-genero", "titulo": "Él, ella, ello: el género", "es": "он, она́, оно́", "antes": "animales" },
         { "id": "animales", "es": "animales" },
+        { "id": "basicas", "bloque": "b3", "es": "mi, tu, su" },
+        { "tipo": "parada", "id": "g-moy-moya", "titulo": "мой, моя́, моё, мои́ y чей", "es": "mi, tu, su", "antes": "familia" },
+        { "tipo": "parada", "id": "g-u-menya-est", "titulo": "У меня́ есть… (tengo)", "es": "tengo", "antes": "familia" },
+        { "id": "familia", "es": "familia" },
+        { "id": "numeros", "bloque": "n1", "es": "números 0-10" },
+        { "id": "basicas", "bloque": "b4", "es": "¿cuánto? ¿dónde está?" },
+        { "tipo": "parada", "id": "g-numeros-dos", "titulo": "1, 2, 3, 4… y la palabra que sigue", "es": "два бра́та", "antes": "verbos:v0" },
+        { "id": "verbos", "bloque": "v0", "es": "trabajar, saber, amar" },
+        { "tipo": "parada", "id": "g-presente", "titulo": "Verbos en presente: я рабо́таю, ты лю́бишь", "es": "presente", "antes": "profesiones" },
         { "id": "profesiones", "es": "profesiones" },
-        { "id": "numeros", "es": "números" },
-        { "id": "falsos-amigos", "es": "falsos amigos" },
-        { "id": "textos", "es": "textos" },
-        { "id": "cultura", "es": "gustos" }
+        { "id": "basicas", "bloque": "b5", "es": "меня́, тебя́" },
+        { "id": "nombres", "es": "nombres rusos", "nuevo": true },
+        { "tipo": "parada", "id": "g-pronombres-acusativo", "titulo": "Меня́ зову́т, Я тебя́ люблю́", "es": "меня́, тебя́", "antes": "adjetivos:a1" },
+        { "id": "basicas", "bloque": "b6", "es": "¿cómo es?" },
+        { "id": "adjetivos", "bloque": "a1", "es": "bueno, bonito" },
+        { "tipo": "parada", "id": "g-adjetivo-adverbio", "titulo": "хоро́ший o хорошо́; како́й", "es": "adjetivo y adverbio", "antes": "falsos-amigos" },
+        { "id": "falsos-amigos", "es": "falsos amigos" }
       ]
     },
     {
@@ -23,16 +37,29 @@
       "titulo": "Módulo 2",
       "temas": [
         { "id": "casa", "es": "casa" },
-        { "id": "ciudad", "es": "ciudad" },
-        { "id": "verbos", "es": "verbos" },
+        { "tipo": "parada", "id": "g-prepositivo-lugar", "titulo": "¿Dónde? в / на + -е", "es": "в ко́мнате", "antes": "verbos:v1" },
+        { "id": "verbos", "bloque": "v1", "es": "verbos" },
+        { "id": "basicas", "bloque": "b7", "es": "¿cuándo?" },
+        { "tipo": "parada", "id": "g-presente-2", "titulo": "Presente: -ешь o -ишь (де́лать, говори́ть, жить, писа́ть)", "es": "dos conjugaciones", "antes": "textos" },
+        { "id": "textos", "es": "textos" },
         { "id": "juegos", "es": "juegos" },
         { "id": "instrumentos", "es": "música" },
+        { "tipo": "parada", "id": "g-igrat-v-na", "titulo": "игра́ть в / игра́ть на", "es": "jugar y tocar", "antes": "paises" },
         { "id": "paises", "es": "países" },
+        { "id": "basicas", "bloque": "b8", "es": "¿de dónde? ¿por qué?" },
+        { "tipo": "parada", "id": "g-otkuda", "titulo": "Отку́да? из… · Где? в… · по-ру́сски", "es": "de dónde eres", "antes": "escuela" },
         { "id": "escuela", "es": "escuela" },
+        { "id": "ciudad", "es": "ciudad" },
+        { "tipo": "parada", "id": "g-gde-kuda", "titulo": "где o куда́; в o на en la ciudad", "es": "dónde y a dónde", "antes": "naturaleza" },
         { "id": "naturaleza", "es": "naturaleza" },
+        { "id": "numeros", "bloque": "n2", "es": "números 11-100" },
+        { "tipo": "parada", "id": "g-numerales", "titulo": "оди́н / одна́, два / две, пе́рвый / пе́рвая; 1 год, 2 го́да, 5 лет", "es": "números y palabras", "antes": "colores" },
+        { "tipo": "parada", "id": "g-plural", "titulo": "El plural", "es": "кни́га → кни́ги", "antes": "colores" },
         { "id": "colores", "es": "colores" },
-        { "id": "adjetivos", "es": "carácter" },
-        { "id": "ideas", "es": "ideas" }
+        { "tipo": "parada", "id": "g-adjetivo-genero", "titulo": "El adjetivo copia el género", "es": "но́вая кни́га", "antes": "adjetivos:a2" },
+        { "id": "adjetivos", "bloque": "a2", "es": "carácter" },
+        { "tipo": "parada", "id": "g-tener", "titulo": "Tener: у меня́ есть / был / не́ было", "es": "tener", "antes": null },
+        { "tipo": "parada", "id": "g-pasado", "titulo": "El pasado: был / была́, рабо́тал / рабо́тала", "es": "pasado", "antes": null }
       ]
     },
     {
@@ -42,9 +69,23 @@
       "temas": [
         { "id": "calendario", "es": "meses y estaciones" },
         { "id": "fiestas", "es": "fiestas" },
+        { "tipo": "parada", "id": "g-acusativo", "titulo": "Я чита́ю кни́гу, Я люблю́ бра́та", "es": "qué o a quién", "antes": "cultura" },
+        { "id": "cultura", "es": "gustos" },
+        { "tipo": "parada", "id": "g-nravitsya", "titulo": "Мне нра́вится: мне, тебе́, ему́…", "es": "me gusta", "antes": "ideas" },
+        { "id": "ideas", "es": "ideas" },
         { "id": "ropa-cuerpo", "es": "ropa" },
-        { "id": "comida", "es": "comida" }
+        { "id": "numeros", "bloque": "n3", "es": "números 100-1000" },
+        { "tipo": "parada", "id": "g-skolko-stoit", "titulo": "Ско́лько сто́ит? Comparar: бо́льше, лу́чше", "es": "precios", "antes": "comida", "nuevo": true },
+        { "id": "comida", "es": "comida" },
+        { "id": "verbos", "bloque": "v2", "es": "comer y comprar" },
+        { "tipo": "parada", "id": "g-hotet", "titulo": "хоте́ть + verbo; comer y beber algo", "es": "quiero", "antes": null, "nuevo": true },
+        { "tipo": "parada", "id": "g-futuro", "titulo": "Futuro: бу́ду + verbo", "es": "futuro", "antes": null },
+        { "tipo": "parada", "id": "g-s-chem", "titulo": "С чем? чай с молоко́м", "es": "con qué", "antes": null, "nuevo": true },
+        { "id": "hora", "es": "la hora", "nuevo": true },
+        { "tipo": "parada", "id": "g-hora", "titulo": "Ско́лько вре́мени? Во ско́лько?", "es": "qué hora es", "antes": null, "nuevo": true },
+        { "tipo": "dialogo", "id": "mi-dia", "titulo": "Mi día", "es": "proyecto final", "nuevo": true }
       ]
     }
-  ]
+  ],
+  "biblioteca": ["expresiones", "servilismo", "reglas-gentilicios", "casos", "genero", "plurales", "posesion", "gramatica-verbos", "gramatica-numerales"]
 }

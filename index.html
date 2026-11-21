@@ -334,24 +334,17 @@ setTimeout(window.hideSplash,10000)})();
   <div class="rep-row"><button class="rep-btn" type="button" data-report hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4M5 4h12l-2 4 2 4H5"/></svg><span>Reportar falla</span></button></div>
 </main>
 
-<!-- GRAMÁTICA (próximamente) -->
-<main id="view-gram" class="view view-study a2-head" hidden>
+<!-- GRAMÁTICA (4.2.0): índice de paradas, parada (explicación) y parada terminada -->
+<main id="view-gram" class="view view-study a2-head gram-v" hidden>
   <header class="practice-head">
-    <button class="circle-btn" id="gram-back" type="button" aria-label="Volver al ejercicio">
+    <button class="circle-btn" id="gram-back" type="button" aria-label="Volver">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
     </button>
     <div class="tm-ttl"><div class="h-sec-head"><h1 class="h-sec-t">Gramática<svg viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5c12-4 22 3 36 0s24-4 38-1 26 3 42-1"/></svg></h1><span class="h-sec-ru" lang="ru">грамма́тика</span></div><span class="tm-sub" id="gram-sub"></span></div>
   </header>
-  <div class="gram-wrap">
-    <section class="gram-card a2-card pal-bl">
-      <span class="a2-sticker"><span lang="ru">ско́ро</span> pronto</span>
-      <div class="a2-kicker"><span class="a2-kic-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg></span><span>EN CONSTRUCCIÓN</span></div>
-      <h2 class="a2-h"><span class="a2-h-s">Gramática explicada</span><span class="a2-h-b"><span class="a2-u">Muy pronto<svg viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5c12-4 22 3 36 0s24-4 38-1 26 3 42-1"/></svg></span> por aquí</span></h2>
-      <div class="a2-chips"><span class="a2-chip c1">dativo <span lang="ru">мне</span></span><span class="a2-chip c2">genitivo <span lang="ru">у меня́</span></span><span class="a2-chip c3">y más…</span></div>
-      <p class="a2-note"><b>Aquí podrás repasar</b> cada forma con calma y con ejemplos de tus ejercicios.</p>
-    </section>
-  </div>
-  <button class="btn btn-primary btn-wide" id="gram-done" type="button">Volver al ejercicio</button>
+  <div class="gram-wrap" id="gram-body" data-scroll></div>
+  <button class="btn btn-primary btn-wide" id="gram-done" type="button">Practicar</button>
+  <button class="menu-item menu-quiet gram-later" id="gram-later" type="button" hidden>Ahora no</button>
 </main>
 
 <!-- RETO DE GRAMÁTICA -->

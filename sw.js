@@ -6,7 +6,7 @@
 // Cada una usa su propia caché y la app real no toca nada bajo /beta/.
 const IS_BETA = /\/beta\/sw\.js$/.test(location.pathname);
 const CACHE_FAMILY = IS_BETA ? "russo-beta-v" : "russo-v";
-const CACHE = CACHE_FAMILY + "50";
+const CACHE = CACHE_FAMILY + "51";
 const BETA_PATH = new URL("beta", self.registration.scope).pathname; // p. ej. /Russo-Study/beta
 const SHELL = [
   "./",
@@ -87,7 +87,8 @@ async function precache() {
     const m = await res.json();
     const extra = [
       ...(m.mazos || []).map((f) => `data/${f}`),
-      ...(m.ejercicios || []).map((id) => `data/ejercicios/${id}.json`)
+      ...(m.ejercicios || []).map((id) => `data/ejercicios/${id}.json`),
+      "data/gramatica/paradas.json" // 4.2.0: paradas de gramática de la Ruta
     ];
     await Promise.all(extra.map((u) => c.add(new Request(u, { cache: "no-cache" })).catch(() => {})));
   } catch (err) { /* sin lista: se guardan al usarse */ }

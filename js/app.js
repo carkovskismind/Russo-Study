@@ -37,6 +37,7 @@ const state = {
   lectura: null,
   leer: { step: 0, sel: 0 },
   ruta: null,
+  paradas: null,
   mapa: null,
   openTile: PILOT,
   selecting: false,
@@ -378,6 +379,9 @@ async function loadDecks() {
         seccion: c.seccion || "",
         ejemplo: c.ejemplo || null,
         tip: c.tip || "",
+        // 4.2.0: bloque de la Ruta y palabra extra (no sale sola como nueva)
+        bloque: typeof c.bloque === "string" ? c.bloque : "",
+        extra: c.extra === true,
         q: c.pregunta,
         a: c.respuesta
       });
@@ -410,6 +414,15 @@ async function loadDecks() {
     const r = await fetch("data/ruta.json", { cache: "no-cache" });
     if (r.ok) state.ruta = await r.json();
   } catch (e) { console.warn("ruta", e); }
+  // 4.2.0: paradas de gramática de la Ruta (opcional mientras se escriben).
+  try {
+    const r = await fetch("data/gramatica/paradas.json", { cache: "no-cache" });
+    if (r.ok) {
+      const j = await r.json();
+      const list = Array.isArray(j) ? j : j.paradas || [];
+      state.paradas = new Map(list.filter((p) => p && p.id && Array.isArray(p.elige)).map((p) => [p.id, p]));
+    }
+  } catch (e) { console.warn("paradas", e); }
   try {
     const r = await fetch("data/lectura/lectura.json", { cache: "no-cache" });
     if (r.ok) state.lectura = await r.json();
@@ -456,6 +469,17 @@ function deckStats(deck, now = Date.now()) {
   for (const card of deck.cards) {
     const keys = keysFor(card);
     const sts = keys.map((k) => store.card(k));
+    // 4.2.0: las palabras extra no cuentan en el avance ni salen solas como nuevas;
+    // si ya las aprendiste, siguen en repaso.
+    if (card.extra) {
+      if (sts.every((st) => !st)) continue;
+      for (const st of sts) {
+        if (!st) { due++; continue; }
+        if (st.due <= eod) due++;
+        if ((st.t || 0) > last) last = st.t;
+      }
+      continue;
+    }
     total += keys.length;
     if (sts.every((st) => !st)) { fresh++; continue; }
     for (const st of sts) {
@@ -480,7 +504,7 @@ function deckNumber(deck) {
 }
 
 function deckTag(deck) {
-  return state.ruta && suggestedDeck() === deck ? " · Sugerido" : "";
+  return state.ruta && baseOf(suggestedDeck()) === deck ? " · Sugerido" : "";
 }
 
 // Actividad de un día: lo que quedó registrado o, para el historial viejo,
@@ -507,22 +531,56 @@ function logActivity() {
 // ---------- Inicio (portada 3.1) ----------
 // Tema del que más tarjetas trae la fila de hoy (la que arma «Empezar»).
 function todayTopic() {
-  const today = dateKey(Date.now());
   const plan = dailyPlan();
   const queue = buildQueue(dailyDecks(), plan.n, plan.r);
   const counts = new Map();
-  for (const it of queue) counts.set(it.card.deckId, (counts.get(it.card.deckId) || 0) + 1);
+  for (const it of queue) { const u = cardUnitKey(it.card); counts.set(u, (counts.get(u) || 0) + 1); }
   const sug = suggestedDeck();
-  if (sug && counts.get(sug.id)) return sug;
+  if (sug && counts.get(unitKeyOf(sug))) return sug;
   let best = null;
   for (const [id, n] of counts) if (!best || n > best.n) best = { id, n };
-  return best ? state.deckById.get(best.id) : null;
+  return best ? deckOfKey(best.id) : null;
+}
+
+// 4.2.0: tema o bloque de la Ruta al que pertenece una tarjeta (o su mazo).
+let cardUnitMap = null;
+function cardUnitKey(card) {
+  if (!cardUnitMap) {
+    cardUnitMap = new Map();
+    for (const t of rutaItems()) if (t.kind === "tema" && t.deck) for (const c of t.deck.cards) if (!cardUnitMap.has(c.id)) cardUnitMap.set(c.id, t.key);
+  }
+  return cardUnitMap.get(card.id) || card.deckId;
+}
+
+// 4.2.0 · Aviso «Antes: 2 minutos de gramática»: la primera palabra nueva de hoy es de un
+// tema con una parada pendiente (que no se saltó hoy).
+const SALTA_KEY = (IS_BETA ? "russo-beta-" : "russo-") + "parada-saltada";
+function saltadasHoy() {
+  try {
+    const j = JSON.parse(localStorage.getItem(SALTA_KEY) || "null");
+    return j && j.day === dateKey(Date.now()) ? j.ids || [] : [];
+  } catch { return []; }
+}
+function saltarParada(id) {
+  const ids = [...new Set([...saltadasHoy(), id])];
+  try { localStorage.setItem(SALTA_KEY, JSON.stringify({ day: dateKey(Date.now()), ids })); } catch { /* sin almacenamiento */ }
+}
+function avisoParada() {
+  if (!state.paradas || !state.paradas.size) return null;
+  const plan = dailyPlan();
+  if (!plan.n) return null;
+  const queue = buildQueue(dailyDecks(), plan.n, 0);
+  const first = queue.find((it) => it.phase === "learn");
+  if (!first) return null;
+  const u = cardUnitKey(first.card);
+  const skip = saltadasHoy();
+  return rutaItems().find((t) => t.kind === "parada" && t.antes && (t.antes === u || t.antes === first.card.deckId) && !paradaDone(t.id) && !skip.includes(t.id)) || null;
 }
 
 // Tema siguiente al actual en la ruta (con mazo), o null.
 function nextRutaTema() {
   const cur = currentTema();
-  const all = rutaMods().filter((m) => !m.pronto).flatMap((m) => modTemas(m)).filter((t) => t.deck);
+  const all = rutaItems().filter((t) => t.kind === "tema" && t.deck);
   const i = cur ? all.indexOf(cur) : -1;
   return all.slice(i + 1).find((t) => !isMemorized(t.deck)) || null;
 }
@@ -802,7 +860,7 @@ function renderHome() {
   // Nota roja: tema del día (con su número en la ruta) y N real
   const td = todayTopic();
   const tema = td ? td.title : forToday ? "Tu práctica" : "Todo al día";
-  const pos = td && state.ruta ? rutaPos(td.id) : null;
+  const pos = td && state.ruta ? rutaPos(unitKeyOf(td)) : null;
   $("#h-num").hidden = !pos;
   if (pos) $("#h-num").textContent = pos.label;
   $("#h-tema").textContent = tema;
@@ -827,16 +885,16 @@ function renderHome() {
   $("#h-mazos").textContent = state.decks.filter((d) => !d.mine).length;
   let cur = suggestedDeck();
   let sigueOpen = false;
-  if (cur && td && cur === td) {
+  if (cur && td && unitKeyOf(cur) === unitKeyOf(td)) {
     const nx = nextRutaTema();
     if (nx) { cur = nx.deck; sigueOpen = true; }
   }
   const sigue = $("#h-sigue");
-  sigue.dataset.deck = cur ? cur.id : "";
+  sigue.dataset.deck = cur ? unitKeyOf(cur) : "";
   sigue.dataset.open = sigueOpen ? "1" : "";
   $("#h-sigue-t").textContent = cur ? cur.title : noDecks ? "Sin temas cargados" : "Tus temas";
   sigue.setAttribute("aria-label", cur ? `Sigue donde ibas: ${cur.title}` : "Mira todos tus temas");
-  $("#h-gram").hidden = !gramaticaDeck();
+  $("#h-gram").hidden = !gramaticaDeck() && !(state.paradas && state.paradas.size);
 }
 
 // Parpadeo del monito: cada 3 a 5 s, solo en el inicio y sin movimiento reducido.
@@ -976,7 +1034,7 @@ function tileHtml(deck) {
   const num = deck.mine ? "Personal" : pos ? `Tema <span class="num">${pos.label}</span>` : "Biblioteca";
   const qa = deck.cards.some((c) => c.kind === "qa");
   const unit = qa ? "tarjetas" : "palabras";
-  const sug = state.ruta && suggestedDeck() === deck;
+  const sug = state.ruta && baseOf(suggestedDeck()) === deck;
   const modes = modesList(deck);
   const words = modes.find((m) => m.key === "words");
   const extra = modes.filter((m) => m.key !== "words");
@@ -1087,7 +1145,7 @@ function dudasHtml(deck) {
 
 // Guarda el tema que Carol está estudiando (para «Sigue con…» y el mapa).
 function markCurrent(deck) {
-  if (deck && !deck.mine) store.setCurrent(deck.id);
+  if (deck && !deck.mine) store.setCurrent(unitKeyOf(deck));
 }
 
 // Inicia un modo de práctica de un tema.
@@ -1148,10 +1206,12 @@ function openTileAnimated(id) {
 
 // ---------- Tema ----------
 function openTema(id) {
-  const deck = state.deckById.get(id);
+  // Un bloque de la Ruta abre el tema completo (con todas sus palabras); el bloque queda como actual.
+  const unit = deckOfKey(id);
+  const deck = baseOf(unit);
   if (!deck) return;
   state.currentDeck = deck;
-  markCurrent(deck);
+  markCurrent(unit);
   state.selecting = false;
   state.selected = new Set();
   $("#deck-search").value = "";
@@ -1369,14 +1429,18 @@ function dailyPlan() {
 // 4.2.0: la práctica del día toma las palabras nuevas en el orden de la Ruta
 // (1.1, 1.2, 1.3…); los temas que no están en la Ruta van al final.
 function dailyDecks() {
+  // 4.2.0: primero los temas y bloques en el orden de la Ruta; después los mazos completos
+  // (lo que falte de ellos: repasos de palabras extra y mazos de la Biblioteca).
+  const out = [];
+  for (const t of rutaItems()) if (t.kind === "tema" && t.deck && deckEnabled(t.deck)) out.push(t.deck);
   const order = new Map();
   let i = 0;
-  for (const m of rutaMods()) for (const t of m.temas || []) if (!t.leer && !order.has(t.id)) order.set(t.id, i++);
-  return state.decks
+  for (const m of rutaMods()) for (const t of m.temas || []) if (!t.leer && !t.tipo && !order.has(t.id)) order.set(t.id, i++);
+  return out.concat(state.decks
     .filter(deckEnabled)
     .map((d, k) => ({ d, o: order.has(d.id) ? order.get(d.id) : 100000 + k }))
     .sort((a, b) => a.o - b.o)
-    .map((x) => x.d);
+    .map((x) => x.d));
 }
 
 // newLimit cuenta palabras nuevas, no tarjetas: en «Ambas» la palabra nueva se
@@ -1386,11 +1450,14 @@ function buildQueue(decks, newLimit, revLimit = Infinity) {
   const eod = endOfDay(now);
   const reviews = [];
   const fresh = [];
+  const seenCard = new Set(); // un mazo puede venir entero y en bloques
   for (const d of decks) {
     for (const card of d.cards) {
+      if (seenCard.has(card.id)) continue;
+      seenCard.add(card.id);
       const its = keysFor(card).map((key) => ({ card, key, dir: key.split("|").pop() }));
       const sts = its.map((it) => store.card(it.key));
-      if (sts.every((st) => !st)) { fresh.push(its); continue; }
+      if (sts.every((st) => !st)) { if (!card.extra) fresh.push(its); continue; }
       its.forEach((it, i) => {
         const st = sts[i];
         if (!st) reviews.push({ ...it, phase: "quiz", due: 0 });
@@ -1437,6 +1504,9 @@ function startToday() {
       queue.splice(Math.floor(Math.random() * (queue.length + 1)), 0, item);
     });
   }
+  // 4.2.0: lo que fallaste en «Elige la forma» otro día (máximo 3), dentro del tope.
+  const libre = Math.max(0, (store.settings.dayMax || 30) - store.newToday(dateKey(Date.now())) - store.revToday(dateKey(Date.now())) - queue.length);
+  for (const it of eligePendientes(Math.min(ELIGE_POR_DIA, libre))) queue.splice(Math.floor(Math.random() * (queue.length + 1)), 0, it);
   startSession(queue, "Práctica de hoy", false, "home");
   if (state.session && state.session.queue === queue) state.session.daily = true;
 }
@@ -1703,6 +1773,16 @@ function renderItem() {
   s.requeue = false;
   hideAllControls();
   updateCounters();
+  // 4.2.0: encabezado «Gramática» en «Elige la forma»; «Práctica» en lo demás.
+  const gramHead = it.dir === "elige" && !!s.parada;
+  const h1 = $("#study-title");
+  if (h1.firstChild && h1.firstChild.nodeType === 3) h1.firstChild.textContent = gramHead ? "Gramática" : "Práctica";
+  $("#view-study .h-sec-ru").textContent = gramHead ? "грамма́тика" : "пра́ктика";
+  $("#view-study").classList.toggle("st-gram", it.dir === "elige");
+  if (it.dir === "elige") {
+    $("#view-study").classList.add("st-quiz");
+    return renderElige(it);
+  }
 
   const learn = it.phase === "learn" && c.kind !== "qa";
   const cardEl = $("#card");
@@ -1843,7 +1923,8 @@ function choose(i) {
   });
   const right = it.options[i].correct;
   if (!right) buttons[i].classList.add("wrong");
-  revealAfterAnswer(it);
+  if (it.dir === "elige") revealElige(it, right && !it.hint);
+  else revealAfterAnswer(it);
   // Usar la pista cuenta como error aunque la respuesta sea correcta.
   const ok = right && !it.hint;
   playSound(right);
@@ -1878,6 +1959,14 @@ function useHint() {
   if (s.answered || it.phase !== "quiz") return;
   if (it.hint === 0) {
     it.hint = 1;
+    if (it.dir === "elige") {
+      $("#hint-text").textContent = eligeHint(it);
+      $("#hint-text").lang = "";
+      $("#hint-mine").hidden = true;
+      $("#hint-box").hidden = false;
+      $("#btn-hint").innerHTML = hintBtnHtml("No sé, muéstrame la respuesta", "Cuenta como error y vuelve al final de hoy.");
+      return;
+    }
     $("#hint-text").textContent = it.dir === "audio" ? it.card.ru : hintText(it);
     $("#hint-text").lang = it.dir === "audio" ? "ru" : "";
     const mine = it.dir === "audio" ? "" : store.note(it.card.id);
@@ -1892,7 +1981,8 @@ function useHint() {
     b.disabled = true;
     if (it.options[j].correct) b.classList.add("correct");
   });
-  revealAfterAnswer(it);
+  if (it.dir === "elige") revealElige(it, false);
+  else revealAfterAnswer(it);
   playSound(false);
   settle(false);
 }
@@ -1962,6 +2052,18 @@ function settle(ok) {
   const now = Date.now();
   if (ok) s.ok++;
   else s.bad++;
+  if (it.dir === "elige") {
+    // Se guarda el primer intento: lo fallado vuelve en la práctica del día siguiente.
+    if (!it.failed) {
+      store.setEjer(it.key, ok);
+      if (!ok && s.firstBad) s.firstBad.push(it.elige);
+      if (s.daily && !it.dayCounted) { it.dayCounted = true; store.countReview(dateKey(now)); }
+      logActivity();
+    } else if (ok && !s.parada) store.setEjer(it.key, true);
+    if (!ok) { it.failed = true; it.hint = 0; s.requeue = true; }
+    updateCounters();
+    return;
+  }
   if (!s.cram) {
     const prev = store.card(it.key);
     // Nueva = ninguna dirección de la palabra se había visto (en «Ambas» cuenta una vez).
@@ -1999,7 +2101,7 @@ function next() {
   if (s.requeue) s.queue.push(it);
   else {
     s.resolved++;
-    if (it.picked && !s.cram) store.setPicks([it.card.id], false);
+    if (it.picked && !s.cram && it.dir !== "elige") store.setPicks([it.card.id], false);
   }
   if (s.queue.length) renderItem();
   else finishSession();
@@ -2007,6 +2109,7 @@ function next() {
 
 function finishSession() {
   const s = state.session;
+  if (s && s.parada) return finishElige(s);
   if (s && s.daily) {
     state.session = null;
     return openFin();
@@ -2762,15 +2865,29 @@ function gramTagHtml(t) {
   return m ? `<b>${esc(m[1])}:</b> ${ru(m[2])}` : ru(t);
 }
 
+// 4.2.0: parada de gramática que explica una etiqueta del Diccionario («después de 2, 3, 4»).
+function paradaForTag(tag) {
+  if (!tag || !state.paradas) return null;
+  const k = norm(tag);
+  for (const p of state.paradas.values()) if ((p.tags || []).some((t) => norm(t) === k)) return p;
+  return null;
+}
+function tagHelp(tag) {
+  if (GRAM_TAGS[tag]) return GRAM_TAGS[tag];
+  const p = paradaForTag(tag);
+  return p ? `${cap(tag)}: ${(p.puntos || [])[0] || p.titulo}` : "";
+}
+
 function cajasDicHtml() {
   const { entries, open } = state.cdic;
   return `<div class="dic-list">${entries.map((d, i) => {
-    const tag = d.tag && GRAM_TAGS[d.tag] ? d.tag : (d.tag || "");
-    const isOpen = open === i && GRAM_TAGS[tag];
+    const tag = d.tag || "";
+    const help = tagHelp(tag);
+    const isOpen = open === i && help;
     return `<div class="dic-row cdic-row${isOpen ? ` open card-frame pal-${BOX_PALS[i % BOX_PALS.length]}` : ""}">
-      <span class="cdic-words">${d.dic ? `<span class="dic-from" lang="ru">${esc(d.dic)}</span><span class="cdic-arrow" aria-hidden="true">→</span>` : ""}<span class="dic-forma" lang="ru">${esc(d.forma)}</span>${tag ? `<span class="cdic-tag">${esc(tag)}</span>` : ""}${tag && GRAM_TAGS[tag] ? `<button class="cdic-q" type="button" data-ctag="${i}" aria-expanded="${!!isOpen}" aria-label="Qué quiere decir ${esc(tag)}">?</button>` : ""}</span>
+      <span class="cdic-words">${d.dic ? `<span class="dic-from" lang="ru">${esc(d.dic)}</span><span class="cdic-arrow" aria-hidden="true">→</span>` : ""}<span class="dic-forma" lang="ru">${esc(d.forma)}</span>${tag ? `<span class="cdic-tag">${esc(tag)}</span>` : ""}${tag && help ? `<button class="cdic-q" type="button" data-ctag="${i}" aria-expanded="${!!isOpen}" aria-label="Qué quiere decir ${esc(tag)}">?</button>` : ""}</span>
       <span class="cdic-es">= ${esc(d.es)}</span>
-      ${isOpen ? `<div class="cdic-expl" role="status"><span>${gramTagHtml(GRAM_TAGS[tag])}</span><button class="cdic-gram" type="button" data-cgram="${i}">Repasar gramática →</button></div>` : ""}
+      ${isOpen ? `<div class="cdic-expl" role="status"><span>${gramTagHtml(help)}</span><button class="cdic-gram" type="button" data-cgram="${i}">Repasar gramática →</button></div>` : ""}
     </div>`;
   }).join("")}</div>`;
 }
@@ -2789,10 +2906,12 @@ function cajasDicClick(e) {
   }
   const g = e.target.closest("[data-cgram]");
   if (g) {
+    // 4.2.0: abre la parada que tiene esa etiqueta; si no hay, el índice de Gramática.
     const tag = cd.entries[Number(g.dataset.cgram)].tag || "";
     closeSheet();
-    $("#gram-sub").textContent = tag ? tag.charAt(0).toUpperCase() + tag.slice(1) : "";
-    show("gram");
+    const p = paradaForTag(tag);
+    if (p) openParada(p.id, { from: "cajas", tag, sub: "Desde el Diccionario de Cajas" });
+    else openGramIndice("cajas");
     return true;
   }
   return false;
@@ -3281,17 +3400,104 @@ function rutaMods() {
   return state.ruta ? state.ruta.modulos : [];
 }
 
-// Temas de un módulo con su mazo (los que no existen se omiten).
+// ----- 4.2.0 · Ruta con bloques y paradas de gramática -----
+// Etiqueta rusa corta de cada bloque en el Mapa (solo se muestra; no cambia ids).
+const BLOQUE_RU = {
+  "basicas:b1": "кто?", "basicas:b2": "я, ты", "basicas:b3": "мой", "basicas:b4": "где?", "basicas:b5": "меня́",
+  "basicas:b6": "како́й?", "basicas:b7": "когда́?", "basicas:b8": "отку́да?"
+};
+// Mayúscula en la primera letra de cada pregunta («¿quién? ¿qué?» → «¿Quién? ¿Qué?»).
+function capEs(s) {
+  return String(s || "").replace(/(^|[¿¡]\s*)(\p{L})/gu, (m, a, b) => a + b.toUpperCase());
+}
+// Un bloque es un pedazo del mazo: mismas tarjetas núcleo con ese «bloque». Mismo id de
+// mazo (el progreso no cambia), sin frases ni ejercicios (esos van con el tema completo).
+const unitCache = new Map();
+function unitDeck(base, bloque, es) {
+  const key = `${base.id}:${bloque}`;
+  if (!unitCache.has(key)) {
+    unitCache.set(key, {
+      ...base,
+      unitKey: key,
+      bloque,
+      base,
+      sub: capEs(es),
+      title: `${base.title} · ${capEs(es)}`,
+      cards: base.cards.filter((c) => c.bloque === bloque && !c.extra),
+      frases: [], dialogos: [], cajas: [], retos: [], aprender: null
+    });
+  }
+  return unitCache.get(key);
+}
+// Clave de un tema en la Ruta: «mazo» o «mazo:bloque».
+const unitKeyOf = (deck) => (deck ? deck.unitKey || deck.id : "");
+// Mazo completo de un tema o bloque.
+const baseOf = (deck) => (deck && deck.base) || deck;
+
+// Paradas de gramática (contenido en data/gramatica/paradas.json).
+function paradaData(id) {
+  return state.paradas ? state.paradas.get(id) || null : null;
+}
+function paradaDone(id) {
+  const r = store.ejer(`parada:${id}`);
+  return !!(r && r.ok > 0);
+}
+
+// Temas y paradas de un módulo (los mazos que no existen se omiten; las paradas sin
+// contenido todavía no se muestran en el Mapa ni en el Módulo, solo en el índice).
 const modCache = new Map();
 function modTemas(mod) {
   if (!modCache.has(mod.id)) modCache.set(mod.id, buildModTemas(mod));
   return modCache.get(mod.id);
 }
+function modItems(mod) {
+  if (!modCache.has("i:" + mod.id)) { modTemas(mod); }
+  return modCache.get("i:" + mod.id);
+}
 
 function buildModTemas(mod) {
-  return mod.temas
-    .map((t, i) => ({ ...t, deck: t.leer ? null : state.deckById.get(t.id), mod, label: `${mod.n}.${i + 1}` }))
-    .filter((t) => t.leer || t.deck);
+  const items = [];
+  const counts = new Map();
+  for (const m of rutaMods()) for (const t of m.temas || []) if (t.bloque) counts.set(t.id, (counts.get(t.id) || 0) + 1);
+  const seen = new Map();
+  let n = 0;
+  for (const t of mod.temas) {
+    if (t.tipo === "parada") {
+      const p = paradaData(t.id);
+      if (p) items.push({ ...t, kind: "parada", key: `parada:${t.id}`, parada: p, mod, deck: null });
+      continue;
+    }
+    if (t.tipo) continue; // diálogo final: todavía no existe
+    if (t.leer) { items.push({ ...t, kind: "leer", key: "leer", mod, deck: null, label: `${mod.n}.${++n}` }); continue; }
+    const base = state.deckById.get(t.id);
+    if (!base) continue;
+    const deck = t.bloque ? unitDeck(base, t.bloque, t.es) : base;
+    if (t.bloque && !deck.cards.length) continue;
+    let parte = 0;
+    if (t.bloque) { parte = (seen.get(t.id) || 0) + 1; seen.set(t.id, parte); }
+    items.push({ ...t, kind: "tema", key: unitKeyOf(deck), deck, base, mod, label: `${mod.n}.${++n}`, parte, partes: t.bloque ? counts.get(t.id) : 0 });
+  }
+  // Las partes se cuentan en toda la Ruta (Básicas · parte 3 de 8).
+  for (const it of items) {
+    if (!it.bloque) continue;
+    let k = 0;
+    for (const m of rutaMods()) {
+      if (m === mod) break;
+      for (const t of m.temas || []) if (t.bloque && t.id === it.id) k++;
+    }
+    it.parte += k;
+  }
+  modCache.set("i:" + mod.id, items);
+  return items.filter((x) => x.kind !== "parada");
+}
+
+// Todo lo de la Ruta en orden (temas, bloques y paradas).
+function rutaItems() {
+  return rutaMods().filter((m) => !m.pronto).flatMap((m) => modItems(m));
+}
+function itemDone(it) {
+  if (it.kind === "parada") return paradaDone(it.id);
+  return it.deck ? isMemorized(it.deck) : false;
 }
 
 // Primer tema sin memorizar de un módulo (lo que sugiere la ruta).
@@ -3300,15 +3506,30 @@ function modFirstOpen(mod) {
   return modTemas(mod).find((t) => t.deck && !isMemorized(t.deck)) || null;
 }
 
-// Tema actual de Carol: el último mazo que abrió o practicó (si está en la ruta).
+// Tema actual de Carol: el último tema (o parada) que abrió o practicó, si está en la ruta.
+// Si ese tema ya está memorizado y lo que sigue es una parada pendiente, «Sigue aquí» pasa a ella.
 // Sin historial, el que sugiere la ruta.
-function currentTema() {
+function currentItem() {
   const id = store.currentDeck();
-  const t = id ? rutaPos(id) : null;
-  if (t && !t.mod.pronto) return t;
+  const all = rutaItems();
+  let i = id ? all.findIndex((x) => x.key === id) : -1;
+  if (i < 0 && id) i = all.findIndex((x) => x.kind === "tema" && x.id === id);
+  if (i >= 0) {
+    const t = all[i];
+    if (t.kind === "tema" && isMemorized(t.deck) && all[i + 1] && all[i + 1].kind === "parada" && !paradaDone(all[i + 1].id)) return all[i + 1];
+    return t;
+  }
   const mods = rutaMods().filter((m) => !m.pronto);
   const m = mods.find((x) => modFirstOpen(x));
   return m ? modFirstOpen(m) : null;
+}
+// Igual, pero siempre un tema (para «Sigue donde ibas», el tema del día, etc.).
+function currentTema() {
+  const c = currentItem();
+  if (!c || c.kind !== "parada") return c;
+  const all = rutaItems();
+  const i = all.indexOf(c);
+  return all.slice(i + 1).find((x) => x.kind === "tema") || all.slice(0, i).reverse().find((x) => x.kind === "tema") || null;
 }
 
 // En el módulo del tema actual es ese tema; en los demás, el primero sin memorizar.
@@ -3319,7 +3540,7 @@ function modCurrent(mod) {
 }
 
 function currentMod() {
-  const c = currentTema();
+  const c = currentItem();
   if (c) return c.mod;
   const mods = rutaMods().filter((m) => !m.pronto);
   return mods[mods.length - 1] || null;
@@ -3342,18 +3563,28 @@ function todayWords(deck) {
   return s.due + Math.min(s.fresh, NEW_PER_DECK_SESSION, newLeftToday());
 }
 
+// Lugar de un tema en la ruta. Con un mazo completo partido en bloques, el primer bloque.
 function rutaPos(deckId) {
   for (const m of rutaMods()) {
-    const t = modTemas(m).find((x) => x.deck && x.deck.id === deckId);
+    const T = modTemas(m);
+    const t = T.find((x) => x.deck && x.key === deckId) || T.find((x) => x.deck && x.id === deckId);
     if (t) return t;
   }
   return null;
 }
 
+// Tema (o bloque) guardado como actual.
+function deckOfKey(key) {
+  if (!key) return null;
+  const pos = rutaPos(key);
+  if (pos && pos.key === key) return pos.deck;
+  return state.deckById.get(key) || null;
+}
+
 // «Tema actual»: el último mazo que abrió o practicó; si no hay, el de la ruta.
 function suggestedDeck() {
   const id = store.currentDeck();
-  const d = id ? state.deckById.get(id) : null;
+  const d = id && !id.startsWith("parada:") ? deckOfKey(id) : null;
   if (d && !d.mine) return d;
   const c = currentTema();
   return c ? c.deck : null;
@@ -3576,10 +3807,7 @@ function mapaClick(e) {
     if (a === "home") return go("home");
     if (a === "leer") return openLeer();
     if (a === "modulo") { state.modulo = m.mod; return go("modulo"); }
-    if (a === "gram") {
-      const d = gramaticaDeck();
-      if (d) openSheet("Dudas de gramática", dudasHtml(d), d.title);
-    }
+    if (a === "gram") return openGramIndice("mapa");
   }
 }
 
@@ -3636,6 +3864,325 @@ function renderModulo() {
     const rest = list.querySelector(".ml-rest");
     if (rest) rest.setAttribute("y1", String(curIdx > 0 ? num.bottom - top + 5 : 30));
   });
+}
+
+// ---------- 4.2.0 · Gramática en la Ruta: índice, parada, «Elige la forma» ----------
+// Las paradas viven en data/gramatica/paradas.json (formato en docs/contenido.md).
+// Al terminar «Elige la forma» la parada queda hecha (ejer «parada:<id>»); lo que
+// fallaste al primer intento vuelve en la práctica del día siguiente (máximo 3 al día).
+const GRAM_PALS = ["kh", "pe", "lav", "li", "pk", "bl", "mint"];
+const ELIGE_POR_DIA = 3;
+const FICHAS = ["casos", "genero", "plurales", "posesion", "gramatica-verbos", "gramatica-numerales", "reglas-gentilicios"];
+const ICO_BOOK = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg>`;
+const ICO_CHEV = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>`;
+const ICO_OK = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
+const UNDERLINE = `<svg viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5c12-4 22 3 36 0s24-4 38-1 26 3 42-1"/></svg>`;
+
+// Texto de gramática: ruso con su letra y color, números aparte y flechas en color.
+// mode "pt" = puntos (números en pastilla amarilla); "t" = títulos (números en Lato).
+function gramText(t, mode = "pt") {
+  return esc(t)
+    .replace(/[а-яё́]+(?:[\s,]+[а-яё́]+)*/gi, (w) => {
+      const m = w.match(/^(.*?)([\s,]*)$/);
+      return `<span lang="ru">${m[1]}</span>${m[2]}`;
+    })
+    .replace(/(^|[^\w-])(\d+)(?![\w])/g, (m, a, n) => `${a}<span class="num${mode === "pt" ? " gx-n" : ""}">${n}</span>`)
+    .replace(/→/g, `<span class="gx-arr">→</span>`);
+}
+
+// Título grande de la parada con una parte resaltada (marcador amarillo y subrayado).
+function paradaTitle(p) {
+  const t = p.titulo || "";
+  let a = -1, b = -1;
+  const pick = (from, to) => { a = from; b = to; };
+  if (p.resalta && t.includes(p.resalta)) pick(t.indexOf(p.resalta), t.indexOf(p.resalta) + p.resalta.length);
+  else if (t.includes("…")) {
+    const i = t.indexOf("…") + 1;
+    const rest = t.slice(i);
+    const m = rest.match(/^\s*(\S+(?:\s+\S+){0,2})/);
+    if (m) pick(i + rest.indexOf(m[1]), i + rest.indexOf(m[1]) + m[1].length);
+  } else if (t.includes(":")) {
+    const i = t.indexOf(":") + 1;
+    const m = t.slice(i).match(/^\s*(.+)$/);
+    if (m) pick(i + t.slice(i).indexOf(m[1]), t.length);
+  }
+  if (a < 0) return gramText(t, "t");
+  return `${gramText(t.slice(0, a), "t")}<span class="pd-mark">${gramText(t.slice(a, b), "t")}${UNDERLINE}</span>${gramText(t.slice(b), "t")}`;
+}
+
+// Nombre corto del tema al que prepara una parada («Antes de Verbos», «Básicas · Yo, tú, él»).
+function shortTitle(d) {
+  const t = d.title === "Palabras básicas" ? "Básicas" : d.title.split(" y ")[0];
+  return d.bloque && d.base && d.base.id === "basicas" ? `${t} · ${d.sub}` : t;
+}
+function antesTitle(key) {
+  if (!key) return "";
+  const t = rutaPos(key);
+  const d = t && t.key === key ? t.deck : state.deckById.get(key);
+  if (!d) return "";
+  const base = baseOf(d);
+  return shortTitle(d.bloque ? { ...d, title: base.title } : d);
+}
+
+// Todas las paradas de la Ruta en orden (con o sin contenido).
+function gramParadas() {
+  const out = [];
+  let n = 0;
+  for (const m of rutaMods()) {
+    for (const t of m.temas || []) {
+      if (t.tipo !== "parada") continue;
+      out.push({ ...t, n: ++n, mod: m, parada: paradaData(t.id) });
+    }
+  }
+  return out;
+}
+
+function openGramIndice(from) {
+  state.gram = { mode: "indice", from: from || state.view };
+  renderGram();
+  show("gram");
+  window.scrollTo(0, 0);
+  const w = $("#gram-body");
+  if (w) w.scrollTop = 0;
+}
+
+function openParada(id, opts = {}) {
+  const p = paradaData(id);
+  if (!p) return toast("Esta parada llega pronto.");
+  const prev = state.gram;
+  state.gram = { mode: "parada", id, from: opts.from || (prev && state.view === "gram" ? prev.from : state.view), back: state.view === "gram" && prev ? { ...prev } : null, tag: opts.tag || "", sub: opts.sub || "" };
+  store.setCurrent(`parada:${id}`);
+  renderGram();
+  show("gram");
+  const w = $("#gram-body");
+  if (w) w.scrollTop = 0;
+}
+
+function gramBack() {
+  const g = state.gram;
+  if (g && g.back) { state.gram = g.back; renderGram(); return; }
+  const from = g ? g.from : "home";
+  state.gram = null;
+  if (from === "cajas") return show("cajas");
+  if (from === "study" && state.session) return show("study");
+  backTo(from === "modulo" ? "modulo" : from);
+}
+
+function renderGram() {
+  const g = state.gram;
+  const view = $("#view-gram");
+  view.classList.toggle("gram-idx", g.mode === "indice");
+  const done = $("#gram-done"), later = $("#gram-later");
+  later.hidden = true;
+  done.hidden = false;
+  $("#gram-back").setAttribute("aria-label", "Volver");
+  if (g.mode === "indice") {
+    const ps = gramParadas();
+    $("#gram-sub").innerHTML = `<span class="num">${ps.length}</span> paradas · en el orden de la Ruta`;
+    done.hidden = true;
+    const cur = currentItem();
+    let html = "";
+    for (const m of rutaMods()) {
+      const mine = ps.filter((p) => p.mod === m);
+      if (!mine.length) continue;
+      const hechas = mine.filter((p) => paradaDone(p.id)).length;
+      html += `<div class="gi-mod"><b>Módulo <span class="num">${m.n}</span></b><span><span class="num">${hechas}</span> de <span class="num">${mine.length}</span> hechas</span></div>`;
+      html += mine.map((p) => {
+        const ok = paradaDone(p.id);
+        const pronto = !p.parada;
+        const isCur = !pronto && cur && cur.kind === "parada" && cur.id === p.id;
+        const pal = GRAM_PALS[(p.n - 1) % GRAM_PALS.length];
+        const antes = antesTitle(p.antes);
+        const circ = ok ? `<span class="gi-c ok" aria-hidden="true">${ICO_OK}</span>` : `<span class="gi-c num${isCur ? " cur" : ""}" aria-hidden="true">${p.n}</span>`;
+        const right = pronto ? `<span class="gi-pronto">pronto</span>` : `<span class="gi-chev" aria-hidden="true">${ICO_CHEV}</span>`;
+        const lab = `Parada ${p.n}: ${p.titulo}${ok ? ", hecha" : isCur ? ", sigue aquí" : pronto ? ", próximamente" : ""}`;
+        return `<div class="gi-item${pronto ? " pronto" : ` card-frame pal-${pal} sh3d`}${isCur ? " cur" : ""}" ${pronto ? "" : `role="button" tabindex="0" data-gpar="${esc(p.id)}"`} aria-label="${esc(lab)}">
+          ${isCur ? `<span class="tm-sigue">Sigue aquí</span>` : ""}${circ}
+          <span class="gi-t"><b>${gramText(p.titulo, "t")}</b><span class="gi-s"><span class="gi-es">${gramText(p.es || "", "t")}</span>${antes ? ` · antes de ${esc(antes)}` : ""}</span></span>${right}</div>`;
+      }).join("");
+    }
+    const fichas = FICHAS.map((id) => state.deckById.get(id)).filter(Boolean);
+    if (fichas.length) {
+      html += `<div class="h-sec-head gi-fichas-h"><h2 class="h-sec-t">Fichas de consulta${UNDERLINE}</h2><span class="h-sec-ru" lang="ru">спра́вка</span></div>
+        <p class="gi-note">Solo para leer: todas las reglas juntas, sin ejercicios.</p>
+        <div class="gi-fichas">${fichas.map((d, i) => `<button class="gi-ficha card-frame pal-${GRAM_PALS[i % GRAM_PALS.length]} sh3d" type="button" data-gficha="${esc(d.id)}"><b>${esc(d.id === "reglas-gentilicios" ? "Gentilicios" : d.title.split(/:| y /)[0])}</b><span><span class="num">${d.cards.length}</span> fichas</span></button>`).join("")}</div>`;
+    }
+    $("#gram-body").innerHTML = html;
+    return;
+  }
+  const p = paradaData(g.id);
+  if (!p) return;
+  const t = rutaItems().find((x) => x.kind === "parada" && x.id === g.id);
+  const antes = antesTitle(t && t.antes);
+  if (g.mode === "parada") {
+    $("#gram-sub").textContent = g.sub || (t ? `Parada · Módulo ${t.mod.n}` : "Parada de gramática");
+    const pts = (p.puntos || []).slice(0, 3);
+    const ex = (p.ejemplos || []).map((x, i) => `<div class="pd-ex">${i === 0 ? `<b class="pd-lab pd-lab-ex">Ejemplos</b>` : ""}<div class="pd-ex-t"><span class="pd-ex-ru" lang="ru">${esc(x.ru)}</span>${x.fonetica ? `<span class="pd-ex-fon">${esc(x.fonetica)}</span>` : ""}<span class="pd-ex-es">${esc(x.es)}</span></div><span class="pd-ex-b"><button class="pd-au pd-au-n" type="button" data-say="${esc(x.ru)}" aria-label="Escuchar el ejemplo">${SPEAKER}</button><button class="pd-au" type="button" data-say-slow="${esc(x.ru)}" aria-label="Escuchar más lento">${TURTLE}</button></span></div>`).join("");
+    $("#gram-body").innerHTML = `<section class="pd-card a2-card pal-bl">
+      <span class="pd-sticker"><span class="num">2</span> min</span>
+      <div class="pd-kick"><span class="pd-ico" aria-hidden="true">${ICO_BOOK}</span><span class="pd-pill">PARADA DE GRAMÁTICA</span></div>
+      <h2 class="pd-h">${antes ? `<span class="pd-h-s">Antes de ${esc(antes)}</span>` : ""}<span class="pd-h-b">${paradaTitle(p)}</span></h2>
+      <div class="pd-chips">${p.ru ? `<span class="pd-chip" lang="ru">${esc(p.ru)}</span>` : ""}${g.tag ? `<span class="pd-chip pd-chip-tag">${gramText(g.tag, "t")}</span>` : ""}</div>
+      <div class="pd-box"><b class="pd-lab">La regla</b>
+        <ul class="pd-pts">${pts.map((x, i) => `<li><i style="background:${["#AA94FC", "#F2C14E", "#4AF2D5"][i % 3]}"></i>${gramText(x)}</li>`).join("")}</ul>
+        ${ex}
+        ${p.ojo ? `<p class="pd-ojo"><b>Ojo:</b> ${gramText(p.ojo, "t")}</p>` : ""}
+      </div>
+    </section>`;
+    done.textContent = "Practicar";
+    later.textContent = "Ahora no";
+    later.hidden = false;
+    return;
+  }
+  if (g.mode === "fin") {
+    const r = g.result || { ok: 0, tot: 0, bad: [] };
+    $("#gram-sub").innerHTML = `Elige la forma${p.ru ? ` · <span lang="ru">${esc(p.ru)}</span>` : ""}`;
+    const fallo = r.bad.length ? r.bad.map((e) => `<span lang="ru">${esc(e.texto.replace(/[.!?]+$/, "").split(/\s+/).slice(-2).join(" "))}</span>`).join(", ") : "";
+    $("#gram-body").innerHTML = `<section class="pd-card pd-fin a2-card pal-kh">
+      <span class="pd-sticker"><span lang="ru">Гото́во!</span> listo</span>
+      <div class="pd-kick pd-kick-fin"><span class="pd-ico pd-ico-fin" aria-hidden="true">${ICO_BOOK}</span><span>PARADA TERMINADA</span></div>
+      <h2 class="pd-h"><span class="pd-h-s">${gramText(p.titulo, "t")}</span><span class="pd-h-b"><span class="a2-u">¡Listo!${UNDERLINE}</span></span></h2>
+      <div class="a2-chips"><span class="a2-chip c1"><span class="num">${r.ok}</span> de <span class="num">${r.tot}</span> bien</span>${r.bad.length ? `<span class="a2-chip c2"><span class="num">${r.bad.length}</span> para repetir</span>` : ""}</div>
+      <p class="a2-note">${r.bad.length ? `<b>${r.bad.length === 1 ? "La que fallaste vuelve" : "Las que fallaste vuelven"}</b> mañana en tu práctica del día: ${fallo}.` : "<b>¡Todas bien!</b> Ya puedes seguir con la Ruta."}</p>
+    </section>`;
+    done.textContent = "Seguir con la Ruta";
+    later.textContent = "Repasar la explicación";
+    later.hidden = false;
+  }
+}
+
+function gramClick(e) {
+  const g = state.gram;
+  if (!g) return;
+  const sl = e.target.closest("[data-say-slow]");
+  if (sl) return speak(sl.dataset.saySlow, 0.6);
+  const sy = e.target.closest("[data-say]");
+  if (sy) return speak(sy.dataset.say);
+  const par = e.target.closest("[data-gpar]");
+  if (par) return openParada(par.dataset.gpar, { from: g.from });
+  const fi = e.target.closest("[data-gficha]");
+  if (fi) { state.gram = null; return openTema(fi.dataset.gficha); }
+}
+
+function gramDone() {
+  const g = state.gram;
+  if (!g) return;
+  if (g.mode === "parada") return startElige(g.id);
+  if (g.mode === "fin") {
+    // Seguir con la Ruta: el tema al que prepara la parada (o el Mapa).
+    const t = rutaItems().find((x) => x.kind === "parada" && x.id === g.id);
+    state.gram = null;
+    if (t && t.antes && deckOfKey(t.antes)) { store.setCurrent(t.antes); state.mapa = null; return go("mapa"); }
+    return openMapa();
+  }
+}
+
+function gramLater() {
+  const g = state.gram;
+  if (!g) return;
+  if (g.mode === "fin") { state.gram = { ...g, mode: "parada", back: null }; renderGram(); $("#gram-body").scrollTop = 0; return; }
+  gramBack();
+}
+
+// «Elige la forma»: se juega con la misma pantalla de práctica.
+function eligeItem(p, e) {
+  return { card: { id: `elige:${e.id}`, deckId: "", kind: "elige", ru: e.texto, es: e.es, fonetica: e.fonetica || "" }, elige: e, parada: p, key: `elige:${e.id}`, dir: "elige", phase: "quiz", failed: false, hint: 0 };
+}
+
+function startElige(id) {
+  const p = paradaData(id);
+  if (!p || !(p.elige || []).length) return;
+  const queue = p.elige.map((e) => eligeItem(p, e));
+  const g = state.gram;
+  startSession(queue, "Elige la forma", false, g && g.from ? g.from : "home");
+  state.session.parada = id;
+  state.session.gramFrom = g ? g.from : "home";
+  state.session.firstBad = [];
+}
+
+// Lo que fallaste al primer intento en días anteriores (para la práctica del día).
+function eligePendientes(max = ELIGE_POR_DIA) {
+  if (!state.paradas) return [];
+  const sod = startOfDay(Date.now());
+  const out = [];
+  for (const p of state.paradas.values()) {
+    for (const e of p.elige || []) {
+      const r = store.ejer(`elige:${e.id}`);
+      if (r && r.last === 0 && r.t < sod) out.push(eligeItem(p, e));
+    }
+  }
+  return out.sort((a, b) => store.ejer(a.key).t - store.ejer(b.key).t).slice(0, max);
+}
+
+// Frase con el hueco (antes de contestar) o con la forma correcta subrayada.
+function eligeFrase(e, filled) {
+  const parts = esc(e.frase).split("___");
+  const gap = filled ? `<span class="el-fill">${esc(e.correcta)}</span>` : `<span class="el-gap" aria-label="hueco"></span>`;
+  return parts.join(gap);
+}
+
+function renderElige(it) {
+  const e = it.elige;
+  const s = state.session;
+  $("#card").className = "card card-frame study-card sh3d pal-kh st-elige";
+  $("#card-badge").hidden = false;
+  $("#card-badge").className = "card-badge q";
+  $("#card-badge").textContent = it.failed ? "Repetir · Completa la frase" : "Completa la frase";
+  $("#study-sub").innerHTML = `Elige la forma${it.parada.ru ? ` · <span lang="ru">${esc(it.parada.ru)}</span>` : ""}`;
+  $("#card-front").innerHTML = eligeFront(e, false);
+  $("#card-speak").hidden = true;
+  it.options = shuffle(e.opciones.map((o) => ({ text: o, correct: o === e.correcta })));
+  $("#options").innerHTML = it.options.map((o, i) => `<button class="option ru" type="button" data-opt="${i}" lang="ru"><span class="key">${i + 1}</span><span class="opt-text"><span>${esc(o.text)}</span></span></button>`).join("");
+  $("#options").hidden = false;
+  $("#st-ask").textContent = "Elige la forma que va en el hueco.";
+  $("#st-ask").hidden = false;
+  $("#btn-hint").innerHTML = hintBtnHtml("Dame una pista", "Te da una idea, no la respuesta. Cuenta como error.");
+  $("#btn-hint").hidden = false;
+  $("#study-exit").hidden = false;
+  s.answered = false;
+}
+
+function eligeFront(e, done) {
+  return `<span class="big-ru el-frase" lang="ru">${eligeFrase(e, done)}</span>
+    ${done && e.fonetica ? `<span class="fon-big el-fon">${esc(e.fonetica)}</span>` : ""}
+    <span class="st-div el-div" aria-hidden="true"></span>
+    ${e.base ? `<span class="el-base">Palabra base <span class="el-base-w" lang="ru">${esc(e.base)}</span></span>` : ""}
+    <span class="el-es">${esc(e.es)}</span>`;
+}
+
+// Después de contestar: la frase completa, su fonética y audio; si fallaste, el porqué.
+function revealElige(it, right) {
+  const e = it.elige;
+  $("#card-front").innerHTML = eligeFront(e, true);
+  $("#card-speak").hidden = !canSpeak();
+  $("#btn-hint").hidden = true;
+  $("#hint-box").hidden = true;
+  const box = $("#options");
+  box.querySelectorAll(".el-msg, .el-err").forEach((x) => x.remove());
+  if (right) {
+    box.insertAdjacentHTML("beforeend", `<p class="el-msg" role="status">¡Bien! En un momento pasa a la siguiente.</p>`);
+  } else {
+    box.insertAdjacentHTML("beforeend", `<section class="el-err" role="status"><b>Va <span lang="ru">${esc(e.correcta)}</span>.</b><p>${gramText(e.porque, "t")}</p></section>`);
+    $("#btn-next").textContent = "Siguiente";
+    $("#btn-next").hidden = false;
+  }
+}
+
+function eligeHint(it) {
+  const e = it.elige;
+  return e.pista || (e.base ? `Fíjate en la palabra que va junto al hueco. Su forma de diccionario es «${e.base}».` : "Fíjate en la palabra que va junto al hueco.");
+}
+
+function finishElige(s) {
+  const id = s.parada;
+  const p = paradaData(id);
+  const tot = p ? p.elige.length : s.resolved;
+  store.setEjer(`parada:${id}`, true);
+  const bad = s.firstBad || [];
+  state.gram = { mode: "fin", id, from: s.gramFrom || "home", result: { ok: Math.max(0, tot - bad.length), tot, bad } };
+  state.session = null;
+  renderGram();
+  show("gram");
 }
 
 // ---------- Ajustes y cuenta ----------
@@ -3876,17 +4423,14 @@ function bind() {
   });
   $("#h-sigue").addEventListener("click", (e) => {
     const t = e.currentTarget;
-    const deck = state.deckById.get(t.dataset.deck || "");
-    if (deck && t.dataset.open) return openTema(deck.id);
+    const deck = deckOfKey(t.dataset.deck || "");
+    if (deck && t.dataset.open) return openTema(unitKeyOf(deck));
     if (deck) { state.currentDeck = deck; markCurrent(deck); return startDeck(deck); }
     go("modulos");
   });
   $("#h-mapa").addEventListener("click", openMapa);
   $("#h-leer").addEventListener("click", openLeer);
-  $("#h-gram").addEventListener("click", () => {
-    const d = gramaticaDeck();
-    if (d) openSheet("Dudas de gramática", dudasHtml(d), d.title);
-  });
+  $("#h-gram").addEventListener("click", () => openGramIndice("home"));
 
   // Temas
   $("#temas-chips").addEventListener("click", (e) => {
@@ -4101,8 +4645,13 @@ function bind() {
   });
   $("#cajas-body").addEventListener("click", cajasClick);
   $("#cajas-dic").addEventListener("click", openCajasDic);
-  $("#gram-back").addEventListener("click", () => show("cajas"));
-  $("#gram-done").addEventListener("click", () => show("cajas"));
+  $("#gram-back").addEventListener("click", gramBack);
+  $("#gram-done").addEventListener("click", gramDone);
+  $("#gram-later").addEventListener("click", gramLater);
+  $("#gram-body").addEventListener("click", gramClick);
+  $("#gram-body").addEventListener("keydown", (e) => {
+    if ((e.key === "Enter" || e.key === " ") && e.target.matches("[data-gpar]")) { e.preventDefault(); e.target.click(); }
+  });
   $("#cajas-close").addEventListener("click", () => {
     const cj = state.cj;
     state.cj = null;
