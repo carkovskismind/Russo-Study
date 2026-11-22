@@ -1818,7 +1818,7 @@
      "texto": "У тебя́ есть соба́ка? — Нет, у меня́ нет соба́ки.",
      "fonetica": "u tie-BIA iest' sa-BA-ka? — niet, u mie-NIA niet sa-BA-ki",
      "es": "¿Tienes perro? — No, no tengo perro.",
-     "porque": "Para decir que no tienes algo se usa нет."
+     "porque": "«No tengo» es нет. Con есть dirías no y sí a la vez."
     },
     {
      "id": "g-tener-e2",
@@ -2090,7 +2090,7 @@
    "ru": "Ско́лько сто́ит?",
    "puntos": [
     "Para preguntar el precio de una cosa: Ско́лько сто́ит кни́га? Si son varias, сто́ят: Ско́лько сто́ят джи́нсы?",
-    "El dinero ruso cambia como la edad: оди́н рубль, два рубля́, пять рубле́й.",
+    "El dinero ruso cambia con el número: оди́н рубль, два рубля́, пять рубле́й. Pero пе́со nunca cambia: пять пе́со.",
     "Para comparar basta una palabra: бо́льше (más), ме́ньше (menos), лу́чше (mejor), ху́же (peor): Э́то лу́чше."
    ],
    "ejemplos": [
@@ -2100,9 +2100,9 @@
      "es": "¿Cuánto cuesta el café?"
     },
     {
-     "ru": "Э́то сто́ит пять рубле́й.",
-     "fonetica": "E-ta STO-it piat' rub-LIEI",
-     "es": "Esto cuesta cinco rublos."
+     "ru": "Э́то сто́ит пять пе́со.",
+     "fonetica": "E-ta STO-it piat' PIE-sa",
+     "es": "Esto cuesta cinco pesos."
     },
     {
      "ru": "Моя́ футбо́лка лу́чше.",
