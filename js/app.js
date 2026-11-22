@@ -820,8 +820,8 @@ function openFin() {
 }
 
 function finEnd() {
-  // Sin sesión iniciada: primero la invitación a guardar el progreso (pantalla de siempre).
-  if (store.syncConfigured && !store.user) {
+  // Sin sesión iniciada: la invitación a guardar el progreso (si no se mostró ya al terminar la práctica).
+  if (needLoginInvite() && !state.loginAsked) {
     $("#done-title").textContent = "Práctica terminada";
     $("#done-summary").textContent = "Tu avance de hoy ya está guardado en este dispositivo.";
     state.doneReturn = "home";
@@ -1679,6 +1679,7 @@ function startSession(queue, title, cram, returnTo) {
     toast("No hay tarjetas pendientes.");
     return;
   }
+  state.loginAsked = false;
   state.session = { queue, title, cram, ok: 0, bad: 0, resolved: 0, answered: false, requeue: false, timer: null, returnTo };
   $("#study-close").setAttribute("aria-label", `Terminar ${title || "la práctica"}`);
   show("study");
@@ -2263,6 +2264,14 @@ function finishSession() {
   if (s && s.parada) return finishElige(s);
   if (s && s.daily) {
     state.session = null;
+    // Sin sesión iniciada: primero la invitación a guardar el progreso y luego «¡Lo lograste!».
+    if (needLoginInvite()) {
+      $("#done-title").textContent = "Práctica terminada";
+      $("#done-summary").textContent = "Tu avance de hoy ya está guardado en este dispositivo.";
+      state.doneReturn = "fin";
+      state.loginAsked = true;
+      return show("done");
+    }
     return openFin();
   }
   $("#done-title").textContent = s.audio ? "Solo audio terminado" : s.cram ? "Repaso rápido terminado" : "Práctica terminada";
@@ -2287,6 +2296,10 @@ function doneContinue() {
 
 // Sin sesión iniciada: invita a guardar el progreso en la nube. Con «Ahora no»
 // el avance sigue guardado en este dispositivo (Store.save siempre escribe en localStorage).
+function needLoginInvite() {
+  return store.syncConfigured && !store.user;
+}
+
 function renderDoneLogin() {
   const ask = store.syncConfigured && !store.user;
   $("#done-login").hidden = !ask;
@@ -4370,7 +4383,15 @@ function gramDone() {
     // Seguir con la Ruta: el tema al que prepara la parada (o el Mapa).
     const t = rutaItems().find((x) => x.kind === "parada" && x.id === g.id);
     state.gram = null;
-    if (t && t.antes && deckOfKey(t.antes)) { store.setCurrent(t.antes); state.mapa = null; return go("mapa"); }
+    if (t && t.antes && deckOfKey(t.antes)) { store.setCurrent(t.antes); state.mapa = null; }
+    // Sin sesión iniciada: invitación a guardar el progreso antes de seguir con la Ruta.
+    if (needLoginInvite()) {
+      $("#done-title").textContent = "Parada terminada";
+      $("#done-summary").textContent = "Tu avance ya está guardado en este dispositivo.";
+      state.doneReturn = "mapa";
+      return show("done");
+    }
+    if (t && t.antes && deckOfKey(t.antes)) return go("mapa");
     return openMapa();
   }
 }
