@@ -2576,7 +2576,7 @@ function renderFrase() {
     let cls = "option";
     let key = i + 1;
     if (cur.choice !== null) {
-      if (o === f.es) { cls += " correct"; key = "✓"; }
+      if (o === (cur.correct || f.es)) { cls += " correct"; key = "✓"; }
       else if (i === cur.choice) cls += " wrong";
     }
     return `<button class="${cls}" type="button" data-fopt="${i}"${cur.choice !== null ? " disabled" : ""}><span class="key">${key}</span><span class="opt-text"><span>${esc(o)}</span></span></button>`;
@@ -2596,7 +2596,29 @@ function renderFrase() {
     </div>
     <p class="fr-msg">Elige la traducción de la frase que armaste:</p>
     <div class="options">${opts}</div>
+    ${cur.choice !== null && cur.variant && !cur.variant.es && cur.variant.nota ? `<p class="fr-orden-nota"><b>Tu orden:</b> ${enfasisText(cur.variant.nota)}</p>` : ""}
     ${foot}`;
+}
+
+// 4.2.1 · Paso 2: si armaste otro orden válido y ese orden tiene su propia traducción
+// (enfasis[].es), la correcta es esa; si no, la neutra y se muestra la nota del orden.
+function variantOf(f, cur) {
+  const list = Array.isArray(f.enfasis) ? f.enfasis : [];
+  if (!cur.ok1 || list.length < 2) return null;
+  const built = normSentence(builtSentence(cur));
+  if (built === normSentence(f.texto || f.validas[0])) return null;
+  return list.find((x) => normSentence(x.ru) === built) || null;
+}
+
+function setStep2Options(f, cur) {
+  const v = variantOf(f, cur);
+  cur.variant = v;
+  cur.correct = f.es;
+  if (v && v.es) {
+    cur.correct = v.es;
+    const wrong = Array.isArray(v.opciones) && v.opciones.length >= 3 ? v.opciones.slice(0, 3) : f.opciones.filter((o) => o !== f.es).slice(0, 3);
+    cur.options = shuffle([v.es, ...wrong]);
+  }
 }
 
 function goStep2() {
@@ -2606,6 +2628,7 @@ function goStep2() {
   const cur = fr.cur;
   cur.step = 2;
   cur.reported = false;
+  setStep2Options(fr.queue[0].f, cur);
   renderFrase();
   if (store.settings.autoSpeak) speak(displaySentence(fr, cur), cur.rate);
 }
@@ -2632,12 +2655,14 @@ function fraseClick(e) {
   if (t.dataset.say) return speak(t.dataset.say);
   if (t.dataset.fopt !== undefined && cur.choice === null) {
     cur.choice = Number(t.dataset.fopt);
-    cur.ok2 = cur.options[cur.choice] === f.es;
+    cur.ok2 = cur.options[cur.choice] === (cur.correct || f.es);
     cur.reported = false;
     playSound(cur.ok2);
     renderFrase();
     // La última frase no avanza sola: terminas cuando toques Continuar.
-    if (cur.ok2 && fr.queue.length > 1) fr.timer = setTimeout(() => { if (state.fr === fr && fr.cur === cur && $("#sheet").hidden) finishFraseItem(); }, AUTO_MS);
+    // Con la nota de tu orden (sin traducción propia) no avanza sola, para que se lea.
+    const noteShown = cur.variant && !cur.variant.es && cur.variant.nota;
+    if (cur.ok2 && !noteShown && fr.queue.length > 1) fr.timer = setTimeout(() => { if (state.fr === fr && fr.cur === cur && $("#sheet").hidden) finishFraseItem(); }, AUTO_MS);
     return;
   }
   const act = t.dataset.fr;
