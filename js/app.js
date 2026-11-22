@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "4.2.0";
+const APP_VERSION = "4.3.0";
 // Botón «Reportar falla». Está activo en la beta; para activarlo también en la versión real, cambia a true.
 const REPORT_BUTTON = IS_BETA || false;
 
@@ -90,8 +90,7 @@ const RU_NAME = {
   colores: "Цвета́", adjetivos: "Хара́ктер", ideas: "Иде́и", verbos: "Глаго́лы", juegos: "И́гры",
   instrumentos: "Му́зыка", comida: "Еда́", "ropa-cuerpo": "Оде́жда", escuela: "Шко́ла", textos: "Те́ксты",
   cultura: "Культу́ра", servilismo: "Уго́дник", expresiones: "Фра́зы", paises: "Стра́ны",
-  "reglas-gentilicios": "мексика́нка", nombres: "Имена́", "falsos-amigos": "Ло́жные друзья́", casos: "Падежи́", "gramatica-verbos": "я чита́ю", genero: "Род",
-  plurales: "кни́га → кни́ги", posesion: "у меня́ есть", "gramatica-numerales": "две кни́ги"
+  "reglas-gentilicios": "мексика́нка", nombres: "Имена́", "falsos-amigos": "Ло́жные друзья́"
 };
 
 function visFor(deck) {
@@ -946,7 +945,9 @@ function startBlink() {
 // (sin filtro activo se ve todo): Gramática · Expresiones · Lectura.
 const EXPRESIONES = new Set(["expresiones", "falsos-amigos", "servilismo"]);
 const LECTURA = new Set(["textos"]);
+// «Gramática» no filtra mazos: abre el índice de Gramática (las paradas de la Ruta).
 const FILTROS = ["Gramática", "Expresiones", "Lectura"];
+const FILTRO_GRAM = "Gramática";
 
 function groupOf(deck) {
   if (EXPRESIONES.has(deck.id)) return "Expresiones";
@@ -4184,7 +4185,7 @@ function renderModulo() {
 // fallaste al primer intento vuelve en la práctica del día siguiente (máximo 3 al día).
 const GRAM_PALS = ["kh", "pe", "lav", "li", "pk", "bl", "mint"];
 const ELIGE_POR_DIA = 3;
-const FICHAS = ["casos", "genero", "plurales", "posesion", "gramatica-verbos", "gramatica-numerales", "reglas-gentilicios"];
+const FICHAS = ["reglas-gentilicios"];
 const ICO_BOOK = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg>`;
 const ICO_CHEV = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>`;
 const ICO_OK = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
@@ -4765,6 +4766,7 @@ function bind() {
   $("#temas-chips").addEventListener("click", (e) => {
     const c = e.target.closest("[data-filter]");
     if (!c) return;
+    if (c.dataset.filter === FILTRO_GRAM) return openGramIndice("temas");
     const f = state.temaFilters || (state.temaFilters = new Set());
     if (f.has(c.dataset.filter)) f.delete(c.dataset.filter); else f.add(c.dataset.filter);
     state.openSet = false;
