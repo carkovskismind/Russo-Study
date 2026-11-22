@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "4.2.0";
+const APP_VERSION = "4.2.1";
 // Botón «Reportar falla». Está activo en la beta; para activarlo también en la versión real, cambia a true.
 const REPORT_BUTTON = IS_BETA || false;
 
@@ -2435,8 +2435,14 @@ function fraseError(f, cur) {
     return { title: missing.length === 1 ? "Casi. Te faltó una ficha." : "Casi. Te faltaron fichas.", body: `Falta: ${missing.join(", ")}. Todas las fichas de la idea se usan.` };
   }
   const toks = placed.map((b) => normSentence(b.t));
+  // Solo se usa un bloque que de verdad va junto en TODAS las respuestas válidas
+  // y que no es la frase completa (si no, el mensaje no tiene sentido).
+  const validToks = f.validas.map((v) => normSentence(v).split(" "));
   for (const e of errs.filter((x) => x.tipo === "bloque" && Array.isArray(x.fichas))) {
-    if (!hasRun(toks, e.fichas.map(normSentence))) return { title: "Casi. Estas fichas van juntas.", body: e.explica };
+    const run = e.fichas.map(normSentence);
+    if (run.length < 2 || run.length >= toks.length) continue;
+    if (!validToks.every((vt) => hasRun(vt, run))) continue;
+    if (!hasRun(toks, run)) return { title: "Casi. Estas fichas van juntas.", body: e.explica };
   }
   const o = errs.find((x) => x.tipo === "orden");
   return { title: "Casi. Revisa el orden.", body: o ? o.explica : "Con estas fichas el orden no funciona así en ruso. Mira la respuesta de abajo." };
