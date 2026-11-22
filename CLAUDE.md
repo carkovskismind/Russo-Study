@@ -10,7 +10,7 @@ Responde siempre en español, claro y breve.
 2. Primero una maqueta o propuesta; se aplica a la app solo cuando Carol la aprueba. Si ella edita la maqueta, respeta sus cambios. **Fidelidad 100 % a la maqueta:** lo programado debe verse exactamente igual a la maqueta viva (textos, medidas, espacios, colores, imágenes y fondos), comprobado con capturas lado a lado en oscuro y claro antes de subir.
 3. Nunca pongas en el código la llave service_role (secret) de Supabase. Solo la publishable key, que ya está en `js/config.js`.
 4. Antes de publicar: `node tools/validar.mjs` sin errores y prueba en celular (390×844) en modo oscuro y claro.
-5. En cada versión nueva sube `APP_VERSION` (js/app.js) y `CACHE` (sw.js).
+5. En cada versión nueva sube `APP_VERSION` (js/app.js) y `CACHE` (sw.js). **El número de versión lo decide Carol: pregúntaselo siempre, nunca lo inventes.** Varios arreglos distintos pueden ir en la misma versión, así que no subas el número solo porque tocaste algo.
 
 ## La app
 
