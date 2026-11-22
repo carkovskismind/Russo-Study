@@ -2147,3 +2147,5 @@ body:not(.no-rep) .view#view-study.st-quiz { padding-bottom: calc(14px + env(saf
 .set-sec .ayudas-reset { min-height: 44px; height: 44px; padding: 0 18px; font-size: 14px; font-weight: 700; color: var(--muted); background: transparent; border: var(--dash); border-radius: 999px; }
 .set-sec label[for="opt-ayudas"] { margin-top: 6px; padding-top: 10px; border-top: 1px solid var(--line-soft); }
 .pd-h-b { letter-spacing: -.012em; }
+/* Tema abierto: «Sigue aquí» va solo en el mosaico marcado de arriba, no en el panel (chocaba con la flecha) */
+.tm-tile.open .t-big .tm-sigue { display: none; }

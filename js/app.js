@@ -1063,7 +1063,8 @@ function tileHtml(deck) {
   const qa = deck.cards.some((c) => c.kind === "qa");
   const nExtra = deck.cards.filter((c) => c.extra).length;
   const unit = qa ? "tarjetas" : "palabras";
-  const sug = state.ruta && baseOf(suggestedDeck()) === deck;
+  const sugD = state.ruta ? baseOf(suggestedDeck()) : null;
+  const sug = !!sugD && sugD.id === deck.id; // también en la copia marcada (tm-anchor) del tema abierto
   const modes = modesList(deck);
   const words = modes.find((m) => m.key === "words");
   const extra = modes.filter((m) => m.key !== "words");
