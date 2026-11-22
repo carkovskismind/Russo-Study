@@ -1046,7 +1046,8 @@ function rutaOrder(list) {
   if (!state.ruta) return list;
   const rank = new Map();
   let n = 0;
-  for (const m of rutaMods()) for (const t of modTemas(m)) if (t.deck) rank.set(t.deck.id, n++);
+  // Un mazo partido en bloques (Básicas, Números…) va donde aparece su primer bloque.
+  for (const m of rutaMods()) for (const t of modTemas(m)) if (t.deck && !rank.has(t.id)) rank.set(t.id, n++);
   const inRuta = list.filter((d) => rank.has(d.id)).sort((a, b) => rank.get(a.id) - rank.get(b.id));
   const rest = list.filter((d) => !rank.has(d.id));
   return [...inRuta, ...rest];
