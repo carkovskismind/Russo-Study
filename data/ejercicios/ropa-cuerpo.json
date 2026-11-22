@@ -12,7 +12,7 @@
           {"ru": "Э́то мой очки́.", "fonetica": "E-ta moi ach-KI", "correcta": false, "porque": "очки́ es plural: мои́."},
           {"ru": "Э́то моя́ очки́.", "fonetica": "E-ta ma-IA ach-KI", "correcta": false, "porque": "очки́ es plural: мои́."}
         ]},
-        {"de": "Лена", "ru": "А чья э́то футбо́лка?", "fonetica": "a cha E-ta fud-BOL-ka", "es": "¿Y de quién es esta playera?"},
+        {"de": "Лена", "ru": "А чья э́то футбо́лка?", "fonetica": "a chia E-ta fud-BOL-ka", "es": "¿Y de quién es esta playera?"},
         {"de": "yo", "ru": "Э́то твоя́ футбо́лка.", "fonetica": "E-ta tva-IA fud-BOL-ka", "es": "Es tu playera.", "opciones": [
           {"ru": "Э́то твоя́ футбо́лка.", "fonetica": "E-ta tva-IA fud-BOL-ka", "correcta": true, "porque": "¡Eso! футбо́лка es femenina: твоя́."},
           {"ru": "Э́то твой футбо́лка.", "fonetica": "E-ta tvoi fud-BOL-ka", "correcta": false, "porque": "футбо́лка es femenina: твоя́."},
@@ -25,13 +25,13 @@
       "id": "ropa-cuerpo-d2",
       "titulo": "¿Jeans o zapatos?",
       "mensajes": [
-        {"de": "Лена", "ru": "Э́то твои́ джи́нсы?", "fonetica": "E-ta tva-I DZHIN-sy", "es": "¿Son tus jeans?"},
+        {"de": "Лена", "ru": "Э́то твои́ джи́нсы?", "fonetica": "E-ta tva-I DZHYN-sy", "es": "¿Son tus jeans?"},
         {"de": "yo", "ru": "Да, э́то мои́ джи́нсы.", "fonetica": "da, E-ta ma-I DZHIN-sy", "es": "Sí, son mis jeans.", "opciones": [
           {"ru": "Да, э́то мои́ джи́нсы.", "fonetica": "da, E-ta ma-I DZHIN-sy", "correcta": true, "porque": "¡Bien! джи́нсы es plural: мои́."},
           {"ru": "Да, э́то мой джи́нсы.", "fonetica": "da, E-ta moi DZHIN-sy", "correcta": false, "porque": "джи́нсы es plural: мои́."},
           {"ru": "Нет, э́то мои́ джи́нсы.", "fonetica": "niet, E-ta ma-I DZHIN-sy", "correcta": false, "porque": "Dices нет pero son tuyos: да."}
         ]},
-        {"de": "Лена", "ru": "А э́то боти́нки?", "fonetica": "a E-ta ba-TIN-ki", "es": "¿Y esto son botines?"},
+        {"de": "Лена", "ru": "А э́то боти́нки?", "fonetica": "a E-ta ba-TIN-ki", "es": "¿Y estos son botines?"},
         {"de": "yo", "ru": "Нет, э́то ту́фли.", "fonetica": "niet, E-ta TUF-li", "es": "No, son zapatos de vestir.", "opciones": [
           {"ru": "Нет, э́то ту́фли.", "fonetica": "niet, E-ta TUF-li", "correcta": true, "porque": "¡Exacto! Dices нет y nombras lo que son."},
           {"ru": "Да, э́то ту́фли.", "fonetica": "da, E-ta TUF-li", "correcta": false, "porque": "Ella dice боти́нки; no son: нет."},

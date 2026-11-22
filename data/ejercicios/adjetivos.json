@@ -6,19 +6,19 @@
       "id": "adjetivos-d1",
       "titulo": "Mi familia",
       "mensajes": [
-        {"de": "Лена", "ru": "Како́й у тебя́ брат?", "fonetica": "ka-KOI u ti-BIA brat", "es": "¿Cómo es tu hermano?"},
-        {"de": "yo", "ru": "Мой брат у́мный и весёлый.", "fonetica": "moi brat UM-nyi i vi-SIO-lyi", "es": "Mi hermano es inteligente y alegre.", "opciones": [
-          {"ru": "Мой брат у́мный и весёлый.", "fonetica": "moi brat UM-nyi i vi-SIO-lyi", "correcta": true, "porque": "¡Bien! брат es masculino: у́мный, весёлый."},
-          {"ru": "Мой брат у́мная и весёлая.", "fonetica": "moi brat UM-na-ia i vi-SIO-la-ia", "correcta": false, "porque": "брат es masculino: у́мный y весёлый."},
-          {"ru": "Моя́ брат у́мный и весёлый.", "fonetica": "ma-IA brat UM-nyi i vi-SIO-lyi", "correcta": false, "porque": "брат es masculino: мой."}
+        {"de": "Лена", "ru": "Како́й у тебя́ брат?", "fonetica": "ka-KOI u tie-BIA brat", "es": "¿Cómo es tu hermano?"},
+        {"de": "yo", "ru": "Мой брат у́мный и весёлый.", "fonetica": "moi brat UM-nyi i vie-SIO-lyi", "es": "Mi hermano es inteligente y alegre.", "opciones": [
+          {"ru": "Мой брат у́мный и весёлый.", "fonetica": "moi brat UM-nyi i vie-SIO-lyi", "correcta": true, "porque": "¡Bien! брат es masculino: у́мный, весёлый."},
+          {"ru": "Мой брат у́мная и весёлая.", "fonetica": "moi brat UM-na-ia i vie-SIO-la-ia", "correcta": false, "porque": "брат es masculino: у́мный y весёлый."},
+          {"ru": "Моя́ брат у́мный и весёлый.", "fonetica": "ma-IA brat UM-nyi i vie-SIO-lyi", "correcta": false, "porque": "брат es masculino: мой."}
         ]},
-        {"de": "Лена", "ru": "А сестра́?", "fonetica": "a sis-TRA", "es": "¿Y tu hermana?"},
-        {"de": "yo", "ru": "Моя́ сестра́ о́чень тво́рческая.", "fonetica": "ma-IA sis-TRA O-chin' TVOR-chis-ka-ia", "es": "Mi hermana es muy creativa.", "opciones": [
-          {"ru": "Моя́ сестра́ о́чень тво́рческая.", "fonetica": "ma-IA sis-TRA O-chin' TVOR-chis-ka-ia", "correcta": true, "porque": "¡Eso! сестра́ es femenina: тво́рческая."},
-          {"ru": "Моя́ сестра́ о́чень тво́рческий.", "fonetica": "ma-IA sis-TRA O-chin' TVOR-chis-kii", "correcta": false, "porque": "сестра́ es femenina: тво́рческая."},
-          {"ru": "Моя́ сестра́ о́чень тво́рческое.", "fonetica": "ma-IA sis-TRA O-chin' TVOR-chis-ka-ie", "correcta": false, "porque": "сестра́ es femenina; тво́рческое es neutro: тво́рческая."}
+        {"de": "Лена", "ru": "А сестра́?", "fonetica": "a sies-TRA", "es": "¿Y tu hermana?"},
+        {"de": "yo", "ru": "Моя́ сестра́ о́чень тво́рческая.", "fonetica": "ma-IA sies-TRA O-chin' TVOR-chis-ka-ia", "es": "Mi hermana es muy creativa.", "opciones": [
+          {"ru": "Моя́ сестра́ о́чень тво́рческая.", "fonetica": "ma-IA sies-TRA O-chin' TVOR-chis-ka-ia", "correcta": true, "porque": "¡Eso! сестра́ es femenina: тво́рческая."},
+          {"ru": "Моя́ сестра́ о́чень тво́рческий.", "fonetica": "ma-IA sies-TRA O-chin' TVOR-chis-kii", "correcta": false, "porque": "сестра́ es femenina: тво́рческая."},
+          {"ru": "Моя́ сестра́ о́чень тво́рческое.", "fonetica": "ma-IA sies-TRA O-chin' TVOR-chis-ka-ie", "correcta": false, "porque": "сестра́ es femenina; тво́рческое es neutro: тво́рческая."}
         ]},
-        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-ti-RIES-na", "es": "¡Qué interesante!"}
+        {"de": "Лена", "ru": "Как интере́сно!", "fonetica": "kak in-tie-RIES-na", "es": "¡Qué interesante!"}
       ]
     },
     {
@@ -26,10 +26,10 @@
       "titulo": "Mi casa",
       "mensajes": [
         {"de": "Лена", "ru": "Твой дом большо́й?", "fonetica": "tvoi dom bal'-SHOI", "es": "¿Tu casa es grande?"},
-        {"de": "yo", "ru": "Нет, он ма́ленький.", "fonetica": "niet, on MA-lin'-kii", "es": "No, es pequeña.", "opciones": [
-          {"ru": "Нет, он ма́ленький.", "fonetica": "niet, on MA-lin'-kii", "correcta": true, "porque": "¡Bien! дом es masculino: ма́ленький."},
-          {"ru": "Нет, он ма́ленькая.", "fonetica": "niet, on MA-lin'-ka-ia", "correcta": false, "porque": "дом es masculino: ма́ленький."},
-          {"ru": "Да, он ма́ленький.", "fonetica": "da, on MA-lin'-kii", "correcta": false, "porque": "Ella pregunta si es grande; es pequeña: нет."}
+        {"de": "yo", "ru": "Нет, он ма́ленький.", "fonetica": "niet, on MA-lien'-kii", "es": "No, es pequeña.", "opciones": [
+          {"ru": "Нет, он ма́ленький.", "fonetica": "niet, on MA-lien'-kii", "correcta": true, "porque": "¡Bien! дом es masculino: ма́ленький."},
+          {"ru": "Нет, он ма́ленькая.", "fonetica": "niet, on MA-lien'-ka-ia", "correcta": false, "porque": "дом es masculino: ма́ленький."},
+          {"ru": "Да, он ма́ленький.", "fonetica": "da, on MA-lien'-kii", "correcta": false, "porque": "Ella pregunta si es grande; es pequeña: нет."}
         ]},
         {"de": "Лена", "ru": "А ко́мната?", "fonetica": "a KOM-na-ta", "es": "¿Y tu cuarto?"},
         {"de": "yo", "ru": "Моя́ ко́мната но́вая и чи́стая.", "fonetica": "ma-IA KOM-na-ta NO-va-ia i CHIS-ta-ia", "es": "Mi cuarto es nuevo y limpio.", "opciones": [
