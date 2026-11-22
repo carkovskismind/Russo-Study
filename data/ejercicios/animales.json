@@ -4,52 +4,80 @@
   "dialogos": [
     {
       "id": "animales-d1",
+      "desde": "g-u-menya-est",
       "titulo": "Mi mascota",
       "mensajes": [
-        {"de": "Лена", "ru": "У тебя́ есть живо́тное?", "fonetica": "u tie-BIA iest' zhy-VOT-na-ie", "es": "¿Tienes algún animal?"},
+        {"de": "Ле́на", "ru": "У тебя́ есть живо́тное?", "fonetica": "u tie-BIA iest' zhy-VOT-na-ie", "es": "¿Tienes algún animal?"},
         {"de": "yo", "ru": "Да, у меня́ есть ко́шка.", "fonetica": "da, u mie-NIA iest' KOSH-ka", "es": "Sí, tengo una gata.", "opciones": [
           {"ru": "Да, у меня́ есть ко́шка.", "fonetica": "da, u mie-NIA iest' KOSH-ka", "correcta": true, "porque": "¡Bien! ко́шка es la gata."},
           {"ru": "Да, у меня́ есть кот.", "fonetica": "da, u mie-NIA iest' kot", "correcta": false, "porque": "кот es un gato macho; tienes una gata: ко́шка."},
           {"ru": "Да, я есть ко́шка.", "fonetica": "da, ia iest' KOSH-ka", "correcta": false, "porque": "«Tengo» se dice у меня́ есть, no я есть."}
         ]},
-        {"de": "Лена", "ru": "Как её зову́т?", "fonetica": "kak ie-IO za-VUT", "es": "¿Cómo se llama ella?"},
+        {"de": "Ле́на", "ru": "Как её зову́т?", "fonetica": "kak ie-IO za-VUT", "es": "¿Cómo se llama ella?"},
         {"de": "yo", "ru": "Её зову́т Му́рка.", "fonetica": "ie-IO za-VUT MUR-ka", "es": "Se llama Murka.", "opciones": [
           {"ru": "Её зову́т Му́рка.", "fonetica": "ie-IO za-VUT MUR-ka", "correcta": true, "porque": "¡Eso! Es una gata: её."},
           {"ru": "Его́ зову́т Му́рка.", "fonetica": "ie-VO za-VUT MUR-ka", "correcta": false, "porque": "его́ es para un macho; tu gata es она́: её."},
           {"ru": "Она́ зову́т Му́рка.", "fonetica": "a-NA za-VUT MUR-ka", "correcta": false, "porque": "зову́т pide её («a ella la llaman»), no она́."}
         ]},
-        {"de": "Лена", "ru": "Как краси́во!", "fonetica": "kak kra-SI-va", "es": "¡Qué bonito!"}
+        {"de": "Ле́на", "ru": "Как краси́во!", "fonetica": "kak kra-SI-va", "es": "¡Qué bonito!"}
       ]
     },
     {
       "id": "animales-d2",
       "titulo": "¿Perro o gato?",
       "mensajes": [
-        {"de": "Лена", "ru": "Э́то соба́ка и́ли ко́шка?", "fonetica": "E-ta sa-BA-ka I-li KOSH-ka", "es": "¿Es perro o gata?"},
+        {"de": "Ле́на", "ru": "Э́то соба́ка и́ли ко́шка?", "fonetica": "E-ta sa-BA-ka I-li KOSH-ka", "es": "¿Es perro o gata?"},
         {"de": "yo", "ru": "Э́то не соба́ка, э́то ко́шка.", "fonetica": "E-ta nie sa-BA-ka, E-ta KOSH-ka", "es": "No es perro, es gata.", "opciones": [
           {"ru": "Э́то не соба́ка, э́то ко́шка.", "fonetica": "E-ta nie sa-BA-ka, E-ta KOSH-ka", "correcta": true, "porque": "¡Bien! не va justo antes de lo que niegas."},
           {"ru": "Э́то нет соба́ка, э́то ко́шка.", "fonetica": "E-ta niet sa-BA-ka, E-ta KOSH-ka", "correcta": false, "porque": "Para negar una palabra se usa не, no нет."},
           {"ru": "Э́то не соба́ка, э́то кот.", "fonetica": "E-ta nie sa-BA-ka, E-ta kot", "correcta": false, "porque": "кот es un gato macho; aquí es una gata: ко́шка."}
         ]},
-        {"de": "Лена", "ru": "А э́то волк?", "fonetica": "a E-ta volk", "es": "¿Y esto es un lobo?"},
-        {"de": "yo", "ru": "Нет, э́то не волк, э́то пёс.", "fonetica": "niet, E-ta nie volk, E-ta pios", "es": "No, no es un lobo, es un perro.", "opciones": [
-          {"ru": "Нет, э́то не волк, э́то пёс.", "fonetica": "niet, E-ta nie volk, E-ta pios", "correcta": true, "porque": "¡Exacto! Empiezas con нет y luego dices lo que sí es."},
-          {"ru": "Да, э́то не волк, э́то пёс.", "fonetica": "da, E-ta nie volk, E-ta pios", "correcta": false, "porque": "Si lo niegas, empiezas con нет."},
-          {"ru": "Нет, э́то не волк, э́то лев.", "fonetica": "niet, E-ta nie volk, E-ta liev", "correcta": false, "porque": "лев es león; la respuesta es пёс (perro)."}
+        {"de": "Ле́на", "ru": "А э́то волк?", "fonetica": "a E-ta volk", "es": "¿Y esto es un lobo?"},
+        {"de": "yo", "ru": "Нет, э́то не волк, э́то соба́ка.", "fonetica": "niet, E-ta nie volk, E-ta sa-BA-ka", "es": "No, no es un lobo, es un perro.", "opciones": [
+          {"ru": "Нет, э́то не волк, э́то соба́ка.", "fonetica": "niet, E-ta nie volk, E-ta sa-BA-ka", "correcta": true, "porque": "¡Exacto! Empiezas con нет y luego dices lo que sí es."},
+          {"ru": "Да, э́то не волк, э́то соба́ка.", "fonetica": "da, E-ta nie volk, E-ta sa-BA-ka", "correcta": false, "porque": "Si lo niegas, empiezas con нет."},
+          {"ru": "Нет, э́то не волк, э́то лев.", "fonetica": "niet, E-ta nie volk, E-ta liev", "correcta": false, "porque": "лев es león; la respuesta es соба́ка (perro)."}
         ]},
-        {"de": "Лена", "ru": "Коне́чно!", "fonetica": "ka-NIESH-na", "es": "¡Claro!"}
+        {"de": "Ле́на", "ru": "А, соба́ка!", "fonetica": "a, sa-BA-ka", "es": "¡Ah, un perro!"}
+      ]
+    },
+    {
+      "id": "animales-d3",
+      "extra": true,
+      "titulo": "Flora y fauna",
+      "mensajes": [
+        {"de": "Ди́ма", "ru": "Что э́то? Живо́тное?", "fonetica": "shto E-ta? zhy-VOT-na-ie", "es": "¿Qué es esto? ¿Un animal?"},
+        {"de": "yo", "ru": "Нет, э́то расте́ние.", "fonetica": "niet, E-ta ras-TIE-ni-ie", "es": "No, es una planta.", "opciones": [
+          {"ru": "Нет, э́то расте́ние.", "fonetica": "niet, E-ta ras-TIE-ni-ie", "correcta": true, "porque": "¡Bien! расте́ние = planta."},
+          {"ru": "Да, э́то расте́ние.", "fonetica": "da, E-ta ras-TIE-ni-ie", "correcta": false, "porque": "No es un animal, así que empiezas con нет."},
+          {"ru": "Нет, э́то живо́тное.", "fonetica": "niet, E-ta zhy-VOT-na-ie", "correcta": false, "porque": "Dices нет pero repites lo mismo. Es una planta: расте́ние."}
+        ]},
+        {"de": "Ди́ма", "ru": "А пито́н и я́щерица? Э́то фло́ра?", "fonetica": "a pi-TON i IA-shchi-ri-tsa? E-ta FLO-ra", "es": "¿Y la pitón y la lagartija? ¿Son flora?"},
+        {"de": "yo", "ru": "Нет, э́то фа́уна. Э́то пресмыка́ющиеся.", "fonetica": "niet, E-ta FA-u-na. E-ta pries-my-KA-iu-shchi-ie-sia", "es": "No, son fauna. Son reptiles.", "opciones": [
+          {"ru": "Нет, э́то фа́уна. Э́то пресмыка́ющиеся.", "fonetica": "niet, E-ta FA-u-na. E-ta pries-my-KA-iu-shchi-ie-sia", "correcta": true, "porque": "¡Exacto! Los animales son фа́уна, y пито́н y я́щерица son reptiles: пресмыка́ющиеся."},
+          {"ru": "Да, э́то фло́ра. Э́то пресмыка́ющиеся.", "fonetica": "da, E-ta FLO-ra. E-ta pries-my-KA-iu-shchi-ie-sia", "correcta": false, "porque": "фло́ра son las plantas; los animales son фа́уна."},
+          {"ru": "Нет, э́то фа́уна. Э́то пти́цы.", "fonetica": "niet, E-ta FA-u-na. E-ta PTI-tsy", "correcta": false, "porque": "пти́цы son aves. La pitón y la lagartija son reptiles: пресмыка́ющиеся."}
+        ]},
+        {"de": "Ди́ма", "ru": "А у тебя́ есть дома́шние живо́тные?", "fonetica": "a u tie-BIA iest' da-MASH-ni-ie zhy-VOT-ny-ie", "es": "¿Y tú tienes mascotas?"},
+        {"de": "yo", "ru": "Да, у меня́ есть пти́чка.", "fonetica": "da, u mie-NIA iest' PTICH-ka", "es": "Sí, tengo un pajarito.", "opciones": [
+          {"ru": "Да, у меня́ есть пти́чка.", "fonetica": "da, u mie-NIA iest' PTICH-ka", "correcta": true, "porque": "¡Muy bien! у меня́ есть = tengo."},
+          {"ru": "Да, я есть пти́чка.", "fonetica": "da, ia iest' PTICH-ka", "correcta": false, "porque": "«Tengo» se dice у меня́ есть; я есть no se usa así."},
+          {"ru": "Нет, у меня́ есть пти́чка.", "fonetica": "niet, u mie-NIA iest' PTICH-ka", "correcta": false, "porque": "Dices нет, pero luego dices que sí tienes: empiezas con да."}
+        ]},
+        {"de": "Ди́ма", "ru": "Как ми́ло!", "fonetica": "kak MI-la", "es": "¡Qué lindo!"}
       ]
     }
   ],
   "cajas": [
     {
       "id": "animales-c1",
+      "desde": "g-moy-moya",
       "pregunta": "мой o моя́: elige la forma para cada animal.",
       "cajas": ["мой", "моя́"],
       "items": [
         {"ru": "… кот", "caja": "мой", "porque": "кот es masculino: мой кот."},
         {"ru": "… ко́шка", "caja": "моя́", "porque": "ко́шка es femenina: моя́ ко́шка."},
-        {"ru": "… пёс", "caja": "мой", "porque": "пёс es masculino: мой пёс."},
+        {"ru": "… пету́х", "caja": "мой", "porque": "пету́х es masculino: мой пету́х."},
         {"ru": "… соба́ка", "caja": "моя́", "porque": "соба́ка es femenina: моя́ соба́ка."},
         {"ru": "… хомя́к", "caja": "мой", "porque": "хомя́к es masculino: мой хомя́к."},
         {"ru": "… ры́ба", "caja": "моя́", "porque": "ры́ба es femenina: моя́ ры́ба."},
@@ -72,6 +100,40 @@
         {"ru": "лев", "caja": "animal salvaje", "porque": "Vive libre en la sabana."},
         {"ru": "слон", "caja": "animal salvaje", "porque": "Vive libre; no es una mascota."},
         {"ru": "тигр", "caja": "animal salvaje", "porque": "Vive libre; no es una mascota."}
+      ]
+    },
+    {
+      "id": "animales-c3",
+      "extra": true,
+      "pregunta": "¿Animal adulto o bebé / forma cariñosa? Elige la caja.",
+      "cajas": ["adulto", "bebé o cariñoso"],
+      "items": [
+        {"ru": "щено́к", "caja": "bebé o cariñoso", "porque": "щено́к es el cachorro, el bebé de la perra (соба́ка)."},
+        {"ru": "котёнок", "caja": "bebé o cariñoso", "porque": "котёнок es el gatito, el bebé de la gata (ко́шка)."},
+        {"ru": "цыплёнок", "caja": "bebé o cariñoso", "porque": "цыплёнок es el pollito, el bebé de la gallina (ку́рица)."},
+        {"ru": "за́йчик", "caja": "bebé o cariñoso", "porque": "за́йчик es la forma cariñosa de за́яц: el final -чик lo hace pequeño."},
+        {"ru": "ры́бка", "caja": "bebé o cariñoso", "porque": "ры́бка es la forma cariñosa de ры́ба: el final -ка la hace pequeña."},
+        {"ru": "черепа́шка", "caja": "bebé o cariñoso", "porque": "черепа́шка es la forma cariñosa de черепа́ха: «tortuguita»."},
+        {"ru": "ку́рица", "caja": "adulto", "porque": "ку́рица es la gallina; su bebé es цыплёнок."},
+        {"ru": "пету́х", "caja": "adulto", "porque": "пету́х es el gallo, un ave adulta."},
+        {"ru": "за́яц", "caja": "adulto", "porque": "за́яц es la liebre adulta; la forma cariñosa es за́йчик."}
+      ]
+    },
+    {
+      "id": "animales-c4",
+      "pregunta": "он u она́: ¿cómo dices «él» o «ella» para cada animal?",
+      "cajas": ["он", "она́"],
+      "cajas_es": ["él (masculino)", "ella (femenino)"],
+      "cajas_uso": ["Para palabras masculinas: casi siempre terminan en consonante.", "Para palabras femeninas: casi siempre terminan en -а o -я."],
+      "items": [
+        {"ru": "волк", "caja": "он", "porque": "волк termina en consonante: он.", "es": "lobo"},
+        {"ru": "попуга́й", "caja": "он", "porque": "попуга́й termina en -й: он.", "es": "perico"},
+        {"ru": "слон", "caja": "он", "porque": "слон termina en consonante: он.", "es": "elefante"},
+        {"ru": "черепа́ха", "caja": "она́", "porque": "черепа́ха termina en -а: она́.", "es": "tortuga"},
+        {"ru": "змея́", "caja": "она́", "porque": "змея́ termina en -я: она́.", "es": "serpiente"},
+        {"ru": "пету́х", "caja": "он", "porque": "пету́х termina en consonante: он.", "es": "gallo"},
+        {"ru": "соба́ка", "caja": "она́", "porque": "соба́ка termina en -а: она́, aunque el perro sea macho.", "es": "perro"},
+        {"ru": "ло́шадь", "caja": "она́", "porque": "Las palabras en -ь pueden ser de los dos géneros; ло́шадь es femenina: она́.", "es": "caballo"}
       ]
     }
   ]

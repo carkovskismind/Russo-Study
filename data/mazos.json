@@ -3,6 +3,7 @@
   "mazos": [
     "vocabulario/familia.json",
     "vocabulario/saludos.json",
+    "vocabulario/nombres.json",
     "vocabulario/basicas.json",
     "vocabulario/profesiones.json",
     "vocabulario/animales.json",

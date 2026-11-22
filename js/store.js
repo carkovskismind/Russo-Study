@@ -19,6 +19,10 @@ function readPending() {
   try { return JSON.parse(localStorage.getItem(PENDING_KEY) || "[]"); } catch { return []; }
 }
 
+function newKey() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
 function writePending(list) {
   try { localStorage.setItem(PENDING_KEY, JSON.stringify(list)); } catch { /* sin almacenamiento */ }
 }
@@ -33,6 +37,7 @@ export const DEFAULT_SETTINGS = {
   fonetica: true,
   theme: "dark",
   name: "",
+  ayudas: true, // 4.2.0: notas de ayuda con flecha
   disabled: {}
 };
 
@@ -73,6 +78,33 @@ function writeLocal(p) {
   }
 }
 
+// Ajustes: cada campo con su tipo; lo que venga vacío, null o con otro tipo
+// (copia vieja o dañada, o de la nube) se cambia por el valor por omisión.
+export function normalizeSettings(raw) {
+  const d = DEFAULT_SETTINGS;
+  const s = raw && typeof raw === "object" && !Array.isArray(raw) ? raw : {};
+  const num = (v, def, min, max) => (typeof v === "number" && Number.isFinite(v) ? Math.max(min, Math.min(max, Math.round(v))) : def);
+  const bool = (v, def) => (typeof v === "boolean" ? v : def);
+  const disabled = {};
+  if (s.disabled && typeof s.disabled === "object" && !Array.isArray(s.disabled)) {
+    for (const [k, v] of Object.entries(s.disabled)) if (v) disabled[k] = true;
+  }
+  return {
+    dir: ["ru", "es", "both"].includes(s.dir) ? s.dir : d.dir,
+    newPerDay: num(s.newPerDay, d.newPerDay, 0, 200),
+    dayMax: num(s.dayMax, d.dayMax, 1, 500),
+    cursive: bool(s.cursive, d.cursive),
+    autoSpeak: bool(s.autoSpeak, d.autoSpeak),
+    sound: bool(s.sound, d.sound),
+    fonetica: bool(s.fonetica, d.fonetica),
+    theme: s.theme === "light" ? "light" : "dark",
+    name: typeof s.name === "string" ? s.name : d.name,
+    ayudas: bool(s.ayudas, d.ayudas),
+    disabled,
+    t: typeof s.t === "number" && Number.isFinite(s.t) ? s.t : 0
+  };
+}
+
 function normalize(p) {
   const base = emptyProgress();
   if (!p || typeof p !== "object") return base;
@@ -89,8 +121,8 @@ function normalize(p) {
     ejer: p.ejer && typeof p.ejer === "object" ? p.ejer : {},
     lectura: p.lectura && typeof p.lectura === "object" ? p.lectura : {},
     current: p.current && typeof p.current === "object" && p.current.deck ? p.current : null,
-    settings: { ...base.settings, ...(p.settings || {}) },
-    resetAt: p.resetAt || 0
+    settings: normalizeSettings(p.settings),
+    resetAt: typeof p.resetAt === "number" && Number.isFinite(p.resetAt) ? p.resetAt : 0
   };
 }
 
@@ -109,22 +141,26 @@ export function merge(a, b) {
     }
   }
   const resetDay = resetAt ? dateKey(resetAt) : "";
+  // Los contadores por día no llevan hora: del día del reinicio solo valen los de
+  // una copia que ya conoce ese reinicio (lo de esa mañana antes de reiniciar se descarta).
+  const skipDay = (src, day) => !!resetDay && (day < resetDay || (day === resetDay && src.resetAt < resetAt));
+  const count = (n) => (typeof n === "number" && Number.isFinite(n) && n > 0 ? n : 0);
   for (const src of [a, b]) {
     for (const [day, n] of Object.entries(src.newLog)) {
-      if (resetDay && day < resetDay) continue;
-      out.newLog[day] = Math.max(out.newLog[day] || 0, n);
+      if (skipDay(src, day)) continue;
+      out.newLog[day] = Math.max(out.newLog[day] || 0, count(n));
     }
     // Repasos hechos por día (tope diario de repasos, 4.0.1).
     for (const [day, n] of Object.entries(src.revLog)) {
-      if (resetDay && day < resetDay) continue;
-      out.revLog[day] = Math.max(out.revLog[day] || 0, n);
+      if (skipDay(src, day)) continue;
+      out.revLog[day] = Math.max(out.revLog[day] || 0, count(n));
     }
   }
   // Actividad por día (para la racha y la gráfica de la semana).
   for (const src of [a, b]) {
     for (const [day, n] of Object.entries(src.days)) {
-      if (resetDay && day < resetDay) continue;
-      out.days[day] = Math.max(out.days[day] || 0, n);
+      if (skipDay(src, day)) continue;
+      out.days[day] = Math.max(out.days[day] || 0, count(n));
     }
   }
   // Frases para armar: gana el intento más reciente.
@@ -196,6 +232,12 @@ export class Store {
 
   get syncConfigured() {
     return !!this.sb;
+  }
+
+  // Hay datos de Supabase en config.js (aunque la librería no haya cargado).
+  get syncWanted() {
+    const cfg = window.RUSSO_CONFIG || {};
+    return !!(cfg.supabaseUrl && cfg.supabaseAnonKey);
   }
 
   async init() {
@@ -358,45 +400,75 @@ export class Store {
 
   // «Mi respuesta también es correcta»: se guarda en Supabase para revisarla.
   // Sin conexión o sin Supabase se queda en el dispositivo y se envía después.
+  // Devuelve true solo si ESTE reporte llegó.
   async report(entry) {
-    const row = { ...entry, mazo: (IS_BETA ? "beta/" : "") + entry.mazo, user_id: this.user ? this.user.id : null, created_at: new Date().toISOString() };
+    const row = { ...entry, mazo: (IS_BETA ? "beta/" : "") + entry.mazo, user_id: this.user ? this.user.id : null, created_at: new Date().toISOString(), _k: newKey() };
     const pending = readPending();
     pending.push(row);
     writePending(pending);
-    return this.flushReports();
+    const sent = await this.flushReports();
+    return sent.has(row._k);
   }
 
   // «Reportar falla» (botón de la beta). Sin conexión se queda en la cola de pendientes.
+  // Devuelve true solo si ESTE reporte llegó.
   async reportFalla(entry) {
-    const row = { tipo: "falla", ...entry, user_id: this.user ? this.user.id : null, created_at: new Date().toISOString() };
+    const row = { tipo: "falla", ...entry, user_id: this.user ? this.user.id : null, created_at: new Date().toISOString(), _k: newKey() };
     const pending = readPending();
     pending.push(row);
     writePending(pending.slice(-50));
-    this.flushReports();
-    return true;
+    const sent = await this.flushReports();
+    return sent.has(row._k);
   }
 
+  // Envía la cola fila por fila: si una falla, las demás sí llegan. Una fila con
+  // user_id de otra sesión (o guardada con sesión y enviada sin ella) se manda sin
+  // user_id, porque Supabase la rechazaría. Devuelve las claves de las filas enviadas.
   async flushReports() {
-    const pending = readPending();
-    if (!pending.length || !this.sb || this._flushing) return false;
-    this._flushing = true;
-    // Todas las filas con las mismas columnas (los reportes viejos no traen las nuevas).
-    const rows = pending.map((r) => ({
-      tipo: "respuesta", pantalla: null, version: null, descripcion: null, entorno: null,
-      mazo: null, frase_id: null, paso: null, respuesta: null, esperada: null, ...r
-    }));
-    try {
-      const { error } = await this.sb.from(REPORTS).insert(rows);
-      if (error) throw error;
-      // Solo se quitan los enviados; lo que llegó mientras tanto se conserva.
-      writePending(readPending().slice(pending.length));
-      return true;
-    } catch (e) {
-      console.warn("No se pudo enviar el reporte", e);
-      return false;
-    } finally {
-      this._flushing = false;
+    if (this._flushP) {
+      const before = await this._flushP;
+      if (!readPending().some((r) => !r._k || !before.has(r._k))) return before;
+      const again = await this.flushReports();
+      return new Set([...before, ...again]);
     }
+    this._flushP = this._flushOnce();
+    try { return await this._flushP; } finally { this._flushP = null; }
+  }
+
+  async _flushOnce() {
+    const sent = new Set();
+    const pending = readPending().map((r) => (r && r._k ? r : { ...r, _k: newKey() }));
+    if (!pending.length || !this.sb) return sent;
+    writePending(pending);
+    const me = this.user ? this.user.id : null;
+    const done = new Set();
+    for (const r of pending) {
+      const { _k, ...data } = r;
+      // Todas las filas con las mismas columnas (los reportes viejos no traen las nuevas).
+      const row = {
+        tipo: "respuesta", pantalla: null, version: null, descripcion: null, entorno: null,
+        mazo: null, frase_id: null, paso: null, respuesta: null, esperada: null, ...data,
+        user_id: data.user_id && data.user_id === me ? data.user_id : null
+      };
+      try {
+        const { error } = await this.sb.from(REPORTS).insert(row);
+        if (error) {
+          // Datos que Supabase nunca aceptará (p. ej. texto demasiado largo): se descartan.
+          if (/^2[23]/.test(String(error.code || ""))) { done.add(_k); console.warn("Reporte descartado", error); continue; }
+          // Otro rechazo del servidor: esta fila se queda en la cola y se sigue con las demás.
+          if (error.code) { console.warn("No se pudo enviar el reporte", error); continue; }
+          throw error;
+        }
+        done.add(_k);
+        sent.add(_k);
+      } catch (e) {
+        console.warn("No se pudo enviar el reporte", e);
+        break; // sin conexión: lo demás se intenta después
+      }
+    }
+    // Solo se quitan los enviados; lo que llegó mientras tanto se conserva.
+    if (done.size) writePending(readPending().filter((r) => !(r && done.has(r._k))));
+    return sent;
   }
 
   picked(id) {

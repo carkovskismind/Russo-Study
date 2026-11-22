@@ -4,8 +4,8 @@
   "grupo": "Gramática",
   "descripcion": "Presente de la 1.ª y 2.ª conjugación, pasado, futuro y los usos de играть.",
   "tarjetas": [
-    {"pregunta": "1.ª conjugación (-ать / -ять): terminaciones del presente", "respuesta": "я -ю (-у)     мы -ем\nты -ешь      вы -ете\nон -ет        они́ -ют (-ут)\nSe cambian las 2 últimas letras del infinitivo: де́лать → де́лаю, де́лаешь…"},
-    {"pregunta": "2.ª conjugación (-ить / -еть): terminaciones del presente", "respuesta": "я -ю (-у)     мы -им\nты -ишь      вы -ите\nон -ит        они́ -ят (-ат)\nSe cambian las 3 últimas letras del infinitivo: говори́ть → говорю́, говори́шь…"},
+    {"id": "gramatica-verbos:1.ª conjugación (-ать / -ять): terminaciones del presente", "pregunta": "1.ª conjugación (ты … -ешь): terminaciones del presente", "respuesta": "La forma de ты te dice el grupo. Si termina en -ешь:\nя -ю (-у)     мы -ем\nты -ешь      вы -ете\nон -ет        они́ -ют (-ут)\nрабо́тать → рабо́таю, рабо́таешь… рабо́тают.\nOjo: el final del infinitivo no siempre avisa. жить → живёшь e име́ть → име́ешь también van aquí."},
+    {"id": "gramatica-verbos:2.ª conjugación (-ить / -еть): terminaciones del presente", "pregunta": "2.ª conjugación (ты … -ишь): terminaciones del presente", "respuesta": "La forma de ты te dice el grupo. Si termina en -ишь:\nя -ю (-у)     мы -им\nты -ишь      вы -ите\nон -ит        они́ -ят (-ат)\nговори́ть → говорю́, говори́шь… говоря́т.\nAlgunos cambian un poco con я: люби́ть → я люблю́, ты лю́бишь.\nOjo: el final del infinitivo no siempre avisa. стоя́ть → стои́шь también va aquí."},
     {"pregunta": "Conjuga де́лать (hacer) en presente", "respuesta": "я де́лаю, ты де́лаешь, он де́лает,\nмы де́лаем, вы де́лаете, они́ де́лают"},
     {"pregunta": "Conjuga говори́ть (hablar) en presente", "respuesta": "я говорю́, ты говори́шь, он говори́т,\nмы говори́м, вы говори́те, они́ говоря́т"},
     {"pregunta": "Conjuga люби́ть (amar) en presente", "respuesta": "я люблю́ (¡con л!), ты лю́бишь, он лю́бит,\nмы лю́бим, вы лю́бите, они́ лю́бят"},

@@ -45,6 +45,7 @@ Y el mazo puede tener, junto a `tarjetas`:
 
 - `"aprender": {"intro": "...", "reglas": ["...", "..."], "tip": "..."}`: lo que se ve arriba del tema.
 - `"frases": [...]`: ejercicios de armar frases. Cada uno lleva `id`, `idea` (en español), `fichas` (las palabras en ruso), `validas` (todas las frases correctas que se pueden armar con esas fichas, en cualquier orden válido), `texto` (cómo se muestra), `fonetica`, `es` (traducción), `opciones` (4 traducciones; una es `es`), `distractores` (fichas de más que aparecen en los repasos) y `pista`.
+- `"enfasis": [{"ru": "...", "nota": "..."}]` (en cada frase con más de un orden válido): una entrada por **cada** orden que la app acepta, ya sea de `validas` o de los bloques libres (si no es `fijo`). `ru` es esa respuesta tal como está en `validas` o como la forman los bloques; la primera entrada es la respuesta principal (`texto`) con una nota que empieza «Orden neutro: …». `nota` es una sola frase corta (máx. ~20 palabras, nivel A1, sin tecnicismos) que dice qué se resalta con ese orden y cuándo se diría así. Regla de base: en ruso lo nuevo o importante va al final; al inicio va lo ya conocido o el contraste. Si dos órdenes son casi iguales, la nota lo dice; si un orden es posible pero raro, también. Sirve para explicar, al acertar con un orden distinto al principal, en qué se está haciendo énfasis.
 
 Si alguien toca «Mi respuesta también es correcta», se guarda en la tabla `reportes` de Supabase. Revísalos en **Table Editor → reportes** y, si tienen razón, agrega esa frase a `validas`.
 
