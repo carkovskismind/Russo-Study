@@ -1,1154 +1,2480 @@
 {
-  "paradas": [
+ "paradas": [
+  {
+   "id": "g-kto-chto",
+   "titulo": "Кто? Что? y э́то (sin «ser»)",
+   "ru": "Кто э́то?",
+   "puntos": [
+    "кто es para personas y también para animales; что, para cosas: Кто э́то? — Э́то ма́ма. Что э́то? — Э́то стол.",
+    "En presente no se dice «es» ni «está»: Э́то кот = Esto es un gato. Я здесь = Estoy aquí.",
+    "нет es el «no» de la respuesta; не va justo antes de la palabra que niegas: Нет, э́то не кот."
+   ],
+   "ejemplos": [
     {
-      "id": "g-kto-chto",
-      "titulo": "Кто? Что? y э́то (sin «ser»)",
-      "ru": "Кто э́то?",
-      "puntos": [
-        "кто es para personas y también para animales; что, para cosas: Кто э́то? — Э́то ма́ма. Что э́то? — Э́то стол.",
-        "En presente no se dice «es» ni «está»: Э́то кот = Esto es un gato. Я здесь = Estoy aquí.",
-        "нет es el «no» de la respuesta; не va justo antes de la palabra que niegas: Нет, э́то не кот."
-      ],
-      "ejemplos": [
-        {
-          "ru": "Кто э́то? — Э́то па́па.",
-          "fonetica": "kto E-ta? — E-ta PA-pa",
-          "es": "¿Quién es? — Es papá."
-        },
-        {
-          "ru": "Что э́то? — Э́то ка́рта.",
-          "fonetica": "shto E-ta? — E-ta KAR-ta",
-          "es": "¿Qué es esto? — Es un mapa."
-        },
-        {
-          "ru": "Нет, э́то не кот, э́то соба́ка.",
-          "fonetica": "niet, E-ta nie kot, E-ta sa-BA-ka",
-          "es": "No, no es un gato, es un perro."
-        }
-      ],
-      "ojo": "Para un animal también se pregunta кто: Кто э́то? — Э́то соба́ка.",
-      "tags": [],
-      "elige": [
-        {
-          "id": "g-kto-chto-e1",
-          "frase": "___ э́то? — Э́то ма́ма.",
-          "base": "кто",
-          "opciones": [
-            "Кто",
-            "Что"
-          ],
-          "correcta": "Кто",
-          "texto": "Кто э́то? — Э́то ма́ма.",
-          "fonetica": "kto E-ta? — E-ta MA-ma",
-          "es": "¿Quién es? — Es mamá.",
-          "porque": "ма́ма es una persona: se pregunta кто."
-        },
-        {
-          "id": "g-kto-chto-e2",
-          "frase": "___ э́то? — Э́то стол.",
-          "base": "что",
-          "opciones": [
-            "Кто",
-            "Что"
-          ],
-          "correcta": "Что",
-          "texto": "Что э́то? — Э́то стол.",
-          "fonetica": "shto E-ta? — E-ta stol",
-          "es": "¿Qué es esto? — Es una mesa.",
-          "porque": "стол (mesa) es una cosa: se pregunta что."
-        },
-        {
-          "id": "g-kto-chto-e3",
-          "frase": "___ э́то? — Э́то кот.",
-          "base": "кто",
-          "opciones": [
-            "Что",
-            "Кто"
-          ],
-          "correcta": "Кто",
-          "texto": "Кто э́то? — Э́то кот.",
-          "fonetica": "kto E-ta? — E-ta kot",
-          "es": "¿Quién es? — Es un gato.",
-          "porque": "Un gato es un animal, y para los animales también se pregunta кто."
-        },
-        {
-          "id": "g-kto-chto-e4",
-          "frase": "___ э́то? — Э́то ка́рта.",
-          "base": "что",
-          "opciones": [
-            "Что",
-            "Кто"
-          ],
-          "correcta": "Что",
-          "texto": "Что э́то? — Э́то ка́рта.",
-          "fonetica": "shto E-ta? — E-ta KAR-ta",
-          "es": "¿Qué es esto? — Es un mapa.",
-          "porque": "ка́рта (mapa) es una cosa: se pregunta что."
-        },
-        {
-          "id": "g-kto-chto-e5",
-          "frase": "___ э́то? — Э́то соба́ка.",
-          "base": "кто",
-          "opciones": [
-            "Кто",
-            "Что"
-          ],
-          "correcta": "Кто",
-          "texto": "Кто э́то? — Э́то соба́ка.",
-          "fonetica": "kto E-ta? — E-ta sa-BA-ka",
-          "es": "¿Quién es? — Es un perro.",
-          "porque": "соба́ка es un animal: se pregunta кто, igual que para una persona."
-        },
-        {
-          "id": "g-kto-chto-e6",
-          "frase": "Э́то ___ кот, э́то соба́ка.",
-          "base": "не",
-          "opciones": [
-            "не",
-            "нет"
-          ],
-          "correcta": "не",
-          "texto": "Э́то не кот, э́то соба́ка.",
-          "fonetica": "E-ta nie kot, E-ta sa-BA-ka",
-          "es": "No es un gato, es un perro.",
-          "porque": "Para negar una palabra dentro de la frase se usa не, justo antes de ella: не кот."
-        },
-        {
-          "id": "g-kto-chto-e7",
-          "frase": "Э́то ма́ма? — ___, э́то па́па.",
-          "base": "нет",
-          "opciones": [
-            "Нет",
-            "Не"
-          ],
-          "correcta": "Нет",
-          "texto": "Э́то ма́ма? — Нет, э́то па́па.",
-          "fonetica": "E-ta MA-ma? — niet, E-ta PA-pa",
-          "es": "¿Es mamá? — No, es papá.",
-          "porque": "Para contestar «no» se usa нет. не no va solo: siempre acompaña a la palabra que niega."
-        }
-      ]
+     "ru": "Кто э́то? — Э́то па́па.",
+     "fonetica": "kto E-ta? — E-ta PA-pa",
+     "es": "¿Quién es? — Es papá."
     },
     {
-      "id": "g-genero",
-      "titulo": "Él, ella, ello: el género",
-      "ru": "он, она́, оно́",
-      "puntos": [
-        "Mira la última letra: consonante o -й → он (брат, кот); -а o -я → она́ (ма́ма, семья́); -о o -е → оно́ (окно́, мо́ре).",
-        "Las que terminan en -ь pueden ser он u она́, así que mira su tarjeta: день — он, ночь — она́.",
-        "Las palabras de hombres son он aunque terminen en -а: па́па, де́душка, дя́дя."
-      ],
-      "ejemplos": [
-        {
-          "ru": "Где кот? — Вот он.",
-          "fonetica": "gdie kot? — vot on",
-          "es": "¿Dónde está el gato? — Aquí está."
-        },
-        {
-          "ru": "Где ма́ма? — Вот она́.",
-          "fonetica": "gdie MA-ma? — vot a-NA",
-          "es": "¿Dónde está mamá? — Aquí está."
-        },
-        {
-          "ru": "Где па́па? — Он там.",
-          "fonetica": "gdie PA-pa? — on tam",
-          "es": "¿Dónde está papá? — Está allá."
-        }
-      ],
-      "ojo": "соба́ка es она́ aunque sea un perro macho; и́мя (y las demás en -мя) es оно́.",
-      "tags": [
-        "femenino",
-        "neutro"
-      ],
-      "elige": [
-        {
-          "id": "g-genero-e1",
-          "frase": "Где ма́ма? — ___ здесь.",
-          "base": "она́",
-          "opciones": [
-            "Он",
-            "Она́",
-            "Оно́"
-          ],
-          "correcta": "Она́",
-          "texto": "Где ма́ма? — Она́ здесь.",
-          "fonetica": "gdie MA-ma? — a-NA zdies'",
-          "es": "¿Dónde está mamá? — Está aquí.",
-          "porque": "ма́ма termina en -а: она́."
-        },
-        {
-          "id": "g-genero-e2",
-          "frase": "Где па́па? — ___ здесь.",
-          "base": "он",
-          "opciones": [
-            "Она́",
-            "Он",
-            "Оно́"
-          ],
-          "correcta": "Он",
-          "texto": "Где па́па? — Он здесь.",
-          "fonetica": "gdie PA-pa? — on zdies'",
-          "es": "¿Dónde está papá? — Está aquí.",
-          "porque": "па́па termina en -а, pero es hombre: он."
-        },
-        {
-          "id": "g-genero-e3",
-          "frase": "Где кот? — ___ там.",
-          "base": "он",
-          "opciones": [
-            "Он",
-            "Она́",
-            "Оно́"
-          ],
-          "correcta": "Он",
-          "texto": "Где кот? — Он там.",
-          "fonetica": "gdie kot? — on tam",
-          "es": "¿Dónde está el gato? — Está allá.",
-          "porque": "кот termina en consonante: он."
-        },
-        {
-          "id": "g-genero-e4",
-          "frase": "Где ко́шка? — ___ там.",
-          "base": "она́",
-          "opciones": [
-            "Он",
-            "Она́",
-            "Оно́"
-          ],
-          "correcta": "Она́",
-          "texto": "Где ко́шка? — Она́ там.",
-          "fonetica": "gdie KOSH-ka? — a-NA tam",
-          "es": "¿Dónde está la gata? — Está allá.",
-          "porque": "ко́шка termina en -а: она́."
-        },
-        {
-          "id": "g-genero-e5",
-          "frase": "Где соба́ка? — Вот ___.",
-          "base": "она́",
-          "opciones": [
-            "он",
-            "она́"
-          ],
-          "correcta": "она́",
-          "texto": "Где соба́ка? — Вот она́.",
-          "fonetica": "gdie sa-BA-ka? — vot a-NA",
-          "es": "¿Dónde está el perro? — Aquí está.",
-          "porque": "соба́ка termina en -а: она́, aunque el perro sea macho."
-        },
-        {
-          "id": "g-genero-e6",
-          "frase": "Где и́мя? — Вот ___.",
-          "base": "оно́",
-          "opciones": [
-            "она́",
-            "оно́",
-            "он"
-          ],
-          "correcta": "оно́",
-          "texto": "Где и́мя? — Вот оно́.",
-          "fonetica": "gdie I-mia? — vot a-NO",
-          "es": "¿Dónde está el nombre? — Aquí está.",
-          "porque": "и́мя termina en -мя, y esas palabras son оно́, aunque terminen en -я."
-        },
-        {
-          "id": "g-genero-e7",
-          "frase": "Где де́душка? — ___ там.",
-          "base": "он",
-          "opciones": [
-            "Он",
-            "Она́"
-          ],
-          "correcta": "Он",
-          "texto": "Где де́душка? — Он там.",
-          "fonetica": "gdie DIE-dush-ka? — on tam",
-          "es": "¿Dónde está el abuelo? — Está allá.",
-          "porque": "де́душка termina en -а, pero es hombre: он."
-        },
-        {
-          "id": "g-genero-e8",
-          "frase": "Где ло́шадь? — Вот ___.",
-          "base": "она́",
-          "opciones": [
-            "он",
-            "она́"
-          ],
-          "correcta": "она́",
-          "texto": "Где ло́шадь? — Вот она́.",
-          "fonetica": "gdie LO-shat'? — vot a-NA",
-          "es": "¿Dónde está el caballo? — Aquí está.",
-          "porque": "ло́шадь termina en -ь, y su tarjeta dice que es femenina: она́."
-        }
-      ]
+     "ru": "Что э́то? — Э́то ка́рта.",
+     "fonetica": "shto E-ta? — E-ta KAR-ta",
+     "es": "¿Qué es esto? — Es un mapa."
     },
     {
-      "id": "g-moy-moya",
-      "titulo": "мой, моя́, моё, мои́ y чей",
-      "ru": "моя́ ма́ма",
-      "puntos": [
-        "«Mi» copia el género de la palabra: мой брат, моя́ сестра́, моё и́мя, мои́ роди́тели. Igual твой (tu), наш (nuestro) y ваш (de usted, de ustedes).",
-        "Para preguntar «¿de quién?» pasa lo mismo: чей брат? чья сестра́? чьё и́мя? чьи де́ти?",
-        "его́ (de él), её (de ella) e их (de ellos) nunca cambian: его́ брат, его́ сестра́."
-      ],
-      "ejemplos": [
-        {
-          "ru": "Э́то моя́ ма́ма.",
-          "fonetica": "E-ta ma-IA MA-ma",
-          "es": "Esta es mi mamá."
-        },
-        {
-          "ru": "Чья э́то соба́ка? — Моя́.",
-          "fonetica": "chia E-ta sa-BA-ka? — ma-IA",
-          "es": "¿De quién es este perro? — Es mío."
-        },
-        {
-          "ru": "Э́то её брат и её сестра́.",
-          "fonetica": "E-ta ie-IO brat i ie-IO sies-TRA",
-          "es": "Este es su hermano y esta es su hermana (de ella)."
-        }
-      ],
-      "ojo": "мой па́па (no «моя́ па́па»): па́па es hombre.",
-      "tags": [],
-      "elige": [
-        {
-          "id": "g-moy-moya-e1",
-          "frase": "Э́то ___ ма́ма.",
-          "base": "мой",
-          "opciones": [
-            "мой",
-            "моя́",
-            "моё"
-          ],
-          "correcta": "моя́",
-          "texto": "Э́то моя́ ма́ма.",
-          "fonetica": "E-ta ma-IA MA-ma",
-          "es": "Esta es mi mamá.",
-          "porque": "ма́ма es она́: моя́ ма́ма."
-        },
-        {
-          "id": "g-moy-moya-e2",
-          "frase": "Э́то ___ па́па.",
-          "base": "мой",
-          "opciones": [
-            "моя́",
-            "мой",
-            "моё"
-          ],
-          "correcta": "мой",
-          "texto": "Э́то мой па́па.",
-          "fonetica": "E-ta moi PA-pa",
-          "es": "Este es mi papá.",
-          "porque": "па́па termina en -а, pero es hombre: мой па́па."
-        },
-        {
-          "id": "g-moy-moya-e3",
-          "frase": "Э́то ___ и́мя.",
-          "base": "мой",
-          "opciones": [
-            "мой",
-            "моя́",
-            "моё"
-          ],
-          "correcta": "моё",
-          "texto": "Э́то моё и́мя.",
-          "fonetica": "E-ta ma-IO I-mia",
-          "es": "Este es mi nombre.",
-          "porque": "и́мя es оно́: моё и́мя."
-        },
-        {
-          "id": "g-moy-moya-e4",
-          "frase": "Э́то ___ роди́тели.",
-          "base": "мой",
-          "opciones": [
-            "мой",
-            "мои́",
-            "моя́"
-          ],
-          "correcta": "мои́",
-          "texto": "Э́то мои́ роди́тели.",
-          "fonetica": "E-ta ma-I ra-DI-tie-li",
-          "es": "Estos son mis padres.",
-          "porque": "роди́тели son varios: мои́ роди́тели."
-        },
-        {
-          "id": "g-moy-moya-e5",
-          "frase": "___ э́то соба́ка? — Моя́.",
-          "base": "чей",
-          "opciones": [
-            "Чей",
-            "Чья",
-            "Чьи"
-          ],
-          "correcta": "Чья",
-          "texto": "Чья э́то соба́ка? — Моя́.",
-          "fonetica": "chia E-ta sa-BA-ka? — ma-IA",
-          "es": "¿De quién es este perro? — Es mío.",
-          "porque": "соба́ка es она́: чья соба́ка? La respuesta también: моя́."
-        },
-        {
-          "id": "g-moy-moya-e6",
-          "frase": "___ э́то кот? — Мой.",
-          "base": "чей",
-          "opciones": [
-            "Чья",
-            "Чей",
-            "Чьё"
-          ],
-          "correcta": "Чей",
-          "texto": "Чей э́то кот? — Мой.",
-          "fonetica": "chei E-ta kot? — moi",
-          "es": "¿De quién es este gato? — Es mío.",
-          "porque": "кот es он: чей кот? La respuesta también: мой."
-        },
-        {
-          "id": "g-moy-moya-e7",
-          "frase": "Э́то ___ ко́шка?",
-          "base": "твой",
-          "opciones": [
-            "твой",
-            "твоя́",
-            "твоё"
-          ],
-          "correcta": "твоя́",
-          "texto": "Э́то твоя́ ко́шка?",
-          "fonetica": "E-ta tva-IA KOSH-ka",
-          "es": "¿Esta es tu gata?",
-          "porque": "ко́шка es она́: твоя́ ко́шка, igual que моя́."
-        },
-        {
-          "id": "g-moy-moya-e8",
-          "frase": "Э́то па́па, а э́то ___ сестра́.",
-          "base": "его́",
-          "opciones": [
-            "его́",
-            "её"
-          ],
-          "correcta": "его́",
-          "texto": "Э́то па́па, а э́то его́ сестра́.",
-          "fonetica": "E-ta PA-pa, a E-ta ie-VO sies-TRA",
-          "es": "Este es papá y esta es su hermana (de él).",
-          "porque": "Es la hermana de papá: его́ (de él). его́ no cambia aunque сестра́ sea femenina."
-        }
-      ]
-    },
-    {
-      "id": "g-u-menya-est",
-      "titulo": "У меня́ есть… (tengo)",
-      "ru": "У меня́ есть брат.",
-      "puntos": [
-        "«Tengo» se dice У меня́ есть… (algo así como «junto a mí hay…»): У меня́ есть брат.",
-        "«¿Tienes…?» es У тебя́ есть…? Se contesta Да, есть. o Нет.",
-        "Lo que tienes no cambia, va como en el diccionario: У меня́ есть сестра́. У меня́ есть ко́шка."
-      ],
-      "ejemplos": [
-        {
-          "ru": "У меня́ есть брат.",
-          "fonetica": "u mie-NIA iest' brat",
-          "es": "Tengo un hermano."
-        },
-        {
-          "ru": "У тебя́ есть соба́ка? — Да, есть.",
-          "fonetica": "u tie-BIA iest' sa-BA-ka? — da, iest'",
-          "es": "¿Tienes perro? — Sí, tengo."
-        },
-        {
-          "ru": "У меня́ есть ко́шка.",
-          "fonetica": "u mie-NIA iest' KOSH-ka",
-          "es": "Tengo una gata."
-        }
-      ],
-      "ojo": "No se dice «я име́ю брат»; se dice У меня́ есть брат.",
-      "tags": [
-        "у + genitivo"
-      ],
-      "elige": [
-        {
-          "id": "g-u-menya-est-e1",
-          "frase": "___ есть брат.",
-          "base": "я",
-          "opciones": [
-            "У меня́",
-            "Я"
-          ],
-          "correcta": "У меня́",
-          "texto": "У меня́ есть брат.",
-          "fonetica": "u mie-NIA iest' brat",
-          "es": "Tengo un hermano.",
-          "porque": "«Tengo» es у меня́ есть. «Я есть» no se usa para decir que tienes algo."
-        },
-        {
-          "id": "g-u-menya-est-e2",
-          "frase": "___ есть сестра́?",
-          "base": "ты",
-          "opciones": [
-            "Ты",
-            "У тебя́"
-          ],
-          "correcta": "У тебя́",
-          "texto": "У тебя́ есть сестра́?",
-          "fonetica": "u tie-BIA iest' sies-TRA",
-          "es": "¿Tienes una hermana?",
-          "porque": "«¿Tienes?» es у тебя́ есть. «Ты есть» no se usa para tener."
-        },
-        {
-          "id": "g-u-menya-est-e3",
-          "frase": "У ___ есть брат?",
-          "base": "ты",
-          "opciones": [
-            "ты",
-            "тебя́"
-          ],
-          "correcta": "тебя́",
-          "texto": "У тебя́ есть брат?",
-          "fonetica": "u tie-BIA iest' brat",
-          "es": "¿Tienes un hermano?",
-          "porque": "Después de у, ты cambia a тебя́: у тебя́."
-        },
-        {
-          "id": "g-u-menya-est-e4",
-          "frase": "У ___ есть ко́шка.",
-          "base": "я",
-          "opciones": [
-            "меня́",
-            "я"
-          ],
-          "correcta": "меня́",
-          "texto": "У меня́ есть ко́шка.",
-          "fonetica": "u mie-NIA iest' KOSH-ka",
-          "es": "Tengo una gata.",
-          "porque": "Después de у, я cambia a меня́: у меня́."
-        },
-        {
-          "id": "g-u-menya-est-e5",
-          "frase": "У меня́ есть ___.",
-          "base": "соба́ка",
-          "opciones": [
-            "соба́ка",
-            "соба́ку"
-          ],
-          "correcta": "соба́ка",
-          "texto": "У меня́ есть соба́ка.",
-          "fonetica": "u mie-NIA iest' sa-BA-ka",
-          "es": "Tengo un perro.",
-          "porque": "Después de у меня́ есть, la palabra va como en el diccionario: соба́ка."
-        },
-        {
-          "id": "g-u-menya-est-e6",
-          "frase": "У тебя́ есть брат? — Да, ___.",
-          "base": "есть",
-          "opciones": [
-            "есть",
-            "я"
-          ],
-          "correcta": "есть",
-          "texto": "У тебя́ есть брат? — Да, есть.",
-          "fonetica": "u tie-BIA iest' brat? — da, iest'",
-          "es": "¿Tienes un hermano? — Sí, tengo.",
-          "porque": "Para contestar «sí, tengo» basta con Да, есть."
-        },
-        {
-          "id": "g-u-menya-est-e7",
-          "frase": "___ есть де́душка и ба́бушка.",
-          "base": "я",
-          "opciones": [
-            "Мой",
-            "У меня́"
-          ],
-          "correcta": "У меня́",
-          "texto": "У меня́ есть де́душка и ба́бушка.",
-          "fonetica": "u mie-NIA iest' DIE-dush-ka i BA-bush-ka",
-          "es": "Tengo abuelo y abuela.",
-          "porque": "«Tengo» siempre es у меня́ есть; мой es «mi» y no sirve para tener."
-        }
-      ]
-    },
-    {
-      "id": "g-numeros-dos",
-      "titulo": "1, 2, 3, 4… y la palabra que sigue",
-      "ru": "два бра́та",
-      "puntos": [
-        "1 copia el género: оди́н брат, одна́ сестра́, одно́ и́мя. 2 tiene dos formas: два (он, оно́) y две (она́): два бра́та, две сестры́.",
-        "Después de 2, 3 y 4 la palabra cambia su final. Si es он u оно́, agrega -а: брат → два бра́та, сын → три сы́на. Si es она́, la -а cambia a -ы, o a -и después de к, г, х: сестра́ → две сестры́, ко́шка → три ко́шки.",
-        "De 5 en adelante cambia otra vez. Por ahora, solo dos que se usan mucho: пять лет (años) y пять челове́к (personas)."
-      ],
-      "ejemplos": [
-        {
-          "ru": "У меня́ два бра́та.",
-          "fonetica": "u mie-NIA dva BRA-ta",
-          "es": "Tengo dos hermanos."
-        },
-        {
-          "ru": "У тебя́ две сестры́?",
-          "fonetica": "u tie-BIA dvie sies-TRY",
-          "es": "¿Tienes dos hermanas?"
-        },
-        {
-          "ru": "У меня́ три ко́шки.",
-          "fonetica": "u mie-NIA tri KOSH-ki",
-          "es": "Tengo tres gatos."
-        }
-      ],
-      "ojo": "две сестры́ (acento al final) no es lo mismo que сёстры (hermanas, en plural). A veces el acento se mueve: кот → два кота́. La fonética lo marca.",
-      "tags": [
-        "después de 2, 3, 4"
-      ],
-      "elige": [
-        {
-          "id": "g-numeros-dos-e1",
-          "frase": "У меня́ ___ сестры́.",
-          "base": "два",
-          "opciones": [
-            "два",
-            "две"
-          ],
-          "correcta": "две",
-          "texto": "У меня́ две сестры́.",
-          "fonetica": "u mie-NIA dvie sies-TRY",
-          "es": "Tengo dos hermanas.",
-          "porque": "сестра́ es она́, y con она́ va две. два es para он y оно́."
-        },
-        {
-          "id": "g-numeros-dos-e2",
-          "frase": "У меня́ ___ брат.",
-          "base": "оди́н",
-          "opciones": [
-            "оди́н",
-            "одна́"
-          ],
-          "correcta": "оди́н",
-          "texto": "У меня́ оди́н брат.",
-          "fonetica": "u mie-NIA a-DIN brat",
-          "es": "Tengo un hermano.",
-          "porque": "брат es он: оди́н брат. одна́ es para она́."
-        },
-        {
-          "id": "g-numeros-dos-e3",
-          "frase": "У меня́ три ___.",
-          "base": "сын",
-          "opciones": [
-            "сы́на",
-            "сын",
-            "сыновья́"
-          ],
-          "correcta": "сы́на",
-          "texto": "У меня́ три сы́на.",
-          "fonetica": "u mie-NIA tri SY-na",
-          "es": "Tengo tres hijos.",
-          "porque": "Después de 2, 3 y 4, una palabra de он agrega -а: сын → три сы́на. сыновья́ es «hijos» sin número."
-        },
-        {
-          "id": "g-numeros-dos-e4",
-          "frase": "У меня́ две ___.",
-          "base": "соба́ка",
-          "opciones": [
-            "соба́ки",
-            "соба́ка",
-            "соба́к"
-          ],
-          "correcta": "соба́ки",
-          "texto": "У меня́ две соба́ки.",
-          "fonetica": "u mie-NIA dvie sa-BA-ki",
-          "es": "Tengo dos perros.",
-          "porque": "соба́ка es она́: después de 2, 3 y 4 la -а cambia. Después de к va -и: две соба́ки. соба́к es la forma de 5 en adelante."
-        },
-        {
-          "id": "g-numeros-dos-e5",
-          "frase": "У тебя́ два ___?",
-          "base": "брат",
-          "opciones": [
-            "бра́та",
-            "брат",
-            "бра́тья"
-          ],
-          "correcta": "бра́та",
-          "texto": "У тебя́ два бра́та?",
-          "fonetica": "u tie-BIA dva BRA-ta",
-          "es": "¿Tienes dos hermanos?",
-          "porque": "Después de два, брат agrega -а: два бра́та. бра́тья es «hermanos» sin número."
-        },
-        {
-          "id": "g-numeros-dos-e6",
-          "frase": "Там четы́ре ___.",
-          "base": "кот",
-          "opciones": [
-            "кота́",
-            "кот",
-            "коты́"
-          ],
-          "correcta": "кота́",
-          "texto": "Там четы́ре кота́.",
-          "fonetica": "tam chi-TY-rie ka-TA",
-          "es": "Allá hay cuatro gatos.",
-          "porque": "кот es он: después de 4 agrega -а, y el acento se va al final: четы́ре кота́."
-        },
-        {
-          "id": "g-numeros-dos-e7",
-          "frase": "У меня́ ___ сестра́.",
-          "base": "оди́н",
-          "opciones": [
-            "оди́н",
-            "одна́",
-            "одно́"
-          ],
-          "correcta": "одна́",
-          "texto": "У меня́ одна́ сестра́.",
-          "fonetica": "u mie-NIA ad-NA sies-TRA",
-          "es": "Tengo una hermana.",
-          "porque": "сестра́ es она́: одна́ сестра́, como моя́ сестра́."
-        },
-        {
-          "id": "g-numeros-dos-e8",
-          "frase": "Здесь пять ___.",
-          "base": "челове́к",
-          "opciones": [
-            "челове́к",
-            "челове́ка"
-          ],
-          "correcta": "челове́к",
-          "texto": "Здесь пять челове́к.",
-          "fonetica": "zdies' piat' chie-la-VIEK",
-          "es": "Aquí hay cinco personas.",
-          "porque": "De 5 en adelante la palabra cambia otra vez; челове́к se queda igual: пять челове́к. челове́ка es la forma para 2, 3 y 4."
-        }
-      ]
-    },
-    {
-      "id": "g-presente",
-      "titulo": "Verbos en presente: я рабо́таю, ты лю́бишь",
-      "ru": "я рабо́таю",
-      "puntos": [
-        "El verbo cambia según quién lo hace: я рабо́таю, ты рабо́таешь, он / она́ рабо́тает, мы рабо́таем, вы рабо́таете, они́ рабо́тают.",
-        "Mira la forma de ты. Si termina en -ешь (рабо́таешь, зна́ешь), sigue -ет, -ем, -ете, -ют. Si termina en -ишь (лю́бишь), sigue -ит, -им, -ите, -ят.",
-        "Algunos verbos cambian un poco solo con я: люби́ть → я люблю́ (con л), pero ты лю́бишь."
-      ],
-      "ejemplos": [
-        {
-          "ru": "Где ты рабо́таешь? — Я рабо́таю здесь.",
-          "fonetica": "gdie ty ra-BO-ta-iesh? — ia ra-BO-ta-iu zdies'",
-          "es": "¿Dónde trabajas? — Trabajo aquí."
-        },
-        {
-          "ru": "Ты зна́ешь? — Да, зна́ю.",
-          "fonetica": "ty ZNA-iesh? — da, ZNA-iu",
-          "es": "¿Sabes? — Sí, sé."
-        },
-        {
-          "ru": "Они́ лю́бят рабо́тать.",
-          "fonetica": "a-NI LIU-biat ra-BO-tat'",
-          "es": "A ellos les encanta trabajar."
-        }
-      ],
-      "ojo": "El final del verbo (-ать, -ить…) no siempre avisa cómo cambia. Apréndelo con su forma de я y de ты, como viene en la tarjeta.",
-      "tags": [],
-      "elige": [
-        {
-          "id": "g-presente-e1",
-          "frase": "Мы ___ здесь.",
-          "base": "рабо́тать",
-          "opciones": [
-            "рабо́таем",
-            "рабо́тают",
-            "рабо́таешь"
-          ],
-          "correcta": "рабо́таем",
-          "texto": "Мы рабо́таем здесь.",
-          "fonetica": "my ra-BO-ta-iem zdies'",
-          "es": "Trabajamos aquí.",
-          "porque": "Con мы, el verbo termina en -ем: мы рабо́таем. рабо́тают es para они́ y рабо́таешь, para ты."
-        },
-        {
-          "id": "g-presente-e2",
-          "frase": "Ты ___? — Да, зна́ю.",
-          "base": "знать",
-          "opciones": [
-            "зна́ешь",
-            "зна́ет"
-          ],
-          "correcta": "зна́ешь",
-          "texto": "Ты зна́ешь? — Да, зна́ю.",
-          "fonetica": "ty ZNA-iesh? — da, ZNA-iu",
-          "es": "¿Sabes? — Sí, sé.",
-          "porque": "Con ты, el verbo termina en -ешь: ты зна́ешь. зна́ет es para он u она́."
-        },
-        {
-          "id": "g-presente-e3",
-          "frase": "Они́ ___ рабо́тать.",
-          "base": "люби́ть",
-          "opciones": [
-            "лю́бят",
-            "лю́бит",
-            "лю́бишь"
-          ],
-          "correcta": "лю́бят",
-          "texto": "Они́ лю́бят рабо́тать.",
-          "fonetica": "a-NI LIU-biat ra-BO-tat'",
-          "es": "A ellos les encanta trabajar.",
-          "porque": "люби́ть es de los de -ишь (ты лю́бишь): con они́ termina en -ят, они́ лю́бят."
-        },
-        {
-          "id": "g-presente-e4",
-          "frase": "Я ___ рабо́тать.",
-          "base": "люби́ть",
-          "opciones": [
-            "люблю́",
-            "любю́",
-            "лю́бит"
-          ],
-          "correcta": "люблю́",
-          "texto": "Я люблю́ рабо́тать.",
-          "fonetica": "ia liub-LIU ra-BO-tat'",
-          "es": "Me encanta trabajar.",
-          "porque": "Con я, люби́ть agrega una л: я люблю́. «любю́» no existe."
-        },
-        {
-          "id": "g-presente-e5",
-          "frase": "Она́ ___ там.",
-          "base": "рабо́тать",
-          "opciones": [
-            "рабо́тает",
-            "рабо́таю",
-            "рабо́тают"
-          ],
-          "correcta": "рабо́тает",
-          "texto": "Она́ рабо́тает там.",
-          "fonetica": "a-NA ra-BO-ta-iet tam",
-          "es": "Ella trabaja allá.",
-          "porque": "Con он u она́, el verbo termina en -ет: она́ рабо́тает."
-        },
-        {
-          "id": "g-presente-e6",
-          "frase": "Вы ___?",
-          "base": "знать",
-          "opciones": [
-            "зна́ете",
-            "зна́ет",
-            "зна́ешь"
-          ],
-          "correcta": "зна́ете",
-          "texto": "Вы зна́ете?",
-          "fonetica": "vy ZNA-ie-tie",
-          "es": "¿Usted sabe?",
-          "porque": "Con вы (usted o ustedes), el verbo termina en -ете: вы зна́ете."
-        },
-        {
-          "id": "g-presente-e7",
-          "frase": "Мы ___ рабо́тать.",
-          "base": "люби́ть",
-          "opciones": [
-            "лю́бим",
-            "лю́бем",
-            "лю́бят"
-          ],
-          "correcta": "лю́бим",
-          "texto": "Мы лю́бим рабо́тать.",
-          "fonetica": "my LIU-bim ra-BO-tat'",
-          "es": "Nos encanta trabajar.",
-          "porque": "люби́ть es de los de -ишь (ты лю́бишь): con мы va -им, no -ем. мы лю́бим."
-        },
-        {
-          "id": "g-presente-e8",
-          "frase": "Где он ___?",
-          "base": "рабо́тать",
-          "opciones": [
-            "рабо́тает",
-            "рабо́тит"
-          ],
-          "correcta": "рабо́тает",
-          "texto": "Где он рабо́тает?",
-          "fonetica": "gdie on ra-BO-ta-iet",
-          "es": "¿Dónde trabaja él?",
-          "porque": "рабо́тать es de los de -ешь (ты рабо́таешь): con он va -ет, он рабо́тает. La -ит es de los de -ишь."
-        }
-      ]
-    },
-    {
-      "id": "g-pronombres-acusativo",
-      "titulo": "Меня́ зову́т, Я тебя́ люблю́",
-      "ru": "Я тебя́ люблю́.",
-      "puntos": [
-        "En ruso muchas palabras cambian su final según lo que hacen en la frase. A esos cambios se les llama casos. No hace falta saber sus nombres: la app te dice para qué sirve cada forma.",
-        "Cuando la persona recibe la acción, я → меня́, ты → тебя́, мы → нас, вы → вас, он → его́, она́ → её: Я тебя́ люблю́. Ты меня́ зна́ешь?",
-        "Por eso Меня́ зову́т… quiere decir «a mí me llaman…», y se pregunta Как тебя́ зову́т?"
-      ],
-      "ejemplos": [
-        {
-          "ru": "Я тебя́ люблю́.",
-          "fonetica": "ia tie-BIA liub-LIU",
-          "es": "Te quiero."
-        },
-        {
-          "ru": "Ты меня́ зна́ешь?",
-          "fonetica": "ty mie-NIA ZNA-iesh",
-          "es": "¿Me conoces?"
-        },
-        {
-          "ru": "Как его́ зову́т? — Его́ зову́т Ди́ма.",
-          "fonetica": "kak ie-VO za-VUT? — ie-VO za-VUT DI-ma",
-          "es": "¿Cómo se llama él? — Se llama Dima."
-        }
-      ],
-      "ojo": "Я тебя́ люблю́ (no «я ты люблю́»). его́ y её se escriben igual que «de él» y «de ella», pero aquí significan «lo» y «la»: Я его́ зна́ю.",
-      "tags": [],
-      "elige": [
-        {
-          "id": "g-pronombres-acusativo-e1",
-          "frase": "Как ___ зову́т?",
-          "base": "ты",
-          "opciones": [
-            "тебя́",
-            "ты",
-            "твой"
-          ],
-          "correcta": "тебя́",
-          "texto": "Как тебя́ зову́т?",
-          "fonetica": "kak tie-BIA za-VUT",
-          "es": "¿Cómo te llamas?",
-          "porque": "Con зову́т, la persona va en la forma que recibe la acción: ты → тебя́ («a ti te llaman»)."
-        },
-        {
-          "id": "g-pronombres-acusativo-e2",
-          "frase": "Я ___ зна́ю.",
-          "base": "он",
-          "opciones": [
-            "его́",
-            "он"
-          ],
-          "correcta": "его́",
-          "texto": "Я его́ зна́ю.",
-          "fonetica": "ia ie-VO ZNA-iu",
-          "es": "Lo conozco.",
-          "porque": "Él recibe la acción (lo conoces): он → его́."
-        },
-        {
-          "id": "g-pronombres-acusativo-e3",
-          "frase": "Мы ___ лю́бим.",
-          "base": "вы",
-          "opciones": [
-            "вас",
-            "вы"
-          ],
-          "correcta": "вас",
-          "texto": "Мы вас лю́бим.",
-          "fonetica": "my vas LIU-bim",
-          "es": "Los queremos.",
-          "porque": "Ustedes reciben la acción: вы → вас."
-        },
-        {
-          "id": "g-pronombres-acusativo-e4",
-          "frase": "___ зову́т Ма́ша.",
-          "base": "я",
-          "opciones": [
-            "Меня́",
-            "Я",
-            "Моя́"
-          ],
-          "correcta": "Меня́",
-          "texto": "Меня́ зову́т Ма́ша.",
-          "fonetica": "mie-NIA za-VUT MA-sha",
-          "es": "Me llamo Masha.",
-          "porque": "«Me llamo» es Меня́ зову́т, literalmente «a mí me llaman». «Я зову́т» no se dice."
-        },
-        {
-          "id": "g-pronombres-acusativo-e5",
-          "frase": "Ты ___ зна́ешь? — Да, зна́ю.",
-          "base": "я",
-          "opciones": [
-            "меня́",
-            "я"
-          ],
-          "correcta": "меня́",
-          "texto": "Ты меня́ зна́ешь? — Да, зна́ю.",
-          "fonetica": "ty mie-NIA ZNA-iesh? — da, ZNA-iu",
-          "es": "¿Me conoces? — Sí, te conozco.",
-          "porque": "Yo recibo la acción (me conoces): я → меня́."
-        },
-        {
-          "id": "g-pronombres-acusativo-e6",
-          "frase": "Э́то Ле́на. Ты ___ зна́ешь?",
-          "base": "она́",
-          "opciones": [
-            "её",
-            "она́",
-            "его́"
-          ],
-          "correcta": "её",
-          "texto": "Э́то Ле́на. Ты её зна́ешь?",
-          "fonetica": "E-ta LIE-na. ty ie-IO ZNA-iesh",
-          "es": "Esta es Lena. ¿La conoces?",
-          "porque": "Ле́на es она́ y recibe la acción: она́ → её. его́ sería para un hombre."
-        },
-        {
-          "id": "g-pronombres-acusativo-e7",
-          "frase": "Э́то Екатери́на. ___ зову́т Ка́тя.",
-          "base": "она́",
-          "opciones": [
-            "Её",
-            "Она́",
-            "Его́"
-          ],
-          "correcta": "Её",
-          "texto": "Э́то Екатери́на. Её зову́т Ка́тя.",
-          "fonetica": "E-ta ie-ka-tie-RI-na. ie-IO za-VUT KA-tia",
-          "es": "Esta es Ekaterina. Le dicen Katia.",
-          "porque": "Para ella: её зову́т (no «она́ зову́т»). Ка́тя es el diminutivo de Екатери́на."
-        },
-        {
-          "id": "g-pronombres-acusativo-e8",
-          "frase": "Са́ша, я ___ люблю́!",
-          "base": "ты",
-          "opciones": [
-            "тебя́",
-            "ты"
-          ],
-          "correcta": "тебя́",
-          "texto": "Са́ша, я тебя́ люблю́!",
-          "fonetica": "SA-sha, ia tie-BIA liub-LIU",
-          "es": "¡Sasha, te quiero!",
-          "porque": "Sasha recibe la acción: ты → тебя́. «Я ты люблю́» no se dice."
-        }
-      ]
-    },
-    {
-      "id": "g-adjetivo-adverbio",
-      "titulo": "хоро́ший o хорошо́; како́й",
-      "ru": "хоро́ший врач",
-      "puntos": [
-        "хоро́ший, краси́вый, интере́сный dicen cómo es alguien o algo: хоро́ший врач, краси́вый кот.",
-        "хорошо́, краси́во, интере́сно (con -о) dicen cómo se hace algo o cómo está todo: Он хорошо́ рабо́тает. Как краси́во!",
-        "Para preguntar cómo es alguien o algo: како́й? — Како́й он? — Он молодо́й и краси́вый."
-      ],
-      "ejemplos": [
-        {
-          "ru": "Он хоро́ший врач.",
-          "fonetica": "on ja-RO-shii vrach",
-          "es": "Es un buen médico."
-        },
-        {
-          "ru": "Он хорошо́ рабо́тает.",
-          "fonetica": "on ja-ra-SHO ra-BO-ta-iet",
-          "es": "Trabaja bien."
-        },
-        {
-          "ru": "Како́й он? — Он молодо́й и краси́вый.",
-          "fonetica": "ka-KOI on? — on ma-la-DOI i kra-SI-vyi",
-          "es": "¿Cómo es él? — Es joven y guapo."
-        }
-      ],
-      "ojo": "хоро́ший врач, pero рабо́тает хорошо́.",
-      "tags": [],
-      "elige": [
-        {
-          "id": "g-adjetivo-adverbio-e1",
-          "frase": "Он ___ рабо́тает.",
-          "base": "хорошо́",
-          "opciones": [
-            "хорошо́",
-            "хоро́ший"
-          ],
-          "correcta": "хорошо́",
-          "texto": "Он хорошо́ рабо́тает.",
-          "fonetica": "on ja-ra-SHO ra-BO-ta-iet",
-          "es": "Él trabaja bien.",
-          "porque": "Dice cómo trabaja: хорошо́ (bien). хоро́ший describe a alguien o algo."
-        },
-        {
-          "id": "g-adjetivo-adverbio-e2",
-          "frase": "Э́то ___ слон.",
-          "base": "большо́й",
-          "opciones": [
-            "большо́й",
-            "большо́"
-          ],
-          "correcta": "большо́й",
-          "texto": "Э́то большо́й слон.",
-          "fonetica": "E-ta bal'-SHOI slon",
-          "es": "Es un elefante grande.",
-          "porque": "Dice cómo es el elefante: большо́й. «большо́» no se usa."
-        },
-        {
-          "id": "g-adjetivo-adverbio-e3",
-          "frase": "Он ___ врач.",
-          "base": "хоро́ший",
-          "opciones": [
-            "хоро́ший",
-            "хорошо́"
-          ],
-          "correcta": "хоро́ший",
-          "texto": "Он хоро́ший врач.",
-          "fonetica": "on ja-RO-shii vrach",
-          "es": "Es un buen médico.",
-          "porque": "Dice cómo es el médico: хоро́ший (bueno). хорошо́ es «bien», para cómo se hace algo."
-        },
-        {
-          "id": "g-adjetivo-adverbio-e4",
-          "frase": "Как ___!",
-          "base": "интере́сно",
-          "opciones": [
-            "интере́сно",
-            "интере́сный"
-          ],
-          "correcta": "интере́сно",
-          "texto": "Как интере́сно!",
-          "fonetica": "kak in-tie-RIES-na",
-          "es": "¡Qué interesante!",
-          "porque": "Para decir «¡qué interesante!» de lo que pasa se usa la forma en -о: Как интере́сно!"
-        },
-        {
-          "id": "g-adjetivo-adverbio-e5",
-          "frase": "Э́то о́чень ___ писа́тель.",
-          "base": "интере́сный",
-          "opciones": [
-            "интере́сный",
-            "интере́сно"
-          ],
-          "correcta": "интере́сный",
-          "texto": "Э́то о́чень интере́сный писа́тель.",
-          "fonetica": "E-ta O-chin' in-tie-RIES-nyi pi-SA-tiel'",
-          "es": "Es un escritor muy interesante.",
-          "porque": "Dice cómo es el escritor: интере́сный. La forma en -о no va con una persona."
-        },
-        {
-          "id": "g-adjetivo-adverbio-e6",
-          "frase": "___ он? — Он молодо́й.",
-          "base": "како́й",
-          "opciones": [
-            "Како́й",
-            "Как"
-          ],
-          "correcta": "Како́й",
-          "texto": "Како́й он? — Он молодо́й.",
-          "fonetica": "ka-KOI on? — on ma-la-DOI",
-          "es": "¿Cómo es él? — Es joven.",
-          "porque": "Para preguntar cómo es alguien se usa како́й. Как он? sería «¿cómo está?»."
-        },
-        {
-          "id": "g-adjetivo-adverbio-e7",
-          "frase": "Здесь о́чень ___.",
-          "base": "краси́во",
-          "opciones": [
-            "краси́во",
-            "краси́вый"
-          ],
-          "correcta": "краси́во",
-          "texto": "Здесь о́чень краси́во.",
-          "fonetica": "zdies' O-chin' kra-SI-va",
-          "es": "Aquí está muy bonito.",
-          "porque": "Habla de cómo está el lugar, no de una cosa: краси́во."
-        },
-        {
-          "id": "g-adjetivo-adverbio-e8",
-          "frase": "Ты о́чень ___ рабо́таешь!",
-          "base": "хорошо́",
-          "opciones": [
-            "хорошо́",
-            "хоро́ший"
-          ],
-          "correcta": "хорошо́",
-          "texto": "Ты о́чень хорошо́ рабо́таешь!",
-          "fonetica": "ty O-chin' ja-ra-SHO ra-BO-ta-iesh",
-          "es": "¡Trabajas muy bien!",
-          "porque": "Dice cómo trabajas: хорошо́. хоро́ший describe a alguien o algo, no cómo se hace."
-        }
-      ]
+     "ru": "Нет, э́то не кот, э́то соба́ка.",
+     "fonetica": "niet, E-ta nie kot, E-ta sa-BA-ka",
+     "es": "No, no es un gato, es un perro."
     }
-  ]
+   ],
+   "ojo": "Para un animal también se pregunta кто: Кто э́то? — Э́то соба́ка.",
+   "tags": [],
+   "elige": [
+    {
+     "id": "g-kto-chto-e1",
+     "frase": "___ э́то? — Э́то ма́ма.",
+     "base": "кто",
+     "opciones": [
+      "Кто",
+      "Что"
+     ],
+     "correcta": "Кто",
+     "texto": "Кто э́то? — Э́то ма́ма.",
+     "fonetica": "kto E-ta? — E-ta MA-ma",
+     "es": "¿Quién es? — Es mamá.",
+     "porque": "ма́ма es una persona: se pregunta кто."
+    },
+    {
+     "id": "g-kto-chto-e2",
+     "frase": "___ э́то? — Э́то стол.",
+     "base": "что",
+     "opciones": [
+      "Кто",
+      "Что"
+     ],
+     "correcta": "Что",
+     "texto": "Что э́то? — Э́то стол.",
+     "fonetica": "shto E-ta? — E-ta stol",
+     "es": "¿Qué es esto? — Es una mesa.",
+     "porque": "стол (mesa) es una cosa: se pregunta что."
+    },
+    {
+     "id": "g-kto-chto-e3",
+     "frase": "___ э́то? — Э́то кот.",
+     "base": "кто",
+     "opciones": [
+      "Что",
+      "Кто"
+     ],
+     "correcta": "Кто",
+     "texto": "Кто э́то? — Э́то кот.",
+     "fonetica": "kto E-ta? — E-ta kot",
+     "es": "¿Quién es? — Es un gato.",
+     "porque": "Un gato es un animal, y para los animales también se pregunta кто."
+    },
+    {
+     "id": "g-kto-chto-e4",
+     "frase": "___ э́то? — Э́то ка́рта.",
+     "base": "что",
+     "opciones": [
+      "Что",
+      "Кто"
+     ],
+     "correcta": "Что",
+     "texto": "Что э́то? — Э́то ка́рта.",
+     "fonetica": "shto E-ta? — E-ta KAR-ta",
+     "es": "¿Qué es esto? — Es un mapa.",
+     "porque": "ка́рта (mapa) es una cosa: se pregunta что."
+    },
+    {
+     "id": "g-kto-chto-e5",
+     "frase": "___ э́то? — Э́то соба́ка.",
+     "base": "кто",
+     "opciones": [
+      "Кто",
+      "Что"
+     ],
+     "correcta": "Кто",
+     "texto": "Кто э́то? — Э́то соба́ка.",
+     "fonetica": "kto E-ta? — E-ta sa-BA-ka",
+     "es": "¿Quién es? — Es un perro.",
+     "porque": "соба́ка es un animal: se pregunta кто, igual que para una persona."
+    },
+    {
+     "id": "g-kto-chto-e6",
+     "frase": "Э́то ___ кот, э́то соба́ка.",
+     "base": "не",
+     "opciones": [
+      "не",
+      "нет"
+     ],
+     "correcta": "не",
+     "texto": "Э́то не кот, э́то соба́ка.",
+     "fonetica": "E-ta nie kot, E-ta sa-BA-ka",
+     "es": "No es un gato, es un perro.",
+     "porque": "Para negar una palabra dentro de la frase se usa не, justo antes de ella: не кот."
+    },
+    {
+     "id": "g-kto-chto-e7",
+     "frase": "Э́то ма́ма? — ___, э́то па́па.",
+     "base": "нет",
+     "opciones": [
+      "Нет",
+      "Не"
+     ],
+     "correcta": "Нет",
+     "texto": "Э́то ма́ма? — Нет, э́то па́па.",
+     "fonetica": "E-ta MA-ma? — niet, E-ta PA-pa",
+     "es": "¿Es mamá? — No, es papá.",
+     "porque": "Para contestar «no» se usa нет. не no va solo: siempre acompaña a la palabra que niega."
+    }
+   ]
+  },
+  {
+   "id": "g-genero",
+   "titulo": "Él, ella, ello: el género",
+   "ru": "он, она́, оно́",
+   "puntos": [
+    "Mira la última letra: consonante o -й → он (брат, кот); -а o -я → она́ (ма́ма, семья́); -о o -е → оно́ (окно́, мо́ре).",
+    "Las que terminan en -ь pueden ser он u она́, así que mira su tarjeta: день — он, ночь — она́.",
+    "Las palabras de hombres son он aunque terminen en -а: па́па, де́душка, дя́дя."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Где кот? — Вот он.",
+     "fonetica": "gdie kot? — vot on",
+     "es": "¿Dónde está el gato? — Aquí está."
+    },
+    {
+     "ru": "Где ма́ма? — Вот она́.",
+     "fonetica": "gdie MA-ma? — vot a-NA",
+     "es": "¿Dónde está mamá? — Aquí está."
+    },
+    {
+     "ru": "Где па́па? — Он там.",
+     "fonetica": "gdie PA-pa? — on tam",
+     "es": "¿Dónde está papá? — Está allá."
+    }
+   ],
+   "ojo": "соба́ка es она́ aunque sea un perro macho; и́мя (y las demás en -мя) es оно́.",
+   "tags": [
+    "femenino",
+    "neutro"
+   ],
+   "elige": [
+    {
+     "id": "g-genero-e1",
+     "frase": "Где ма́ма? — ___ здесь.",
+     "base": "она́",
+     "opciones": [
+      "Он",
+      "Она́",
+      "Оно́"
+     ],
+     "correcta": "Она́",
+     "texto": "Где ма́ма? — Она́ здесь.",
+     "fonetica": "gdie MA-ma? — a-NA zdies'",
+     "es": "¿Dónde está mamá? — Está aquí.",
+     "porque": "ма́ма termina en -а: она́."
+    },
+    {
+     "id": "g-genero-e2",
+     "frase": "Где па́па? — ___ здесь.",
+     "base": "он",
+     "opciones": [
+      "Она́",
+      "Он",
+      "Оно́"
+     ],
+     "correcta": "Он",
+     "texto": "Где па́па? — Он здесь.",
+     "fonetica": "gdie PA-pa? — on zdies'",
+     "es": "¿Dónde está papá? — Está aquí.",
+     "porque": "па́па termina en -а, pero es hombre: он."
+    },
+    {
+     "id": "g-genero-e3",
+     "frase": "Где кот? — ___ там.",
+     "base": "он",
+     "opciones": [
+      "Он",
+      "Она́",
+      "Оно́"
+     ],
+     "correcta": "Он",
+     "texto": "Где кот? — Он там.",
+     "fonetica": "gdie kot? — on tam",
+     "es": "¿Dónde está el gato? — Está allá.",
+     "porque": "кот termina en consonante: он."
+    },
+    {
+     "id": "g-genero-e4",
+     "frase": "Где ко́шка? — ___ там.",
+     "base": "она́",
+     "opciones": [
+      "Он",
+      "Она́",
+      "Оно́"
+     ],
+     "correcta": "Она́",
+     "texto": "Где ко́шка? — Она́ там.",
+     "fonetica": "gdie KOSH-ka? — a-NA tam",
+     "es": "¿Dónde está la gata? — Está allá.",
+     "porque": "ко́шка termina en -а: она́."
+    },
+    {
+     "id": "g-genero-e5",
+     "frase": "Где соба́ка? — Вот ___.",
+     "base": "она́",
+     "opciones": [
+      "он",
+      "она́"
+     ],
+     "correcta": "она́",
+     "texto": "Где соба́ка? — Вот она́.",
+     "fonetica": "gdie sa-BA-ka? — vot a-NA",
+     "es": "¿Dónde está el perro? — Aquí está.",
+     "porque": "соба́ка termina en -а: она́, aunque el perro sea macho."
+    },
+    {
+     "id": "g-genero-e6",
+     "frase": "Где и́мя? — Вот ___.",
+     "base": "оно́",
+     "opciones": [
+      "она́",
+      "оно́",
+      "он"
+     ],
+     "correcta": "оно́",
+     "texto": "Где и́мя? — Вот оно́.",
+     "fonetica": "gdie I-mia? — vot a-NO",
+     "es": "¿Dónde está el nombre? — Aquí está.",
+     "porque": "и́мя termina en -мя, y esas palabras son оно́, aunque terminen en -я."
+    },
+    {
+     "id": "g-genero-e7",
+     "frase": "Где де́душка? — ___ там.",
+     "base": "он",
+     "opciones": [
+      "Он",
+      "Она́"
+     ],
+     "correcta": "Он",
+     "texto": "Где де́душка? — Он там.",
+     "fonetica": "gdie DIE-dush-ka? — on tam",
+     "es": "¿Dónde está el abuelo? — Está allá.",
+     "porque": "де́душка termina en -а, pero es hombre: он."
+    },
+    {
+     "id": "g-genero-e8",
+     "frase": "Где ло́шадь? — Вот ___.",
+     "base": "она́",
+     "opciones": [
+      "он",
+      "она́"
+     ],
+     "correcta": "она́",
+     "texto": "Где ло́шадь? — Вот она́.",
+     "fonetica": "gdie LO-shat'? — vot a-NA",
+     "es": "¿Dónde está el caballo? — Aquí está.",
+     "porque": "ло́шадь termina en -ь, y su tarjeta dice que es femenina: она́."
+    }
+   ]
+  },
+  {
+   "id": "g-moy-moya",
+   "titulo": "мой, моя́, моё, мои́ y чей",
+   "ru": "моя́ ма́ма",
+   "puntos": [
+    "«Mi» copia el género de la palabra: мой брат, моя́ сестра́, моё и́мя, мои́ роди́тели. Igual твой (tu), наш (nuestro) y ваш (de usted, de ustedes).",
+    "Para preguntar «¿de quién?» pasa lo mismo: чей брат? чья сестра́? чьё и́мя? чьи де́ти?",
+    "его́ (de él), её (de ella) e их (de ellos) nunca cambian: его́ брат, его́ сестра́."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Э́то моя́ ма́ма.",
+     "fonetica": "E-ta ma-IA MA-ma",
+     "es": "Esta es mi mamá."
+    },
+    {
+     "ru": "Чья э́то соба́ка? — Моя́.",
+     "fonetica": "chia E-ta sa-BA-ka? — ma-IA",
+     "es": "¿De quién es este perro? — Es mío."
+    },
+    {
+     "ru": "Э́то её брат и её сестра́.",
+     "fonetica": "E-ta ie-IO brat i ie-IO sies-TRA",
+     "es": "Este es su hermano y esta es su hermana (de ella)."
+    }
+   ],
+   "ojo": "мой па́па (no «моя́ па́па»): па́па es hombre.",
+   "tags": [],
+   "elige": [
+    {
+     "id": "g-moy-moya-e1",
+     "frase": "Э́то ___ ма́ма.",
+     "base": "мой",
+     "opciones": [
+      "мой",
+      "моя́",
+      "моё"
+     ],
+     "correcta": "моя́",
+     "texto": "Э́то моя́ ма́ма.",
+     "fonetica": "E-ta ma-IA MA-ma",
+     "es": "Esta es mi mamá.",
+     "porque": "ма́ма es она́: моя́ ма́ма."
+    },
+    {
+     "id": "g-moy-moya-e2",
+     "frase": "Э́то ___ па́па.",
+     "base": "мой",
+     "opciones": [
+      "моя́",
+      "мой",
+      "моё"
+     ],
+     "correcta": "мой",
+     "texto": "Э́то мой па́па.",
+     "fonetica": "E-ta moi PA-pa",
+     "es": "Este es mi papá.",
+     "porque": "па́па termina en -а, pero es hombre: мой па́па."
+    },
+    {
+     "id": "g-moy-moya-e3",
+     "frase": "Э́то ___ и́мя.",
+     "base": "мой",
+     "opciones": [
+      "мой",
+      "моя́",
+      "моё"
+     ],
+     "correcta": "моё",
+     "texto": "Э́то моё и́мя.",
+     "fonetica": "E-ta ma-IO I-mia",
+     "es": "Este es mi nombre.",
+     "porque": "и́мя es оно́: моё и́мя."
+    },
+    {
+     "id": "g-moy-moya-e4",
+     "frase": "Э́то ___ роди́тели.",
+     "base": "мой",
+     "opciones": [
+      "мой",
+      "мои́",
+      "моя́"
+     ],
+     "correcta": "мои́",
+     "texto": "Э́то мои́ роди́тели.",
+     "fonetica": "E-ta ma-I ra-DI-tie-li",
+     "es": "Estos son mis padres.",
+     "porque": "роди́тели son varios: мои́ роди́тели."
+    },
+    {
+     "id": "g-moy-moya-e5",
+     "frase": "___ э́то соба́ка? — Моя́.",
+     "base": "чей",
+     "opciones": [
+      "Чей",
+      "Чья",
+      "Чьи"
+     ],
+     "correcta": "Чья",
+     "texto": "Чья э́то соба́ка? — Моя́.",
+     "fonetica": "chia E-ta sa-BA-ka? — ma-IA",
+     "es": "¿De quién es este perro? — Es mío.",
+     "porque": "соба́ка es она́: чья соба́ка? La respuesta también: моя́."
+    },
+    {
+     "id": "g-moy-moya-e6",
+     "frase": "___ э́то кот? — Мой.",
+     "base": "чей",
+     "opciones": [
+      "Чья",
+      "Чей",
+      "Чьё"
+     ],
+     "correcta": "Чей",
+     "texto": "Чей э́то кот? — Мой.",
+     "fonetica": "chei E-ta kot? — moi",
+     "es": "¿De quién es este gato? — Es mío.",
+     "porque": "кот es он: чей кот? La respuesta también: мой."
+    },
+    {
+     "id": "g-moy-moya-e7",
+     "frase": "Э́то ___ ко́шка?",
+     "base": "твой",
+     "opciones": [
+      "твой",
+      "твоя́",
+      "твоё"
+     ],
+     "correcta": "твоя́",
+     "texto": "Э́то твоя́ ко́шка?",
+     "fonetica": "E-ta tva-IA KOSH-ka",
+     "es": "¿Esta es tu gata?",
+     "porque": "ко́шка es она́: твоя́ ко́шка, igual que моя́."
+    },
+    {
+     "id": "g-moy-moya-e8",
+     "frase": "Э́то па́па, а э́то ___ сестра́.",
+     "base": "его́",
+     "opciones": [
+      "его́",
+      "её"
+     ],
+     "correcta": "его́",
+     "texto": "Э́то па́па, а э́то его́ сестра́.",
+     "fonetica": "E-ta PA-pa, a E-ta ie-VO sies-TRA",
+     "es": "Este es papá y esta es su hermana (de él).",
+     "porque": "Es la hermana de papá: его́ (de él). его́ no cambia aunque сестра́ sea femenina."
+    }
+   ]
+  },
+  {
+   "id": "g-u-menya-est",
+   "titulo": "У меня́ есть… (tengo)",
+   "ru": "У меня́ есть брат.",
+   "puntos": [
+    "«Tengo» se dice У меня́ есть… (algo así como «junto a mí hay…»): У меня́ есть брат.",
+    "«¿Tienes…?» es У тебя́ есть…? Se contesta Да, есть. o Нет.",
+    "Lo que tienes no cambia, va como en el diccionario: У меня́ есть сестра́. У меня́ есть ко́шка."
+   ],
+   "ejemplos": [
+    {
+     "ru": "У меня́ есть брат.",
+     "fonetica": "u mie-NIA iest' brat",
+     "es": "Tengo un hermano."
+    },
+    {
+     "ru": "У тебя́ есть соба́ка? — Да, есть.",
+     "fonetica": "u tie-BIA iest' sa-BA-ka? — da, iest'",
+     "es": "¿Tienes perro? — Sí, tengo."
+    },
+    {
+     "ru": "У меня́ есть ко́шка.",
+     "fonetica": "u mie-NIA iest' KOSH-ka",
+     "es": "Tengo una gata."
+    }
+   ],
+   "ojo": "No se dice «я име́ю брат»; se dice У меня́ есть брат.",
+   "tags": [
+    "у + genitivo"
+   ],
+   "elige": [
+    {
+     "id": "g-u-menya-est-e1",
+     "frase": "___ есть брат.",
+     "base": "я",
+     "opciones": [
+      "У меня́",
+      "Я"
+     ],
+     "correcta": "У меня́",
+     "texto": "У меня́ есть брат.",
+     "fonetica": "u mie-NIA iest' brat",
+     "es": "Tengo un hermano.",
+     "porque": "«Tengo» es у меня́ есть. «Я есть» no se usa para decir que tienes algo."
+    },
+    {
+     "id": "g-u-menya-est-e2",
+     "frase": "___ есть сестра́?",
+     "base": "ты",
+     "opciones": [
+      "Ты",
+      "У тебя́"
+     ],
+     "correcta": "У тебя́",
+     "texto": "У тебя́ есть сестра́?",
+     "fonetica": "u tie-BIA iest' sies-TRA",
+     "es": "¿Tienes una hermana?",
+     "porque": "«¿Tienes?» es у тебя́ есть. «Ты есть» no se usa para tener."
+    },
+    {
+     "id": "g-u-menya-est-e3",
+     "frase": "У ___ есть брат?",
+     "base": "ты",
+     "opciones": [
+      "ты",
+      "тебя́"
+     ],
+     "correcta": "тебя́",
+     "texto": "У тебя́ есть брат?",
+     "fonetica": "u tie-BIA iest' brat",
+     "es": "¿Tienes un hermano?",
+     "porque": "Después de у, ты cambia a тебя́: у тебя́."
+    },
+    {
+     "id": "g-u-menya-est-e4",
+     "frase": "У ___ есть ко́шка.",
+     "base": "я",
+     "opciones": [
+      "меня́",
+      "я"
+     ],
+     "correcta": "меня́",
+     "texto": "У меня́ есть ко́шка.",
+     "fonetica": "u mie-NIA iest' KOSH-ka",
+     "es": "Tengo una gata.",
+     "porque": "Después de у, я cambia a меня́: у меня́."
+    },
+    {
+     "id": "g-u-menya-est-e5",
+     "frase": "У меня́ есть ___.",
+     "base": "соба́ка",
+     "opciones": [
+      "соба́ка",
+      "соба́ку"
+     ],
+     "correcta": "соба́ка",
+     "texto": "У меня́ есть соба́ка.",
+     "fonetica": "u mie-NIA iest' sa-BA-ka",
+     "es": "Tengo un perro.",
+     "porque": "Después de у меня́ есть, la palabra va como en el diccionario: соба́ка."
+    },
+    {
+     "id": "g-u-menya-est-e6",
+     "frase": "У тебя́ есть брат? — Да, ___.",
+     "base": "есть",
+     "opciones": [
+      "есть",
+      "я"
+     ],
+     "correcta": "есть",
+     "texto": "У тебя́ есть брат? — Да, есть.",
+     "fonetica": "u tie-BIA iest' brat? — da, iest'",
+     "es": "¿Tienes un hermano? — Sí, tengo.",
+     "porque": "Para contestar «sí, tengo» basta con Да, есть."
+    },
+    {
+     "id": "g-u-menya-est-e7",
+     "frase": "___ есть де́душка и ба́бушка.",
+     "base": "я",
+     "opciones": [
+      "Мой",
+      "У меня́"
+     ],
+     "correcta": "У меня́",
+     "texto": "У меня́ есть де́душка и ба́бушка.",
+     "fonetica": "u mie-NIA iest' DIE-dush-ka i BA-bush-ka",
+     "es": "Tengo abuelo y abuela.",
+     "porque": "«Tengo» siempre es у меня́ есть; мой es «mi» y no sirve para tener."
+    }
+   ]
+  },
+  {
+   "id": "g-numeros-dos",
+   "titulo": "1, 2, 3, 4… y la palabra que sigue",
+   "ru": "два бра́та",
+   "puntos": [
+    "1 copia el género: оди́н брат, одна́ сестра́, одно́ и́мя. 2 tiene dos formas: два (он, оно́) y две (она́): два бра́та, две сестры́.",
+    "Después de 2, 3 y 4 la palabra cambia su final. Si es он u оно́, agrega -а: брат → два бра́та, сын → три сы́на. Si es она́, la -а cambia a -ы, o a -и después de к, г, х: сестра́ → две сестры́, ко́шка → три ко́шки.",
+    "De 5 en adelante cambia otra vez. Por ahora, solo dos que se usan mucho: пять лет (años) y пять челове́к (personas)."
+   ],
+   "ejemplos": [
+    {
+     "ru": "У меня́ два бра́та.",
+     "fonetica": "u mie-NIA dva BRA-ta",
+     "es": "Tengo dos hermanos."
+    },
+    {
+     "ru": "У тебя́ две сестры́?",
+     "fonetica": "u tie-BIA dvie sies-TRY",
+     "es": "¿Tienes dos hermanas?"
+    },
+    {
+     "ru": "У меня́ три ко́шки.",
+     "fonetica": "u mie-NIA tri KOSH-ki",
+     "es": "Tengo tres gatos."
+    }
+   ],
+   "ojo": "две сестры́ (acento al final) no es lo mismo que сёстры (hermanas, en plural). A veces el acento se mueve: кот → два кота́. La fonética lo marca.",
+   "tags": [
+    "después de 2, 3, 4"
+   ],
+   "elige": [
+    {
+     "id": "g-numeros-dos-e1",
+     "frase": "У меня́ ___ сестры́.",
+     "base": "два",
+     "opciones": [
+      "два",
+      "две"
+     ],
+     "correcta": "две",
+     "texto": "У меня́ две сестры́.",
+     "fonetica": "u mie-NIA dvie sies-TRY",
+     "es": "Tengo dos hermanas.",
+     "porque": "сестра́ es она́, y con она́ va две. два es para он y оно́."
+    },
+    {
+     "id": "g-numeros-dos-e2",
+     "frase": "У меня́ ___ брат.",
+     "base": "оди́н",
+     "opciones": [
+      "оди́н",
+      "одна́"
+     ],
+     "correcta": "оди́н",
+     "texto": "У меня́ оди́н брат.",
+     "fonetica": "u mie-NIA a-DIN brat",
+     "es": "Tengo un hermano.",
+     "porque": "брат es он: оди́н брат. одна́ es para она́."
+    },
+    {
+     "id": "g-numeros-dos-e3",
+     "frase": "У меня́ три ___.",
+     "base": "сын",
+     "opciones": [
+      "сы́на",
+      "сын",
+      "сыновья́"
+     ],
+     "correcta": "сы́на",
+     "texto": "У меня́ три сы́на.",
+     "fonetica": "u mie-NIA tri SY-na",
+     "es": "Tengo tres hijos.",
+     "porque": "Después de 2, 3 y 4, una palabra de он agrega -а: сын → три сы́на. сыновья́ es «hijos» sin número."
+    },
+    {
+     "id": "g-numeros-dos-e4",
+     "frase": "У меня́ две ___.",
+     "base": "соба́ка",
+     "opciones": [
+      "соба́ки",
+      "соба́ка",
+      "соба́к"
+     ],
+     "correcta": "соба́ки",
+     "texto": "У меня́ две соба́ки.",
+     "fonetica": "u mie-NIA dvie sa-BA-ki",
+     "es": "Tengo dos perros.",
+     "porque": "соба́ка es она́: después de 2, 3 y 4 la -а cambia. Después de к va -и: две соба́ки. соба́к es la forma de 5 en adelante."
+    },
+    {
+     "id": "g-numeros-dos-e5",
+     "frase": "У тебя́ два ___?",
+     "base": "брат",
+     "opciones": [
+      "бра́та",
+      "брат",
+      "бра́тья"
+     ],
+     "correcta": "бра́та",
+     "texto": "У тебя́ два бра́та?",
+     "fonetica": "u tie-BIA dva BRA-ta",
+     "es": "¿Tienes dos hermanos?",
+     "porque": "Después de два, брат agrega -а: два бра́та. бра́тья es «hermanos» sin número."
+    },
+    {
+     "id": "g-numeros-dos-e6",
+     "frase": "Там четы́ре ___.",
+     "base": "кот",
+     "opciones": [
+      "кота́",
+      "кот",
+      "коты́"
+     ],
+     "correcta": "кота́",
+     "texto": "Там четы́ре кота́.",
+     "fonetica": "tam chi-TY-rie ka-TA",
+     "es": "Allá hay cuatro gatos.",
+     "porque": "кот es он: después de 4 agrega -а, y el acento se va al final: четы́ре кота́."
+    },
+    {
+     "id": "g-numeros-dos-e7",
+     "frase": "У меня́ ___ сестра́.",
+     "base": "оди́н",
+     "opciones": [
+      "оди́н",
+      "одна́",
+      "одно́"
+     ],
+     "correcta": "одна́",
+     "texto": "У меня́ одна́ сестра́.",
+     "fonetica": "u mie-NIA ad-NA sies-TRA",
+     "es": "Tengo una hermana.",
+     "porque": "сестра́ es она́: одна́ сестра́, como моя́ сестра́."
+    },
+    {
+     "id": "g-numeros-dos-e8",
+     "frase": "Здесь пять ___.",
+     "base": "челове́к",
+     "opciones": [
+      "челове́к",
+      "челове́ка"
+     ],
+     "correcta": "челове́к",
+     "texto": "Здесь пять челове́к.",
+     "fonetica": "zdies' piat' chie-la-VIEK",
+     "es": "Aquí hay cinco personas.",
+     "porque": "De 5 en adelante la palabra cambia otra vez; челове́к se queda igual: пять челове́к. челове́ка es la forma para 2, 3 y 4."
+    }
+   ]
+  },
+  {
+   "id": "g-presente",
+   "titulo": "Verbos en presente: я рабо́таю, ты лю́бишь",
+   "ru": "я рабо́таю",
+   "puntos": [
+    "El verbo cambia según quién lo hace: я рабо́таю, ты рабо́таешь, он / она́ рабо́тает, мы рабо́таем, вы рабо́таете, они́ рабо́тают.",
+    "Mira la forma de ты. Si termina en -ешь (рабо́таешь, зна́ешь), sigue -ет, -ем, -ете, -ют. Si termina en -ишь (лю́бишь), sigue -ит, -им, -ите, -ят.",
+    "Algunos verbos cambian un poco solo con я: люби́ть → я люблю́ (con л), pero ты лю́бишь."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Где ты рабо́таешь? — Я рабо́таю здесь.",
+     "fonetica": "gdie ty ra-BO-ta-iesh? — ia ra-BO-ta-iu zdies'",
+     "es": "¿Dónde trabajas? — Trabajo aquí."
+    },
+    {
+     "ru": "Ты зна́ешь? — Да, зна́ю.",
+     "fonetica": "ty ZNA-iesh? — da, ZNA-iu",
+     "es": "¿Sabes? — Sí, sé."
+    },
+    {
+     "ru": "Они́ лю́бят рабо́тать.",
+     "fonetica": "a-NI LIU-biat ra-BO-tat'",
+     "es": "A ellos les encanta trabajar."
+    }
+   ],
+   "ojo": "El final del verbo (-ать, -ить…) no siempre avisa cómo cambia. Apréndelo con su forma de я y de ты, como viene en la tarjeta.",
+   "tags": [],
+   "elige": [
+    {
+     "id": "g-presente-e1",
+     "frase": "Мы ___ здесь.",
+     "base": "рабо́тать",
+     "opciones": [
+      "рабо́таем",
+      "рабо́тают",
+      "рабо́таешь"
+     ],
+     "correcta": "рабо́таем",
+     "texto": "Мы рабо́таем здесь.",
+     "fonetica": "my ra-BO-ta-iem zdies'",
+     "es": "Trabajamos aquí.",
+     "porque": "Con мы, el verbo termina en -ем: мы рабо́таем. рабо́тают es para они́ y рабо́таешь, para ты."
+    },
+    {
+     "id": "g-presente-e2",
+     "frase": "Ты ___? — Да, зна́ю.",
+     "base": "знать",
+     "opciones": [
+      "зна́ешь",
+      "зна́ет"
+     ],
+     "correcta": "зна́ешь",
+     "texto": "Ты зна́ешь? — Да, зна́ю.",
+     "fonetica": "ty ZNA-iesh? — da, ZNA-iu",
+     "es": "¿Sabes? — Sí, sé.",
+     "porque": "Con ты, el verbo termina en -ешь: ты зна́ешь. зна́ет es para он u она́."
+    },
+    {
+     "id": "g-presente-e3",
+     "frase": "Они́ ___ рабо́тать.",
+     "base": "люби́ть",
+     "opciones": [
+      "лю́бят",
+      "лю́бит",
+      "лю́бишь"
+     ],
+     "correcta": "лю́бят",
+     "texto": "Они́ лю́бят рабо́тать.",
+     "fonetica": "a-NI LIU-biat ra-BO-tat'",
+     "es": "A ellos les encanta trabajar.",
+     "porque": "люби́ть es de los de -ишь (ты лю́бишь): con они́ termina en -ят, они́ лю́бят."
+    },
+    {
+     "id": "g-presente-e4",
+     "frase": "Я ___ рабо́тать.",
+     "base": "люби́ть",
+     "opciones": [
+      "люблю́",
+      "любю́",
+      "лю́бит"
+     ],
+     "correcta": "люблю́",
+     "texto": "Я люблю́ рабо́тать.",
+     "fonetica": "ia liub-LIU ra-BO-tat'",
+     "es": "Me encanta trabajar.",
+     "porque": "Con я, люби́ть agrega una л: я люблю́. «любю́» no existe."
+    },
+    {
+     "id": "g-presente-e5",
+     "frase": "Она́ ___ там.",
+     "base": "рабо́тать",
+     "opciones": [
+      "рабо́тает",
+      "рабо́таю",
+      "рабо́тают"
+     ],
+     "correcta": "рабо́тает",
+     "texto": "Она́ рабо́тает там.",
+     "fonetica": "a-NA ra-BO-ta-iet tam",
+     "es": "Ella trabaja allá.",
+     "porque": "Con он u она́, el verbo termina en -ет: она́ рабо́тает."
+    },
+    {
+     "id": "g-presente-e6",
+     "frase": "Вы ___?",
+     "base": "знать",
+     "opciones": [
+      "зна́ете",
+      "зна́ет",
+      "зна́ешь"
+     ],
+     "correcta": "зна́ете",
+     "texto": "Вы зна́ете?",
+     "fonetica": "vy ZNA-ie-tie",
+     "es": "¿Usted sabe?",
+     "porque": "Con вы (usted o ustedes), el verbo termina en -ете: вы зна́ете."
+    },
+    {
+     "id": "g-presente-e7",
+     "frase": "Мы ___ рабо́тать.",
+     "base": "люби́ть",
+     "opciones": [
+      "лю́бим",
+      "лю́бем",
+      "лю́бят"
+     ],
+     "correcta": "лю́бим",
+     "texto": "Мы лю́бим рабо́тать.",
+     "fonetica": "my LIU-bim ra-BO-tat'",
+     "es": "Nos encanta trabajar.",
+     "porque": "люби́ть es de los de -ишь (ты лю́бишь): con мы va -им, no -ем. мы лю́бим."
+    },
+    {
+     "id": "g-presente-e8",
+     "frase": "Где он ___?",
+     "base": "рабо́тать",
+     "opciones": [
+      "рабо́тает",
+      "рабо́тит"
+     ],
+     "correcta": "рабо́тает",
+     "texto": "Где он рабо́тает?",
+     "fonetica": "gdie on ra-BO-ta-iet",
+     "es": "¿Dónde trabaja él?",
+     "porque": "рабо́тать es de los de -ешь (ты рабо́таешь): con он va -ет, он рабо́тает. La -ит es de los de -ишь."
+    }
+   ]
+  },
+  {
+   "id": "g-pronombres-acusativo",
+   "titulo": "Меня́ зову́т, Я тебя́ люблю́",
+   "ru": "Я тебя́ люблю́.",
+   "puntos": [
+    "En ruso muchas palabras cambian su final según lo que hacen en la frase. A esos cambios se les llama casos. No hace falta saber sus nombres: la app te dice para qué sirve cada forma.",
+    "Cuando la persona recibe la acción, я → меня́, ты → тебя́, мы → нас, вы → вас, он → его́, она́ → её: Я тебя́ люблю́. Ты меня́ зна́ешь?",
+    "Por eso Меня́ зову́т… quiere decir «a mí me llaman…», y se pregunta Как тебя́ зову́т?"
+   ],
+   "ejemplos": [
+    {
+     "ru": "Я тебя́ люблю́.",
+     "fonetica": "ia tie-BIA liub-LIU",
+     "es": "Te quiero."
+    },
+    {
+     "ru": "Ты меня́ зна́ешь?",
+     "fonetica": "ty mie-NIA ZNA-iesh",
+     "es": "¿Me conoces?"
+    },
+    {
+     "ru": "Как его́ зову́т? — Его́ зову́т Ди́ма.",
+     "fonetica": "kak ie-VO za-VUT? — ie-VO za-VUT DI-ma",
+     "es": "¿Cómo se llama él? — Se llama Dima."
+    }
+   ],
+   "ojo": "Я тебя́ люблю́ (no «я ты люблю́»). его́ y её se escriben igual que «de él» y «de ella», pero aquí significan «lo» y «la»: Я его́ зна́ю.",
+   "tags": [],
+   "elige": [
+    {
+     "id": "g-pronombres-acusativo-e1",
+     "frase": "Как ___ зову́т?",
+     "base": "ты",
+     "opciones": [
+      "тебя́",
+      "ты",
+      "твой"
+     ],
+     "correcta": "тебя́",
+     "texto": "Как тебя́ зову́т?",
+     "fonetica": "kak tie-BIA za-VUT",
+     "es": "¿Cómo te llamas?",
+     "porque": "Con зову́т, la persona va en la forma que recibe la acción: ты → тебя́ («a ti te llaman»)."
+    },
+    {
+     "id": "g-pronombres-acusativo-e2",
+     "frase": "Я ___ зна́ю.",
+     "base": "он",
+     "opciones": [
+      "его́",
+      "он"
+     ],
+     "correcta": "его́",
+     "texto": "Я его́ зна́ю.",
+     "fonetica": "ia ie-VO ZNA-iu",
+     "es": "Lo conozco.",
+     "porque": "Él recibe la acción (lo conoces): он → его́."
+    },
+    {
+     "id": "g-pronombres-acusativo-e3",
+     "frase": "Мы ___ лю́бим.",
+     "base": "вы",
+     "opciones": [
+      "вас",
+      "вы"
+     ],
+     "correcta": "вас",
+     "texto": "Мы вас лю́бим.",
+     "fonetica": "my vas LIU-bim",
+     "es": "Los queremos.",
+     "porque": "Ustedes reciben la acción: вы → вас."
+    },
+    {
+     "id": "g-pronombres-acusativo-e4",
+     "frase": "___ зову́т Ма́ша.",
+     "base": "я",
+     "opciones": [
+      "Меня́",
+      "Я",
+      "Моя́"
+     ],
+     "correcta": "Меня́",
+     "texto": "Меня́ зову́т Ма́ша.",
+     "fonetica": "mie-NIA za-VUT MA-sha",
+     "es": "Me llamo Masha.",
+     "porque": "«Me llamo» es Меня́ зову́т, literalmente «a mí me llaman». «Я зову́т» no se dice."
+    },
+    {
+     "id": "g-pronombres-acusativo-e5",
+     "frase": "Ты ___ зна́ешь? — Да, зна́ю.",
+     "base": "я",
+     "opciones": [
+      "меня́",
+      "я"
+     ],
+     "correcta": "меня́",
+     "texto": "Ты меня́ зна́ешь? — Да, зна́ю.",
+     "fonetica": "ty mie-NIA ZNA-iesh? — da, ZNA-iu",
+     "es": "¿Me conoces? — Sí, te conozco.",
+     "porque": "Yo recibo la acción (me conoces): я → меня́."
+    },
+    {
+     "id": "g-pronombres-acusativo-e6",
+     "frase": "Э́то Ле́на. Ты ___ зна́ешь?",
+     "base": "она́",
+     "opciones": [
+      "её",
+      "она́",
+      "его́"
+     ],
+     "correcta": "её",
+     "texto": "Э́то Ле́на. Ты её зна́ешь?",
+     "fonetica": "E-ta LIE-na. ty ie-IO ZNA-iesh",
+     "es": "Esta es Lena. ¿La conoces?",
+     "porque": "Ле́на es она́ y recibe la acción: она́ → её. его́ sería para un hombre."
+    },
+    {
+     "id": "g-pronombres-acusativo-e7",
+     "frase": "Э́то Екатери́на. ___ зову́т Ка́тя.",
+     "base": "она́",
+     "opciones": [
+      "Её",
+      "Она́",
+      "Его́"
+     ],
+     "correcta": "Её",
+     "texto": "Э́то Екатери́на. Её зову́т Ка́тя.",
+     "fonetica": "E-ta ie-ka-tie-RI-na. ie-IO za-VUT KA-tia",
+     "es": "Esta es Ekaterina. Le dicen Katia.",
+     "porque": "Para ella: её зову́т (no «она́ зову́т»). Ка́тя es el diminutivo de Екатери́на."
+    },
+    {
+     "id": "g-pronombres-acusativo-e8",
+     "frase": "Са́ша, я ___ люблю́!",
+     "base": "ты",
+     "opciones": [
+      "тебя́",
+      "ты"
+     ],
+     "correcta": "тебя́",
+     "texto": "Са́ша, я тебя́ люблю́!",
+     "fonetica": "SA-sha, ia tie-BIA liub-LIU",
+     "es": "¡Sasha, te quiero!",
+     "porque": "Sasha recibe la acción: ты → тебя́. «Я ты люблю́» no se dice."
+    }
+   ]
+  },
+  {
+   "id": "g-adjetivo-adverbio",
+   "titulo": "хоро́ший o хорошо́; како́й",
+   "ru": "хоро́ший врач",
+   "puntos": [
+    "хоро́ший, краси́вый, интере́сный dicen cómo es alguien o algo: хоро́ший врач, краси́вый кот.",
+    "хорошо́, краси́во, интере́сно (con -о) dicen cómo se hace algo o cómo está todo: Он хорошо́ рабо́тает. Как краси́во!",
+    "Para preguntar cómo es alguien o algo: како́й? — Како́й он? — Он молодо́й и краси́вый."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Он хоро́ший врач.",
+     "fonetica": "on ja-RO-shii vrach",
+     "es": "Es un buen médico."
+    },
+    {
+     "ru": "Он хорошо́ рабо́тает.",
+     "fonetica": "on ja-ra-SHO ra-BO-ta-iet",
+     "es": "Trabaja bien."
+    },
+    {
+     "ru": "Како́й он? — Он молодо́й и краси́вый.",
+     "fonetica": "ka-KOI on? — on ma-la-DOI i kra-SI-vyi",
+     "es": "¿Cómo es él? — Es joven y guapo."
+    }
+   ],
+   "ojo": "хоро́ший врач, pero рабо́тает хорошо́.",
+   "tags": [],
+   "elige": [
+    {
+     "id": "g-adjetivo-adverbio-e1",
+     "frase": "Он ___ рабо́тает.",
+     "base": "хорошо́",
+     "opciones": [
+      "хорошо́",
+      "хоро́ший"
+     ],
+     "correcta": "хорошо́",
+     "texto": "Он хорошо́ рабо́тает.",
+     "fonetica": "on ja-ra-SHO ra-BO-ta-iet",
+     "es": "Él trabaja bien.",
+     "porque": "Dice cómo trabaja: хорошо́ (bien). хоро́ший describe a alguien o algo."
+    },
+    {
+     "id": "g-adjetivo-adverbio-e2",
+     "frase": "Э́то ___ слон.",
+     "base": "большо́й",
+     "opciones": [
+      "большо́й",
+      "большо́"
+     ],
+     "correcta": "большо́й",
+     "texto": "Э́то большо́й слон.",
+     "fonetica": "E-ta bal'-SHOI slon",
+     "es": "Es un elefante grande.",
+     "porque": "Dice cómo es el elefante: большо́й. «большо́» no se usa."
+    },
+    {
+     "id": "g-adjetivo-adverbio-e3",
+     "frase": "Он ___ врач.",
+     "base": "хоро́ший",
+     "opciones": [
+      "хоро́ший",
+      "хорошо́"
+     ],
+     "correcta": "хоро́ший",
+     "texto": "Он хоро́ший врач.",
+     "fonetica": "on ja-RO-shii vrach",
+     "es": "Es un buen médico.",
+     "porque": "Dice cómo es el médico: хоро́ший (bueno). хорошо́ es «bien», para cómo se hace algo."
+    },
+    {
+     "id": "g-adjetivo-adverbio-e4",
+     "frase": "Как ___!",
+     "base": "интере́сно",
+     "opciones": [
+      "интере́сно",
+      "интере́сный"
+     ],
+     "correcta": "интере́сно",
+     "texto": "Как интере́сно!",
+     "fonetica": "kak in-tie-RIES-na",
+     "es": "¡Qué interesante!",
+     "porque": "Para decir «¡qué interesante!» de lo que pasa se usa la forma en -о: Как интере́сно!"
+    },
+    {
+     "id": "g-adjetivo-adverbio-e5",
+     "frase": "Э́то о́чень ___ писа́тель.",
+     "base": "интере́сный",
+     "opciones": [
+      "интере́сный",
+      "интере́сно"
+     ],
+     "correcta": "интере́сный",
+     "texto": "Э́то о́чень интере́сный писа́тель.",
+     "fonetica": "E-ta O-chin' in-tie-RIES-nyi pi-SA-tiel'",
+     "es": "Es un escritor muy interesante.",
+     "porque": "Dice cómo es el escritor: интере́сный. La forma en -о no va con una persona."
+    },
+    {
+     "id": "g-adjetivo-adverbio-e6",
+     "frase": "___ он? — Он молодо́й.",
+     "base": "како́й",
+     "opciones": [
+      "Како́й",
+      "Как"
+     ],
+     "correcta": "Како́й",
+     "texto": "Како́й он? — Он молодо́й.",
+     "fonetica": "ka-KOI on? — on ma-la-DOI",
+     "es": "¿Cómo es él? — Es joven.",
+     "porque": "Para preguntar cómo es alguien se usa како́й. Как он? sería «¿cómo está?»."
+    },
+    {
+     "id": "g-adjetivo-adverbio-e7",
+     "frase": "Здесь о́чень ___.",
+     "base": "краси́во",
+     "opciones": [
+      "краси́во",
+      "краси́вый"
+     ],
+     "correcta": "краси́во",
+     "texto": "Здесь о́чень краси́во.",
+     "fonetica": "zdies' O-chin' kra-SI-va",
+     "es": "Aquí está muy bonito.",
+     "porque": "Habla de cómo está el lugar, no de una cosa: краси́во."
+    },
+    {
+     "id": "g-adjetivo-adverbio-e8",
+     "frase": "Ты о́чень ___ рабо́таешь!",
+     "base": "хорошо́",
+     "opciones": [
+      "хорошо́",
+      "хоро́ший"
+     ],
+     "correcta": "хорошо́",
+     "texto": "Ты о́чень хорошо́ рабо́таешь!",
+     "fonetica": "ty O-chin' ja-ra-SHO ra-BO-ta-iesh",
+     "es": "¡Trabajas muy bien!",
+     "porque": "Dice cómo trabajas: хорошо́. хоро́ший describe a alguien o algo, no cómo se hace."
+    }
+   ]
+  },
+  {
+   "id": "g-prepositivo-lugar",
+   "titulo": "¿Dónde? в / на + -е",
+   "ru": "в ко́мнате",
+   "puntos": [
+    "Para decir dónde está algo, la palabra toma -е: стол → на столе́, ко́мната → в ко́мнате, шко́ла → в шко́ле.",
+    "в es dentro de algo con paredes o límites (в па́рке, в до́ме); на es encima o en un evento (на столе́, на конце́рте).",
+    "кафе́, кино́, метро́ y такси́ no cambian nunca: в кафе́, в кино́, в метро́."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Кни́га лежи́т на столе́.",
+     "fonetica": "KNI-ga lie-ZHYT na sta-LIE",
+     "es": "El libro está sobre la mesa."
+    },
+    {
+     "ru": "Ма́ма в ко́мнате.",
+     "fonetica": "MA-ma f KOM-na-tie",
+     "es": "Mamá está en el cuarto."
+    },
+    {
+     "ru": "Мы сейча́с в кафе́.",
+     "fonetica": "my sie-CHAS f ka-FE",
+     "es": "Ahora estamos en un café."
+    }
+   ],
+   "ojo": "Cuatro se aprenden con -у́: в шкафу́, в лесу́, в саду́, в углу́. Su nombre es prepositivo.",
+   "tags": [
+    "prepositivo"
+   ],
+   "elige": [
+    {
+     "id": "g-prepositivo-lugar-e1",
+     "frase": "Кни́га лежи́т на ___.",
+     "base": "стол",
+     "opciones": [
+      "столе́",
+      "стол",
+      "столу́"
+     ],
+     "correcta": "столе́",
+     "texto": "Кни́га лежи́т на столе́.",
+     "fonetica": "KNI-ga lie-ZHYT na sta-LIE",
+     "es": "El libro está sobre la mesa.",
+     "porque": "Dice dónde está el libro: стол → на столе́."
+    },
+    {
+     "id": "g-prepositivo-lugar-e2",
+     "frase": "Ма́ма ___ ко́мнате.",
+     "base": "в / на",
+     "opciones": [
+      "в",
+      "на",
+      "из"
+     ],
+     "correcta": "в",
+     "texto": "Ма́ма в ко́мнате.",
+     "fonetica": "MA-ma f KOM-na-tie",
+     "es": "Mamá está en el cuarto.",
+     "porque": "La ко́мната tiene paredes: se dice в ко́мнате."
+    },
+    {
+     "id": "g-prepositivo-lugar-e3",
+     "frase": "Мы сейча́с в ___.",
+     "base": "кафе́",
+     "opciones": [
+      "кафе́",
+      "кафе́е",
+      "кафи́"
+     ],
+     "correcta": "кафе́",
+     "texto": "Мы сейча́с в кафе́.",
+     "fonetica": "my sie-CHAS f ka-FE",
+     "es": "Ahora estamos en un café.",
+     "porque": "кафе́ nunca cambia: в кафе́."
+    }
+   ]
+  },
+  {
+   "id": "g-presente-2",
+   "titulo": "Presente: -ешь o -ишь (де́лать, говори́ть, жить, писа́ть)",
+   "ru": "-ешь / -ишь",
+   "puntos": [
+    "La forma de ты te dice el grupo: si es -ешь, siguen -ет, -ем, -ете y -ут o -ют: ты де́лаешь → они́ де́лают.",
+    "Si la forma de ты es -ишь, siguen -ю, -ит, -им, -ите, -ят: я говорю́, ты говори́шь, они́ говоря́т.",
+    "El final del infinitivo no siempre avisa: жить → ты живёшь, писа́ть → ты пи́шешь. Apréndelos con su forma de ты."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Что ты де́лаешь?",
+     "fonetica": "shto ty DIE-la-iesh",
+     "es": "¿Qué haces?"
+    },
+    {
+     "ru": "Я говорю́ по-ру́сски.",
+     "fonetica": "ia ga-va-RIU pa-RUS-ki",
+     "es": "Hablo ruso."
+    },
+    {
+     "ru": "Я пишу́ письмо́.",
+     "fonetica": "ia pi-SHU pis'-MO",
+     "es": "Escribo una carta."
+    }
+   ],
+   "ojo": "Con я, люби́ть mete una л: я люблю́, pero ты лю́бишь.",
+   "tags": [],
+   "elige": [
+    {
+     "id": "g-presente-2-e1",
+     "frase": "Что ты ___?",
+     "base": "де́лать",
+     "opciones": [
+      "де́лаешь",
+      "де́лаишь",
+      "де́лает"
+     ],
+     "correcta": "де́лаешь",
+     "texto": "Что ты де́лаешь?",
+     "fonetica": "shto ty DIE-la-iesh",
+     "es": "¿Qué haces?",
+     "porque": "де́лать va con -ешь: ты де́лаешь."
+    },
+    {
+     "id": "g-presente-2-e2",
+     "frase": "Они́ ___ по-ру́сски.",
+     "base": "говори́ть",
+     "opciones": [
+      "говоря́т",
+      "говорю́т",
+      "говори́т"
+     ],
+     "correcta": "говоря́т",
+     "texto": "Они́ говоря́т по-ру́сски.",
+     "fonetica": "a-NI ga-va-RIAT pa-RUS-ki",
+     "es": "Ellos hablan ruso.",
+     "porque": "говори́ть es de -ишь: con они́ termina en -ят."
+    },
+    {
+     "id": "g-presente-2-e3",
+     "frase": "Где ты ___?",
+     "base": "жить",
+     "opciones": [
+      "живёшь",
+      "жи́ваешь",
+      "живёт"
+     ],
+     "correcta": "живёшь",
+     "texto": "Где ты живёшь?",
+     "fonetica": "gdie ty zhy-VIOSH",
+     "es": "¿Dónde vives?",
+     "porque": "жить va con -ешь y cambia la raíz: ты живёшь."
+    }
+   ]
+  },
+  {
+   "id": "g-igrat-v-na",
+   "titulo": "игра́ть в / игра́ть на",
+   "ru": "игра́ть в / на",
+   "puntos": [
+    "Para juegos y deportes, игра́ть в + el juego: игра́ть в футбо́л, в ша́хматы, в ка́рты, в волейбо́л.",
+    "Para instrumentos, игра́ть на + el instrumento con -е: игра́ть на гита́ре, на скри́пке, на бараба́не.",
+    "Los deportes que no se juegan van con занима́ться спо́ртом: Я занима́юсь спо́ртом."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Я игра́ю в футбо́л.",
+     "fonetica": "ia ig-RA-iu f fut-BOL",
+     "es": "Juego futbol."
+    },
+    {
+     "ru": "Она́ игра́ет на гита́ре.",
+     "fonetica": "a-NA ig-RA-iet na gui-TA-rie",
+     "es": "Ella toca la guitarra."
+    },
+    {
+     "ru": "Я занима́юсь спо́ртом.",
+     "fonetica": "ia za-ni-MA-ius' SPOR-tam",
+     "es": "Hago deporte."
+    }
+   ],
+   "ojo": "Son dos bloques fijos: в para lo que se juega, на para lo que se toca. игра́ть в футбо́л, игра́ть на гита́ре.",
+   "tags": [],
+   "elige": [
+    {
+     "id": "g-igrat-v-na-e1",
+     "frase": "Он игра́ет ___.",
+     "base": "ша́хматы",
+     "opciones": [
+      "в ша́хматы",
+      "на ша́хматах",
+      "в ша́хматах"
+     ],
+     "correcta": "в ша́хматы",
+     "texto": "Он игра́ет в ша́хматы.",
+     "fonetica": "on ig-RA-iet f SHAJ-ma-ty",
+     "es": "Él juega ajedrez.",
+     "porque": "Los juegos van con в: игра́ть в ша́хматы."
+    },
+    {
+     "id": "g-igrat-v-na-e2",
+     "frase": "Я игра́ю ___.",
+     "base": "гита́ра",
+     "opciones": [
+      "на гита́ре",
+      "в гита́ру",
+      "на гита́ру"
+     ],
+     "correcta": "на гита́ре",
+     "texto": "Я игра́ю на гита́ре.",
+     "fonetica": "ia ig-RA-iu na gui-TA-rie",
+     "es": "Toco la guitarra.",
+     "porque": "Los instrumentos van con на y el final -е."
+    },
+    {
+     "id": "g-igrat-v-na-e3",
+     "frase": "Моя́ сестра́ игра́ет ___.",
+     "base": "пиани́но",
+     "opciones": [
+      "на пиани́но",
+      "в пиани́но",
+      "на пиани́не"
+     ],
+     "correcta": "на пиани́но",
+     "texto": "Моя́ сестра́ игра́ет на пиани́но.",
+     "fonetica": "ma-IA sies-TRA ig-RA-iet na pi-a-NI-na",
+     "es": "Mi hermana toca el piano.",
+     "porque": "Instrumento: на. Y пиани́но nunca cambia."
+    }
+   ]
+  },
+  {
+   "id": "g-otkuda",
+   "titulo": "Отку́да? из… · Где? в… · по-ру́сски",
+   "ru": "из Ме́ксики",
+   "puntos": [
+    "Para decir de dónde eres: из + el país con -ы o -и: Я из Ме́ксики. Я из Росси́и. Я из Кана́ды.",
+    "Para decir dónde estás o vives: в + el país con -е o -и: Я живу́ в Ме́ксике.",
+    "El idioma va en una sola palabra con по-: Я говорю́ по-ру́сски и по-испа́нски."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Отку́да вы? — Я из Ме́ксики.",
+     "fonetica": "at-KU-da vy? — ia iz MIEK-si-ki",
+     "es": "¿De dónde es usted? — Soy de México."
+    },
+    {
+     "ru": "Я живу́ в Ме́ксике.",
+     "fonetica": "ia zhy-VU v MIEK-si-kie",
+     "es": "Vivo en México."
+    },
+    {
+     "ru": "Я говорю́ по-ру́сски.",
+     "fonetica": "ia ga-va-RIU pa-RUS-ki",
+     "es": "Hablo ruso."
+    }
+   ],
+   "ojo": "Ме́ксики (de México) frente a Ме́ксике (en México): из pide una y в pide la otra. El de из se llama genitivo.",
+   "tags": [
+    "genitivo"
+   ],
+   "elige": [
+    {
+     "id": "g-otkuda-e1",
+     "frase": "Отку́да вы? — Я ___ Ме́ксики.",
+     "base": "из / в",
+     "opciones": [
+      "из",
+      "в",
+      "на"
+     ],
+     "correcta": "из",
+     "texto": "Отку́да вы? — Я из Ме́ксики.",
+     "fonetica": "at-KU-da vy? — ia iz MIEK-si-ki",
+     "es": "¿De dónde es usted? — Soy de México.",
+     "porque": "Отку́да pregunta de dónde, y eso se dice con из."
+    },
+    {
+     "id": "g-otkuda-e2",
+     "frase": "Я живу́ в ___.",
+     "base": "Росси́я",
+     "opciones": [
+      "Росси́и",
+      "Росси́я",
+      "Росси́ю"
+     ],
+     "correcta": "Росси́и",
+     "texto": "Я живу́ в Росси́и.",
+     "fonetica": "ia zhy-VU v ra-SI-i",
+     "es": "Vivo en Rusia.",
+     "porque": "Dice dónde vive: в Росси́и."
+    },
+    {
+     "id": "g-otkuda-e3",
+     "frase": "Я говорю́ ___.",
+     "base": "ру́сский",
+     "opciones": [
+      "по-ру́сски",
+      "ру́сский",
+      "в ру́сском"
+     ],
+     "correcta": "по-ру́сски",
+     "texto": "Я говорю́ по-ру́сски.",
+     "fonetica": "ia ga-va-RIU pa-RUS-ki",
+     "es": "Hablo ruso.",
+     "porque": "El idioma que hablas va con по-: по-ру́сски."
+    }
+   ]
+  },
+  {
+   "id": "g-gde-kuda",
+   "titulo": "где o куда́; в o на en la ciudad",
+   "ru": "Где? Куда́?",
+   "puntos": [
+    "Где? pregunta dónde estás y la palabra toma -е: Я в па́рке. Я на по́чте.",
+    "Куда́? pregunta a dónde vas: lo que termina en -а cambia a -у y lo demás queda igual: Я иду́ в шко́лу. Я иду́ в парк.",
+    "до́ма = en casa, estando; домо́й = a casa, yendo: Ма́ма до́ма. Я иду́ домо́й."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Где ты? — Я в па́рке.",
+     "fonetica": "gdie ty? — ia f PAR-kie",
+     "es": "¿Dónde estás? — Estoy en el parque."
+    },
+    {
+     "ru": "Куда́ ты идёшь? — В парк.",
+     "fonetica": "ku-DA ty i-DIOSH? — f park",
+     "es": "¿A dónde vas? — Al parque."
+    },
+    {
+     "ru": "Я иду́ домо́й.",
+     "fonetica": "ia i-DU da-MOI",
+     "es": "Voy a casa."
+    }
+   ],
+   "ojo": "кафе́, кино́, метро́ y такси́ se ven igual en los dos casos: в кафе́ (estando) y в кафе́ (yendo).",
+   "tags": [
+    "prepositivo",
+    "acusativo"
+   ],
+   "elige": [
+    {
+     "id": "g-gde-kuda-e1",
+     "frase": "Где ты? — Я в ___.",
+     "base": "парк",
+     "opciones": [
+      "па́рке",
+      "парк",
+      "па́рка"
+     ],
+     "correcta": "па́рке",
+     "texto": "Где ты? — Я в па́рке.",
+     "fonetica": "gdie ty? — ia f PAR-kie",
+     "es": "¿Dónde estás? — Estoy en el parque.",
+     "porque": "Где pregunta dónde estás: в па́рке."
+    },
+    {
+     "id": "g-gde-kuda-e2",
+     "frase": "Куда́ ты идёшь? — В ___.",
+     "base": "музе́й",
+     "opciones": [
+      "музе́й",
+      "музе́е",
+      "музе́я"
+     ],
+     "correcta": "музе́й",
+     "texto": "Куда́ ты идёшь? — В музе́й.",
+     "fonetica": "ku-DA ty i-DIOSH? — v mu-ZIEI",
+     "es": "¿A dónde vas? — Al museo.",
+     "porque": "Куда́ es movimiento: la palabra se queda igual."
+    },
+    {
+     "id": "g-gde-kuda-e3",
+     "frase": "Ма́ма сейча́с ___.",
+     "base": "до́ма / домо́й",
+     "opciones": [
+      "до́ма",
+      "домо́й",
+      "дом"
+     ],
+     "correcta": "до́ма",
+     "texto": "Ма́ма сейча́с до́ма.",
+     "fonetica": "MA-ma sie-CHAS DO-ma",
+     "es": "Mamá está en casa ahora.",
+     "porque": "до́ма = en casa; домо́й es cuando vas hacia allá."
+    }
+   ]
+  },
+  {
+   "id": "g-numerales",
+   "titulo": "оди́н / одна́, два / две, пе́рвый / пе́рвая; 1 год, 2 го́да, 5 лет",
+   "ru": "оди́н, одна́, два, две",
+   "puntos": [
+    "El número 1 copia el género de la palabra, igual que мой: оди́н брат, одна́ сестра́, одно́ пальто́.",
+    "два va con las palabras de он y оно́; две, con las de она́: два бра́та, два пальто́, две сестры́, две кни́ги.",
+    "La edad: оди́н год, два го́да, пять лет. Se dice con мне, тебе́, ему́, ей: Мне два́дцать лет."
+   ],
+   "ejemplos": [
+    {
+     "ru": "У меня́ одна́ ко́шка.",
+     "fonetica": "u mie-NIA ad-NA KOSH-ka",
+     "es": "Tengo una gata."
+    },
+    {
+     "ru": "Здесь две кни́ги.",
+     "fonetica": "zdies' dvie KNI-gui",
+     "es": "Aquí hay dos libros."
+    },
+    {
+     "ru": "Мне два́дцать лет.",
+     "fonetica": "mnie DVA-tsat' liet",
+     "es": "Tengo veinte años."
+    }
+   ],
+   "ojo": "пе́рвый, пе́рвая, пе́рвое son como un adjetivo y copian el género: пе́рвый эта́ж, пе́рвая кни́га; para «en el primer piso» se dice на пе́рвом этаже́, con la forma que verás en el caso prepositivo.",
+   "tags": [
+    "оди́н, одна́, одно́",
+    "два / две",
+    "la edad"
+   ],
+   "elige": [
+    {
+     "id": "g-numerales-e1",
+     "frase": "У меня́ ___ кни́га.",
+     "base": "оди́н",
+     "opciones": [
+      "оди́н",
+      "одна́",
+      "одно́"
+     ],
+     "correcta": "одна́",
+     "texto": "У меня́ одна́ кни́га.",
+     "fonetica": "u mie-NIA ad-NA KNI-ga",
+     "es": "Tengo un libro.",
+     "porque": "кни́га es она́: одна́ кни́га, igual que моя́ кни́га."
+    },
+    {
+     "id": "g-numerales-e2",
+     "frase": "Мне пять ___.",
+     "base": "год",
+     "opciones": [
+      "год",
+      "го́да",
+      "лет"
+     ],
+     "correcta": "лет",
+     "texto": "Мне пять лет.",
+     "fonetica": "mnie piat' liet",
+     "es": "Tengo cinco años.",
+     "porque": "De cinco en adelante la edad va con лет."
+    },
+    {
+     "id": "g-numerales-e3",
+     "frase": "Ему́ два ___.",
+     "base": "год",
+     "opciones": [
+      "год",
+      "го́да",
+      "лет"
+     ],
+     "correcta": "го́да",
+     "texto": "Ему́ два го́да.",
+     "fonetica": "ie-MU dva GO-da",
+     "es": "Él tiene dos años.",
+     "porque": "Con два, три y четы́ре se dice го́да."
+    }
+   ]
+  },
+  {
+   "id": "g-plural",
+   "titulo": "El plural",
+   "ru": "кни́га → кни́ги",
+   "puntos": [
+    "Casi todas suman -ы y la -а final se cambia por -ы: стол → столы́, ма́ма → ма́мы, шко́ла → шко́лы.",
+    "Después de г, к, х, ж, ш, щ, ч y en las de -ь o -я va -и: кни́га → кни́ги, ло́шадь → ло́шади, семья́ → се́мьи.",
+    "Las de оно́ cambian -о por -а y -е por -я: письмо́ → пи́сьма, сло́во → слова́, мо́ре → моря́."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Э́то кни́ги и слова́.",
+     "fonetica": "E-ta KNI-gui i sla-VA",
+     "es": "Estos son libros y palabras."
+    },
+    {
+     "ru": "Э́то шко́лы и музе́и.",
+     "fonetica": "E-ta SHKO-ly i mu-ZIE-i",
+     "es": "Estas son escuelas y museos."
+    },
+    {
+     "ru": "Вот де́ти и лю́ди.",
+     "fonetica": "vot DIE-ti i LIU-di",
+     "es": "Aquí están los niños y las personas."
+    }
+   ],
+   "ojo": "Seis se aprenden de memoria: друг → друзья́, брат → бра́тья, сестра́ → сёстры, ребёнок → де́ти, челове́к → лю́ди, дом → дома́.",
+   "tags": [
+    "plural"
+   ],
+   "elige": [
+    {
+     "id": "g-plural-e1",
+     "frase": "Здесь оди́н стол, а там ___.",
+     "base": "стол",
+     "opciones": [
+      "столы́",
+      "столи́",
+      "стола́"
+     ],
+     "correcta": "столы́",
+     "texto": "Здесь оди́н стол, а там столы́.",
+     "fonetica": "zdies' a-DIN stol, a tam sta-LY",
+     "es": "Aquí hay una mesa y allá mesas.",
+     "porque": "Casi todas hacen el plural con -ы: столы́."
+    },
+    {
+     "id": "g-plural-e2",
+     "frase": "Здесь одна́ кни́га, а там ___.",
+     "base": "кни́га",
+     "opciones": [
+      "кни́ги",
+      "кни́гы",
+      "кни́га"
+     ],
+     "correcta": "кни́ги",
+     "texto": "Здесь одна́ кни́га, а там кни́ги.",
+     "fonetica": "zdies' ad-NA KNI-ga, a tam KNI-gui",
+     "es": "Aquí hay un libro y allá libros.",
+     "porque": "Después de г nunca va -ы: кни́ги."
+    },
+    {
+     "id": "g-plural-e3",
+     "frase": "Вот одно́ письмо́, а вот ___.",
+     "base": "письмо́",
+     "opciones": [
+      "пи́сьма",
+      "письмы́",
+      "пи́сьмо"
+     ],
+     "correcta": "пи́сьма",
+     "texto": "Вот одно́ письмо́, а вот пи́сьма.",
+     "fonetica": "vot ad-NO pis'-MO, a vot PIS'-ma",
+     "es": "Aquí hay una carta y aquí cartas.",
+     "porque": "Las palabras de оно́ en -о hacen el plural en -а."
+    }
+   ]
+  },
+  {
+   "id": "g-adjetivo-genero",
+   "titulo": "El adjetivo copia el género",
+   "ru": "но́вая кни́га",
+   "puntos": [
+    "El adjetivo copia el género de la palabra: но́вый дом (он), но́вая кни́га (она́), но́вое письмо́ (оно́).",
+    "Con varias cosas el adjetivo termina en -ые: но́вые джи́нсы, чёрные боти́нки; después de к, г, х va -ие: ма́ленькие ко́шки, больши́е дома́.",
+    "Unos pocos llevan el acento al final y hacen -ой con он: большо́й дом, больша́я кварти́ра, большо́е зда́ние."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Моя́ ко́шка чёрная.",
+     "fonetica": "ma-IA KOSH-ka CHIOR-na-ia",
+     "es": "Mi gata es negra."
+    },
+    {
+     "ru": "Здесь большо́й дом, а там ма́ленький.",
+     "fonetica": "zdies' bal'-SHOI dom, a tam MA-lien'-kii",
+     "es": "Aquí hay una casa grande y allá una pequeña."
+    },
+    {
+     "ru": "У меня́ есть но́вые джи́нсы.",
+     "fonetica": "u mie-NIA iest' NO-vy-ie DZHYN-sy",
+     "es": "Tengo unos jeans nuevos."
+    }
+   ],
+   "ojo": "Las palabras de hombre en -а piden la forma de он: мой люби́мый па́па, nunca «моя́ люби́мая па́па».",
+   "tags": [
+    "adjetivo"
+   ],
+   "elige": [
+    {
+     "id": "g-adjetivo-genero-e1",
+     "frase": "Э́то ___ кни́га.",
+     "base": "но́вый",
+     "opciones": [
+      "но́вый",
+      "но́вая",
+      "но́вое"
+     ],
+     "correcta": "но́вая",
+     "texto": "Э́то но́вая кни́га.",
+     "fonetica": "E-ta NO-va-ia KNI-ga",
+     "es": "Este es un libro nuevo.",
+     "porque": "кни́га es она́, así que el adjetivo toma -ая."
+    },
+    {
+     "id": "g-adjetivo-genero-e2",
+     "frase": "У нас ___ кварти́ра.",
+     "base": "большо́й",
+     "opciones": [
+      "большо́й",
+      "больша́я",
+      "большо́е"
+     ],
+     "correcta": "больша́я",
+     "texto": "У нас больша́я кварти́ра.",
+     "fonetica": "u nas bal'-SHA-ia kvar-TI-ra",
+     "es": "Tenemos un departamento grande.",
+     "porque": "кварти́ра es она́, y большо́й se vuelve больша́я."
+    },
+    {
+     "id": "g-adjetivo-genero-e3",
+     "frase": "Э́то мои́ ___ боти́нки.",
+     "base": "чёрный",
+     "opciones": [
+      "чёрный",
+      "чёрная",
+      "чёрные"
+     ],
+     "correcta": "чёрные",
+     "texto": "Э́то мои́ чёрные боти́нки.",
+     "fonetica": "E-ta ma-I CHIOR-ny-ie ba-TIN-ki",
+     "es": "Estos son mis botines negros.",
+     "porque": "боти́нки son varios, así que el adjetivo toma -ые."
+    }
+   ]
+  },
+  {
+   "id": "g-tener",
+   "titulo": "Tener: у меня́ есть / был / не́ было",
+   "ru": "У меня́ есть…",
+   "puntos": [
+    "Para decir que tienes algo: У меня́ есть + la cosa tal cual: У меня́ есть брат. У меня́ есть ко́шка.",
+    "Para decir que no tienes algo: У меня́ нет + la palabra ya cambiada: нет бра́та, нет сестры́, нет вре́мени.",
+    "Para hablar de antes: У меня́ был брат. У меня́ была́ соба́ка. У меня́ бы́ли джи́нсы."
+   ],
+   "ejemplos": [
+    {
+     "ru": "У меня́ есть брат и сестра́.",
+     "fonetica": "u mie-NIA iest' brat i sies-TRA",
+     "es": "Tengo un hermano y una hermana."
+    },
+    {
+     "ru": "У меня́ нет сестры́.",
+     "fonetica": "u mie-NIA niet sies-TRY",
+     "es": "No tengo hermana."
+    },
+    {
+     "ru": "Ра́ньше у меня́ была́ ко́шка.",
+     "fonetica": "RAN'-she u mie-NIA by-LA KOSH-ka",
+     "es": "Antes tenía una gata."
+    }
+   ],
+   "ojo": "Para «no tenía» siempre se dice не́ было, igual para todo: У меня́ не́ было вре́мени. У меня́ не́ было соба́ки.",
+   "tags": [
+    "tener",
+    "у + genitivo"
+   ],
+   "elige": [
+    {
+     "id": "g-tener-e1",
+     "frase": "У тебя́ есть соба́ка? — Нет, у меня́ ___ соба́ки.",
+     "base": "нет",
+     "opciones": [
+      "есть",
+      "нет",
+      "не"
+     ],
+     "correcta": "нет",
+     "texto": "У тебя́ есть соба́ка? — Нет, у меня́ нет соба́ки.",
+     "fonetica": "u tie-BIA iest' sa-BA-ka? — niet, u mie-NIA niet sa-BA-ki",
+     "es": "¿Tienes perro? — No, no tengo perro.",
+     "porque": "«No tengo» es нет. Con есть dirías no y sí a la vez."
+    },
+    {
+     "id": "g-tener-e2",
+     "frase": "У меня́ нет ___.",
+     "base": "брат",
+     "opciones": [
+      "брат",
+      "бра́та",
+      "бра́тья"
+     ],
+     "correcta": "бра́та",
+     "texto": "У меня́ нет бра́та.",
+     "fonetica": "u mie-NIA niet BRA-ta",
+     "es": "No tengo hermano.",
+     "porque": "Después de нет, брат se vuelve бра́та."
+    },
+    {
+     "id": "g-tener-e3",
+     "frase": "Ра́ньше у меня́ ___ соба́ка.",
+     "base": "была́",
+     "opciones": [
+      "был",
+      "была́",
+      "бы́ли"
+     ],
+     "correcta": "была́",
+     "texto": "Ра́ньше у меня́ была́ соба́ка.",
+     "fonetica": "RAN'-she u mie-NIA by-LA sa-BA-ka",
+     "es": "Antes tenía un perro.",
+     "porque": "соба́ка es она́, por eso была́."
+    }
+   ]
+  },
+  {
+   "id": "g-pasado",
+   "titulo": "El pasado: был / была́, рабо́тал / рабо́тала",
+   "ru": "был, была́, бы́ли",
+   "puntos": [
+    "Para el pasado quita -ть y pon -л cuando es él: он рабо́тал, он был до́ма.",
+    "Carol, cuando hablas de ti agrega -а, porque eres mujer: я была́ до́ма, я рабо́тала. Nunca я был.",
+    "Para varias personas, -ли: мы бы́ли на конце́рте, они́ рабо́тали."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Вчера́ я была́ до́ма.",
+     "fonetica": "fchi-RA ia by-LA DO-ma",
+     "es": "Ayer estuve en casa."
+    },
+    {
+     "ru": "Я рабо́тала в кафе́.",
+     "fonetica": "ia ra-BO-ta-la f ka-FE",
+     "es": "Yo trabajaba en una cafetería."
+    },
+    {
+     "ru": "Вчера́ мы бы́ли на конце́рте.",
+     "fonetica": "fchi-RA my BY-li na kan-TSER-tie",
+     "es": "Ayer fuimos a un concierto."
+    }
+   ],
+   "ojo": "El pasado mira el género de quien hace la acción: a una mujer, ты была́; a un hombre, ты был.",
+   "tags": [],
+   "elige": [
+    {
+     "id": "g-pasado-e1",
+     "frase": "Вчера́ я ___ до́ма.",
+     "base": "быть",
+     "opciones": [
+      "была́",
+      "был",
+      "бы́ли"
+     ],
+     "correcta": "была́",
+     "texto": "Вчера́ я была́ до́ма.",
+     "fonetica": "fchi-RA ia by-LA DO-ma",
+     "es": "Ayer estuve en casa.",
+     "porque": "Carol habla de sí misma, mujer: я была́."
+    },
+    {
+     "id": "g-pasado-e2",
+     "frase": "Я ___ в кафе́.",
+     "base": "рабо́тать",
+     "opciones": [
+      "рабо́тала",
+      "рабо́тал",
+      "рабо́тали"
+     ],
+     "correcta": "рабо́тала",
+     "texto": "Я рабо́тала в кафе́.",
+     "fonetica": "ia ra-BO-ta-la f ka-FE",
+     "es": "Yo trabajaba en una cafetería.",
+     "porque": "Una mujer que habla de sí misma usa -ла."
+    },
+    {
+     "id": "g-pasado-e3",
+     "frase": "Мой брат ___ до́ма.",
+     "base": "быть",
+     "opciones": [
+      "был",
+      "была́",
+      "бы́ли"
+     ],
+     "correcta": "был",
+     "texto": "Мой брат был до́ма.",
+     "fonetica": "moi brat byl DO-ma",
+     "es": "Mi hermano estaba en casa.",
+     "porque": "брат es él: был, sin -а."
+    }
+   ]
+  },
+  {
+   "id": "g-acusativo",
+   "titulo": "Я чита́ю кни́гу, Я люблю́ бра́та",
+   "ru": "кни́гу, му́зыку",
+   "puntos": [
+    "Cuando una cosa recibe la acción, las que terminan en -а cambian a -у, y las de -я, a -ю: Я чита́ю кни́гу. Я слу́шаю му́зыку.",
+    "Las cosas que terminan en consonante no cambian nada: Я чита́ю журна́л. Я смотрю́ фильм.",
+    "Las personas y los animales de он sí cambian y suman -а: брат → бра́та, сосе́д → сосе́да. Я люблю́ бра́та. Я зна́ю сосе́да."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Я чита́ю кни́гу.",
+     "fonetica": "ia chi-TA-iu KNI-gu",
+     "es": "Leo un libro."
+    },
+    {
+     "ru": "Я слу́шаю му́зыку.",
+     "fonetica": "ia SLU-sha-iu MU-zy-ku",
+     "es": "Escucho música."
+    },
+    {
+     "ru": "Я о́чень люблю́ бра́та.",
+     "fonetica": "ia O-chin' liub-LIU BRA-ta",
+     "es": "Quiero mucho a mi hermano."
+    }
+   ],
+   "ojo": "Son dos cosas distintas: una cosa masculina no cambia (Я чита́ю журна́л), pero una persona sí (Я люблю́ бра́та). Esta forma se llama acusativo.",
+   "tags": [
+    "acusativo"
+   ],
+   "elige": [
+    {
+     "id": "g-acusativo-e1",
+     "frase": "Я чита́ю ___.",
+     "base": "кни́га",
+     "opciones": [
+      "кни́гу",
+      "кни́га",
+      "кни́ги"
+     ],
+     "correcta": "кни́гу",
+     "texto": "Я чита́ю кни́гу.",
+     "fonetica": "ia chi-TA-iu KNI-gu",
+     "es": "Leo un libro.",
+     "porque": "кни́га recibe la acción: la -а cambia a -у."
+    },
+    {
+     "id": "g-acusativo-e2",
+     "frase": "Я смотрю́ ___.",
+     "base": "фильм",
+     "opciones": [
+      "фильм",
+      "фи́льма",
+      "фи́льму"
+     ],
+     "correcta": "фильм",
+     "texto": "Я смотрю́ фильм.",
+     "fonetica": "ia smat-RIU fil'm",
+     "es": "Veo una película.",
+     "porque": "фильм es una cosa y termina en consonante: no cambia."
+    },
+    {
+     "id": "g-acusativo-e3",
+     "frase": "Я люблю́ ___.",
+     "base": "брат",
+     "opciones": [
+      "бра́та",
+      "брат",
+      "бра́ту"
+     ],
+     "correcta": "бра́та",
+     "texto": "Я люблю́ бра́та.",
+     "fonetica": "ia liub-LIU BRA-ta",
+     "es": "Quiero a mi hermano.",
+     "porque": "брат es una persona, y las personas sí cambian: -а."
+    }
+   ]
+  },
+  {
+   "id": "g-nravitsya",
+   "titulo": "Мне нра́вится: мне, тебе́, ему́…",
+   "ru": "Мне нра́вится",
+   "puntos": [
+    "Para decir qué te gusta se empieza con un bloque fijo: мне (a mí), тебе́ (a ti), ему́ (a él), ей (a ella), нам (a nosotros).",
+    "нра́вится cuando te gusta una cosa y нра́вятся cuando son varias: Мне нра́вится му́зыка. Мне нра́вятся ко́шки.",
+    "Я люблю́ es más fuerte: Мне нра́вится джаз (me gusta) frente a Я люблю́ джаз (me encanta)."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Мне нра́вится му́зыка.",
+     "fonetica": "mnie NRA-vit-sa MU-zy-ka",
+     "es": "Me gusta la música."
+    },
+    {
+     "ru": "Мне нра́вятся ко́шки.",
+     "fonetica": "mnie NRA-viat-sa KOSH-ki",
+     "es": "Me gustan los gatos."
+    },
+    {
+     "ru": "Ему́ нра́вится футбо́л.",
+     "fonetica": "ie-MU NRA-vit-sa fut-BOL",
+     "es": "A él le gusta el futbol."
+    }
+   ],
+   "ojo": "Con нра́вится la cosa no cambia (Мне нра́вится му́зыка), pero con люблю́ sí (Я люблю́ му́зыку). El bloque мне, тебе́, ему́ se llama dativo.",
+   "tags": [
+    "dativo"
+   ],
+   "elige": [
+    {
+     "id": "g-nravitsya-e1",
+     "frase": "___ нра́вится джаз.",
+     "base": "мне",
+     "opciones": [
+      "Мне",
+      "Я",
+      "Меня́"
+     ],
+     "correcta": "Мне",
+     "texto": "Мне нра́вится джаз.",
+     "fonetica": "mnie NRA-vit-sa dzhas",
+     "es": "Me gusta el jazz.",
+     "porque": "«Me gusta» empieza con Мне, nunca con Я."
+    },
+    {
+     "id": "g-nravitsya-e2",
+     "frase": "Мне ___ ко́шки.",
+     "base": "нра́виться",
+     "opciones": [
+      "нра́вятся",
+      "нра́вится",
+      "нра́виться"
+     ],
+     "correcta": "нра́вятся",
+     "texto": "Мне нра́вятся ко́шки.",
+     "fonetica": "mnie NRA-viat-sa KOSH-ki",
+     "es": "Me gustan los gatos.",
+     "porque": "ко́шки son varias, así que se usa нра́вятся."
+    },
+    {
+     "id": "g-nravitsya-e3",
+     "frase": "___ нра́вится гита́ра.",
+     "base": "ему́",
+     "opciones": [
+      "Ему́",
+      "Ей",
+      "Его́"
+     ],
+     "correcta": "Ему́",
+     "texto": "Ему́ нра́вится гита́ра.",
+     "fonetica": "ie-MU NRA-vit-sa gui-TA-ra",
+     "es": "A él le gusta la guitarra.",
+     "porque": "«A él» es ему́; ей sería «a ella»."
+    }
+   ]
+  },
+  {
+   "id": "g-skolko-stoit",
+   "titulo": "Ско́лько сто́ит? Comparar: бо́льше, лу́чше",
+   "ru": "Ско́лько сто́ит?",
+   "puntos": [
+    "Para preguntar el precio de una cosa: Ско́лько сто́ит кни́га? Si son varias, сто́ят: Ско́лько сто́ят джи́нсы?",
+    "El dinero ruso cambia con el número: оди́н рубль, два рубля́, пять рубле́й. Pero пе́со nunca cambia: пять пе́со.",
+    "Para comparar basta una palabra: бо́льше (más), ме́ньше (menos), лу́чше (mejor), ху́же (peor): Э́то лу́чше."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Ско́лько сто́ит ко́фе?",
+     "fonetica": "SKOL'-ka STO-it KO-fie",
+     "es": "¿Cuánto cuesta el café?"
+    },
+    {
+     "ru": "Э́то сто́ит пять пе́со.",
+     "fonetica": "E-ta STO-it piat' PIE-sa",
+     "es": "Esto cuesta cinco pesos."
+    },
+    {
+     "ru": "Моя́ футбо́лка лу́чше.",
+     "fonetica": "ma-IA fud-BOL-ka LUT-she",
+     "es": "Mi playera es mejor."
+    }
+   ],
+   "ojo": "сто́ит (cuesta) se parece a стои́т (está de pie), pero el acento cambia todo: Ско́лько сто́ит сок? y Ва́за стои́т на столе́.",
+   "tags": [
+    "Ско́лько сто́ит?",
+    "рубль, рубля́, рубле́й",
+    "comparar"
+   ],
+   "elige": [
+    {
+     "id": "g-skolko-stoit-e1",
+     "frase": "Ско́лько ___ джи́нсы?",
+     "base": "сто́ить",
+     "opciones": [
+      "сто́ит",
+      "сто́ят",
+      "сто́им"
+     ],
+     "correcta": "сто́ят",
+     "texto": "Ско́лько сто́ят джи́нсы?",
+     "fonetica": "SKOL'-ka STO-iat DZHYN-sy",
+     "es": "¿Cuánto cuestan los jeans?",
+     "porque": "джи́нсы son varios: сто́ят. сто́ит es para una sola cosa."
+    },
+    {
+     "id": "g-skolko-stoit-e2",
+     "frase": "Пи́цца сто́ит пять ___.",
+     "base": "рубль",
+     "opciones": [
+      "рубль",
+      "рубля́",
+      "рубле́й"
+     ],
+     "correcta": "рубле́й",
+     "texto": "Пи́цца сто́ит пять рубле́й.",
+     "fonetica": "PI-tsa STO-it piat' rub-LIEI",
+     "es": "La pizza cuesta cinco rublos.",
+     "porque": "De cinco en adelante se dice рубле́й, como пять лет."
+    },
+    {
+     "id": "g-skolko-stoit-e3",
+     "frase": "Твой ко́фе ___.",
+     "base": "лу́чше",
+     "opciones": [
+      "лу́чше",
+      "лу́чший",
+      "хорошо́"
+     ],
+     "correcta": "лу́чше",
+     "texto": "Твой ко́фе лу́чше.",
+     "fonetica": "tvoi KO-fie LUT-she",
+     "es": "Tu café es mejor.",
+     "porque": "лу́чше compara dos cosas; лу́чший es «el mejor»."
+    }
+   ]
+  },
+  {
+   "id": "g-hotet",
+   "titulo": "хоте́ть + verbo; comer y beber algo",
+   "ru": "Я хочу́…",
+   "puntos": [
+    "Я хочу́ + un verbo entero en -ть dice lo que quieres hacer: Я хочу́ гуля́ть. Я хочу́ танцева́ть. Я хочу́ петь.",
+    "Я хочу́ + una cosa dice lo que quieres tener o tomar: Я хочу́ ко́фе. Я хочу́ сок. Я хочу́ пи́ццу.",
+    "хоте́ть no sigue la regla normal: я хочу́, ты хо́чешь, он хо́чет, мы хоти́м."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Я хочу́ ко́фе, пожа́луйста.",
+     "fonetica": "ia ja-CHU KO-fie, pa-ZHA-lus-ta",
+     "es": "Quiero un café, por favor."
+    },
+    {
+     "ru": "Сего́дня я хочу́ отдыха́ть.",
+     "fonetica": "sie-VOD-nia ia ja-CHU at-dy-JAT'",
+     "es": "Hoy quiero descansar."
+    },
+    {
+     "ru": "Ты хо́чешь игра́ть в ша́хматы?",
+     "fonetica": "ty JO-chish ig-RAT' f SHAJ-ma-ty",
+     "es": "¿Quieres jugar ajedrez?"
+    }
+   ],
+   "ojo": "Si lo que quieres termina en -а, cambia a -у: Я хочу́ во́ду. Я хочу́ пи́ццу. Y ко́фе nunca cambia.",
+   "tags": [
+    "verbo irregular"
+   ],
+   "elige": [
+    {
+     "id": "g-hotet-e1",
+     "frase": "Я хочу́ ___.",
+     "base": "танцева́ть",
+     "opciones": [
+      "танцева́ть",
+      "танцу́ю",
+      "танцева́л"
+     ],
+     "correcta": "танцева́ть",
+     "texto": "Я хочу́ танцева́ть.",
+     "fonetica": "ia ja-CHU tan-tsy-VAT'",
+     "es": "Quiero bailar.",
+     "porque": "Después de хочу́ el verbo va entero, con su -ть."
+    },
+    {
+     "id": "g-hotet-e2",
+     "frase": "Я хочу́ ___, пожа́луйста.",
+     "base": "вода́",
+     "opciones": [
+      "во́ду",
+      "вода́",
+      "во́ды"
+     ],
+     "correcta": "во́ду",
+     "texto": "Я хочу́ во́ду, пожа́луйста.",
+     "fonetica": "ia ja-CHU VO-du, pa-ZHA-lus-ta",
+     "es": "Quiero agua, por favor.",
+     "porque": "вода́ recibe la acción: la -а cambia a -у."
+    },
+    {
+     "id": "g-hotet-e3",
+     "frase": "Ты ___ чай и́ли ко́фе?",
+     "base": "хоте́ть",
+     "opciones": [
+      "хо́чешь",
+      "хо́чет",
+      "хочу́"
+     ],
+     "correcta": "хо́чешь",
+     "texto": "Ты хо́чешь чай и́ли ко́фе?",
+     "fonetica": "ty JO-chish chai I-li KO-fie",
+     "es": "¿Quieres té o café?",
+     "porque": "Con ты el verbo хоте́ть se dice хо́чешь."
+    }
+   ]
+  },
+  {
+   "id": "g-futuro",
+   "titulo": "Futuro: бу́ду + verbo",
+   "ru": "бу́ду, бу́дешь, бу́дет",
+   "puntos": [
+    "Para el futuro: бу́ду + el verbo tal como viene en el diccionario: За́втра я бу́ду рабо́тать.",
+    "Cambia solo бу́ду: ты бу́дешь, он бу́дет, мы бу́дем, вы бу́дете, они́ бу́дут.",
+    "Después de бу́ду el verbo no se conjuga: Я бу́ду чита́ть, nunca «я бу́ду чита́ю»."
+   ],
+   "ejemplos": [
+    {
+     "ru": "За́втра я бу́ду рабо́тать.",
+     "fonetica": "ZAF-tra ia BU-du ra-BO-tat'",
+     "es": "Mañana voy a trabajar."
+    },
+    {
+     "ru": "Ты бу́дешь игра́ть на гита́ре?",
+     "fonetica": "ty BU-diesh ig-RAT' na gui-TA-rie",
+     "es": "¿Vas a tocar la guitarra?"
+    },
+    {
+     "ru": "Мы бу́дем чита́ть кни́гу.",
+     "fonetica": "my BU-diem chi-TAT' KNI-gu",
+     "es": "Vamos a leer un libro."
+    }
+   ],
+   "ojo": "Para decir «estaré» basta бу́ду solo, sin otro verbo: За́втра я бу́ду до́ма.",
+   "tags": [],
+   "elige": [
+    {
+     "id": "g-futuro-e1",
+     "frase": "За́втра я ___ рабо́тать.",
+     "base": "быть",
+     "opciones": [
+      "бу́ду",
+      "бу́дет",
+      "бу́дешь"
+     ],
+     "correcta": "бу́ду",
+     "texto": "За́втра я бу́ду рабо́тать.",
+     "fonetica": "ZAF-tra ia BU-du ra-BO-tat'",
+     "es": "Mañana voy a trabajar.",
+     "porque": "Con я va бу́ду; бу́дет es para он u она́."
+    },
+    {
+     "id": "g-futuro-e2",
+     "frase": "Ты бу́дешь ___ на гита́ре?",
+     "base": "игра́ть",
+     "opciones": [
+      "игра́ть",
+      "игра́ешь",
+      "игра́ет"
+     ],
+     "correcta": "игра́ть",
+     "texto": "Ты бу́дешь игра́ть на гита́ре?",
+     "fonetica": "ty BU-diesh ig-RAT' na gui-TA-rie",
+     "es": "¿Vas a tocar la guitarra?",
+     "porque": "Después de бу́дешь el verbo queda sin conjugar."
+    },
+    {
+     "id": "g-futuro-e3",
+     "frase": "Мы ___ чита́ть кни́гу.",
+     "base": "быть",
+     "opciones": [
+      "бу́дем",
+      "бу́дут",
+      "бу́дешь"
+     ],
+     "correcta": "бу́дем",
+     "texto": "Мы бу́дем чита́ть кни́гу.",
+     "fonetica": "my BU-diem chi-TAT' KNI-gu",
+     "es": "Vamos a leer un libro.",
+     "porque": "Con мы va бу́дем; бу́дут es para они́."
+    }
+   ]
+  },
+  {
+   "id": "g-s-chem",
+   "titulo": "С чем? чай с молоко́м",
+   "ru": "с молоко́м",
+   "puntos": [
+    "с quiere decir «con»: las palabras de он y оно́ toman -ом y las de она́, -ой: чай с молоко́м, ко́фе с са́харом, я с ма́мой.",
+    "Guárdalas como frases enteras: Чай с молоко́м, пожа́луйста. Así te salen solas, sin pensarlas.",
+    "Con занима́ться pasa lo mismo: Я занима́юсь спо́ртом quiere decir «hago deporte»."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Чай с молоко́м, пожа́луйста.",
+     "fonetica": "chai s ma-la-KOM, pa-ZHA-lus-ta",
+     "es": "Té con leche, por favor."
+    },
+    {
+     "ru": "Я пью ко́фе с са́харом.",
+     "fonetica": "ia piu KO-fie s SA-ja-ram",
+     "es": "Tomo café con azúcar."
+    },
+    {
+     "ru": "Я занима́юсь спо́ртом.",
+     "fonetica": "ia za-ni-MA-ius' SPOR-tam",
+     "es": "Hago deporte."
+    }
+   ],
+   "ojo": "игра́ть в футбо́л, pero занима́ться спо́ртом. El final -ом se llama instrumental.",
+   "tags": [
+    "instrumental"
+   ],
+   "elige": [
+    {
+     "id": "g-s-chem-e1",
+     "frase": "Чай ___ молоко́м, пожа́луйста.",
+     "base": "с",
+     "opciones": [
+      "с",
+      "в",
+      "на"
+     ],
+     "correcta": "с",
+     "texto": "Чай с молоко́м, пожа́луйста.",
+     "fonetica": "chai s ma-la-KOM, pa-ZHA-lus-ta",
+     "es": "Té con leche, por favor.",
+     "porque": "«Con leche» se dice с молоко́м."
+    },
+    {
+     "id": "g-s-chem-e2",
+     "frase": "Я пью ко́фе с ___.",
+     "base": "са́хар",
+     "opciones": [
+      "са́харом",
+      "са́хар",
+      "са́харе"
+     ],
+     "correcta": "са́харом",
+     "texto": "Я пью ко́фе с са́харом.",
+     "fonetica": "ia piu KO-fie s SA-ja-ram",
+     "es": "Tomo café con azúcar.",
+     "porque": "Después de с, са́хар se vuelve са́харом."
+    },
+    {
+     "id": "g-s-chem-e3",
+     "frase": "Я занима́юсь ___.",
+     "base": "спорт",
+     "opciones": [
+      "спо́ртом",
+      "спорт",
+      "в спорт"
+     ],
+     "correcta": "спо́ртом",
+     "texto": "Я занима́юсь спо́ртом.",
+     "fonetica": "ia za-ni-MA-ius' SPOR-tam",
+     "es": "Hago deporte.",
+     "porque": "занима́ться pide спо́ртом; в спорт es de игра́ть."
+    }
+   ]
+  },
+  {
+   "id": "g-hora",
+   "titulo": "Ско́лько вре́мени? Во ско́лько?",
+   "ru": "Ско́лько вре́мени?",
+   "puntos": [
+    "Ско́лько вре́мени? pregunta qué hora es ahora. Se contesta con сейча́с: Сейча́с три часа́.",
+    "Во ско́лько? pregunta a qué hora pasa algo. La respuesta lleva в: Уро́к в пять часо́в.",
+    "Las horas cambian como la edad: час, два часа́, пять часо́в."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Ско́лько вре́мени?",
+     "fonetica": "SKOL'-ka VRIE-mie-ni",
+     "es": "¿Qué hora es?"
+    },
+    {
+     "ru": "Сейча́с три часа́.",
+     "fonetica": "sie-CHAS tri chi-SA",
+     "es": "Son las tres."
+    },
+    {
+     "ru": "Во ско́лько конце́рт?",
+     "fonetica": "va SKOL'-ka kan-TSERT",
+     "es": "¿A qué hora es el concierto?"
+    }
+   ],
+   "ojo": "часы́ (con -ы) es el reloj, no «las horas»: Мои́ часы́ здесь. Y para «la una» basta час, sin оди́н: Сейча́с час.",
+   "tags": [
+    "Ско́лько вре́мени?",
+    "Во ско́лько?",
+    "час, часа́, часо́в"
+   ],
+   "elige": [
+    {
+     "id": "g-hora-e1",
+     "frase": "___ конце́рт?",
+     "base": "во ско́лько",
+     "opciones": [
+      "Ско́лько вре́мени",
+      "Во ско́лько",
+      "Отку́да"
+     ],
+     "correcta": "Во ско́лько",
+     "texto": "Во ско́лько конце́рт?",
+     "fonetica": "va SKOL'-ka kan-TSERT",
+     "es": "¿A qué hora es el concierto?",
+     "porque": "Во ско́лько? pregunta a qué hora pasa algo."
+    },
+    {
+     "id": "g-hora-e2",
+     "frase": "Сейча́с пять ___.",
+     "base": "час",
+     "opciones": [
+      "час",
+      "часа́",
+      "часо́в"
+     ],
+     "correcta": "часо́в",
+     "texto": "Сейча́с пять часо́в.",
+     "fonetica": "sie-CHAS piat' chi-SOF",
+     "es": "Son las cinco.",
+     "porque": "De cinco en adelante se dice часо́в."
+    },
+    {
+     "id": "g-hora-e3",
+     "frase": "Уро́к в два ___.",
+     "base": "час",
+     "opciones": [
+      "час",
+      "часа́",
+      "часо́в"
+     ],
+     "correcta": "часа́",
+     "texto": "Уро́к в два часа́.",
+     "fonetica": "u-ROK v dva chi-SA",
+     "es": "La clase es a las dos.",
+     "porque": "Con два, три y четы́ре se dice часа́."
+    }
+   ]
+  }
+ ]
 }

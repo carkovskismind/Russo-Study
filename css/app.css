@@ -2149,3 +2149,7 @@ body:not(.no-rep) .view#view-study.st-quiz { padding-bottom: calc(14px + env(saf
 .pd-h-b { letter-spacing: -.012em; }
 /* Tema abierto: «Sigue aquí» va solo en el mosaico marcado de arriba, no en el panel (chocaba con la flecha) */
 .tm-tile.open .t-big .tm-sigue { display: none; }
+/* 4.2.1 · Paso 2 de Frases: nota del orden que armaste cuando la traducción es la neutra */
+.fr-orden-nota { margin: 12px 2px 0; font-size: 14px; line-height: 1.4; color: var(--text); }
+.fr-orden-nota b { font-weight: 800; }
+.fr-orden-nota .fr-tk { font-family: var(--f-ru); font-weight: 700; }

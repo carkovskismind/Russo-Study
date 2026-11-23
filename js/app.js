@@ -1,7 +1,7 @@
 import { Store, IS_BETA } from "./store.js";
 import { schedule, endOfDay, startOfDay, dateKey, DAY } from "./srs.js";
 
-const APP_VERSION = "4.2.0";
+const APP_VERSION = "4.2.1";
 // Botón «Reportar falla». Está activo en la beta; para activarlo también en la versión real, cambia a true.
 const REPORT_BUTTON = IS_BETA || false;
 
@@ -90,8 +90,7 @@ const RU_NAME = {
   colores: "Цвета́", adjetivos: "Хара́ктер", ideas: "Иде́и", verbos: "Глаго́лы", juegos: "И́гры",
   instrumentos: "Му́зыка", comida: "Еда́", "ropa-cuerpo": "Оде́жда", escuela: "Шко́ла", textos: "Те́ксты",
   cultura: "Культу́ра", servilismo: "Уго́дник", expresiones: "Фра́зы", paises: "Стра́ны",
-  "reglas-gentilicios": "мексика́нка", nombres: "Имена́", "falsos-amigos": "Ло́жные друзья́", casos: "Падежи́", "gramatica-verbos": "я чита́ю", genero: "Род",
-  plurales: "кни́га → кни́ги", posesion: "у меня́ есть", "gramatica-numerales": "две кни́ги"
+  "reglas-gentilicios": "мексика́нка", nombres: "Имена́", "falsos-amigos": "Ло́жные друзья́"
 };
 
 function visFor(deck) {
@@ -612,8 +611,13 @@ function gramaticaDeck() {
 }
 
 // ---------- 4.2.0 · Buscador del inicio ----------
+// Para buscar: además de lo de norm(), ignora los acentos y la ñ del español («numeros» encuentra «Números»).
+// norm() no se toca porque de él salen los ids de las tarjetas.
+function fold(s) {
+  return norm(s).normalize("NFD").replace(/[̀-ͯ]/g, "");
+}
 function searchKey(s) {
-  return norm(String(s || "")).replace(/[-·.,;:!?¿¡«»"()]/g, " ").replace(/\s+/g, " ").trim();
+  return fold(String(s || "")).replace(/[-·.,;:!?¿¡«»"()]/g, " ").replace(/\s+/g, " ").trim();
 }
 function clearSearch() {
   $("#h-q").value = "";
@@ -946,7 +950,9 @@ function startBlink() {
 // (sin filtro activo se ve todo): Gramática · Expresiones · Lectura.
 const EXPRESIONES = new Set(["expresiones", "falsos-amigos", "servilismo"]);
 const LECTURA = new Set(["textos"]);
+// «Gramática» no filtra mazos: abre el índice de Gramática (las paradas de la Ruta).
 const FILTROS = ["Gramática", "Expresiones", "Lectura"];
+const FILTRO_GRAM = "Gramática";
 
 function groupOf(deck) {
   if (EXPRESIONES.has(deck.id)) return "Expresiones";
@@ -1444,10 +1450,10 @@ function renderSelectBar() {
 
 function filteredCards() {
   const d = state.currentDeck;
-  const q = norm($("#deck-search").value);
+  const q = fold($("#deck-search").value);
   return d.cards.filter((c) => {
     if (!q) return true;
-    const hay = norm([c.ru, c.es, c.q, c.a, c.nota, c.tag].join(" "));
+    const hay = fold([c.ru, c.es, c.q, c.a, c.nota, c.tag].join(" "));
     return hay.includes(q);
   });
 }
@@ -2435,8 +2441,14 @@ function fraseError(f, cur) {
     return { title: missing.length === 1 ? "Casi. Te faltó una ficha." : "Casi. Te faltaron fichas.", body: `Falta: ${missing.join(", ")}. Todas las fichas de la idea se usan.` };
   }
   const toks = placed.map((b) => normSentence(b.t));
+  // Solo se usa un bloque que de verdad va junto en TODAS las respuestas válidas
+  // y que no es la frase completa (si no, el mensaje no tiene sentido).
+  const validToks = f.validas.map((v) => normSentence(v).split(" "));
   for (const e of errs.filter((x) => x.tipo === "bloque" && Array.isArray(x.fichas))) {
-    if (!hasRun(toks, e.fichas.map(normSentence))) return { title: "Casi. Estas fichas van juntas.", body: e.explica };
+    const run = e.fichas.map(normSentence);
+    if (run.length < 2 || run.length >= toks.length) continue;
+    if (!validToks.every((vt) => hasRun(vt, run))) continue;
+    if (!hasRun(toks, run)) return { title: "Casi. Estas fichas van juntas.", body: e.explica };
   }
   const o = errs.find((x) => x.tipo === "orden");
   return { title: "Casi. Revisa el orden.", body: o ? o.explica : "Con estas fichas el orden no funciona así en ruso. Mira la respuesta de abajo." };
@@ -2569,7 +2581,7 @@ function renderFrase() {
     let cls = "option";
     let key = i + 1;
     if (cur.choice !== null) {
-      if (o === f.es) { cls += " correct"; key = "✓"; }
+      if (o === (cur.correct || f.es)) { cls += " correct"; key = "✓"; }
       else if (i === cur.choice) cls += " wrong";
     }
     return `<button class="${cls}" type="button" data-fopt="${i}"${cur.choice !== null ? " disabled" : ""}><span class="key">${key}</span><span class="opt-text"><span>${esc(o)}</span></span></button>`;
@@ -2589,7 +2601,29 @@ function renderFrase() {
     </div>
     <p class="fr-msg">Elige la traducción de la frase que armaste:</p>
     <div class="options">${opts}</div>
+    ${cur.choice !== null && cur.variant && !cur.variant.es && cur.variant.nota ? `<p class="fr-orden-nota"><b>Tu orden:</b> ${enfasisText(cur.variant.nota)}</p>` : ""}
     ${foot}`;
+}
+
+// 4.2.1 · Paso 2: si armaste otro orden válido y ese orden tiene su propia traducción
+// (enfasis[].es), la correcta es esa; si no, la neutra y se muestra la nota del orden.
+function variantOf(f, cur) {
+  const list = Array.isArray(f.enfasis) ? f.enfasis : [];
+  if (!cur.ok1 || list.length < 2) return null;
+  const built = normSentence(builtSentence(cur));
+  if (built === normSentence(f.texto || f.validas[0])) return null;
+  return list.find((x) => normSentence(x.ru) === built) || null;
+}
+
+function setStep2Options(f, cur) {
+  const v = variantOf(f, cur);
+  cur.variant = v;
+  cur.correct = f.es;
+  if (v && v.es) {
+    cur.correct = v.es;
+    const wrong = Array.isArray(v.opciones) && v.opciones.length >= 3 ? v.opciones.slice(0, 3) : f.opciones.filter((o) => o !== f.es).slice(0, 3);
+    cur.options = shuffle([v.es, ...wrong]);
+  }
 }
 
 function goStep2() {
@@ -2599,6 +2633,7 @@ function goStep2() {
   const cur = fr.cur;
   cur.step = 2;
   cur.reported = false;
+  setStep2Options(fr.queue[0].f, cur);
   renderFrase();
   if (store.settings.autoSpeak) speak(displaySentence(fr, cur), cur.rate);
 }
@@ -2625,12 +2660,14 @@ function fraseClick(e) {
   if (t.dataset.say) return speak(t.dataset.say);
   if (t.dataset.fopt !== undefined && cur.choice === null) {
     cur.choice = Number(t.dataset.fopt);
-    cur.ok2 = cur.options[cur.choice] === f.es;
+    cur.ok2 = cur.options[cur.choice] === (cur.correct || f.es);
     cur.reported = false;
     playSound(cur.ok2);
     renderFrase();
     // La última frase no avanza sola: terminas cuando toques Continuar.
-    if (cur.ok2 && fr.queue.length > 1) fr.timer = setTimeout(() => { if (state.fr === fr && fr.cur === cur && $("#sheet").hidden) finishFraseItem(); }, AUTO_MS);
+    // Con la nota de tu orden (sin traducción propia) no avanza sola, para que se lea.
+    const noteShown = cur.variant && !cur.variant.es && cur.variant.nota;
+    if (cur.ok2 && !noteShown && fr.queue.length > 1) fr.timer = setTimeout(() => { if (state.fr === fr && fr.cur === cur && $("#sheet").hidden) finishFraseItem(); }, AUTO_MS);
     return;
   }
   const act = t.dataset.fr;
@@ -4184,7 +4221,7 @@ function renderModulo() {
 // fallaste al primer intento vuelve en la práctica del día siguiente (máximo 3 al día).
 const GRAM_PALS = ["kh", "pe", "lav", "li", "pk", "bl", "mint"];
 const ELIGE_POR_DIA = 3;
-const FICHAS = ["casos", "genero", "plurales", "posesion", "gramatica-verbos", "gramatica-numerales", "reglas-gentilicios"];
+const FICHAS = ["reglas-gentilicios"];
 const ICO_BOOK = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg>`;
 const ICO_CHEV = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>`;
 const ICO_OK = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
@@ -4765,6 +4802,7 @@ function bind() {
   $("#temas-chips").addEventListener("click", (e) => {
     const c = e.target.closest("[data-filter]");
     if (!c) return;
+    if (c.dataset.filter === FILTRO_GRAM) return openGramIndice("temas");
     const f = state.temaFilters || (state.temaFilters = new Set());
     if (f.has(c.dataset.filter)) f.delete(c.dataset.filter); else f.add(c.dataset.filter);
     state.openSet = false;

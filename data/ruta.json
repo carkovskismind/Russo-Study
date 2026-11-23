@@ -87,5 +87,5 @@
       ]
     }
   ],
-  "biblioteca": ["expresiones", "servilismo", "reglas-gentilicios", "casos", "genero", "plurales", "posesion", "gramatica-verbos", "gramatica-numerales"]
+  "biblioteca": ["expresiones", "servilismo", "reglas-gentilicios"]
 }

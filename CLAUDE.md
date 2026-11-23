@@ -5,11 +5,19 @@ Responde siempre en español, claro y breve.
 
 ## Reglas de trabajo (obligatorias)
 
-1. Antes de crear o programar algo, pregunta si hay dudas. Jamás asumas nada. Si decides algo sin preguntar, dilo al final.
+1. Antes de crear o programar algo, pregunta si hay dudas. Jamás asumas nada. **Si te atoras o aparece una bifurcación real, para y pregunta**; no decidas por tu cuenta para no frenar la conversación. Decir al final lo que decidiste es la red por si algo se escapa, no un permiso para decidir y avisar después. Un permiso amplio («arréglalo», «agrégalas») cubre lo que pediste, no las decisiones que aparezcan en el camino.
+   - **Ningún agente sin que Carol lo pida.** No lances subagentes por iniciativa propia, ni uno. Si crees que hacen falta, di para qué, cuántos y qué va a hacer cada uno, y espera su respuesta. Lanzar varios a la vez gasta el límite de uso de Carol y puede cortar el trabajo a la mitad.
 2. Primero una maqueta o propuesta; se aplica a la app solo cuando Carol la aprueba. Si ella edita la maqueta, respeta sus cambios. **Fidelidad 100 % a la maqueta:** lo programado debe verse exactamente igual a la maqueta viva (textos, medidas, espacios, colores, imágenes y fondos), comprobado con capturas lado a lado en oscuro y claro antes de subir.
 3. Nunca pongas en el código la llave service_role (secret) de Supabase. Solo la publishable key, que ya está en `js/config.js`.
 4. Antes de publicar: `node tools/validar.mjs` sin errores y prueba en celular (390×844) en modo oscuro y claro.
-5. En cada versión nueva sube `APP_VERSION` (js/app.js) y `CACHE` (sw.js).
+5. En cada versión nueva sube `APP_VERSION` (js/app.js) y `CACHE` (sw.js). **El número de versión lo decide Carol: pregúntaselo siempre, nunca lo inventes.** Varios arreglos distintos pueden ir en la misma versión, así que no subas el número solo porque tocaste algo.
+
+## Commits y descripción de PR (acordado con Carol, nov 2026)
+
+- **Descripción del PR:** un resumen de las fallas encontradas y cómo se solucionaron (tabla «Falla | Cómo se solucionó»), lo que se comprobó y qué revisar en la vista previa. Si el PR no corrige fallas, un resumen corto de qué cambia y por qué.
+- **Mensajes de commit:** primera línea con la versión y lo que se arregla o cambia; si hace falta, un cuerpo corto con la falla y su solución.
+- **Nunca** pongas en un commit ni en un PR las preguntas o mensajes de Carol ni comandos (p. ej. `node tools/validar.mjs`): se escribe «validación sin errores».
+- Termina con las líneas de atribución que pida la sesión.
 
 ## La app
 
@@ -54,6 +62,8 @@ Responde siempre en español, claro y breve.
 | `programador` | Único que toca `index.html`, `css/`, `js/`, `sw.js`. |
 | `revisor` | Prueba la app y el contenido; **solo reporta**, no corrige. |
 | `diseno-ux` | Maquetas fieles a los bocetos de Carol, coherentes con el diseño aprobado en oscuro y claro. |
+
+**Estos agentes solo se usan cuando Carol lo pide** (regla 1). Vale para todos los chats, incluido `orden`: coordinar no da permiso de repartir trabajo por cuenta propia.
 
 Orden de trabajo en un mismo archivo: primero `mazos`, después `gramatica`. Nunca dos agentes a la vez sobre el mismo archivo.
 
