@@ -611,8 +611,13 @@ function gramaticaDeck() {
 }
 
 // ---------- 4.2.0 · Buscador del inicio ----------
+// Para buscar: además de lo de norm(), ignora los acentos y la ñ del español («numeros» encuentra «Números»).
+// norm() no se toca porque de él salen los ids de las tarjetas.
+function fold(s) {
+  return norm(s).normalize("NFD").replace(/[̀-ͯ]/g, "");
+}
 function searchKey(s) {
-  return norm(String(s || "")).replace(/[-·.,;:!?¿¡«»"()]/g, " ").replace(/\s+/g, " ").trim();
+  return fold(String(s || "")).replace(/[-·.,;:!?¿¡«»"()]/g, " ").replace(/\s+/g, " ").trim();
 }
 function clearSearch() {
   $("#h-q").value = "";
@@ -1445,10 +1450,10 @@ function renderSelectBar() {
 
 function filteredCards() {
   const d = state.currentDeck;
-  const q = norm($("#deck-search").value);
+  const q = fold($("#deck-search").value);
   return d.cards.filter((c) => {
     if (!q) return true;
-    const hay = norm([c.ru, c.es, c.q, c.a, c.nota, c.tag].join(" "));
+    const hay = fold([c.ru, c.es, c.q, c.a, c.nota, c.tag].join(" "));
     return hay.includes(q);
   });
 }
