@@ -5,11 +5,19 @@ Responde siempre en español, claro y breve.
 
 ## Reglas de trabajo (obligatorias)
 
-1. Antes de crear o programar algo, pregunta si hay dudas. Jamás asumas nada. Si decides algo sin preguntar, dilo al final.
-2. Primero una maqueta o propuesta; se aplica a la app solo cuando Carol la aprueba. Si ella edita la maqueta, respeta sus cambios.
+1. Antes de crear o programar algo, pregunta si hay dudas. Jamás asumas nada. **Si te atoras o aparece una bifurcación real, para y pregunta**; no decidas por tu cuenta para no frenar la conversación. Decir al final lo que decidiste es la red por si algo se escapa, no un permiso para decidir y avisar después. Un permiso amplio («arréglalo», «agrégalas») cubre lo que pediste, no las decisiones que aparezcan en el camino.
+   - **Ningún agente sin que Carol lo pida.** No lances subagentes por iniciativa propia, ni uno. Si crees que hacen falta, di para qué, cuántos y qué va a hacer cada uno, y espera su respuesta. Lanzar varios a la vez gasta el límite de uso de Carol y puede cortar el trabajo a la mitad.
+2. Primero una maqueta o propuesta; se aplica a la app solo cuando Carol la aprueba. Si ella edita la maqueta, respeta sus cambios. **Fidelidad 100 % a la maqueta:** lo programado debe verse exactamente igual a la maqueta viva (textos, medidas, espacios, colores, imágenes y fondos), comprobado con capturas lado a lado en oscuro y claro antes de subir.
 3. Nunca pongas en el código la llave service_role (secret) de Supabase. Solo la publishable key, que ya está en `js/config.js`.
 4. Antes de publicar: `node tools/validar.mjs` sin errores y prueba en celular (390×844) en modo oscuro y claro.
-5. En cada versión nueva sube `APP_VERSION` (js/app.js) y `CACHE` (sw.js).
+5. En cada versión nueva sube `APP_VERSION` (js/app.js) y `CACHE` (sw.js). **El número de versión lo decide Carol: pregúntaselo siempre, nunca lo inventes.** Varios arreglos distintos pueden ir en la misma versión, así que no subas el número solo porque tocaste algo.
+
+## Commits y descripción de PR (acordado con Carol, nov 2026)
+
+- **Descripción del PR:** un resumen de las fallas encontradas y cómo se solucionaron (tabla «Falla | Cómo se solucionó»), lo que se comprobó y qué revisar en la vista previa. Si el PR no corrige fallas, un resumen corto de qué cambia y por qué.
+- **Mensajes de commit:** primera línea con la versión y lo que se arregla o cambia; si hace falta, un cuerpo corto con la falla y su solución.
+- **Nunca** pongas en un commit ni en un PR las preguntas o mensajes de Carol ni comandos (p. ej. `node tools/validar.mjs`): se escribe «validación sin errores».
+- Termina con las líneas de atribución que pida la sesión.
 
 ## La app
 
@@ -36,16 +44,13 @@ Responde siempre en español, claro y breve.
 
 ## Plan acordado (oct 2026)
 
-- **Principio:** la app es para **memorizar vocabulario y aprenderlo por uso**. La gramática solo aparece **a pedido**: «¿Dudas de gramática?» (data/gramatica/dudas.json), la explicación cuando fallas y el Diccionario. Nada de lecciones obligatorias.
-- **El inicio actual se conserva** (semana, Tu avance + para hoy, Aprendidas, Racha, Seguir con). Se agrega una tarjeta «Tu ruta» con un mini mapa.
-- **Mapa del módulo** = los temas de vocabulario en el **orden de las clases de CENLEX** (M1 → M2 → M3), estilo ciudad isométrica del boceto de Carol. Aprobado: **propuesta D** (dibujos con contorno crema tipo sticker + calle ámbar #F2C14E, plataformas pastel en código, pin #4AF2D5, tarjeta negra con Cajas · Frases · Palabras · Mini diálogo). Maqueta: artefacto «Russo Study · Ruta 3.0», tablero 2D.
-- **Tus temas** sigue en mosaico de 2 columnas con filtros (Todos · Vocabulario · Países y gentilicios · Gramática · Expresiones); al tocar uno crece y muestra Palabras · Frases · Diálogo · Cajas.
-- Sección independiente **«Aprende a leer»** (data/lectura/lectura.json, 6 pasos).
-- Ejercicios nuevos: **mini diálogos tipo chat** y **clasificar en cajas** (data/ejercicios/).
-- Frases: `bloques`, `fijo`, cualquier orden válido en `validas`, `errores` con explicación, y `diccionario` (forma, significado, porqué) por ficha. Botón **«Diccionario»** + «+ Repasar» → mazo personal **«Mis palabras»**.
-- Al acertar en frases, avance automático (≈1 s).
-- Módulo 3: después; por ahora solo M1 y M2. Carol va empezando M3 en clase.
-- **Beta:** https://carkovskismind.github.io/Russo-Study/beta/ (rama `beta`), con su propio progreso en el dispositivo. La tabla `progress_beta` de Supabase queda para después. Todo cambio visible se prueba primero en `beta` y luego pasa a `main` por solicitud.
+- **Ruta** de unidades en orden sugerido (todas abiertas, con «sigue aquí»), cada una con su vocabulario y su gramática.
+- Sección independiente **«Aprende a leer»** (alfabeto, acento, reducción de О, suaves/duras, Ь y Ъ).
+- **Biblioteca** con todos los mazos para práctica libre.
+- Palabras pequeñas (кто, что, где, куда́…) repartidas por unidad y aprendidas con su uso.
+- Ejercicios nuevos: **mini diálogos tipo chat** y **clasificar en cajas**.
+- Frases: bloques que van juntos + cualquier orden válido + explicación del error.
+- Botón **«Diccionario»** en las frases (forma de diccionario, significado, por qué cambió) y «+ Repasar» → mazo personal **«Mis palabras»**.
 
 ## Agentes del proyecto (`.claude/agents/`)
 
@@ -57,6 +62,8 @@ Responde siempre en español, claro y breve.
 | `programador` | Único que toca `index.html`, `css/`, `js/`, `sw.js`. |
 | `revisor` | Prueba la app y el contenido; **solo reporta**, no corrige. |
 | `diseno-ux` | Maquetas fieles a los bocetos de Carol, coherentes con el diseño aprobado en oscuro y claro. |
+
+**Estos agentes solo se usan cuando Carol lo pide** (regla 1). Vale para todos los chats, incluido `orden`: coordinar no da permiso de repartir trabajo por cuenta propia.
 
 Orden de trabajo en un mismo archivo: primero `mazos`, después `gramatica`. Nunca dos agentes a la vez sobre el mismo archivo.
 
