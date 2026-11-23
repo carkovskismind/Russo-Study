@@ -12,6 +12,13 @@ Responde siempre en español, claro y breve.
 4. Antes de publicar: `node tools/validar.mjs` sin errores y prueba en celular (390×844) en modo oscuro y claro.
 5. En cada versión nueva sube `APP_VERSION` (js/app.js) y `CACHE` (sw.js). **El número de versión lo decide Carol: pregúntaselo siempre, nunca lo inventes.** Varios arreglos distintos pueden ir en la misma versión, así que no subas el número solo porque tocaste algo.
 
+## Commits y descripción de PR (acordado con Carol, nov 2026)
+
+- **Descripción del PR:** un resumen de las fallas encontradas y cómo se solucionaron (tabla «Falla | Cómo se solucionó»), lo que se comprobó y qué revisar en la vista previa. Si el PR no corrige fallas, un resumen corto de qué cambia y por qué.
+- **Mensajes de commit:** primera línea con la versión y lo que se arregla o cambia; si hace falta, un cuerpo corto con la falla y su solución.
+- **Nunca** pongas en un commit ni en un PR las preguntas o mensajes de Carol ni comandos (p. ej. `node tools/validar.mjs`): se escribe «validación sin errores».
+- Termina con las líneas de atribución que pida la sesión.
+
 ## La app
 
 - En vivo: https://carkovskismind.github.io/Russo-Study/ (GitHub Pages, rama `main`, raíz).
