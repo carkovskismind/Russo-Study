@@ -2,33 +2,34 @@
   "basicas": {
     "titulo": "Кто? Что? y э́то (sin verbo «ser»)",
     "puntos": [
-      "кто pregunta por personas y animales; что, por cosas.",
-      "э́то = «esto es / es». En presente el ruso no usa el verbo «ser»: Э́то кот.",
-      "не va antes de la palabra que niegas; нет es el «no» de la respuesta."
+      "кто pregunta por personas y animales; что, por cosas: Кто там? Что э́то?",
+      "э́то = «esto, eso, esto es». En presente el ruso no usa «ser» ni «estar»: Э́то здесь = Es aquí.",
+      "не va antes de la palabra que niegas; нет es el «no» de la respuesta: Нет, не здесь.",
+      "а une dos ideas que se oponen: не здесь, а там."
     ],
     "ejemplos": [
       {
-        "ru": "Кто э́то? — Э́то ма́ма.",
-        "fonetica": "kto E-ta? — E-ta MA-ma",
-        "es": "¿Quién es? — Es mamá."
+        "ru": "Кто там?",
+        "fonetica": "kto tam?",
+        "es": "¿Quién está allí?"
       },
       {
-        "ru": "Что э́то? — Э́то ка́рта.",
-        "fonetica": "shto E-ta? — E-ta KAR-ta",
-        "es": "¿Qué es esto? — Es un mapa."
+        "ru": "Что э́то?",
+        "fonetica": "shto E-ta?",
+        "es": "¿Qué es esto?"
       },
       {
-        "ru": "Нет, э́то не кот, э́то соба́ка.",
-        "fonetica": "niet, E-ta nie kot, E-ta sa-BA-ka",
-        "es": "No, no es un gato, es un perro."
+        "ru": "Э́то здесь? — Да, здесь.",
+        "fonetica": "E-ta zdies'? — da, zdies'",
+        "es": "¿Es aquí? — Sí, aquí."
       },
       {
-        "ru": "Где ты? — Я здесь.",
-        "fonetica": "gdie ty? — ia zdies'",
-        "es": "¿Dónde estás? — Estoy aquí."
+        "ru": "Нет, не здесь, а там.",
+        "fonetica": "niet, nie zdies', a tam",
+        "es": "No, no aquí, sino allí."
       }
     ],
-    "ojo": "Para un animal también se pregunta кто: Кто э́то? — Э́то соба́ка."
+    "ojo": "Para un animal también se pregunta кто, no что."
   },
   "escuela": {
     "titulo": "Él, ella, ello: el género",
@@ -67,7 +68,7 @@
       "«Mi» cambia según la palabra: мой брат, моя́ сестра́, моё и́мя, мои́ роди́тели.",
       "Igual твой / твоя́ / твоё / твои́ y наш / на́ша / на́ше / на́ши.",
       "его́ (de él), её (de ella) e их (de ellos) nunca cambian.",
-      "Plurales especiales: брат → бра́тья, сестра́ → сёстры, ребёнок → де́ти, челове́к → лю́ди."
+      "Algunas palabras tienen otra palabra para «varios»: ребёнок → де́ти, челове́к → лю́ди."
     ],
     "ejemplos": [
       {
@@ -76,9 +77,9 @@
         "es": "Esta es mi mamá."
       },
       {
-        "ru": "Её зову́т Ле́на.",
-        "fonetica": "ie-IO za-VUT LIE-na",
-        "es": "Ella se llama Lena."
+        "ru": "Э́то её па́па.",
+        "fonetica": "E-ta ie-IO PA-pa",
+        "es": "Este es su papá (de ella)."
       },
       {
         "ru": "Э́то мои́ роди́тели.",
@@ -94,11 +95,11 @@
     "ojo": "его́ y её no cambian con la cosa: его́ брат, его́ сестра́, его́ де́ти."
   },
   "saludos": {
-    "titulo": "¿Tú o usted? ты y вы",
+    "titulo": "¿Tú o usted? Dos formas de saludar",
     "puntos": [
-      "вы sirve para una persona con respeto (usted) y para varias personas.",
-      "ты es para amigos, familia y niños.",
+      "En ruso hay dos formas de hablarle a alguien: de usted (con respeto, o a varias personas) y de tú (amigos, familia y niños).",
       "Por eso hay dos «hola»: здра́вствуйте (usted o varios) y здра́вствуй o приве́т (tú).",
+      "Para despedirte: до свида́ния sirve con todos; пока́ es solo de tú. Para disculparte: извини́те (usted) · извини́ (tú).",
       "El nombre: Как вас зову́т? (usted) · Как тебя́ зову́т? (tú) · Меня́ зову́т…"
     ],
     "ejemplos": [
@@ -113,14 +114,14 @@
         "es": "¡Hola! ¿Cómo te llamas?"
       },
       {
-        "ru": "Меня́ зову́т Ка́тя.",
-        "fonetica": "mie-NIA za-VUT KA-tia",
-        "es": "Me llamo Katia."
-      },
-      {
         "ru": "Извини́те, пожа́луйста.",
         "fonetica": "iz-vi-NI-tie, pa-ZHA-lus-ta",
         "es": "Disculpe, por favor."
+      },
+      {
+        "ru": "Пока́! До за́втра!",
+        "fonetica": "pa-KA! da ZAF-tra",
+        "es": "¡Bye! ¡Hasta mañana!"
       }
     ],
     "ojo": "приве́т con tu maestra suena demasiado familiar; con ella usa здра́вствуйте."
@@ -131,7 +132,7 @@
       "Para decir tu profesión no hace falta verbo: Я инжене́р.",
       "Muchas tienen pareja: студе́нт / студе́нтка, официа́нт / официа́нтка.",
       "Otras sirven igual para hombre y mujer: врач, инжене́р, архите́ктор.",
-      "El lugar: Я рабо́таю в больни́це / на заво́де."
+      "Para preguntar: Кто он? — Он врач. · Где вы рабо́таете?"
     ],
     "ejemplos": [
       {
@@ -150,9 +151,9 @@
         "es": "¿Dónde trabaja usted?"
       },
       {
-        "ru": "Она́ рабо́тает в шко́ле.",
-        "fonetica": "a-NA ra-BO-ta-iet f SHKO-lie",
-        "es": "Ella trabaja en una escuela."
+        "ru": "Где ты рабо́таешь? — Я рабо́таю здесь.",
+        "fonetica": "gdie ty ra-BO-ta-iesh? — ia ra-BO-ta-iu zdies'",
+        "es": "¿Dónde trabajas? — Trabajo aquí."
       }
     ],
     "ojo": "врач no cambia para mujer: Моя́ ма́ма — врач."
@@ -160,10 +161,10 @@
   "animales": {
     "titulo": "Los animales son «кто»",
     "puntos": [
-      "Para los animales se pregunta кто, igual que para las personas.",
-      "Plural normal con -ы / -и: соба́ки, пти́цы, ры́бы.",
-      "Las crías en -ёнок cambian a -я́та: котёнок → котя́та, цыплёнок → цыпля́та.",
-      "Algunas palabras no cambian nunca: кенгуру́."
+      "Para los animales se pregunta кто, igual que para las personas: Кто э́то? — Э́то слон.",
+      "El final dice si es он, она́ u оно́: кот, волк → он; ко́шка, пти́ца, ры́ба → она́; живо́тное → оно́.",
+      "ло́шадь termina en -ь y es она́: mira su tarjeta.",
+      "кот es el gato macho; ко́шка es la gata, pero también se usa para cualquier gato."
     ],
     "ejemplos": [
       {
@@ -172,22 +173,22 @@
         "es": "¿Quién es? — Es una gata."
       },
       {
-        "ru": "У меня́ есть соба́ка.",
-        "fonetica": "u mie-NIA iest' sa-BA-ka",
-        "es": "Tengo un perro."
+        "ru": "Где соба́ка? — Вот она́.",
+        "fonetica": "gdie sa-BA-ka? — vot a-NA",
+        "es": "¿Dónde está el perro? — Aquí está."
       },
       {
-        "ru": "Мой кот бе́лый.",
-        "fonetica": "moi kot BIE-lyi",
-        "es": "Mi gato es blanco."
+        "ru": "Где кот? — Он там.",
+        "fonetica": "gdie kot? — on tam",
+        "es": "¿Dónde está el gato? — Está allá."
       },
       {
-        "ru": "Э́то мои́ котя́та.",
-        "fonetica": "E-ta ma-I ka-TIA-ta",
-        "es": "Estos son mis gatitos."
+        "ru": "Э́то не волк, э́то соба́ка.",
+        "fonetica": "E-ta nie volk, E-ta sa-BA-ka",
+        "es": "No es un lobo, es un perro."
       }
     ],
-    "ojo": "соба́ка es femenina aunque sea un perro macho: моя́ соба́ка."
+    "ojo": "соба́ка es она́ aunque sea un perro macho: Где соба́ка? — Вот она́."
   },
   "casa": {
     "titulo": "¿Dónde está? в / на + -е",
@@ -327,12 +328,12 @@
     "ojo": "Se dice в лесу́, no «в ле́се»."
   },
   "numeros": {
-    "titulo": "Números con palabras",
+    "titulo": "Números del 0 al 10",
     "puntos": [
-      "оди́н copia el género, como мой: оди́н брат, одна́ сестра́, одно́ и́мя.",
-      "два va con он y оно́; две, con она́: два бра́та, две сестры́.",
-      "Después de 2, 3 y 4 la palabra cambia su final: él / ello + -а (два бра́та); ella: -а → -ы, o -и después de к, г, х (две сестры́, три ко́шки).",
-      "De 5 en adelante cambia otra vez: пять лет, пять челове́к. Lo verás con calma en su parada."
+      "Para el teléfono, los números se dicen uno por uno: Мой но́мер — во́семь пять три…",
+      "оди́н y два son para palabras de он (y два también para оно́). Para она́ se dice одна́ y две.",
+      "Del 3 al 10 los números no cambian.",
+      "Después de 2, 3 y 4 la palabra que sigue cambia su final. Lo verás con calma en su parada."
     ],
     "ejemplos": [
       {
@@ -341,17 +342,17 @@
         "es": "Mi número es ocho, cinco, tres."
       },
       {
-        "ru": "У меня́ оди́н брат и одна́ сестра́.",
-        "fonetica": "u mie-NIA a-DIN brat i ad-NA sies-TRA",
-        "es": "Tengo un hermano y una hermana."
+        "ru": "У меня́ оди́н брат.",
+        "fonetica": "u mie-NIA a-DIN brat",
+        "es": "Tengo un hermano."
       },
       {
-        "ru": "У меня́ два бра́та.",
-        "fonetica": "u mie-NIA dva BRA-ta",
-        "es": "Tengo dos hermanos."
+        "ru": "У тебя́ есть но́мер? — Да, есть.",
+        "fonetica": "u tie-BIA iest' NO-mier? — da, iest'",
+        "es": "¿Tienes número (de teléfono)? — Sí, tengo."
       }
     ],
-    "ojo": "«Dos hermanas» es две сестры́: con palabras de она́ va две, no два."
+    "ojo": "оди́н es para он: оди́н брат. Con она́ es одна́: одна́ сестра́."
   },
   "colores": {
     "titulo": "Los colores cambian como adjetivos",
@@ -388,20 +389,21 @@
   "adjetivos": {
     "titulo": "¿Cómo es? Adjetivos",
     "puntos": [
-      "El adjetivo copia el género: но́вый дом, но́вая кварти́ра, но́вое зда́ние, но́вые сту́лья.",
-      "Finales: -ый / -ий / -ой (m), -ая / -яя (f), -ое / -ее (n), -ые / -ие (pl).",
-      "Las formas en -о (краси́во, интере́сно, хорошо́) dicen cómo es una situación o cómo se hace algo."
+      "Las palabras que dicen cómo es alguien o algo terminan en -ый, -ий u -ой: но́вый, хоро́ший, большо́й.",
+      "Van antes de la palabra (большо́й слон) o después, sin «es»: Слон большо́й.",
+      "Por ahora úsalas con palabras de он (кот, брат, врач). Con она́ y оно́ cambian el final; eso llega en el Módulo 2.",
+      "Las formas en -о (краси́во, интере́сно, хорошо́) dicen cómo se hace algo o cómo está todo."
     ],
     "ejemplos": [
       {
-        "ru": "Э́то большо́й дом.",
-        "fonetica": "E-ta bal'-SHOI dom",
-        "es": "Es una casa grande."
+        "ru": "Э́то большо́й слон.",
+        "fonetica": "E-ta bal'-SHOI slon",
+        "es": "Es un elefante grande."
       },
       {
-        "ru": "Моя́ ко́мната ма́ленькая.",
-        "fonetica": "ma-IA KOM-na-ta MA-lien'-ka-ia",
-        "es": "Mi cuarto es pequeño."
+        "ru": "Мой де́душка ста́рый, а брат молодо́й.",
+        "fonetica": "moi DIE-dush-ka STA-ryi, a brat ma-la-DOI",
+        "es": "Mi abuelito es viejo, y mi hermano es joven."
       },
       {
         "ru": "Как интере́сно!",
@@ -409,41 +411,36 @@
         "es": "¡Qué interesante!"
       },
       {
-        "ru": "Он хорошо́ говори́т по-ру́сски.",
-        "fonetica": "on ja-ra-SHO ga-va-RIT pa-RUS-ki",
-        "es": "Él habla bien ruso."
+        "ru": "Он хорошо́ рабо́тает.",
+        "fonetica": "on ja-ra-SHO ra-BO-ta-iet",
+        "es": "Él trabaja bien."
       }
     ],
     "ojo": "хоро́ший (bueno) describe a alguien o algo; хорошо́ (bien), cómo se hace: хоро́ший врач, хорошо́ рабо́тает."
   },
   "verbos": {
-    "titulo": "Verbos: ahora y antes",
+    "titulo": "Verbos: el final cambia según quién",
     "puntos": [
-      "Presente de рабо́тать: я рабо́таю, ты рабо́таешь, он рабо́тает, мы рабо́таем, вы рабо́таете, они́ рабо́тают.",
-      "Otros llevan -и-: говори́ть → я говорю́, ты говори́шь, они́ говоря́т.",
-      "Pasado: quita -ть y pon -л (él), -ла (ella), -ло (ello), -ли (varios): рабо́тал, рабо́тала, рабо́тали.",
+      "En la tarjeta ves el verbo como en el diccionario, terminado en -ть: рабо́тать, знать, люби́ть.",
+      "Al usarlo, el final cambia según quién lo hace: я рабо́таю, ты рабо́таешь… La nota de cada tarjeta te da sus formas.",
+      "люби́ть cambia un poco con я: я люблю́ (con л), pero ты лю́бишь.",
       "не va justo antes del verbo: Я не зна́ю."
     ],
     "ejemplos": [
       {
-        "ru": "Я живу́ в Ме́ксике.",
-        "fonetica": "ia zhy-VU v MIE-ksi-kie",
-        "es": "Vivo en México."
+        "ru": "Я рабо́таю здесь.",
+        "fonetica": "ia ra-BO-ta-iu zdies'",
+        "es": "Trabajo aquí."
       },
       {
-        "ru": "Ты говори́шь по-ру́сски?",
-        "fonetica": "ty ga-va-RISH pa-RUS-ki",
-        "es": "¿Hablas ruso?"
+        "ru": "Ты зна́ешь? — Да, зна́ю.",
+        "fonetica": "ty ZNA-iesh? — da, ZNA-iu",
+        "es": "¿Sabes? — Sí, sé."
       },
       {
-        "ru": "Ра́ньше я рабо́тала в шко́ле.",
-        "fonetica": "RAN'-she ia ra-BO-ta-la f SHKO-lie",
-        "es": "Antes trabajaba en una escuela (mujer)."
-      },
-      {
-        "ru": "Где вы бы́ли? — Я был до́ма.",
-        "fonetica": "gdie vy BY-li? — ia byl DO-ma",
-        "es": "¿Dónde estuvo? — Estuve en casa (hombre)."
+        "ru": "Я люблю́ рабо́тать.",
+        "fonetica": "ia liub-LIU ra-BO-tat'",
+        "es": "Me encanta trabajar."
       },
       {
         "ru": "Я не зна́ю.",
@@ -451,7 +448,7 @@
         "es": "No sé."
       }
     ],
-    "ojo": "El pasado cambia según quién habla: una mujer dice я была́, я рабо́тала; un hombre, я был, я рабо́тал."
+    "ojo": "Después de люблю́ el otro verbo va como en el diccionario: Я люблю́ рабо́тать (no «люблю́ рабо́таю»)."
   },
   "juegos": {
     "titulo": "игра́ть в + juego o deporte",
@@ -799,9 +796,14 @@
         "es": "¿Cuál es su apellido?"
       },
       {
-        "ru": "Я пью ко́фе в кафе́.",
-        "fonetica": "ia piu KO-fie f ka-FE",
-        "es": "Tomo café en la cafetería."
+        "ru": "Я люблю́ ко́фе.",
+        "fonetica": "ia liub-LIU KO-fie",
+        "es": "Me encanta el café."
+      },
+      {
+        "ru": "Где кафе́? — Вот оно́.",
+        "fonetica": "gdie ka-FE? — vot a-NO",
+        "es": "¿Dónde está la cafetería? — Aquí está."
       },
       {
         "ru": "Магази́н там.",
@@ -809,9 +811,9 @@
         "es": "La tienda está allá."
       },
       {
-        "ru": "Сейча́с ра́но.",
-        "fonetica": "sie-CHAS RA-na",
-        "es": "Ahora es temprano."
+        "ru": "О́чень ра́но!",
+        "fonetica": "O-chin' RA-na",
+        "es": "¡Es muy temprano!"
       }
     ],
     "ojo": "фами́лия no es «familia» (esa es семья́): моя́ семья́ = mi familia, моя́ фами́лия = mi apellido."
