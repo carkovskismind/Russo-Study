@@ -206,16 +206,20 @@ function syncHistory(src) {
 
 // Ventana de confirmación: «Quedarme/Seguir» (turquesa) y «Salir» (contorno).
 let dlgOnLeave = null;
+let dlgOnStay = null;
 const dlgOpen = () => !$("#dlg").hidden;
 
-function openDlg(kind) {
+function openDlg(kind, opt) {
   if (dlgOpen()) return;
   const app = kind === "app";
-  $("#dlg-title").textContent = app ? "¿Salir de Ruso de bolsillo?" : "¿Salir del repaso?";
-  $("#dlg-text").textContent = app ? "Tu avance ya está guardado." : "Tu avance de hoy se guarda.";
+  const resume = kind === "resume"; // 4.2.2: «¿Seguir donde ibas?» al volver a un ejercicio a medias
+  $("#dlg-title").textContent = resume ? "¿Seguir donde ibas?" : app ? "¿Salir de Ruso de bolsillo?" : "¿Salir del repaso?";
+  if (resume) $("#dlg-text").innerHTML = opt.html;
+  else $("#dlg-text").textContent = app ? "Tu avance ya está guardado." : "Tu avance de hoy se guarda.";
   $("#dlg-stay").textContent = app ? "Quedarme" : "Seguir";
-  $("#dlg-leave").textContent = "Salir";
-  dlgOnLeave = app ? exitApp : closeSession;
+  $("#dlg-leave").textContent = resume ? "Empezar de nuevo" : "Salir";
+  dlgOnStay = resume ? opt.onStay : null;
+  dlgOnLeave = resume ? opt.onFresh : app ? exitApp : closeSession;
   dlgReturn = document.activeElement;
   $("#dlg").hidden = false;
   for (const el of $$(".view, #nav, #sheet")) el.inert = true;
@@ -228,6 +232,28 @@ function closeDlg() {
   $("#dlg").hidden = true;
   for (const el of $$(".view, #nav, #sheet")) el.inert = false;
   if (dlgReturn && document.contains(dlgReturn) && !dlgReturn.closest("[hidden]")) dlgReturn.focus();
+}
+
+// ---------- Ejercicios a medias (4.2.2) ----------
+// Un ejercicio que se deja a la mitad se guarda solo (solo de hoy, en este dispositivo).
+// Al volver a entrar sale «¿Seguir donde ibas?»; al terminar o «Empezar de nuevo» se borra.
+const nN = (n) => `<span class="num">${n}</span>`;
+const plu = (n, one, many) => (n === 1 ? one : many);
+function textoAvance(pos, tot, ok, bad, pre = "") {
+  return `${pre}Vas en la ${nN(pos)} de ${nN(tot)} (${nN(ok)} ${plu(ok, "acierto", "aciertos")}, ${nN(bad)} ${plu(bad, "error", "errores")}).`;
+}
+
+// Si hay algo guardado y se puede retomar, pregunta; si no, empieza de cero.
+// textOf(guardado) devuelve el aviso (HTML) o "" si ya no sirve; seguir(guardado) devuelve false si no pudo retomar.
+function conParcial(tipo, id, textOf, seguir, nuevo) {
+  const sv = store.parcialGet(tipo, id);
+  const html = sv ? textOf(sv) : "";
+  if (!html) {
+    if (sv) store.parcialDel(tipo, id);
+    return nuevo();
+  }
+  const fresh = () => { store.parcialDel(tipo, id); nuevo(); };
+  openDlg("resume", { html, onStay: () => { if (seguir(sv) === false) fresh(); }, onFresh: fresh });
 }
 
 // Salir de la app de verdad: se retrocede por encima de las dos entradas de la app
@@ -1202,11 +1228,18 @@ function audioWords(deck) {
 }
 
 function startAudio(deck) {
+  const id = unitKeyOf(deck);
+  const back = state.view === "tema" ? "tema" : state.view;
+  conParcial("audio", id, sesionTexto, (sv) => sesionSeguir(sv, "audio", id, "Solo audio", true, back, { audio: true }), () => startAudioFresh(deck));
+}
+
+function startAudioFresh(deck) {
   const words = shuffle(audioWords(deck)).slice(0, 20);
   if (!words.length) return toast("Primero memoriza algunas palabras de este tema.");
   const queue = words.map((card) => ({ card, key: `${card.id}|audio`, dir: "audio", phase: "quiz", failed: false, hint: 0 }));
   startSession(queue, "Solo audio", true, state.view === "tema" ? "tema" : state.view);
   state.session.audio = true;
+  state.session.pk = { tipo: "audio", id: unitKeyOf(deck) };
 }
 
 function dudasFor(deck) {
@@ -1645,6 +1678,10 @@ function newLeftToday() {
 }
 
 function startToday() {
+  conParcial("hoy", "hoy", sesionTexto, (sv) => sesionSeguir(sv, "hoy", "hoy", "Práctica de hoy", false, "home", { daily: true }), startTodayFresh);
+}
+
+function startTodayFresh() {
   const plan = dailyPlan();
   const queue = buildQueue(dailyDecks(), plan.n, plan.r);
   // Palabras elegidas a mano («+ Hoy»), dentro del tope del día; las que no caben salen mañana.
@@ -1666,20 +1703,85 @@ function startToday() {
   const libre = Math.max(0, (store.settings.dayMax || 30) - store.newToday(dateKey(Date.now())) - store.revToday(dateKey(Date.now())) - queue.length);
   for (const it of eligePendientes(Math.min(ELIGE_POR_DIA, libre))) queue.splice(Math.floor(Math.random() * (queue.length + 1)), 0, it);
   startSession(queue, "Práctica de hoy", false, "home");
-  if (state.session && state.session.queue === queue) state.session.daily = true;
+  if (state.session && state.session.queue === queue) { state.session.daily = true; state.session.pk = { tipo: "hoy", id: "hoy" }; }
 }
 
 function startDeck(deck) {
-  // La práctica por tema respeta lo que queda del tope de nuevas del día.
-  const queue = buildQueue([deck], Math.min(NEW_PER_DECK_SESSION, newLeftToday()));
-  startSession(queue, deck.title, false, state.view === "tema" ? "tema" : state.view);
+  const id = unitKeyOf(deck);
+  const back = state.view === "tema" ? "tema" : state.view;
+  conParcial("palabras", id, sesionTexto, (sv) => sesionSeguir(sv, "palabras", id, deck.title, false, back), () => {
+    // La práctica por tema respeta lo que queda del tope de nuevas del día.
+    const queue = buildQueue([deck], Math.min(NEW_PER_DECK_SESSION, newLeftToday()));
+    startSession(queue, deck.title, false, back);
+    if (state.session && state.session.queue === queue) state.session.pk = { tipo: "palabras", id };
+  });
 }
 
 function startCram(deck) {
+  const id = unitKeyOf(deck);
+  const back = state.view === "tema" ? "tema" : state.view;
+  conParcial("cram", id, sesionTexto, (sv) => sesionSeguir(sv, "cram", id, "Repaso rápido", true, back), () => startCramFresh(deck, id));
+}
+
+function startCramFresh(deck, id) {
   let items = itemsFor(deck).filter((it) => store.card(it.key));
   if (!items.length) items = itemsFor(deck);
   items = shuffle(items).slice(0, 40).map((it) => ({ ...it, phase: "quiz", failed: false, hint: 0 }));
   startSession(items, "Repaso rápido", true, state.view === "tema" ? "tema" : state.view);
+  if (state.session && state.session.queue === items) state.session.pk = { tipo: "cram", id };
+}
+
+// 4.2.2 · Guardado de la práctica de palabras y de «Elige la forma».
+function itemGuardar(x) {
+  if (x.dir === "elige") return { e: x.elige.id, pa: x.parada.id, f: +!!x.failed, dc: +!!x.dayCounted };
+  return { c: x.card.id, dk: x.card.deckId, k: x.key, d: x.dir, p: x.phase, f: +!!x.failed, pk: +!!x.picked, dc: +!!x.dayCounted };
+}
+
+function itemRestaurar(o) {
+  if (!o) return null;
+  if (o.e) {
+    const p = paradaData(o.pa);
+    const e = p && (p.elige || []).find((x) => x.id === o.e);
+    if (!e) return null;
+    const it = eligeItem(p, e);
+    it.failed = !!o.f;
+    it.dayCounted = !!o.dc;
+    return it;
+  }
+  const deck = state.deckById.get(o.dk);
+  let card = deck && deck.cards.find((c) => c.id === o.c);
+  if (!card) for (const d of state.decks) { card = d.cards.find((c) => c.id === o.c); if (card) break; }
+  if (!card || !o.k) return null;
+  return { card, key: o.k, dir: o.d, phase: o.p, failed: !!o.f, hint: 0, picked: !!o.pk, dayCounted: !!o.dc };
+}
+
+// Se guarda como quedará la fila al pasar a la siguiente: sin la que acabas de contestar
+// (o al final, si la fallaste). Si ya no queda nada, se borra.
+function sesionGuardar() {
+  const s = state.session;
+  if (!s || !s.pk) return;
+  const rest = s.queue.slice(1);
+  if (s.requeue) rest.push(s.queue[0]);
+  if (!rest.length || s.ok + s.bad === 0) return store.parcialDel(s.pk.tipo, s.pk.id);
+  const sv = { q: rest.map(itemGuardar), ok: s.ok, bad: s.bad, res: s.resolved + (s.requeue ? 0 : 1) };
+  if (s.firstBad) sv.fb = s.firstBad.map((e) => e.id);
+  store.parcialSet(s.pk.tipo, s.pk.id, sv);
+}
+
+function sesionTexto(sv) {
+  if (!Array.isArray(sv.q) || !sv.q.length || !Number.isFinite(sv.res)) return "";
+  return textoAvance(sv.res + 1, sv.res + sv.q.length, sv.ok | 0, sv.bad | 0);
+}
+
+function sesionSeguir(sv, tipo, id, title, cram, returnTo, extra) {
+  const queue = sv.q.map(itemRestaurar).filter(Boolean);
+  if (!queue.length) return false;
+  startSession(queue, title, cram, returnTo);
+  const s = state.session;
+  if (!s || s.queue !== queue) return;
+  Object.assign(s, { ok: sv.ok | 0, bad: sv.bad | 0, resolved: sv.res | 0, pk: { tipo, id } }, extra || {});
+  updateCounters();
+  return s;
 }
 
 function startSession(queue, title, cram, returnTo) {
@@ -2205,8 +2307,13 @@ function selfCheck(knew) {
   next();
 }
 
-// Guarda el resultado de la tarjeta actual.
+// Guarda el resultado de la tarjeta actual (y el ejercicio a medias).
 function settle(ok) {
+  settleCore(ok);
+  sesionGuardar();
+}
+
+function settleCore(ok) {
   const s = state.session;
   const it = s.queue[0];
   const now = Date.now();
@@ -2269,6 +2376,7 @@ function next() {
 
 function finishSession() {
   const s = state.session;
+  if (s && s.pk) store.parcialDel(s.pk.tipo, s.pk.id);
   if (s && s.parada) return finishElige(s);
   if (s && s.daily) {
     state.session = null;
@@ -2338,6 +2446,23 @@ const AUTO_MS = 1000;
 function startFrases(deck, first) {
   const all = frasesOf(deck, inRutaView());
   if (!all.length) return;
+  // Con una frase pedida («¡Lo lograste!») no se ofrece seguir lo guardado.
+  if (Number.isInteger(first)) return startFrasesFresh(deck, first, all);
+  const id = unitKeyOf(deck);
+  conParcial("frases", id, (sv) => {
+    if (!Array.isArray(sv.q) || !sv.q.length || !Number.isFinite(sv.res)) return "";
+    return textoAvance(sv.res + 1, sv.res + sv.q.length, sv.ok | 0, sv.bad | 0);
+  }, (sv) => {
+    const byId = new Map(all.map((f) => [f.id, f]));
+    const queue = sv.q.map((x) => (byId.has(x.i) ? { f: byId.get(x.i), failed: !!x.f } : null)).filter(Boolean);
+    if (!queue.length) return false;
+    state.fr = { deck, queue, ok: sv.ok | 0, bad: sv.bad | 0, resolved: sv.res | 0, results: Array.isArray(sv.rs) ? sv.rs : [], total: sv.tot || queue.length, returnTo: state.view === "tema" ? "tema" : state.view, timer: null };
+    show("frase");
+    newFraseItem();
+  }, () => startFrasesFresh(deck, first, all));
+}
+
+function startFrasesFresh(deck, first, all) {
   let list = shuffle(all);
   // Desde «¡Lo lograste!»: primero la frase que usa tus palabras de hoy (índice en la lista completa).
   const want = Number.isInteger(first) ? ejRaw(deck).frases[first] : null;
@@ -2732,8 +2857,12 @@ function finishFraseItem() {
       fr.queue.push(item);
     } else fr.results[fr.resolved++] = false;
   }
-  if (fr.queue.length) newFraseItem();
-  else {
+  const pid = unitKeyOf(fr.deck);
+  if (fr.queue.length) {
+    store.parcialSet("frases", pid, { q: fr.queue.map((x) => ({ i: x.f.id, f: +!!x.failed })), ok: fr.ok, bad: fr.bad, res: fr.resolved, rs: fr.results, tot: fr.total });
+    newFraseItem();
+  } else {
+    store.parcialDel("frases", pid);
     $("#done-title").textContent = "Frases terminadas";
     $("#done-summary").textContent = `${fr.ok} frases bien y ${fr.bad} para repasar. Las que fallaste volverán con una ficha de más para despistar.`;
     state.doneReturn = fr.returnTo;
@@ -2896,6 +3025,43 @@ function backFrom(where) {
 function startDialogo(deck, first) {
   const list = ejOf(deck, inRutaView()).dialogos;
   if (!list.length) return;
+  if (Number.isInteger(first)) return startDialogoFresh(deck, first, list);
+  const id = unitKeyOf(deck);
+  conParcial("dialogo", id, (sv) => {
+    const di = list.findIndex((d) => d.id === sv.did);
+    if (di < 0 || !Array.isArray(sv.shown)) return "";
+    const ok = sv.ok | 0, bad = sv.bad | 0;
+    return `Vas en el diálogo ${nN(di + 1)} de ${nN(list.length)} (${nN(ok)} ${plu(ok, "acierto", "aciertos")}, ${nN(bad)} ${plu(bad, "error", "errores")}).`;
+  }, (sv) => {
+    const di = list.findIndex((d) => d.id === sv.did);
+    const d = list[di];
+    if (!d || sv.mi > d.mensajes.length) return false;
+    const shown = [];
+    for (let k = 0; k < sv.mi; k++) {
+      const x = sv.shown[k], m = d.mensajes[k];
+      if (!x || !m) return false;
+      shown.push(x.mine ? { m: { ...m, ru: x.ru, fonetica: x.fonetica }, mine: true, late: !!x.late } : { m, mine: false });
+    }
+    state.dl = { deck, list, di, ok: sv.ok | 0, bad: sv.bad | 0, es: !!sv.es, timer: null, returnTo: state.view === "tema" ? "tema" : state.view };
+    $("#dialogo-es").setAttribute("aria-pressed", String(!!sv.es));
+    show("dialogo");
+    state.dl.cur = { d, mi: sv.mi, shown, wait: null, choice: null, fail: !!sv.fail, typing: false, finished: false, hold: !!sv.hold };
+    stepDialog();
+  }, () => startDialogoFresh(deck, first, list));
+}
+
+function dialogoGuardar() {
+  const dl = state.dl;
+  if (!dl || !dl.cur) return;
+  const c = dl.cur;
+  if (!(dl.di > 0 || c.shown.some((b) => b.mine))) return;
+  store.parcialSet("dialogo", unitKeyOf(dl.deck), {
+    did: c.d.id, ok: dl.ok, bad: dl.bad, es: dl.es, mi: c.mi, fail: c.fail, hold: !!c.hold,
+    shown: c.shown.map((b) => (b.mine ? { mine: 1, late: +!!b.late, ru: b.m.ru, fonetica: b.m.fonetica } : { mine: 0 }))
+  });
+}
+
+function startDialogoFresh(deck, first, list) {
   const want = Number.isInteger(first) ? ejRaw(deck).dialogos[first] : null;
   const di = want && list.includes(want) ? list.indexOf(want) : 0;
   state.dl = { deck, list, di, ok: 0, bad: 0, es: false, timer: null, returnTo: state.view === "tema" ? "tema" : state.view };
@@ -2967,6 +3133,7 @@ function bubbleHtml(b, dl, first) {
 function renderDialogo() {
   const dl = state.dl;
   const c = dl.cur;
+  dialogoGuardar();
   const other = (c.d.mensajes.find((m) => m.de !== "yo") || {}).de || "";
   $("#dialogo-sub").innerHTML = `${esc(other)} te escribe · <span class="num">${dl.di + 1}</span> de <span class="num">${dl.list.length}</span>`;
   const bubbles = c.shown.map((b, i) => bubbleHtml(b, dl, !b.mine && (i === 0 || c.shown[i - 1].mine))).join("");
@@ -3061,6 +3228,7 @@ function dialogoClick(e) {
     dl.di++;
     return beginDialog();
   }
+  store.parcialDel("dialogo", unitKeyOf(dl.deck));
   finishEjer("Diálogos terminados", `${dl.ok} de ${dl.list.length} sin errores. Los que tuvieron errores los puedes repetir cuando quieras.`, dl.returnTo);
   state.dl = null;
 }
@@ -3185,6 +3353,41 @@ function cajaHasEs(e) {
 function startCajas(deck, first) {
   const list = ejOf(deck, inRutaView()).cajas;
   if (!list.length) return;
+  if (Number.isInteger(first)) return startCajasFresh(deck, first, list);
+  const id = unitKeyOf(deck);
+  conParcial("cajas", id, (sv) => {
+    const e = list[sv.ci];
+    if (!e || e.id !== sv.eid || !Array.isArray(sv.bank) || !Array.isArray(sv.boxes)) return "";
+    return textoAvance(Math.min(sv.done + 1, e.items.length), e.items.length, sv.done | 0, sv.errs | 0, list.length > 1 ? `Ejercicio ${nN(sv.ci + 1)} de ${nN(list.length)}. ` : "");
+  }, (sv) => {
+    const e = list[sv.ci];
+    const okIdx = (a) => a.every((i) => Number.isInteger(i) && e.items[i]);
+    if (!e || !okIdx(sv.bank) || !sv.boxes.every(okIdx) || sv.boxes.length !== e.cajas.length) return false;
+    state.cj = { deck, list, ci: sv.ci, ok: sv.ok | 0, bad: sv.bad | 0, stage: "intro", mode: sv.mode, returnTo: state.view === "tema" ? "tema" : state.view };
+    show("cajas");
+    beginCaja(sv.lang);
+    const c = state.cj.cur;
+    const it = (i) => ({ ...e.items[i], i });
+    c.bank = sv.bank.map(it);
+    c.boxes = sv.boxes.map((b) => b.map(it));
+    c.done = sv.done | 0;
+    c.fail = !!sv.fail;
+    c.errs = sv.errs | 0;
+    renderCajas();
+  }, () => startCajasFresh(deck, first, list));
+}
+
+function cajasGuardar() {
+  const cj = state.cj;
+  const c = cj && cj.cur;
+  if (!c || cj.stage !== "play" || !(c.done > 0 || cj.ok + cj.bad > 0)) return;
+  store.parcialSet("cajas", unitKeyOf(cj.deck), {
+    ci: cj.ci, eid: c.e.id, ok: cj.ok, bad: cj.bad, mode: cj.mode, lang: c.lang, done: c.done, fail: c.fail, errs: c.errs || 0,
+    bank: c.bank.map((x) => x.i), boxes: c.boxes.map((b) => b.map((x) => x.i))
+  });
+}
+
+function startCajasFresh(deck, first, list) {
   // Empieza en el primer ejercicio que aún no terminas: el avance se queda guardado.
   let ci = list.findIndex((x) => { const r = store.ejer(x.id); return !(r && r.ok > 0); });
   if (ci < 0) ci = 0;
@@ -3241,6 +3444,7 @@ function beginCaja(lang) {
     good: null,
     help: -1,
     fail: false,
+    errs: 0,
     done: 0
   };
   renderCajas();
@@ -3270,6 +3474,7 @@ function cajaWord(c, it) {
 function renderCajas() {
   const cj = state.cj;
   const c = cj.cur;
+  cajasGuardar();
   const e = c.e;
   const total = e.items.length;
   const hasEs = cajaHasHelp(e);
@@ -3366,6 +3571,7 @@ function cajasClick(e) {
     } else {
       // La palabra regresa a «Faltan»: se explica por qué y lo intentas de nuevo.
       c.fail = true;
+      c.errs = (c.errs || 0) + 1;
       c.err = { item, k };
       c.good = null;
       playSound(false);
@@ -3384,6 +3590,7 @@ function cajasClick(e) {
     cj.ci++;
     return beginCaja(cj.mode);
   }
+  store.parcialDel("cajas", unitKeyOf(cj.deck));
   finishEjer("Cajas terminadas", `${cj.ok} de ${cj.ok + cj.bad} rondas sin errores. Tu avance se queda guardado; repítelas cuando quieras.`, cj.returnTo);
   state.cj = null;
 }
@@ -4450,12 +4657,21 @@ function eligeItem(p, e) {
 function startElige(id) {
   const p = paradaData(id);
   if (!p || !(p.elige || []).length) return;
-  const queue = p.elige.map((e) => eligeItem(p, e));
   const g = state.gram;
-  startSession(queue, "Elige la forma", false, g && g.from ? g.from : "home");
-  state.session.parada = id;
-  state.session.gramFrom = g ? g.from : "home";
-  state.session.firstBad = [];
+  const from = g && g.from ? g.from : "home";
+  const extra = { parada: id, gramFrom: g ? g.from : "home" };
+  conParcial("elige", id, sesionTexto, (sv) => {
+    const s = sesionSeguir(sv, "elige", id, "Elige la forma", false, from, extra);
+    if (!s) return false;
+    s.firstBad = (sv.fb || []).map((x) => p.elige.find((e) => e.id === x)).filter(Boolean);
+  }, () => {
+    const queue = p.elige.map((e) => eligeItem(p, e));
+    startSession(queue, "Elige la forma", false, from);
+    state.session.parada = id;
+    state.session.gramFrom = g ? g.from : "home";
+    state.session.firstBad = [];
+    state.session.pk = { tipo: "elige", id };
+  });
 }
 
 // Lo que fallaste al primer intento en días anteriores (para la práctica del día).
@@ -4983,7 +5199,7 @@ function bind() {
     const em = $("#login-email");
     if (em) em.focus();
   });
-  $("#dlg-stay").addEventListener("click", closeDlg);
+  $("#dlg-stay").addEventListener("click", () => { const f = dlgOnStay; dlgOnStay = null; closeDlg(); if (f) f(); });
   $("#dlg-leave").addEventListener("click", () => { const f = dlgOnLeave; closeDlg(); if (f) f(); });
   document.addEventListener("keydown", (e) => {
     if (!dlgOpen()) return;
@@ -5225,6 +5441,7 @@ async function main() {
   openShortcut();
   // Pantalla de carga: se quita cuando la primera pantalla ya está pintada (mín. 1 s, máx. 8 s)
   requestAnimationFrame(() => requestAnimationFrame(() => { if (window.hideSplash) window.hideSplash(); }));
+  store.parcialPurge(); // 4.2.2: borra lo guardado a medias de otros días
   store.init().then(renderSync).catch((e) => console.warn(e));
 
   startVisitCounter();
