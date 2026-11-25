@@ -2482,7 +2482,7 @@
    "ru": "ка́рие глаза́",
    "puntos": [
     "Si la palabra va en plural, el adjetivo también: ка́рие глаза́, дли́нные во́лосы.",
-    "во́лосы y глаза́ son plurales siempre en ruso, aunque en español digas «el cabello» en singular.",
+    "во́лосы siempre va en plural, aunque en español digas «el cabello» en singular; y como los ojos son dos, se dice глаза́ (un solo ojo sí es глаз).",
     "Al pasar al plural el acento a veces se brinca: глаз → глаза́; pero у́хо → у́ши se queda igual."
    ],
    "ejemplos": [
@@ -2502,7 +2502,7 @@
      "es": "Yo tengo las orejas pequeñas."
     }
    ],
-   "ojo": "ка́рий solo se usa para ojos. Una mesa café es кори́чневая, nunca ка́рая.",
+   "ojo": "ка́рий solo se usa para ojos. Una mesa café es кори́чневый стол, nunca ка́рий стол.",
    "tags": [
     "plural",
     "adjetivo",
@@ -2542,7 +2542,7 @@
     },
     {
      "id": "g-plural-adjetivo-e3",
-     "frase": "Э́то мой глаз, а э́то мои́ ___.",
+     "frase": "Э́то не оди́н глаз, э́то мои́ ___.",
      "base": "глаз",
      "opciones": [
       "глаза́",
@@ -2550,9 +2550,9 @@
       "гла́за"
      ],
      "correcta": "глаза́",
-     "texto": "Э́то мой глаз, а э́то мои́ глаза́.",
-     "fonetica": "E-ta moi glaz, a E-ta ma-I gla-ZA",
-     "es": "Este es mi ojo, y estos son mis ojos.",
+     "texto": "Э́то не оди́н глаз, э́то мои́ глаза́.",
+     "fonetica": "E-ta nie a-DIN glaz, E-ta ma-I gla-ZA",
+     "es": "No es un ojo, son mis ojos.",
      "porque": "El plural de глаз es глаза́, con el acento al final."
     },
     {
@@ -2628,7 +2628,7 @@
      "es": "¿Cómo es él físicamente?"
     }
    ],
-   "ojo": "гость, тесть y шесть solo terminan en -сть: no llevan este sufijo, y гость y тесть son он.",
+   "ojo": "Ojo con гость: se ve igual, pero ahí la о es parte de la raíz (гост-), no el sufijo; гость es он. тесть y шесть terminan en -есть y tampoco llevan el sufijo.",
    "tags": [
     "sustantivo",
     "sufijo",
@@ -2678,7 +2678,7 @@
      "texto": "ва́жный → ва́жность",
      "fonetica": "VAZH-nyi VAZH-nast'",
      "es": "importante → importancia",
-     "porque": "Quitas -ный y pones -ость: ва́жность."
+     "porque": "Quitas la -ый del adjetivo y pones -ость: ва́жный → ва́жность."
     },
     {
      "id": "g-ost-e4",
@@ -2723,7 +2723,7 @@
      "texto": "Гость — э́то он.",
      "fonetica": "gost' E-ta on",
      "es": "«Invitado» es masculino.",
-     "porque": "гость solo termina en -сть: no lleva el sufijo -ость."
+     "porque": "En гость la о es parte de la raíz (гост-), no el sufijo -ость."
     }
    ]
   },
@@ -2849,7 +2849,7 @@
      "texto": "Э́то не рост, э́то высота́ до́ма.",
      "fonetica": "E-ta nie rost, E-ta vy-sa-TA DO-ma",
      "es": "No es estatura, es la altura de la casa.",
-     "porque": "рост es solo de personas; de las cosas se dice высота́."
+     "porque": "De una persona se dice рост; de una cosa, высота́."
     }
    ]
   }

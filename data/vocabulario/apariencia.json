@@ -161,7 +161,7 @@
    "ru": "ру́сый",
    "fonetica": "RU-syi",
    "es": "rubio oscuro, castaño claro",
-   "pista": "Ese color de pelo que no es ni rubio ni castaño.",
+   "pista": "Ese color de pelo clarito, el más común en Rusia.",
    "tag": "Adjetivo",
    "nota": "No existe en español con una sola palabra. Es el pelo más común en Rusia.",
    "ejemplo": {
@@ -357,7 +357,7 @@
    ],
    "validas": [
     "У него́ ка́рие глаза́",
-    "Ка́рие глаза́ у него́"
+    "Глаза́ у него́ ка́рие"
    ],
    "texto": "У него́ ка́рие глаза́.",
    "fonetica": "u nie-VO KA-ri-ie gla-ZA",
@@ -379,7 +379,9 @@
      "него́"
     ],
     [
-     "ка́рие",
+     "ка́рие"
+    ],
+    [
      "глаза́"
     ]
    ],
@@ -437,14 +439,6 @@
      "explica": "У y него́ van juntas: у него́ = él tiene."
     },
     {
-     "tipo": "bloque",
-     "fichas": [
-      "ка́рие",
-      "глаза́"
-     ],
-     "explica": "Van juntas y las dos en plural."
-    },
-    {
      "tipo": "distractor",
      "ficha": "неё",
      "explica": "неё es «de ella»; la idea habla de él: него́."
@@ -461,8 +455,8 @@
      "nota": "Orden neutro: primero de quién hablas, luego cómo son sus ojos."
     },
     {
-     "ru": "Ка́рие глаза́ у него́",
-     "nota": "Empieza por los ojos cafés: suena a contraste, como «los ojos cafés los tiene él»."
+     "ru": "Глаза́ у него́ ка́рие",
+     "nota": "Empieza por los ojos: pone el foco en el color, como «sus ojos son cafés»."
     }
    ]
   },
