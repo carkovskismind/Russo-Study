@@ -1,0 +1,564 @@
+{
+ "id": "cuerpo",
+ "titulo": "El cuerpo",
+ "grupo": "Vocabulario",
+ "descripcion": "Las partes del cuerpo, de la cabeza a los pies. Varias van casi siempre en plural y algunas brincan el acento.",
+ "tarjetas": [
+  {
+   "ru": "те́ло",
+   "fonetica": "TIE-la",
+   "es": "cuerpo",
+   "pista": "Lo que descansa cuando duermes.",
+   "tag": "Neutro · inanim.",
+   "nota": "Plural: тела́. Отдыха́ет на́ше те́ло = descansa nuestro cuerpo."
+  },
+  {
+   "ru": "голова́",
+   "fonetica": "ga-la-VA",
+   "es": "cabeza",
+   "pista": "Arriba de todo, y adentro está el cerebro.",
+   "tag": "Fem. · inanim.",
+   "nota": "Plural: го́ловы (el acento se brinca al principio)."
+  },
+  {
+   "ru": "мозг",
+   "fonetica": "mozg",
+   "es": "cerebro",
+   "pista": "Lo que usas para pensar.",
+   "tag": "Masc. · inanim.",
+   "nota": "Plural: мозги́."
+  },
+  {
+   "ru": "лицо́",
+   "fonetica": "li-TSO",
+   "es": "cara, rostro",
+   "pista": "Lo que ve la gente cuando te saluda.",
+   "tag": "Neutro · inanim.",
+   "nota": "Plural: ли́ца. Ojo: también significa «persona» en lenguaje formal."
+  },
+  {
+   "ru": "лоб",
+   "fonetica": "lob",
+   "es": "frente",
+   "pista": "Entre las cejas y el pelo.",
+   "tag": "Masc. · inanim.",
+   "nota": "Plural: лбы (se cae la о)."
+  },
+  {
+   "ru": "бровь",
+   "fonetica": "brov'",
+   "es": "ceja",
+   "pista": "El pelito que va arriba del ojo.",
+   "tag": "Fem. · inanim.",
+   "nota": "Plural: бро́ви. Termina en -ь y es она́."
+  },
+  {
+   "ru": "глаз",
+   "fonetica": "glaz",
+   "es": "ojo",
+   "pista": "Con esto miras.",
+   "tag": "Masc. · inanim.",
+   "nota": "Plural: глаза́, y el acento se brinca al final."
+  },
+  {
+   "ru": "у́хо",
+   "fonetica": "U-ja",
+   "es": "oreja, oído",
+   "pista": "Con esto escuchas.",
+   "tag": "Neutro · inanim.",
+   "nota": "Plural: у́ши, y aquí el acento NO se mueve."
+  },
+  {
+   "ru": "нос",
+   "fonetica": "nos",
+   "es": "nariz",
+   "pista": "Con esto hueles.",
+   "tag": "Masc. · inanim.",
+   "nota": "Plural: носы́. большо́й нос = nariz grande."
+  },
+  {
+   "ru": "рот",
+   "fonetica": "rot",
+   "es": "boca",
+   "pista": "Para comer y para hablar.",
+   "tag": "Masc. · inanim.",
+   "nota": "Plural: рты (se cae la о)."
+  },
+  {
+   "ru": "губа́",
+   "fonetica": "gu-BA",
+   "es": "labio",
+   "pista": "Los dos bordes de la boca.",
+   "tag": "Fem. · inanim.",
+   "nota": "Plural: гу́бы, y el acento se brinca al principio."
+  },
+  {
+   "ru": "зуб",
+   "fonetica": "zub",
+   "es": "diente",
+   "pista": "Treinta y dos, si tienes suerte.",
+   "tag": "Masc. · inanim.",
+   "nota": "Plural: зу́бы."
+  },
+  {
+   "ru": "язы́к",
+   "fonetica": "ia-ZYK",
+   "es": "lengua",
+   "pista": "Está dentro de la boca y también sirve para hablar.",
+   "tag": "Masc. · inanim.",
+   "nota": "La misma palabra significa «idioma»: ру́сский язы́к = el idioma ruso."
+  },
+  {
+   "ru": "го́рло",
+   "fonetica": "GOR-la",
+   "es": "garganta",
+   "pista": "Lo que duele cuando te resfrías.",
+   "tag": "Neutro · inanim.",
+   "nota": "Plural: го́рла."
+  },
+  {
+   "ru": "ше́я",
+   "fonetica": "SHE-ia",
+   "es": "cuello",
+   "pista": "Une la cabeza con el cuerpo.",
+   "tag": "Fem. · inanim.",
+   "nota": "Plural: ше́и. Después de ш la е suena como «e», no como «ie»."
+  },
+  {
+   "ru": "плечо́",
+   "fonetica": "plie-CHO",
+   "es": "hombro",
+   "pista": "Donde cargas la mochila.",
+   "tag": "Neutro · inanim.",
+   "nota": "Plural: пле́чи, y el acento se brinca al principio."
+  },
+  {
+   "ru": "рука́",
+   "fonetica": "ru-KA",
+   "es": "mano, brazo",
+   "pista": "Con esto agarras las cosas.",
+   "tag": "Fem. · inanim.",
+   "nota": "Una sola palabra para mano y brazo. Plural: ру́ки."
+  },
+  {
+   "ru": "па́лец",
+   "fonetica": "PA-lits",
+   "es": "dedo",
+   "pista": "Hay cinco en cada mano.",
+   "tag": "Masc. · inanim.",
+   "nota": "Plural: па́льцы (se cae la е)."
+  },
+  {
+   "ru": "грудь",
+   "fonetica": "grud'",
+   "es": "pecho",
+   "pista": "Donde está el corazón.",
+   "tag": "Fem. · inanim.",
+   "nota": "Termina en -ь y es она́, como бровь."
+  },
+  {
+   "ru": "спина́",
+   "fonetica": "spi-NA",
+   "es": "espalda",
+   "pista": "Lo que te duele si trabajas mucho sentada.",
+   "tag": "Fem. · inanim.",
+   "nota": "Plural: спи́ны. Устаёт на́ша спина́ = se cansa nuestra espalda."
+  },
+  {
+   "ru": "живо́т",
+   "fonetica": "zhy-VOT",
+   "es": "vientre, panza",
+   "pista": "Por fuera, abajo del pecho.",
+   "tag": "Masc. · inanim.",
+   "nota": "Plural: животы́. No confundir con желу́док, que es por dentro."
+  },
+  {
+   "ru": "желу́док",
+   "fonetica": "zhy-LU-dak",
+   "es": "estómago",
+   "pista": "El órgano de adentro que digiere.",
+   "tag": "Masc. · inanim.",
+   "nota": "Plural: желу́дки. живо́т es la panza por fuera."
+  },
+  {
+   "ru": "мы́шца",
+   "fonetica": "MYSH-tsa",
+   "es": "músculo",
+   "pista": "Lo que se pone duro cuando haces fuerza.",
+   "tag": "Fem. · inanim.",
+   "nota": "Plural: мы́шцы."
+  },
+  {
+   "ru": "нога́",
+   "fonetica": "na-GA",
+   "es": "pierna, pie",
+   "pista": "Con esto caminas.",
+   "tag": "Fem. · inanim.",
+   "nota": "Una sola palabra para pierna y pie. Plural: но́ги."
+  },
+  {
+   "ru": "коле́но",
+   "fonetica": "ka-LIE-na",
+   "es": "rodilla",
+   "pista": "A la mitad de la pierna, se dobla.",
+   "tag": "Neutro · inanim.",
+   "nota": "Plural: коле́ни."
+  },
+  {
+   "ru": "се́рдце",
+   "fonetica": "SIER-tse",
+   "es": "corazón",
+   "pista": "Late todo el día sin parar.",
+   "tag": "Neutro · inanim.",
+   "nota": "La д no se pronuncia: SIER-tse."
+  },
+  {
+   "ru": "ко́жа",
+   "fonetica": "KO-zha",
+   "es": "piel",
+   "pista": "Cubre todo el cuerpo.",
+   "tag": "Fem. · inanim.",
+   "nota": "Plural: ко́жи."
+  },
+  {
+   "ru": "во́лосы",
+   "fonetica": "VO-la-sy",
+   "es": "cabello, pelo",
+   "pista": "Crece en la cabeza.",
+   "tag": "Plural · inanim.",
+   "nota": "En ruso va en plural. El singular во́лос es un solo pelo."
+  },
+  {
+   "ru": "фигу́ра",
+   "fonetica": "fi-GU-ra",
+   "es": "figura, cuerpo",
+   "pista": "La forma general de una persona.",
+   "tag": "Fem. · inanim.",
+   "nota": "У неё краси́вая фигу́ра = ella tiene bonita figura."
+  },
+  {
+   "ru": "устава́ть",
+   "fonetica": "us-ta-VAT'",
+   "es": "cansarse",
+   "tag": "Verbo",
+   "pista": "Lo que te pasa después de trabajar mucho.",
+   "nota": "Устаю́т на́ши глаза́ = se cansan nuestros ojos. Устаёт на́ша спина́ = se cansa nuestra espalda.",
+   "ejemplo": {
+    "ru": "Устаю́т на́ши глаза́.",
+    "fonetica": "us-ta-IUT NA-shy gla-ZA",
+    "es": "Se cansan nuestros ojos."
+   }
+  }
+ ],
+ "frases": [
+  {
+   "id": "cansan-ojos",
+   "idea": "Di que se cansan nuestros ojos.",
+   "fichas": [
+    "Устаю́т",
+    "на́ши",
+    "глаза́"
+   ],
+   "validas": [
+    "Устаю́т на́ши глаза́",
+    "На́ши глаза́ устаю́т"
+   ],
+   "texto": "Устаю́т на́ши глаза́.",
+   "fonetica": "us-ta-IUT NA-shy gla-ZA",
+   "es": "Se cansan nuestros ojos.",
+   "opciones": [
+    "Se cansan nuestros ojos.",
+    "Se cansan nuestras manos.",
+    "Descansan nuestros ojos.",
+    "Se cansó nuestro ojo."
+   ],
+   "distractores": [
+    "на́ше",
+    "глаз"
+   ],
+   "pista": "«Глаза́» es plural: el posesivo también.",
+   "bloques": [
+    [
+     "Устаю́т"
+    ],
+    [
+     "на́ши",
+     "глаза́"
+    ]
+   ],
+   "diccionario": [
+    {
+     "ficha": "Устаю́т",
+     "forma": "устава́ть",
+     "es": "cansarse",
+     "fonetica": "us-ta-IUT",
+     "porque": "Forma de они́: устава́ть → устаю́т."
+    },
+    {
+     "ficha": "на́ши",
+     "forma": "наш",
+     "es": "nuestro",
+     "fonetica": "NA-shy",
+     "porque": "Plural, porque глаза́ es plural: наш → на́ши."
+    },
+    {
+     "ficha": "глаза́",
+     "forma": "глаз",
+     "es": "ojo",
+     "fonetica": "gla-ZA",
+     "porque": "Plural de глаз, con el acento al final."
+    },
+    {
+     "ficha": "на́ше",
+     "forma": "наш",
+     "es": "nuestro (neutro)",
+     "fonetica": "NA-she",
+     "porque": ""
+    },
+    {
+     "ficha": "глаз",
+     "forma": "глаз",
+     "es": "ojo",
+     "fonetica": "glaz",
+     "porque": ""
+    }
+   ],
+   "errores": [
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "на́ши",
+      "глаза́"
+     ],
+     "explica": "на́ши y глаза́ van juntas: las dos en plural."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "на́ше",
+     "explica": "на́ше es para оно́; глаза́ es plural, así que va на́ши."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "глаз",
+     "explica": "глаз es un solo ojo; aquí son los dos: глаза́."
+    }
+   ],
+   "enfasis": [
+    {
+     "ru": "Устаю́т на́ши глаза́",
+     "nota": "Empieza por el verbo: suena a explicación general, como en tu cuaderno."
+    },
+    {
+     "ru": "На́ши глаза́ устаю́т",
+     "nota": "Empieza por los ojos: suena a que hablas de ellos en particular."
+    }
+   ]
+  },
+  {
+   "id": "descansa-cuerpo",
+   "idea": "Di que descansa nuestro cuerpo.",
+   "fichas": [
+    "Отдыха́ет",
+    "на́ше",
+    "те́ло"
+   ],
+   "validas": [
+    "Отдыха́ет на́ше те́ло",
+    "На́ше те́ло отдыха́ет"
+   ],
+   "texto": "Отдыха́ет на́ше те́ло.",
+   "fonetica": "at-dy-JA-iet NA-she TIE-la",
+   "es": "Descansa nuestro cuerpo.",
+   "opciones": [
+    "Descansa nuestro cuerpo.",
+    "Se cansa nuestro cuerpo.",
+    "Descansa nuestra espalda.",
+    "Descansaba nuestro cuerpo."
+   ],
+   "distractores": [
+    "на́ша",
+    "на́ши"
+   ],
+   "pista": "«Те́ло» termina en -о: es оно́.",
+   "bloques": [
+    [
+     "Отдыха́ет"
+    ],
+    [
+     "на́ше",
+     "те́ло"
+    ]
+   ],
+   "diccionario": [
+    {
+     "ficha": "Отдыха́ет",
+     "forma": "отдыха́ть",
+     "es": "descansar",
+     "fonetica": "at-dy-JA-iet",
+     "porque": "Forma de он/она́/оно́: отдыха́ть → отдыха́ет."
+    },
+    {
+     "ficha": "на́ше",
+     "forma": "наш",
+     "es": "nuestro",
+     "fonetica": "NA-she",
+     "porque": "Forma de оно́, porque те́ло termina en -о."
+    },
+    {
+     "ficha": "те́ло",
+     "forma": "те́ло",
+     "es": "cuerpo",
+     "fonetica": "TIE-la",
+     "porque": ""
+    },
+    {
+     "ficha": "на́ша",
+     "forma": "наш",
+     "es": "nuestra",
+     "fonetica": "NA-sha",
+     "porque": ""
+    },
+    {
+     "ficha": "на́ши",
+     "forma": "наш",
+     "es": "nuestros",
+     "fonetica": "NA-shy",
+     "porque": ""
+    }
+   ],
+   "errores": [
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "на́ше",
+      "те́ло"
+     ],
+     "explica": "на́ше y те́ло van juntas: те́ло es оно́."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "на́ша",
+     "explica": "на́ша es para она́; те́ло es оно́, así que va на́ше."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "на́ши",
+     "explica": "на́ши es plural; aquí hay un solo cuerpo."
+    }
+   ],
+   "enfasis": [
+    {
+     "ru": "Отдыха́ет на́ше те́ло",
+     "nota": "Empieza por el verbo: así viene en tu cuaderno, como regla general."
+    },
+    {
+     "ru": "На́ше те́ло отдыха́ет",
+     "nota": "Empieza por el cuerpo: suena a que hablas de él en particular."
+    }
+   ]
+  },
+  {
+   "id": "cansa-espalda",
+   "idea": "Di que se cansa nuestra espalda.",
+   "fichas": [
+    "Устаёт",
+    "на́ша",
+    "спина́"
+   ],
+   "validas": [
+    "Устаёт на́ша спина́",
+    "На́ша спина́ устаёт"
+   ],
+   "texto": "Устаёт на́ша спина́.",
+   "fonetica": "us-ta-IOT NA-sha spi-NA",
+   "es": "Se cansa nuestra espalda.",
+   "opciones": [
+    "Se cansa nuestra espalda.",
+    "Se cansan nuestras espaldas.",
+    "Descansa nuestra espalda.",
+    "Se cansa nuestro cuerpo."
+   ],
+   "distractores": [
+    "на́ше",
+    "устаю́т"
+   ],
+   "pista": "Una sola espalda: el verbo va en singular.",
+   "bloques": [
+    [
+     "Устаёт"
+    ],
+    [
+     "на́ша",
+     "спина́"
+    ]
+   ],
+   "diccionario": [
+    {
+     "ficha": "Устаёт",
+     "forma": "устава́ть",
+     "es": "cansarse",
+     "fonetica": "us-ta-IOT",
+     "porque": "Forma de он/она́/оно́: устава́ть → устаёт."
+    },
+    {
+     "ficha": "на́ша",
+     "forma": "наш",
+     "es": "nuestra",
+     "fonetica": "NA-sha",
+     "porque": "Forma de она́, porque спина́ termina en -а."
+    },
+    {
+     "ficha": "спина́",
+     "forma": "спина́",
+     "es": "espalda",
+     "fonetica": "spi-NA",
+     "porque": ""
+    },
+    {
+     "ficha": "на́ше",
+     "forma": "наш",
+     "es": "nuestro (neutro)",
+     "fonetica": "NA-she",
+     "porque": ""
+    },
+    {
+     "ficha": "устаю́т",
+     "forma": "устава́ть",
+     "es": "se cansan",
+     "fonetica": "us-ta-IUT",
+     "porque": ""
+    }
+   ],
+   "errores": [
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "на́ша",
+      "спина́"
+     ],
+     "explica": "на́ша y спина́ van juntas: спина́ es она́."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "на́ше",
+     "explica": "на́ше es para оно́; спина́ es она́."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "устаю́т",
+     "explica": "устаю́т es para varias cosas; aquí hay una sola espalda: устаёт."
+    }
+   ],
+   "enfasis": [
+    {
+     "ru": "Устаёт на́ша спина́",
+     "nota": "Empieza por el verbo, como la regla de tu cuaderno."
+    },
+    {
+     "ru": "На́ша спина́ устаёт",
+     "nota": "Empieza por la espalda: suena a que hablas de ella en particular."
+    }
+   ]
+  }
+ ]
+}

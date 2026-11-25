@@ -2475,6 +2475,383 @@
      "porque": "Con два, три y четы́ре se dice часа́."
     }
    ]
+  },
+  {
+   "id": "g-plural-adjetivo",
+   "titulo": "El adjetivo en plural y el acento que se brinca",
+   "ru": "ка́рие глаза́",
+   "puntos": [
+    "Si la palabra va en plural, el adjetivo también: ка́рие глаза́, дли́нные во́лосы.",
+    "во́лосы y глаза́ son plurales siempre en ruso, aunque en español digas «el cabello» en singular.",
+    "Al pasar al plural el acento a veces se brinca: глаз → глаза́; pero у́хо → у́ши se queda igual."
+   ],
+   "ejemplos": [
+    {
+     "ru": "У неё дли́нные во́лосы.",
+     "fonetica": "u nie-IO DLIN-ny-ie VO-la-sy",
+     "es": "Ella tiene el cabello largo."
+    },
+    {
+     "ru": "У него́ ка́рие глаза́.",
+     "fonetica": "u nie-VO KA-ri-ie gla-ZA",
+     "es": "Él tiene los ojos cafés."
+    },
+    {
+     "ru": "У меня́ ма́ленькие у́ши.",
+     "fonetica": "u mie-NIA MA-lien'-ki-ie U-shy",
+     "es": "Yo tengo las orejas pequeñas."
+    }
+   ],
+   "ojo": "ка́рий solo se usa para ojos. Una mesa café es кори́чневая, nunca ка́рая.",
+   "tags": [
+    "plural",
+    "adjetivo",
+    "acento",
+    "cuerpo"
+   ],
+   "elige": [
+    {
+     "id": "g-plural-adjetivo-e1",
+     "frase": "У неё ___ во́лосы.",
+     "base": "дли́нный",
+     "opciones": [
+      "дли́нный",
+      "дли́нные",
+      "дли́нная"
+     ],
+     "correcta": "дли́нные",
+     "texto": "У неё дли́нные во́лосы.",
+     "fonetica": "u nie-IO DLIN-ny-ie VO-la-sy",
+     "es": "Ella tiene el cabello largo.",
+     "porque": "во́лосы es plural, así que el adjetivo también."
+    },
+    {
+     "id": "g-plural-adjetivo-e2",
+     "frase": "У него́ ___ глаза́.",
+     "base": "ка́рий",
+     "opciones": [
+      "ка́рий",
+      "ка́рие",
+      "ка́рая"
+     ],
+     "correcta": "ка́рие",
+     "texto": "У него́ ка́рие глаза́.",
+     "fonetica": "u nie-VO KA-ri-ie gla-ZA",
+     "es": "Él tiene los ojos cafés.",
+     "porque": "глаза́ es plural: el adjetivo pasa a -ие."
+    },
+    {
+     "id": "g-plural-adjetivo-e3",
+     "frase": "Э́то мой глаз, а э́то мои́ ___.",
+     "base": "глаз",
+     "opciones": [
+      "глаза́",
+      "гла́зы",
+      "гла́за"
+     ],
+     "correcta": "глаза́",
+     "texto": "Э́то мой глаз, а э́то мои́ глаза́.",
+     "fonetica": "E-ta moi glaz, a E-ta ma-I gla-ZA",
+     "es": "Este es mi ojo, y estos son mis ojos.",
+     "porque": "El plural de глаз es глаза́, con el acento al final."
+    },
+    {
+     "id": "g-plural-adjetivo-e4",
+     "frase": "Э́то моё у́хо, а э́то мои́ ___.",
+     "base": "у́хо",
+     "opciones": [
+      "у́ши",
+      "уши́",
+      "у́хи"
+     ],
+     "correcta": "у́ши",
+     "texto": "Э́то моё у́хо, а э́то мои́ у́ши.",
+     "fonetica": "E-ta ma-IO U-ja, a E-ta ma-I U-shy",
+     "es": "Esta es mi oreja, y estas son mis orejas.",
+     "porque": "Aquí el acento no se mueve: у́хо → у́ши."
+    },
+    {
+     "id": "g-plural-adjetivo-e5",
+     "frase": "У меня́ ___ у́ши.",
+     "base": "ма́ленький",
+     "opciones": [
+      "ма́ленький",
+      "ма́ленькие",
+      "ма́ленькая"
+     ],
+     "correcta": "ма́ленькие",
+     "texto": "У меня́ ма́ленькие у́ши.",
+     "fonetica": "u mie-NIA MA-lien'-ki-ie U-shy",
+     "es": "Yo tengo las orejas pequeñas.",
+     "porque": "у́ши es plural; después de к el adjetivo hace -ие."
+    },
+    {
+     "id": "g-plural-adjetivo-e6",
+     "frase": "У неё ___ во́лосы.",
+     "base": "коро́ткий",
+     "opciones": [
+      "коро́ткий",
+      "коро́ткие",
+      "коро́ткая"
+     ],
+     "correcta": "коро́ткие",
+     "texto": "У неё коро́ткие во́лосы.",
+     "fonetica": "u nie-IO ka-ROT-ki-ie VO-la-sy",
+     "es": "Ella tiene el cabello corto.",
+     "porque": "во́лосы es plural; después de к va -ие, no -ые."
+    }
+   ]
+  },
+  {
+   "id": "g-ost",
+   "titulo": "-ость: siempre она́",
+   "ru": "ста́рый → ста́рость",
+   "puntos": [
+    "El sufijo -ость convierte un adjetivo en un sustantivo abstracto, como -idad o -eza en español.",
+    "Toda palabra con -ость es она́, sin excepción: ста́рость, но́вость, вне́шность.",
+    "Para formarla quitas la terminación del adjetivo y pones -ость: но́вый → но́вость."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Э́то хоро́шая но́вость.",
+     "fonetica": "E-ta ja-RO-sha-ia NO-vast'",
+     "es": "Es una buena noticia."
+    },
+    {
+     "ru": "Мо́лодость — э́то хорошо́.",
+     "fonetica": "MO-la-dast' E-ta ja-ra-SHO",
+     "es": "La juventud es algo bueno."
+    },
+    {
+     "ru": "Кака́я у него́ вне́шность?",
+     "fonetica": "ka-KA-ia u nie-VO VNIESH-nast'",
+     "es": "¿Cómo es él físicamente?"
+    }
+   ],
+   "ojo": "гость, тесть y шесть solo terminan en -сть: no llevan este sufijo, y гость y тесть son он.",
+   "tags": [
+    "sustantivo",
+    "sufijo",
+    "género"
+   ],
+   "elige": [
+    {
+     "id": "g-ost-e1",
+     "frase": "Э́то хоро́шая ___.",
+     "base": "но́вый",
+     "opciones": [
+      "но́вость",
+      "но́вый",
+      "но́вости"
+     ],
+     "correcta": "но́вость",
+     "texto": "Э́то хоро́шая но́вость.",
+     "fonetica": "E-ta ja-RO-sha-ia NO-vast'",
+     "es": "Es una buena noticia.",
+     "porque": "но́вый + -ость da но́вость, y es она́: хоро́шая."
+    },
+    {
+     "id": "g-ost-e2",
+     "frase": "ста́рый → ___",
+     "base": "ста́рый",
+     "opciones": [
+      "ста́рость",
+      "старота́",
+      "ста́ро"
+     ],
+     "correcta": "ста́рость",
+     "texto": "ста́рый → ста́рость",
+     "fonetica": "STA-ryi STA-rast'",
+     "es": "viejo → vejez",
+     "porque": "Este adjetivo forma su sustantivo con -ость."
+    },
+    {
+     "id": "g-ost-e3",
+     "frase": "ва́жный → ___",
+     "base": "ва́жный",
+     "opciones": [
+      "ва́жность",
+      "важнота́",
+      "ва́жно"
+     ],
+     "correcta": "ва́жность",
+     "texto": "ва́жный → ва́жность",
+     "fonetica": "VAZH-nyi VAZH-nast'",
+     "es": "importante → importancia",
+     "porque": "Quitas -ный y pones -ость: ва́жность."
+    },
+    {
+     "id": "g-ost-e4",
+     "frase": "молодо́й → ___",
+     "base": "молодо́й",
+     "opciones": [
+      "мо́лодость",
+      "молодо́сть",
+      "молода́"
+     ],
+     "correcta": "мо́лодость",
+     "texto": "молодо́й → мо́лодость",
+     "fonetica": "ma-la-DOI MO-la-dast'",
+     "es": "joven → juventud",
+     "porque": "Aquí el acento se brinca hasta el principio: мо́лодость."
+    },
+    {
+     "id": "g-ost-e5",
+     "frase": "Вне́шность — э́то ___.",
+     "base": "вне́шность",
+     "opciones": [
+      "он",
+      "она́",
+      "оно́"
+     ],
+     "correcta": "она́",
+     "texto": "Вне́шность — э́то она́.",
+     "fonetica": "VNIESH-nast' E-ta a-NA",
+     "es": "«Apariencia» es femenina.",
+     "porque": "Todas las de -ость son она́."
+    },
+    {
+     "id": "g-ost-e6",
+     "frase": "Гость — э́то ___.",
+     "base": "гость",
+     "opciones": [
+      "он",
+      "она́",
+      "оно́"
+     ],
+     "correcta": "он",
+     "texto": "Гость — э́то он.",
+     "fonetica": "gost' E-ta on",
+     "es": "«Invitado» es masculino.",
+     "porque": "гость solo termina en -сть: no lleva el sufijo -ость."
+    }
+   ]
+  },
+  {
+   "id": "g-ota",
+   "titulo": "-ота́: también она́, y el acento al final",
+   "ru": "краси́вый → красота́",
+   "puntos": [
+    "Otros adjetivos forman su sustantivo con -ота́, no con -ость: краси́вый → красота́.",
+    "También son она́, igual que las de -ость: красота́, чистота́, темнота́.",
+    "Aquí el acento siempre cae al final. Léelo en voz alta: кра-со-та́, чис-то-та́."
+   ],
+   "ejemplos": [
+    {
+     "ru": "Кака́я красота́!",
+     "fonetica": "ka-KA-ia kra-sa-TA",
+     "es": "¡Qué belleza!"
+    },
+    {
+     "ru": "Я не люблю́ темноту́.",
+     "fonetica": "ia nie liub-LIU tiem-na-TU",
+     "es": "No me gusta la oscuridad."
+    },
+    {
+     "ru": "В ко́мнате чистота́.",
+     "fonetica": "f KOM-na-tie chis-ta-TA",
+     "es": "El cuarto está limpio."
+    }
+   ],
+   "ojo": "No hay regla para saber cuál lleva -ость y cuál -ота́: se van aprendiendo. Pero el género siempre es она́, así que en eso nunca fallas.",
+   "tags": [
+    "sustantivo",
+    "sufijo",
+    "género",
+    "acento"
+   ],
+   "elige": [
+    {
+     "id": "g-ota-e1",
+     "frase": "краси́вый → ___",
+     "base": "краси́вый",
+     "opciones": [
+      "красота́",
+      "краси́вость",
+      "красо́та"
+     ],
+     "correcta": "красота́",
+     "texto": "краси́вый → красота́",
+     "fonetica": "kra-SI-vyi kra-sa-TA",
+     "es": "bonito → belleza",
+     "porque": "Este no hace -ость: hace -ота́, con el acento al final."
+    },
+    {
+     "id": "g-ota-e2",
+     "frase": "чи́стый → ___",
+     "base": "чи́стый",
+     "opciones": [
+      "чистота́",
+      "чи́стость",
+      "чисто́та"
+     ],
+     "correcta": "чистота́",
+     "texto": "чи́стый → чистота́",
+     "fonetica": "CHIS-tyi chis-ta-TA",
+     "es": "limpio → limpieza",
+     "porque": "El acento se va hasta la última sílaba: чис-то-та́."
+    },
+    {
+     "id": "g-ota-e3",
+     "frase": "тёмный → ___",
+     "base": "тёмный",
+     "opciones": [
+      "темнота́",
+      "тёмность",
+      "темно́та"
+     ],
+     "correcta": "темнота́",
+     "texto": "тёмный → темнота́",
+     "fonetica": "TIOM-nyi tiem-na-TA",
+     "es": "oscuro → oscuridad",
+     "porque": "La ё pierde el acento y suena «ie»: tiem-na-TA."
+    },
+    {
+     "id": "g-ota-e4",
+     "frase": "высо́кий → ___",
+     "base": "высо́кий",
+     "opciones": [
+      "высота́",
+      "высо́кость",
+      "высо́та"
+     ],
+     "correcta": "высота́",
+     "texto": "высо́кий → высота́",
+     "fonetica": "vy-SO-kii vy-sa-TA",
+     "es": "alto → altura",
+     "porque": "Con -ота́ y el acento al final: вы-со-та́."
+    },
+    {
+     "id": "g-ota-e5",
+     "frase": "Красота́ — э́то ___.",
+     "base": "красота́",
+     "opciones": [
+      "он",
+      "она́",
+      "оно́"
+     ],
+     "correcta": "она́",
+     "texto": "Красота́ — э́то она́.",
+     "fonetica": "kra-sa-TA E-ta a-NA",
+     "es": "«Belleza» es femenina.",
+     "porque": "Las de -ота́ también son она́."
+    },
+    {
+     "id": "g-ota-e6",
+     "frase": "Э́то не рост, э́то ___ до́ма.",
+     "base": "высота́",
+     "opciones": [
+      "рост",
+      "высота́",
+      "высо́кий"
+     ],
+     "correcta": "высота́",
+     "texto": "Э́то не рост, э́то высота́ до́ма.",
+     "fonetica": "E-ta nie rost, E-ta vy-sa-TA DO-ma",
+     "es": "No es estatura, es la altura de la casa.",
+     "porque": "рост es solo de personas; de las cosas se dice высота́."
+    }
+   ]
   }
  ]
 }

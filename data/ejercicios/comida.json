@@ -15,8 +15,8 @@
         {"de": "Ле́на", "ru": "А что ещё?", "fonetica": "a shto iesh-CHO", "es": "¿Y qué más?"},
         {"de": "yo", "ru": "Я хочу́ хлеб и мя́со.", "fonetica": "ia ja-CHU jlieb i MIA-sa", "es": "Quiero pan y carne.", "opciones": [
           {"ru": "Я хочу́ хлеб и мя́со.", "fonetica": "ia ja-CHU jlieb i MIA-sa", "correcta": true, "porque": "¡Eso! и une las dos cosas."},
-          {"ru": "Я хочу́ хлеб и́ли мя́со.", "fonetica": "ia ja-CHU khlieb I-li MIA-sa", "correcta": false, "porque": "и́ли es «o»; quieres las dos cosas: и."},
-          {"ru": "Я хочу́ хлеб и мёд.", "fonetica": "ia ja-CHU khlieb i miod", "correcta": false, "porque": "мёд es miel; quieres carne: мя́со."}
+          {"ru": "Я хочу́ хлеб и́ли мя́со.", "fonetica": "ia ja-CHU jlieb I-li MIA-sa", "correcta": false, "porque": "и́ли es «o»; quieres las dos cosas: и."},
+          {"ru": "Я хочу́ хлеб и мёд.", "fonetica": "ia ja-CHU jlieb i miod", "correcta": false, "porque": "мёд es miel; quieres carne: мя́со."}
         ]},
         {"de": "Ле́на", "ru": "Коне́чно!", "fonetica": "ka-NIESH-na", "es": "¡Claro!"}
       ]
