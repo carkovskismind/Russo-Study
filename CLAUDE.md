@@ -9,7 +9,7 @@ Responde siempre en español, claro y breve.
    - **Ningún agente sin que Carol lo pida.** No lances subagentes por iniciativa propia, ni uno. Si crees que hacen falta, di para qué, cuántos y qué va a hacer cada uno, y espera su respuesta. Lanzar varios a la vez gasta el límite de uso de Carol y puede cortar el trabajo a la mitad.
 2. Primero una maqueta o propuesta; se aplica a la app solo cuando Carol la aprueba. Si ella edita la maqueta, respeta sus cambios. **Fidelidad 100 % a la maqueta:** lo programado debe verse exactamente igual a la maqueta viva (textos, medidas, espacios, colores, imágenes y fondos), comprobado con capturas lado a lado en oscuro y claro antes de subir.
 3. Nunca pongas en el código la llave service_role (secret) de Supabase. Solo la publishable key, que ya está en `js/config.js`.
-4. Antes de publicar: `node tools/validar.mjs` sin errores y prueba en celular (390×844) en modo oscuro y claro.
+4. Antes de publicar: `node tools/validar.mjs` sin errores y prueba en celular (390×844) en modo oscuro y claro. Si hubo contenido ruso nuevo, corre `python3 tools/audio-faltante.py` para generar su audio con la voz Elena (si no, suena la voz del dispositivo) y sube lo que genere.
 5. En cada versión nueva sube `APP_VERSION` (js/app.js) y `CACHE` (sw.js). **El número de versión lo decide Carol: pregúntaselo siempre, nunca lo inventes.** Varios arreglos distintos pueden ir en la misma versión, así que no subas el número solo porque tocaste algo.
 
 ## Commits y descripción de PR (acordado con Carol, nov 2026)
