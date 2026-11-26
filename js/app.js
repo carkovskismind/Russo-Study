@@ -2840,9 +2840,8 @@ function fraseClick(e) {
   if (act === "next") return finishFraseItem();
 }
 
-function finishFraseItem() {
-  const fr = state.fr;
-  if (!fr) return;
+// Cuenta la frase actual (resultado, cola y marcador). Lo usan «Continuar» y salir a media frase.
+function resolveFraseItem(fr) {
   clearTimeout(fr.timer);
   const cur = fr.cur;
   const item = fr.queue.shift();
@@ -2860,9 +2859,34 @@ function finishFraseItem() {
       fr.queue.push(item);
     } else fr.results[fr.resolved++] = false;
   }
+}
+
+function fraseGuardarParcial(fr) {
+  const pid = unitKeyOf(fr.deck);
+  if (fr.queue.length) store.parcialSet("frases", pid, { q: fr.queue.map((x) => ({ i: x.f.id, f: +!!x.failed })), ok: fr.ok, bad: fr.bad, res: fr.resolved, rs: fr.results, tot: fr.total });
+  else store.parcialDel("frases", pid);
+}
+
+// Al salir (X, gesto atrás, Escape) a media frase: si ya contestaste algo, se cuenta como lo haría «Continuar»
+// y se guarda para «¿Seguir donde ibas?». Si solo comprobaste una frase bien armada (aún sin traducción),
+// se guarda el avance sin contarla. Sin respuesta, no se guarda nada.
+function fraseSalir(fr) {
+  clearTimeout(fr.timer);
+  const cur = fr.cur;
+  if (!cur || !fr.queue.length) return;
+  const cuenta = cur.choice !== null || (cur.checked && !cur.ok1 && !cur.reported1);
+  if (cuenta) resolveFraseItem(fr);
+  else if (!cur.checked) return;
+  fraseGuardarParcial(fr);
+}
+
+function finishFraseItem() {
+  const fr = state.fr;
+  if (!fr) return;
+  resolveFraseItem(fr);
   const pid = unitKeyOf(fr.deck);
   if (fr.queue.length) {
-    store.parcialSet("frases", pid, { q: fr.queue.map((x) => ({ i: x.f.id, f: +!!x.failed })), ok: fr.ok, bad: fr.bad, res: fr.resolved, rs: fr.results, tot: fr.total });
+    fraseGuardarParcial(fr);
     newFraseItem();
   } else {
     store.parcialDel("frases", pid);
@@ -3057,7 +3081,7 @@ function dialogoGuardar() {
   const dl = state.dl;
   if (!dl || !dl.cur) return;
   const c = dl.cur;
-  if (!(dl.di > 0 || c.shown.some((b) => b.mine))) return;
+  if (!(dl.di > 0 || c.fail || c.shown.some((b) => b.mine))) return;
   store.parcialSet("dialogo", unitKeyOf(dl.deck), {
     did: c.d.id, ok: dl.ok, bad: dl.bad, es: dl.es, mi: c.mi, fail: c.fail, hold: !!c.hold,
     shown: c.shown.map((b) => (b.mine ? { mine: 1, late: +!!b.late, ru: b.m.ru, fonetica: b.m.fonetica } : { mine: 0 }))
@@ -3383,7 +3407,7 @@ function startCajas(deck, first) {
 function cajasGuardar() {
   const cj = state.cj;
   const c = cj && cj.cur;
-  if (!c || cj.stage !== "play" || !(c.done > 0 || cj.ok + cj.bad > 0)) return;
+  if (!c || cj.stage !== "play" || !(c.done > 0 || c.errs > 0 || cj.ok + cj.bad > 0)) return;
   store.parcialSet("cajas", unitKeyOf(cj.deck), {
     ci: cj.ci, eid: c.e.id, ok: cj.ok, bad: cj.bad, mode: cj.mode, lang: c.lang, done: c.done, fail: c.fail, errs: c.errs || 0,
     bank: c.bank.map((x) => x.i), boxes: c.boxes.map((b) => b.map((x) => x.i))
@@ -5258,7 +5282,7 @@ function bind() {
   $("#frase-body").addEventListener("click", fraseClick);
   $("#frase-close").addEventListener("click", () => {
     const fr = state.fr;
-    if (fr) clearTimeout(fr.timer);
+    if (fr) fraseSalir(fr);
     closeSheet();
     state.fr = null;
     backTo(fr ? fr.returnTo : "home");
