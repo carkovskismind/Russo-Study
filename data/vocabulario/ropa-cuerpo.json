@@ -1,48 +1,987 @@
 {
-  "id": "ropa-cuerpo",
-  "titulo": "Ropa, cuerpo y objetos personales",
-  "grupo": "Vocabulario",
-  "descripcion": "Prendas, partes del cuerpo y cosas de uso personal. Muchas prendas solo existen en plural.",
-  "frases": [
-    {"id": "jeans-nuevos", "idea": "Di que tienes unos jeans nuevos.", "fichas": ["У", "меня́", "есть", "но́вые", "джи́нсы"], "validas": ["У меня́ есть но́вые джи́нсы", "Но́вые джи́нсы у меня́ есть"], "texto": "У меня́ есть но́вые джи́нсы.", "fonetica": "u mie-NIA iest' NO-vy-ie DZHYN-sy", "es": "Tengo unos jeans nuevos.", "opciones": ["Tengo unos jeans nuevos.", "Tengo unos shorts nuevos.", "Tenía unos jeans nuevos.", "Tengo unos jeans viejos."], "distractores": ["шо́рты", "но́вый"], "pista": "«Джи́нсы» es plural: el adjetivo también.", "diccionario": [{"ficha": "У", "forma": "у", "es": "junto a, en casa de (у меня́ = yo tengo)", "fonetica": "u", "porque": ""}, {"ficha": "меня́", "forma": "я", "es": "yo (a mí)", "fonetica": "mie-NIA", "porque": "Con «зову́т» y «у» se usa la forma меня́: я → меня́."}, {"ficha": "есть", "forma": "быть", "es": "haber, tener (есть = hay)", "fonetica": "iest'", "porque": "Presente de быть: у меня́ есть = tengo."}, {"ficha": "но́вые", "forma": "но́вый", "es": "nuevo", "fonetica": "NO-vy-ie", "porque": "Plural (con джи́нсы): но́вый → но́вые."}, {"ficha": "джи́нсы", "forma": "джи́нсы", "es": "jeans", "fonetica": "DZHYN-sy", "porque": "Siempre en plural."}, {"ficha": "шо́рты", "forma": "шо́рты", "es": "shorts", "fonetica": "SHOR-ty", "porque": ""}, {"ficha": "но́вый", "forma": "но́вый", "es": "nuevo", "fonetica": "NO-vyi", "porque": ""}], "bloques": [["У", "меня́", "есть"], ["но́вые", "джи́нсы"]], "fijo": true, "errores": [{"tipo": "bloque", "fichas": ["У", "меня́", "есть"], "explica": "У, меня́ y есть van juntas: у меня́ есть = tengo."}, {"tipo": "bloque", "fichas": ["но́вые", "джи́нсы"], "explica": "но́вые и джи́нсы van juntos: джи́нсы es plural y но́вые también."}, {"tipo": "orden", "explica": "Usa у меня́ есть completo: у меня́ есть но́вые джи́нсы (lo normal) o, para contrastar, но́вые джи́нсы у меня́ есть."}, {"tipo": "distractor", "ficha": "шо́рты", "explica": "шо́рты es «shorts»; la idea dice jeans: джи́нсы."}, {"tipo": "distractor", "ficha": "но́вый", "explica": "но́вый es singular; джи́нсы es plural: но́вые."}], "enfasis": [{"ru": "У меня́ есть но́вые джи́нсы", "nota": "Orden neutro: «tengo» va al inicio y al final va lo nuevo: qué tienes."}, {"ru": "Но́вые джи́нсы у меня́ есть", "nota": "Empieza por los jeans nuevos: suena a contraste, como «los jeans nuevos, eso sí tengo»."}]},
-    {"id": "lentes-reloj", "idea": "Di que tus lentes están allá y tu reloj aquí.", "fichas": ["Мои́", "очки́", "там", "а", "часы́", "здесь"], "validas": ["Мои́ очки́ там а часы́ здесь", "Часы́ здесь а мои́ очки́ там"], "texto": "Мои́ очки́ там, а часы́ здесь.", "fonetica": "ma-I ach-KI tam a chi-SY zdies'", "es": "Mis lentes están allá y el reloj está aquí.", "opciones": ["Mis lentes están aquí y el reloj allá.", "Mis lentes están allá y el reloj está aquí.", "Mis lentes y mi reloj están allá.", "Mi celular está allá y el reloj aquí."], "distractores": ["моби́льник", "духи́"], "pista": "«Очки́» es plural: «мои́».", "diccionario": [{"ficha": "Мои́", "forma": "мой", "es": "mi", "fonetica": "ma-I", "porque": "Plural: мой → мои́."}, {"ficha": "очки́", "forma": "очки́", "es": "lentes, anteojos", "fonetica": "ach-KI", "porque": "Siempre en plural."}, {"ficha": "там", "forma": "там", "es": "allí, allá", "fonetica": "tam", "porque": ""}, {"ficha": "а", "forma": "а", "es": "y, en cambio", "fonetica": "a", "porque": ""}, {"ficha": "часы́", "forma": "часы́", "es": "reloj", "fonetica": "chi-SY", "porque": "Siempre en plural."}, {"ficha": "здесь", "forma": "здесь", "es": "aquí", "fonetica": "zdies'", "porque": ""}, {"ficha": "моби́льник", "forma": "моби́льник", "es": "celular", "fonetica": "ma-BIL'-nik", "porque": ""}, {"ficha": "духи́", "forma": "духи́", "es": "perfume", "fonetica": "du-JI", "porque": "Siempre en plural."}], "bloques": [["Мои́", "очки́", "там"], ["а"], ["часы́", "здесь"]], "fijo": true, "errores": [{"tipo": "bloque", "fichas": ["Мои́", "очки́", "там"], "explica": "Мои́, очки́ y там van juntos: мои́ очки́ там = mis lentes están allá."}, {"tipo": "bloque", "fichas": ["часы́", "здесь"], "explica": "часы́ и здесь van juntos: часы́ здесь = el reloj está aquí."}, {"tipo": "distractor", "ficha": "моби́льник", "explica": "моби́льник es «celular»; la idea dice reloj: часы́."}, {"tipo": "distractor", "ficha": "духи́", "explica": "духи́ es «perfume»; la idea dice reloj: часы́."}, {"tipo": "orden", "explica": "Puedes empezar por cualquiera de las dos partes, pero а va en medio: мои́ очки́ там, а часы́ здесь."}], "enfasis": [{"ru": "Мои́ очки́ там а часы́ здесь", "nota": "Orden neutro: sigue la idea; primero los lentes y después, en contraste, el reloj."}, {"ru": "Часы́ здесь а мои́ очки́ там", "nota": "Dice lo mismo empezando por el reloj; solo cambia qué mencionas primero.", "es": "El reloj está aquí y mis lentes están allá.", "opciones": ["El reloj está allá y mis lentes están aquí.", "El reloj y mis lentes están allá.", "El reloj está aquí y mi celular está allá."]}]},
-    {"id": "zapatos-botines", "idea": "Di: estos son mis zapatos de vestir y estos mis botines.", "fichas": ["Э́то", "мои́", "ту́фли", "а", "э́то", "мои́", "боти́нки"], "validas": ["Э́то мои́ ту́фли а э́то мои́ боти́нки", "Э́то мои́ боти́нки а э́то мои́ ту́фли"], "texto": "Э́то мои́ ту́фли, а э́то мои́ боти́нки.", "fonetica": "E-ta ma-I TUF-li a E-ta ma-I ba-TIN-ki", "es": "Estos son mis zapatos de vestir y estos mis botines.", "opciones": ["Estos son mis botines y estos mis zapatos de vestir.", "Estos son mis zapatos de vestir y estos mis lentes.", "Estos son mis zapatos de vestir y estos mis botines.", "Estos son mis zapatos y estos tus botines."], "distractores": ["твои́", "о́бувь"], "pista": "Dos prendas plurales: «мои́».", "diccionario": [{"ficha": "Э́то", "forma": "э́то", "es": "esto, esto es", "fonetica": "E-ta", "porque": ""}, {"ficha": "мои́", "forma": "мой", "es": "mi", "fonetica": "ma-I", "porque": "Plural: мой → мои́."}, {"ficha": "ту́фли", "forma": "ту́фли", "es": "zapatos de vestir", "fonetica": "TUF-li", "porque": ""}, {"ficha": "а", "forma": "а", "es": "y, en cambio", "fonetica": "a", "porque": ""}, {"ficha": "э́то", "forma": "э́то", "es": "esto, esto es", "fonetica": "E-ta", "porque": ""}, {"ficha": "мои́", "forma": "мой", "es": "mi", "fonetica": "ma-I", "porque": "Plural: мой → мои́."}, {"ficha": "боти́нки", "forma": "боти́нки", "es": "botines, zapatos cerrados", "fonetica": "ba-TIN-ki", "porque": ""}, {"ficha": "твои́", "forma": "твой", "es": "tu", "fonetica": "tva-I", "porque": "Plural: твой → твои́."}, {"ficha": "о́бувь", "forma": "о́бувь", "es": "calzado", "fonetica": "O-buv'", "porque": ""}], "bloques": [["Э́то", "мои́", "ту́фли"], ["а"], ["э́то", "мои́", "боти́нки"]], "fijo": true, "errores": [{"tipo": "bloque", "fichas": ["Э́то", "мои́", "ту́фли"], "explica": "Э́то, мои́ y ту́фли van juntos: мои́ va con ту́фли (plural)."}, {"tipo": "bloque", "fichas": ["э́то", "мои́", "боти́нки"], "explica": "э́то, мои́ y боти́нки van juntos: мои́ va con боти́нки (plural)."}, {"tipo": "orden", "explica": "Puedes empezar por cualquiera de los dos, pero а va en medio: э́то мои́ ту́фли, а э́то мои́ боти́нки."}, {"tipo": "distractor", "ficha": "твои́", "explica": "твои́ es «tus»; la idea dice «mis»: мои́."}, {"tipo": "distractor", "ficha": "о́бувь", "explica": "о́бувь es «calzado» en general; la idea nombra zapatos de vestir: ту́фли."}], "enfasis": [{"ru": "Э́то мои́ ту́фли а э́то мои́ боти́нки", "nota": "Orden neutro: sigue la idea; primero los zapatos y después, en contraste, los botines."}, {"ru": "Э́то мои́ боти́нки а э́то мои́ ту́фли", "nota": "Dice lo mismo empezando por los botines; solo cambia qué mencionas primero.", "es": "Estos son mis botines y estos mis zapatos de vestir.", "opciones": ["Estos son mis botines y estos mis lentes.", "Estos son tus botines y estos mis zapatos.", "Estos son mis lentes y estos mis zapatos de vestir."]}]},
-    {"id": "playera-negra", "idea": "Di que llevas puesta una playera negra.", "fichas": ["На", "мне", "чёрная", "футбо́лка"], "validas": ["На мне чёрная футбо́лка"], "texto": "На мне чёрная футбо́лка.", "fonetica": "na mnie CHOR-na-ia fud-BOL-ka", "es": "Llevo una playera negra.", "opciones": ["Llevo una playera blanca.", "Llevo unos pantalones negros.", "Él lleva una playera negra.", "Llevo una playera negra."], "distractores": ["бе́лая", "брю́ки"], "pista": "«Llevar puesto» se dice con на + «мне».", "diccionario": [{"ficha": "На", "forma": "на", "es": "en, sobre", "fonetica": "na", "porque": ""}, {"ficha": "мне", "forma": "я", "es": "yo (a mí)", "fonetica": "mnie", "porque": "Despues de на se usa мне: на мне = «sobre mi», o sea «llevo puesto»."}, {"ficha": "чёрная", "forma": "чёрный", "es": "negro", "fonetica": "CHOR-na-ia", "porque": "Femenino (con футбо́лка): чёрный → чёрная."}, {"ficha": "футбо́лка", "forma": "футбо́лка", "es": "playera", "fonetica": "fud-BOL-ka", "porque": ""}, {"ficha": "бе́лая", "forma": "бе́лый", "es": "blanco", "fonetica": "BIE-la-ia", "porque": "Femenino (con футбо́лка): бе́лый → бе́лая."}, {"ficha": "брю́ки", "forma": "брю́ки", "es": "pantalón", "fonetica": "BRIU-ki", "porque": ""}], "bloques": [["На", "мне"], ["чёрная", "футбо́лка"]], "fijo": true, "errores": [{"tipo": "bloque", "fichas": ["На", "мне"], "explica": "На и мне van juntas: на мне = llevo puesto."}, {"tipo": "bloque", "fichas": ["чёрная", "футбо́лка"], "explica": "чёрная и футбо́лка van juntas: чёрная concuerda con футбо́лка (femenino)."}, {"tipo": "orden", "explica": "Primero на мне (llevo puesto) y luego qué llevas: чёрная футбо́лка. «Чёрная футбо́лка на мне» dice otra cosa: «la playera negra la traigo yo»."}, {"tipo": "distractor", "ficha": "бе́лая", "explica": "бе́лая es «blanca»; la idea dice negra: чёрная."}, {"tipo": "distractor", "ficha": "брю́ки", "explica": "брю́ки es «pantalón»; la idea dice playera: футбо́лка."}]},
-    {"id": "nariz-grande", "idea": "Di que él tiene la nariz grande.", "fichas": ["У", "него́", "большо́й", "нос"], "validas": ["У него́ большо́й нос", "Нос у него́ большо́й", "У него́ нос большо́й", "Большо́й нос у него́"], "texto": "У него́ большо́й нос.", "fonetica": "u nie-VO bal'-SHOI nos", "es": "Él tiene la nariz grande.", "opciones": ["Él tiene la nariz grande.", "Él tiene la nariz pequeña.", "Ella tiene la nariz grande.", "Él tiene el ojo grande."], "distractores": ["неё", "глаз"], "pista": "Para «él tiene» se usa у него́.", "diccionario": [{"ficha": "У", "forma": "у", "es": "junto a, en casa de (у меня́ = yo tengo)", "fonetica": "u", "porque": ""}, {"ficha": "него́", "forma": "он", "es": "él (a él)", "fonetica": "nie-VO", "porque": "Después de у se usa него́: он → у него́."}, {"ficha": "большо́й", "forma": "большо́й", "es": "grande", "fonetica": "bal'-SHOI", "porque": ""}, {"ficha": "нос", "forma": "нос", "es": "nariz", "fonetica": "nos", "porque": ""}, {"ficha": "неё", "forma": "она́", "es": "ella (a ella)", "fonetica": "nie-IO", "porque": "Después de у se usa неё: она́ → у неё."}, {"ficha": "глаз", "forma": "глаз", "es": "ojo", "fonetica": "glaz", "porque": ""}], "bloques": [["У", "него́"], ["большо́й"], ["нос"]], "fijo": true, "errores": [{"tipo": "bloque", "fichas": ["У", "него́"], "explica": "У y него́ van juntas: у него́ = él tiene."}, {"tipo": "orden", "explica": "Lo más claro: у него́ al inicio y al final cómo es: у него́ большо́й нос."}, {"tipo": "distractor", "ficha": "неё", "explica": "неё es «ella»; la idea habla de él: него́."}, {"tipo": "distractor", "ficha": "глаз", "explica": "глаз es «ojo»; la idea dice nariz: нос."}], "enfasis": [{"ru": "У него́ большо́й нос", "nota": "Orden neutro: hablas de él; al final va lo nuevo: una nariz grande."}, {"ru": "У него́ нос большо́й", "nota": "Hablas de él y resaltas que su nariz es grande. Casi igual al neutro."}, {"ru": "Нос у него́ большо́й", "nota": "Hablas de su nariz; lo importante es que es grande. Suena a describir rasgo por rasgo."}, {"ru": "Большо́й нос у него́", "nota": "Lo importante es quién: él. Suena a contraste: «la nariz grande la tiene él».", "es": "Es él quien tiene la nariz grande.", "opciones": ["Es él quien tiene la nariz pequeña.", "Es ella quien tiene la nariz grande.", "Es él quien tiene el ojo grande."]}]},
-    {"id": "perfume-maquillaje", "idea": "Aclara que es perfume, no maquillaje.", "fichas": ["Э́то", "духи́", "а", "не", "косме́тика"], "validas": ["Э́то духи́ а не косме́тика", "Э́то не косме́тика а духи́"], "texto": "Э́то духи́, а не косме́тика.", "fonetica": "E-ta du-JI a nie kas-MIE-ti-ka", "es": "Es perfume, no maquillaje.", "opciones": ["Es maquillaje, no perfume.", "Es perfume, no maquillaje.", "No es perfume, es una báscula.", "Es perfume y maquillaje."], "distractores": ["весы́", "но́жницы"], "pista": "«А не» sirve para corregir.", "diccionario": [{"ficha": "Э́то", "forma": "э́то", "es": "esto, esto es", "fonetica": "E-ta", "porque": ""}, {"ficha": "духи́", "forma": "духи́", "es": "perfume", "fonetica": "du-JI", "porque": "Siempre en plural."}, {"ficha": "а", "forma": "а", "es": "y, en cambio", "fonetica": "a", "porque": ""}, {"ficha": "не", "forma": "не", "es": "no (niega la palabra siguiente)", "fonetica": "nie", "porque": ""}, {"ficha": "косме́тика", "forma": "косме́тика", "es": "maquillaje, cosméticos", "fonetica": "kas-MIE-ti-ka", "porque": ""}, {"ficha": "весы́", "forma": "весы́", "es": "báscula", "fonetica": "vie-SY", "porque": "Siempre en plural."}, {"ficha": "но́жницы", "forma": "но́жницы", "es": "tijeras", "fonetica": "NOZH-ni-tsy", "porque": "Siempre en plural."}], "bloques": [["Э́то"], ["духи́"], ["а"], ["не", "косме́тика"]], "fijo": true, "errores": [{"tipo": "bloque", "fichas": ["не", "косме́тика"], "explica": "не y косме́тика van juntas: не va justo antes de косме́тика."}, {"tipo": "orden", "explica": "Empieza con э́то. Después puedes decir духи́, а не косме́тика o не косме́тика, а духи́."}, {"tipo": "distractor", "ficha": "весы́", "explica": "весы́ es «báscula»; la idea habla de perfume y maquillaje."}, {"tipo": "distractor", "ficha": "но́жницы", "explica": "но́жницы es «tijeras»; la idea habla de perfume y maquillaje."}], "enfasis": [{"ru": "Э́то духи́ а не косме́тика", "nota": "Orden neutro: dices primero lo que sí es (perfume) y luego aclaras lo que no es."}, {"ru": "Э́то не косме́тика а духи́", "nota": "Primero niegas lo que alguien pensó y al final va lo correcto. Suena a corregir a alguien.", "es": "No es maquillaje, sino perfume.", "opciones": ["No es perfume, sino maquillaje.", "No es maquillaje, sino una báscula.", "No es una báscula, sino maquillaje."]}]}
-  ],
-  "tarjetas": [
-    {"ru": "оде́жда", "fonetica": "a-DIEZH-da", "es": "ropa", "pista": "Lo que te pones para vestirte.", "tag": "Fem. · inanim.", "nota": "Solo existe en singular."},
-    {"ru": "о́бувь", "fonetica": "O-buv'", "es": "calzado", "pista": "Lo que te pones en los pies.", "tag": "Fem. · inanim.", "nota": "Solo existe en singular."},
-    {"ru": "футбо́лка", "fonetica": "fud-BOL-ka", "es": "playera", "pista": "Prenda de manga corta.", "tag": "Fem. · inanim."},
-    {"ru": "пальто́", "fonetica": "pal'-TO", "es": "abrigo", "pista": "Prenda larga para el frío; no cambia.", "tag": "Neutro · inanim.", "nota": "No cambia nunca."},
-    {"ru": "брю́ки", "fonetica": "BRIU-ki", "es": "pantalón", "pista": "Prenda que cubre las piernas (formal).", "tag": "Plural · inanim.", "nota": "Solo existe en plural."},
-    {"ru": "штаны́", "fonetica": "shta-NY", "es": "pantalones (coloquial)", "pista": "Prenda que cubre las piernas (coloquial).", "tag": "Plural · inanim.", "nota": "Solo existe en plural."},
-    {"ru": "джи́нсы", "fonetica": "DZHYN-sy", "es": "jeans", "pista": "Pantalón de mezclilla.", "tag": "Plural · inanim.", "nota": "Solo existe en plural."},
-    {"ru": "шо́рты", "fonetica": "SHOR-ty", "es": "shorts", "pista": "Pantalón corto.", "tag": "Plural · inanim.", "nota": "Solo existe en plural."},
-    {"ru": "колго́тки", "fonetica": "kal-GOT-ki", "es": "medias, mallas", "pista": "Prenda delgada para piernas.", "tag": "Plural · inanim.", "nota": "Solo existe en plural."},
-    {"ru": "лоси́ны", "fonetica": "la-SI-ny", "es": "leggings", "pista": "Pantalón ajustado de tela elástica.", "tag": "Plural · inanim.", "nota": "También ле́ггинсы. Solo plural."},
-    {"ru": "трусы́", "fonetica": "tru-SY", "es": "calzones, ropa interior", "pista": "Ropa interior de abajo.", "tag": "Plural · inanim.", "nota": "Solo existe en plural."},
-    {"ru": "пла́вки", "fonetica": "PLAF-ki", "es": "traje de baño (de hombre)", "pista": "Ropa para nadar de hombre.", "tag": "Plural · inanim.", "nota": "Solo existe en plural."},
-    {"ru": "боти́нки", "fonetica": "ba-TIN-ki", "es": "botines, zapatos cerrados", "pista": "Calzado cerrado que cubre el tobillo.", "tag": "Plural · inanim.", "nota": "sg. боти́нок"},
-    {"ru": "ту́фли", "fonetica": "TUF-li", "es": "zapatos (de vestir)", "pista": "Calzado elegante para una fiesta.", "tag": "Plural · inanim.", "nota": "sg. ту́фля"},
-    {"ru": "очки́", "fonetica": "ach-KI", "es": "lentes, anteojos", "pista": "Se usan para ver mejor.", "tag": "Plural · inanim.", "nota": "Solo existe en plural."},
-    {"ru": "часы́", "fonetica": "chi-SY", "es": "reloj", "pista": "Indica la hora (siempre plural).", "tag": "Plural · inanim.", "nota": "Solo existe en plural."},
-    {"ru": "духи́", "fonetica": "du-JI", "es": "perfume", "pista": "Líquido para oler bien.", "tag": "Plural · inanim.", "nota": "Solo existe en plural."},
-    {"ru": "косме́тика", "fonetica": "kas-MIE-ti-ka", "es": "maquillaje, cosméticos", "pista": "Productos para la cara: labial, rímel.", "tag": "Fem. · inanim.", "nota": "Solo existe en singular."},
-    {"ru": "но́жницы", "fonetica": "NOZH-ni-tsy", "es": "tijeras", "pista": "Sirven para cortar papel.", "tag": "Plural · inanim.", "nota": "Solo existe en plural."},
-    {"ru": "весы́", "fonetica": "vie-SY", "es": "báscula", "pista": "Sirve para pesarte.", "tag": "Plural · inanim.", "nota": "Solo existe en plural."},
-    {"ru": "моби́льник", "fonetica": "ma-BIL'-nik", "es": "celular", "pista": "Teléfono que llevas en la bolsa.", "tag": "Masc. · inanim.", "nota": "Coloquial."},
-    {"ru": "фигу́ра", "fonetica": "fi-GU-ra", "es": "figura, cuerpo", "pista": "Silueta de una persona.", "tag": "Fem. · inanim."},
-    {"ru": "ко́жа", "fonetica": "KO-zha", "es": "piel", "pista": "Lo que cubre todo tu cuerpo.", "tag": "Fem. · inanim."},
-    {"ru": "во́лосы", "fonetica": "VO-la-sy", "es": "cabello, pelo", "pista": "Lo que crece en tu cabeza.", "tag": "Plural · inanim.", "nota": "ры́жие во́лосы = cabello pelirrojo"},
-    {"ru": "нос", "fonetica": "nos", "es": "nariz", "pista": "Parte de la cara para oler.", "tag": "Masc. · inanim."},
-    {"ru": "глаз", "fonetica": "glaz", "es": "ojo", "pista": "Parte de la cara para ver.", "tag": "Masc. · inanim.", "nota": "pl. глаза́"},
-    {"ru": "у́хо", "fonetica": "U-ja", "es": "oreja, oído", "pista": "Parte de la cabeza para oír.", "tag": "Neutro · inanim.", "nota": "pl. у́ши"},
-    {"ru": "плечо́", "fonetica": "plie-CHO", "es": "hombro", "pista": "Une el brazo con el cuerpo.", "tag": "Neutro · inanim.", "nota": "pl. пле́чи"},
-    {"ru": "се́рдце", "fonetica": "SIER-tse", "es": "corazón", "pista": "Órgano que bombea sangre.", "tag": "Neutro · inanim.", "nota": "La д no se pronuncia: «sértse»."},
-    {"ru": "душа́", "fonetica": "du-SHA", "es": "alma", "pista": "Parte espiritual de la persona.", "tag": "Fem. · inanim."},
-    {"ru": "крыло́", "fonetica": "kry-LO", "es": "ala", "pista": "Con ellas vuelan las aves.", "tag": "Neutro · inanim.", "nota": "pl. кры́лья"},
-    {"ru": "коле́ни", "fonetica": "ka-LIE-ni", "es": "rodillas", "pista": "Articulación de la pierna.", "tag": "Plural · inanim.", "nota": "sg. коле́но"}
-  ]
+ "id": "ropa-cuerpo",
+ "titulo": "Ropa",
+ "grupo": "Vocabulario",
+ "descripcion": "Prendas, calzado y cosas de uso personal. Muchas prendas solo existen en plural.",
+ "frases": [
+  {
+   "id": "jeans-nuevos",
+   "idea": "Di que tienes unos jeans nuevos.",
+   "fichas": [
+    "У",
+    "меня́",
+    "есть",
+    "но́вые",
+    "джи́нсы"
+   ],
+   "validas": [
+    "У меня́ есть но́вые джи́нсы",
+    "Но́вые джи́нсы у меня́ есть"
+   ],
+   "texto": "У меня́ есть но́вые джи́нсы.",
+   "fonetica": "u mie-NIA iest' NO-vy-ie DZHYN-sy",
+   "es": "Tengo unos jeans nuevos.",
+   "opciones": [
+    "Tengo unos jeans nuevos.",
+    "Tengo unos shorts nuevos.",
+    "Tenía unos jeans nuevos.",
+    "Tengo unos jeans viejos."
+   ],
+   "distractores": [
+    "шо́рты",
+    "но́вый"
+   ],
+   "pista": "«Джи́нсы» es plural: el adjetivo también.",
+   "diccionario": [
+    {
+     "ficha": "У",
+     "forma": "у",
+     "es": "junto a, en casa de (у меня́ = yo tengo)",
+     "fonetica": "u",
+     "porque": ""
+    },
+    {
+     "ficha": "меня́",
+     "forma": "я",
+     "es": "yo (a mí)",
+     "fonetica": "mie-NIA",
+     "porque": "Con «зову́т» y «у» se usa la forma меня́: я → меня́."
+    },
+    {
+     "ficha": "есть",
+     "forma": "быть",
+     "es": "haber, tener (есть = hay)",
+     "fonetica": "iest'",
+     "porque": "Presente de быть: у меня́ есть = tengo."
+    },
+    {
+     "ficha": "но́вые",
+     "forma": "но́вый",
+     "es": "nuevo",
+     "fonetica": "NO-vy-ie",
+     "porque": "Plural (con джи́нсы): но́вый → но́вые."
+    },
+    {
+     "ficha": "джи́нсы",
+     "forma": "джи́нсы",
+     "es": "jeans",
+     "fonetica": "DZHYN-sy",
+     "porque": "Siempre en plural."
+    },
+    {
+     "ficha": "шо́рты",
+     "forma": "шо́рты",
+     "es": "shorts",
+     "fonetica": "SHOR-ty",
+     "porque": ""
+    },
+    {
+     "ficha": "но́вый",
+     "forma": "но́вый",
+     "es": "nuevo",
+     "fonetica": "NO-vyi",
+     "porque": ""
+    }
+   ],
+   "bloques": [
+    [
+     "У",
+     "меня́",
+     "есть"
+    ],
+    [
+     "но́вые",
+     "джи́нсы"
+    ]
+   ],
+   "fijo": true,
+   "errores": [
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "У",
+      "меня́",
+      "есть"
+     ],
+     "explica": "У, меня́ y есть van juntas: у меня́ есть = tengo."
+    },
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "но́вые",
+      "джи́нсы"
+     ],
+     "explica": "но́вые и джи́нсы van juntos: джи́нсы es plural y но́вые también."
+    },
+    {
+     "tipo": "orden",
+     "explica": "Usa у меня́ есть completo: у меня́ есть но́вые джи́нсы (lo normal) o, para contrastar, но́вые джи́нсы у меня́ есть."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "шо́рты",
+     "explica": "шо́рты es «shorts»; la idea dice jeans: джи́нсы."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "но́вый",
+     "explica": "но́вый es singular; джи́нсы es plural: но́вые."
+    }
+   ],
+   "enfasis": [
+    {
+     "ru": "У меня́ есть но́вые джи́нсы",
+     "nota": "Orden neutro: «tengo» va al inicio y al final va lo nuevo: qué tienes."
+    },
+    {
+     "ru": "Но́вые джи́нсы у меня́ есть",
+     "nota": "Empieza por los jeans nuevos: suena a contraste, como «los jeans nuevos, eso sí tengo»."
+    }
+   ]
+  },
+  {
+   "id": "lentes-reloj",
+   "idea": "Di que tus lentes están allá y tu reloj aquí.",
+   "fichas": [
+    "Мои́",
+    "очки́",
+    "там",
+    "а",
+    "часы́",
+    "здесь"
+   ],
+   "validas": [
+    "Мои́ очки́ там а часы́ здесь",
+    "Часы́ здесь а мои́ очки́ там"
+   ],
+   "texto": "Мои́ очки́ там, а часы́ здесь.",
+   "fonetica": "ma-I ach-KI tam a chi-SY zdies'",
+   "es": "Mis lentes están allá y el reloj está aquí.",
+   "opciones": [
+    "Mis lentes están aquí y el reloj allá.",
+    "Mis lentes están allá y el reloj está aquí.",
+    "Mis lentes y mi reloj están allá.",
+    "Mis botines están allá y el reloj aquí."
+   ],
+   "distractores": [
+    "боти́нки",
+    "духи́"
+   ],
+   "pista": "«Очки́» es plural: «мои́».",
+   "diccionario": [
+    {
+     "ficha": "Мои́",
+     "forma": "мой",
+     "es": "mi",
+     "fonetica": "ma-I",
+     "porque": "Plural: мой → мои́."
+    },
+    {
+     "ficha": "очки́",
+     "forma": "очки́",
+     "es": "lentes, anteojos",
+     "fonetica": "ach-KI",
+     "porque": "Siempre en plural."
+    },
+    {
+     "ficha": "там",
+     "forma": "там",
+     "es": "allí, allá",
+     "fonetica": "tam",
+     "porque": ""
+    },
+    {
+     "ficha": "а",
+     "forma": "а",
+     "es": "y, en cambio",
+     "fonetica": "a",
+     "porque": ""
+    },
+    {
+     "ficha": "часы́",
+     "forma": "часы́",
+     "es": "reloj",
+     "fonetica": "chi-SY",
+     "porque": "Siempre en plural."
+    },
+    {
+     "ficha": "здесь",
+     "forma": "здесь",
+     "es": "aquí",
+     "fonetica": "zdies'",
+     "porque": ""
+    },
+    {
+     "ficha": "боти́нки",
+     "forma": "боти́нки",
+     "es": "botines",
+     "fonetica": "ba-TIN-ki",
+     "porque": ""
+    },
+    {
+     "ficha": "духи́",
+     "forma": "духи́",
+     "es": "perfume",
+     "fonetica": "du-JI",
+     "porque": "Siempre en plural."
+    }
+   ],
+   "bloques": [
+    [
+     "Мои́",
+     "очки́",
+     "там"
+    ],
+    [
+     "а"
+    ],
+    [
+     "часы́",
+     "здесь"
+    ]
+   ],
+   "fijo": true,
+   "errores": [
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "Мои́",
+      "очки́",
+      "там"
+     ],
+     "explica": "Мои́, очки́ y там van juntos: мои́ очки́ там = mis lentes están allá."
+    },
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "часы́",
+      "здесь"
+     ],
+     "explica": "часы́ и здесь van juntos: часы́ здесь = el reloj está aquí."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "боти́нки",
+     "explica": "боти́нки es «botines»; la idea dice reloj: часы́."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "духи́",
+     "explica": "духи́ es «perfume»; la idea dice reloj: часы́."
+    },
+    {
+     "tipo": "orden",
+     "explica": "Puedes empezar por cualquiera de las dos partes, pero а va en medio: мои́ очки́ там, а часы́ здесь."
+    }
+   ],
+   "enfasis": [
+    {
+     "ru": "Мои́ очки́ там а часы́ здесь",
+     "nota": "Orden neutro: sigue la idea; primero los lentes y después, en contraste, el reloj."
+    },
+    {
+     "ru": "Часы́ здесь а мои́ очки́ там",
+     "nota": "Dice lo mismo empezando por el reloj; solo cambia qué mencionas primero.",
+     "es": "El reloj está aquí y mis lentes están allá.",
+     "opciones": [
+      "El reloj está allá y mis lentes están aquí.",
+      "El reloj y mis lentes están allá.",
+      "El reloj está aquí y mis botines están allá."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "zapatos-botines",
+   "idea": "Di: estos son mis zapatos de vestir y estos mis botines.",
+   "fichas": [
+    "Э́то",
+    "мои́",
+    "ту́фли",
+    "а",
+    "э́то",
+    "мои́",
+    "боти́нки"
+   ],
+   "validas": [
+    "Э́то мои́ ту́фли а э́то мои́ боти́нки",
+    "Э́то мои́ боти́нки а э́то мои́ ту́фли"
+   ],
+   "texto": "Э́то мои́ ту́фли, а э́то мои́ боти́нки.",
+   "fonetica": "E-ta ma-I TUF-li a E-ta ma-I ba-TIN-ki",
+   "es": "Estos son mis zapatos de vestir y estos mis botines.",
+   "opciones": [
+    "Estos son mis botines y estos mis zapatos de vestir.",
+    "Estos son mis zapatos de vestir y estos mis lentes.",
+    "Estos son mis zapatos de vestir y estos mis botines.",
+    "Estos son mis zapatos y estos tus botines."
+   ],
+   "distractores": [
+    "твои́",
+    "о́бувь"
+   ],
+   "pista": "Dos prendas plurales: «мои́».",
+   "diccionario": [
+    {
+     "ficha": "Э́то",
+     "forma": "э́то",
+     "es": "esto, esto es",
+     "fonetica": "E-ta",
+     "porque": ""
+    },
+    {
+     "ficha": "мои́",
+     "forma": "мой",
+     "es": "mi",
+     "fonetica": "ma-I",
+     "porque": "Plural: мой → мои́."
+    },
+    {
+     "ficha": "ту́фли",
+     "forma": "ту́фли",
+     "es": "zapatos de vestir",
+     "fonetica": "TUF-li",
+     "porque": ""
+    },
+    {
+     "ficha": "а",
+     "forma": "а",
+     "es": "y, en cambio",
+     "fonetica": "a",
+     "porque": ""
+    },
+    {
+     "ficha": "э́то",
+     "forma": "э́то",
+     "es": "esto, esto es",
+     "fonetica": "E-ta",
+     "porque": ""
+    },
+    {
+     "ficha": "мои́",
+     "forma": "мой",
+     "es": "mi",
+     "fonetica": "ma-I",
+     "porque": "Plural: мой → мои́."
+    },
+    {
+     "ficha": "боти́нки",
+     "forma": "боти́нки",
+     "es": "botines, zapatos cerrados",
+     "fonetica": "ba-TIN-ki",
+     "porque": ""
+    },
+    {
+     "ficha": "твои́",
+     "forma": "твой",
+     "es": "tu",
+     "fonetica": "tva-I",
+     "porque": "Plural: твой → твои́."
+    },
+    {
+     "ficha": "о́бувь",
+     "forma": "о́бувь",
+     "es": "calzado",
+     "fonetica": "O-buv'",
+     "porque": ""
+    }
+   ],
+   "bloques": [
+    [
+     "Э́то",
+     "мои́",
+     "ту́фли"
+    ],
+    [
+     "а"
+    ],
+    [
+     "э́то",
+     "мои́",
+     "боти́нки"
+    ]
+   ],
+   "fijo": true,
+   "errores": [
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "Э́то",
+      "мои́",
+      "ту́фли"
+     ],
+     "explica": "Э́то, мои́ y ту́фли van juntos: мои́ va con ту́фли (plural)."
+    },
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "э́то",
+      "мои́",
+      "боти́нки"
+     ],
+     "explica": "э́то, мои́ y боти́нки van juntos: мои́ va con боти́нки (plural)."
+    },
+    {
+     "tipo": "orden",
+     "explica": "Puedes empezar por cualquiera de los dos, pero а va en medio: э́то мои́ ту́фли, а э́то мои́ боти́нки."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "твои́",
+     "explica": "твои́ es «tus»; la idea dice «mis»: мои́."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "о́бувь",
+     "explica": "о́бувь es «calzado» en general; la idea nombra zapatos de vestir: ту́фли."
+    }
+   ],
+   "enfasis": [
+    {
+     "ru": "Э́то мои́ ту́фли а э́то мои́ боти́нки",
+     "nota": "Orden neutro: sigue la idea; primero los zapatos y después, en contraste, los botines."
+    },
+    {
+     "ru": "Э́то мои́ боти́нки а э́то мои́ ту́фли",
+     "nota": "Dice lo mismo empezando por los botines; solo cambia qué mencionas primero.",
+     "es": "Estos son mis botines y estos mis zapatos de vestir.",
+     "opciones": [
+      "Estos son mis botines y estos mis lentes.",
+      "Estos son tus botines y estos mis zapatos.",
+      "Estos son mis lentes y estos mis zapatos de vestir."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "playera-negra",
+   "idea": "Di que llevas puesta una playera negra.",
+   "fichas": [
+    "На",
+    "мне",
+    "чёрная",
+    "футбо́лка"
+   ],
+   "validas": [
+    "На мне чёрная футбо́лка"
+   ],
+   "texto": "На мне чёрная футбо́лка.",
+   "fonetica": "na mnie CHOR-na-ia fud-BOL-ka",
+   "es": "Llevo una playera negra.",
+   "opciones": [
+    "Llevo una playera blanca.",
+    "Llevo unos pantalones negros.",
+    "Él lleva una playera negra.",
+    "Llevo una playera negra."
+   ],
+   "distractores": [
+    "бе́лая",
+    "брю́ки"
+   ],
+   "pista": "«Llevar puesto» se dice con на + «мне».",
+   "diccionario": [
+    {
+     "ficha": "На",
+     "forma": "на",
+     "es": "en, sobre",
+     "fonetica": "na",
+     "porque": ""
+    },
+    {
+     "ficha": "мне",
+     "forma": "я",
+     "es": "yo (a mí)",
+     "fonetica": "mnie",
+     "porque": "Despues de на se usa мне: на мне = «sobre mi», o sea «llevo puesto»."
+    },
+    {
+     "ficha": "чёрная",
+     "forma": "чёрный",
+     "es": "negro",
+     "fonetica": "CHOR-na-ia",
+     "porque": "Femenino (con футбо́лка): чёрный → чёрная."
+    },
+    {
+     "ficha": "футбо́лка",
+     "forma": "футбо́лка",
+     "es": "playera",
+     "fonetica": "fud-BOL-ka",
+     "porque": ""
+    },
+    {
+     "ficha": "бе́лая",
+     "forma": "бе́лый",
+     "es": "blanco",
+     "fonetica": "BIE-la-ia",
+     "porque": "Femenino (con футбо́лка): бе́лый → бе́лая."
+    },
+    {
+     "ficha": "брю́ки",
+     "forma": "брю́ки",
+     "es": "pantalón",
+     "fonetica": "BRIU-ki",
+     "porque": ""
+    }
+   ],
+   "bloques": [
+    [
+     "На",
+     "мне"
+    ],
+    [
+     "чёрная",
+     "футбо́лка"
+    ]
+   ],
+   "fijo": true,
+   "errores": [
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "На",
+      "мне"
+     ],
+     "explica": "На и мне van juntas: на мне = llevo puesto."
+    },
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "чёрная",
+      "футбо́лка"
+     ],
+     "explica": "чёрная и футбо́лка van juntas: чёрная concuerda con футбо́лка (femenino)."
+    },
+    {
+     "tipo": "orden",
+     "explica": "Primero на мне (llevo puesto) y luego qué llevas: чёрная футбо́лка. «Чёрная футбо́лка на мне» dice otra cosa: «la playera negra la traigo yo»."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "бе́лая",
+     "explica": "бе́лая es «blanca»; la idea dice negra: чёрная."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "брю́ки",
+     "explica": "брю́ки es «pantalón»; la idea dice playera: футбо́лка."
+    }
+   ]
+  },
+  {
+   "id": "nariz-grande",
+   "idea": "Di que él tiene la nariz grande.",
+   "fichas": [
+    "У",
+    "него́",
+    "большо́й",
+    "нос"
+   ],
+   "validas": [
+    "У него́ большо́й нос",
+    "Нос у него́ большо́й",
+    "У него́ нос большо́й",
+    "Большо́й нос у него́"
+   ],
+   "texto": "У него́ большо́й нос.",
+   "fonetica": "u nie-VO bal'-SHOI nos",
+   "es": "Él tiene la nariz grande.",
+   "opciones": [
+    "Él tiene la nariz grande.",
+    "Él tiene la nariz pequeña.",
+    "Ella tiene la nariz grande.",
+    "Él tiene el ojo grande."
+   ],
+   "distractores": [
+    "неё",
+    "глаз"
+   ],
+   "pista": "Para «él tiene» se usa у него́.",
+   "diccionario": [
+    {
+     "ficha": "У",
+     "forma": "у",
+     "es": "junto a, en casa de (у меня́ = yo tengo)",
+     "fonetica": "u",
+     "porque": ""
+    },
+    {
+     "ficha": "него́",
+     "forma": "он",
+     "es": "él (a él)",
+     "fonetica": "nie-VO",
+     "porque": "Después de у se usa него́: он → у него́."
+    },
+    {
+     "ficha": "большо́й",
+     "forma": "большо́й",
+     "es": "grande",
+     "fonetica": "bal'-SHOI",
+     "porque": ""
+    },
+    {
+     "ficha": "нос",
+     "forma": "нос",
+     "es": "nariz",
+     "fonetica": "nos",
+     "porque": ""
+    },
+    {
+     "ficha": "неё",
+     "forma": "она́",
+     "es": "ella (a ella)",
+     "fonetica": "nie-IO",
+     "porque": "Después de у se usa неё: она́ → у неё."
+    },
+    {
+     "ficha": "глаз",
+     "forma": "глаз",
+     "es": "ojo",
+     "fonetica": "glaz",
+     "porque": ""
+    }
+   ],
+   "bloques": [
+    [
+     "У",
+     "него́"
+    ],
+    [
+     "большо́й"
+    ],
+    [
+     "нос"
+    ]
+   ],
+   "fijo": true,
+   "errores": [
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "У",
+      "него́"
+     ],
+     "explica": "У y него́ van juntas: у него́ = él tiene."
+    },
+    {
+     "tipo": "orden",
+     "explica": "Lo más claro: у него́ al inicio y al final cómo es: у него́ большо́й нос."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "неё",
+     "explica": "неё es «ella»; la idea habla de él: него́."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "глаз",
+     "explica": "глаз es «ojo»; la idea dice nariz: нос."
+    }
+   ],
+   "enfasis": [
+    {
+     "ru": "У него́ большо́й нос",
+     "nota": "Orden neutro: hablas de él; al final va lo nuevo: una nariz grande."
+    },
+    {
+     "ru": "У него́ нос большо́й",
+     "nota": "Hablas de él y resaltas que su nariz es grande. Casi igual al neutro."
+    },
+    {
+     "ru": "Нос у него́ большо́й",
+     "nota": "Hablas de su nariz; lo importante es que es grande. Suena a describir rasgo por rasgo."
+    },
+    {
+     "ru": "Большо́й нос у него́",
+     "nota": "Lo importante es quién: él. Suena a contraste: «la nariz grande la tiene él».",
+     "es": "Es él quien tiene la nariz grande.",
+     "opciones": [
+      "Es él quien tiene la nariz pequeña.",
+      "Es ella quien tiene la nariz grande.",
+      "Es él quien tiene el ojo grande."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "perfume-maquillaje",
+   "idea": "Aclara que es perfume, no maquillaje.",
+   "fichas": [
+    "Э́то",
+    "духи́",
+    "а",
+    "не",
+    "косме́тика"
+   ],
+   "validas": [
+    "Э́то духи́ а не косме́тика",
+    "Э́то не косме́тика а духи́"
+   ],
+   "texto": "Э́то духи́, а не косме́тика.",
+   "fonetica": "E-ta du-JI a nie kas-MIE-ti-ka",
+   "es": "Es perfume, no maquillaje.",
+   "opciones": [
+    "Es maquillaje, no perfume.",
+    "Es perfume, no maquillaje.",
+    "No es perfume, son unos lentes.",
+    "Es perfume y maquillaje."
+   ],
+   "distractores": [
+    "ту́фли",
+    "очки́"
+   ],
+   "pista": "«А не» sirve para corregir.",
+   "diccionario": [
+    {
+     "ficha": "Э́то",
+     "forma": "э́то",
+     "es": "esto, esto es",
+     "fonetica": "E-ta",
+     "porque": ""
+    },
+    {
+     "ficha": "духи́",
+     "forma": "духи́",
+     "es": "perfume",
+     "fonetica": "du-JI",
+     "porque": "Siempre en plural."
+    },
+    {
+     "ficha": "а",
+     "forma": "а",
+     "es": "y, en cambio",
+     "fonetica": "a",
+     "porque": ""
+    },
+    {
+     "ficha": "не",
+     "forma": "не",
+     "es": "no (niega la palabra siguiente)",
+     "fonetica": "nie",
+     "porque": ""
+    },
+    {
+     "ficha": "косме́тика",
+     "forma": "косме́тика",
+     "es": "maquillaje, cosméticos",
+     "fonetica": "kas-MIE-ti-ka",
+     "porque": ""
+    },
+    {
+     "ficha": "ту́фли",
+     "forma": "ту́фли",
+     "es": "zapatos",
+     "fonetica": "TUF-li",
+     "porque": "Siempre en plural."
+    },
+    {
+     "ficha": "очки́",
+     "forma": "очки́",
+     "es": "lentes",
+     "fonetica": "ach-KI",
+     "porque": "Solo existe en plural."
+    }
+   ],
+   "bloques": [
+    [
+     "Э́то"
+    ],
+    [
+     "духи́"
+    ],
+    [
+     "а"
+    ],
+    [
+     "не",
+     "косме́тика"
+    ]
+   ],
+   "fijo": true,
+   "errores": [
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "не",
+      "косме́тика"
+     ],
+     "explica": "не y косме́тика van juntas: не va justo antes de косме́тика."
+    },
+    {
+     "tipo": "orden",
+     "explica": "Empieza con э́то. Después puedes decir духи́, а не косме́тика o не косме́тика, а духи́."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "ту́фли",
+     "explica": "ту́фли es «zapatos»; la idea habla de perfume y maquillaje."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "очки́",
+     "explica": "очки́ es «lentes»; la idea habla de perfume y maquillaje."
+    }
+   ],
+   "enfasis": [
+    {
+     "ru": "Э́то духи́ а не косме́тика",
+     "nota": "Orden neutro: dices primero lo que sí es (perfume) y luego aclaras lo que no es."
+    },
+    {
+     "ru": "Э́то не косме́тика а духи́",
+     "nota": "Primero niegas lo que alguien pensó y al final va lo correcto. Suena a corregir a alguien.",
+     "es": "No es maquillaje, sino perfume.",
+     "opciones": [
+      "No es perfume, sino maquillaje.",
+      "No es maquillaje, sino unos lentes.",
+      "No son unos lentes, sino maquillaje."
+     ]
+    }
+   ]
+  }
+ ],
+ "tarjetas": [
+  {
+   "ru": "оде́жда",
+   "fonetica": "a-DIEZH-da",
+   "es": "ropa",
+   "pista": "Lo que te pones para vestirte.",
+   "tag": "Fem. · inanim.",
+   "nota": "Solo existe en singular."
+  },
+  {
+   "ru": "о́бувь",
+   "fonetica": "O-buv'",
+   "es": "calzado",
+   "pista": "Lo que te pones en los pies.",
+   "tag": "Fem. · inanim.",
+   "nota": "Solo existe en singular."
+  },
+  {
+   "ru": "футбо́лка",
+   "fonetica": "fud-BOL-ka",
+   "es": "playera",
+   "pista": "Prenda de manga corta.",
+   "tag": "Fem. · inanim."
+  },
+  {
+   "ru": "пальто́",
+   "fonetica": "pal'-TO",
+   "es": "abrigo",
+   "pista": "Prenda larga para el frío; no cambia.",
+   "tag": "Neutro · inanim.",
+   "nota": "No cambia nunca."
+  },
+  {
+   "ru": "брю́ки",
+   "fonetica": "BRIU-ki",
+   "es": "pantalón",
+   "pista": "Prenda que cubre las piernas (formal).",
+   "tag": "Plural · inanim.",
+   "nota": "Solo existe en plural."
+  },
+  {
+   "ru": "штаны́",
+   "fonetica": "shta-NY",
+   "es": "pantalones (coloquial)",
+   "pista": "Prenda que cubre las piernas (coloquial).",
+   "tag": "Plural · inanim.",
+   "nota": "Solo existe en plural."
+  },
+  {
+   "ru": "джи́нсы",
+   "fonetica": "DZHYN-sy",
+   "es": "jeans",
+   "pista": "Pantalón de mezclilla.",
+   "tag": "Plural · inanim.",
+   "nota": "Solo existe en plural."
+  },
+  {
+   "ru": "шо́рты",
+   "fonetica": "SHOR-ty",
+   "es": "shorts",
+   "pista": "Pantalón corto.",
+   "tag": "Plural · inanim.",
+   "nota": "Solo existe en plural."
+  },
+  {
+   "ru": "колго́тки",
+   "fonetica": "kal-GOT-ki",
+   "es": "medias, mallas",
+   "pista": "Prenda delgada para piernas.",
+   "tag": "Plural · inanim.",
+   "nota": "Solo existe en plural."
+  },
+  {
+   "ru": "лоси́ны",
+   "fonetica": "la-SI-ny",
+   "es": "leggings",
+   "pista": "Pantalón ajustado de tela elástica.",
+   "tag": "Plural · inanim.",
+   "nota": "También ле́ггинсы. Solo plural."
+  },
+  {
+   "ru": "трусы́",
+   "fonetica": "tru-SY",
+   "es": "calzones, ropa interior",
+   "pista": "Ropa interior de abajo.",
+   "tag": "Plural · inanim.",
+   "nota": "Solo existe en plural."
+  },
+  {
+   "ru": "пла́вки",
+   "fonetica": "PLAF-ki",
+   "es": "traje de baño (de hombre)",
+   "pista": "Ropa para nadar de hombre.",
+   "tag": "Plural · inanim.",
+   "nota": "Solo existe en plural."
+  },
+  {
+   "ru": "боти́нки",
+   "fonetica": "ba-TIN-ki",
+   "es": "botines, zapatos cerrados",
+   "pista": "Calzado cerrado que cubre el tobillo.",
+   "tag": "Plural · inanim.",
+   "nota": "sg. боти́нок"
+  },
+  {
+   "ru": "ту́фли",
+   "fonetica": "TUF-li",
+   "es": "zapatos (de vestir)",
+   "pista": "Calzado elegante para una fiesta.",
+   "tag": "Plural · inanim.",
+   "nota": "sg. ту́фля"
+  },
+  {
+   "ru": "очки́",
+   "fonetica": "ach-KI",
+   "es": "lentes, anteojos",
+   "pista": "Se usan para ver mejor.",
+   "tag": "Plural · inanim.",
+   "nota": "Solo existe en plural."
+  },
+  {
+   "ru": "часы́",
+   "fonetica": "chi-SY",
+   "es": "reloj",
+   "pista": "Indica la hora (siempre plural).",
+   "tag": "Plural · inanim.",
+   "nota": "Solo existe en plural."
+  },
+  {
+   "ru": "духи́",
+   "fonetica": "du-JI",
+   "es": "perfume",
+   "pista": "Líquido para oler bien.",
+   "tag": "Plural · inanim.",
+   "nota": "Solo existe en plural."
+  },
+  {
+   "ru": "косме́тика",
+   "fonetica": "kas-MIE-ti-ka",
+   "es": "maquillaje, cosméticos",
+   "pista": "Productos para la cara: labial, rímel.",
+   "tag": "Fem. · inanim.",
+   "nota": "Solo existe en singular."
+  }
+ ]
 }

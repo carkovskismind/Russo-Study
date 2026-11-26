@@ -556,7 +556,41 @@ export class Store {
     this.save();
   }
 
+  // 4.2.2 · Ejercicios a medias: una clave por ejercicio y por día (fecha local), solo en este dispositivo.
+  // Lo de otros días se ignora y se borra.
+  _parcialKey(tipo, id) {
+    return `${PREFIX}parcial-${dateKey(Date.now())}-${tipo}-${id}`;
+  }
+
+  parcialGet(tipo, id) {
+    try {
+      const raw = localStorage.getItem(this._parcialKey(tipo, id));
+      const d = raw ? JSON.parse(raw) : null;
+      return d && typeof d === "object" ? d : null;
+    } catch { return null; }
+  }
+
+  parcialSet(tipo, id, data) {
+    try { localStorage.setItem(this._parcialKey(tipo, id), JSON.stringify(data)); } catch { /* sin almacenamiento */ }
+  }
+
+  parcialDel(tipo, id) {
+    try { localStorage.removeItem(this._parcialKey(tipo, id)); } catch { /* sin almacenamiento */ }
+  }
+
+  // Borra lo guardado de otros días (o todo, si all es true).
+  parcialPurge(all = false) {
+    try {
+      const pre = `${PREFIX}parcial-`;
+      const hoy = `${pre}${dateKey(Date.now())}-`;
+      for (const k of Object.keys(localStorage)) {
+        if (k.startsWith(pre) && (all || !k.startsWith(hoy))) localStorage.removeItem(k);
+      }
+    } catch { /* sin almacenamiento */ }
+  }
+
   reset() {
+    this.parcialPurge(true);
     const now = Date.now();
     const settings = { ...this.p.settings, t: now };
     const notes = this.p.notes;

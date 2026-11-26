@@ -1,67 +1,1081 @@
 {
-  "id": "ideas",
-  "titulo": "Ideas, sentimientos y sociedad",
-  "grupo": "Vocabulario",
-  "descripcion": "Conceptos abstractos, emociones y temas de la vida en sociedad.",
-  "frases": [
-    {"id": "amistad-alegria", "idea": "Di que la amistad es alegría.", "fichas": ["Дру́жба", "ра́дость"], "validas": ["Дру́жба ра́дость"], "texto": "Дру́жба — ра́дость.", "fonetica": "DRUZH-ba RA-dast'", "es": "La amistad es alegría.", "opciones": ["La amistad es alegría.", "El amor es alegría.", "La amistad es un problema.", "La amistad era alegría."], "distractores": ["любо́вь", "жизнь"], "pista": "Sin «es» en presente: se pone una raya.", "diccionario": [{"ficha": "Дру́жба", "forma": "дру́жба", "es": "amistad", "fonetica": "DRUZH-ba", "porque": ""}, {"ficha": "ра́дость", "forma": "ра́дость", "es": "alegría", "fonetica": "RA-dast'", "porque": ""}, {"ficha": "любо́вь", "forma": "любо́вь", "es": "amor", "fonetica": "liu-BOV'", "porque": ""}, {"ficha": "жизнь", "forma": "жизнь", "es": "vida", "fonetica": "zhyzn'", "porque": ""}], "bloques": [["Дру́жба"], ["ра́дость"]], "fijo": true, "errores": [{"tipo": "orden", "explica": "Primero el tema (дру́жба) y luego lo que es (ра́дость). En presente no se dice «es»."}, {"tipo": "distractor", "ficha": "любо́вь", "explica": "любо́вь es «amor»; la idea dice amistad y alegría."}, {"tipo": "distractor", "ficha": "жизнь", "explica": "жизнь es «vida»; la idea dice amistad y alegría."}]},
-    {"id": "tengo-sueno", "idea": "Di que tienes un sueño (una aspiración).", "fichas": ["У", "меня́", "есть", "мечта́"], "validas": ["У меня́ есть мечта́", "Мечта́ у меня́ есть"], "texto": "У меня́ есть мечта́.", "fonetica": "u mie-NIA iest' miech-TA", "es": "Tengo un sueño.", "opciones": ["Tengo un problema.", "Tengo un sueño.", "Tengo una idea.", "Tenía un sueño."], "distractores": ["иде́я", "сон"], "pista": "No es el sueño de dormir.", "diccionario": [{"ficha": "У", "forma": "у", "es": "junto a, en casa de (у меня́ = yo tengo)", "fonetica": "u", "porque": ""}, {"ficha": "меня́", "forma": "я", "es": "yo (a mí)", "fonetica": "mie-NIA", "porque": "Después de «у» se usa la forma меня́: я → меня́."}, {"ficha": "есть", "forma": "быть", "es": "haber, tener (есть = hay)", "fonetica": "iest'", "porque": "Presente de быть: у меня́ есть = tengo."}, {"ficha": "мечта́", "forma": "мечта́", "es": "sueño, anhelo", "fonetica": "miech-TA", "porque": ""}, {"ficha": "иде́я", "forma": "иде́я", "es": "idea", "fonetica": "i-DIE-ia", "porque": ""}, {"ficha": "сон", "forma": "сон", "es": "sueño (dormir)", "fonetica": "son", "porque": ""}], "bloques": [["У", "меня́", "есть"], ["мечта́"]], "fijo": true, "errores": [{"tipo": "bloque", "fichas": ["У", "меня́", "есть"], "explica": "У, меня́ y есть van juntas: у меня́ есть = tengo."}, {"tipo": "orden", "explica": "Usa у меня́ есть completo: у меня́ есть мечта́ (lo normal) o, para contrastar, мечта́ у меня́ есть."}, {"tipo": "distractor", "ficha": "иде́я", "explica": "иде́я es «idea»; el sueño que deseas es мечта́."}, {"tipo": "distractor", "ficha": "сон", "explica": "сон es el sueño al dormir; el sueño que deseas es мечта́."}], "enfasis": [{"ru": "У меня́ есть мечта́", "nota": "Orden neutro: «tengo» va al inicio y al final va lo nuevo: qué tienes."}, {"ru": "Мечта́ у меня́ есть", "nota": "Empieza por el sueño: suena a contraste, como «el sueño, eso sí tengo»."}]},
-    {"id": "miedo-risa", "idea": "Di que tú tienes miedo y a él le da risa.", "fichas": ["Мне", "стра́шно", "а", "ему́", "смешно́"], "validas": ["Мне стра́шно а ему́ смешно́", "Ему́ смешно́ а мне стра́шно"], "texto": "Мне стра́шно, а ему́ смешно́.", "fonetica": "mnie STRASH-na a ie-MU smiesh-NO", "es": "Tengo miedo y a él le da risa.", "opciones": ["Me da risa y a él miedo.", "Tengo miedo y a ella le da risa.", "Tengo miedo y a él le da risa.", "Me aburro y a él le da risa."], "distractores": ["ску́чно", "ей"], "pista": "El sentimiento se dice con «мне» o «ему́».", "diccionario": [{"ficha": "Мне", "forma": "я", "es": "yo (a mí)", "fonetica": "mnie", "porque": "Cambia como я → мне (para sentimientos)."}, {"ficha": "стра́шно", "forma": "стра́шно", "es": "da miedo", "fonetica": "STRASH-na", "porque": ""}, {"ficha": "а", "forma": "а", "es": "y, en cambio", "fonetica": "a", "porque": ""}, {"ficha": "ему́", "forma": "он", "es": "él (a él)", "fonetica": "ie-MU", "porque": "Cambia como он → ему́ (para sentimientos)."}, {"ficha": "смешно́", "forma": "смешно́", "es": "da risa, es gracioso", "fonetica": "smiesh-NO", "porque": ""}, {"ficha": "ску́чно", "forma": "ску́чно", "es": "es aburrido", "fonetica": "SKUSH-na", "porque": ""}, {"ficha": "ей", "forma": "она́", "es": "ella (a ella)", "fonetica": "iei", "porque": "Cambia como она́ → ей."}], "bloques": [["Мне", "стра́шно"], ["а"], ["ему́", "смешно́"]], "fijo": true, "errores": [{"tipo": "bloque", "fichas": ["Мне", "стра́шно"], "explica": "Мне и стра́шно van juntas: мне стра́шно = tengo miedo."}, {"tipo": "bloque", "fichas": ["ему́", "смешно́"], "explica": "ему́ и смешно́ van juntas: ему́ смешно́ = a él le da risa."}, {"tipo": "distractor", "ficha": "ску́чно", "explica": "ску́чно es «aburrido»; la idea dice risa: смешно́."}, {"tipo": "distractor", "ficha": "ей", "explica": "ей es «a ella»; la idea dice «a él»: ему́."}, {"tipo": "orden", "explica": "Puedes empezar por cualquiera de las dos partes, pero а va en medio: мне стра́шно, а ему́ смешно́."}], "enfasis": [{"ru": "Мне стра́шно а ему́ смешно́", "nota": "Orden neutro: sigue la idea; primero cómo te sientes y después, en contraste, cómo se siente él."}, {"ru": "Ему́ смешно́ а мне стра́шно", "nota": "Dice lo mismo empezando por cómo se siente él; solo cambia qué mencionas primero.", "es": "A él le da risa y yo tengo miedo.", "opciones": ["A él le da miedo y a mí risa.", "A ella le da risa y yo tengo miedo.", "A él le da risa y yo me aburro."]}]},
-    {"id": "vida-guerra", "idea": "Di que la vida no es guerra.", "fichas": ["Жизнь", "э́то", "не", "война́"], "validas": ["Жизнь э́то не война́"], "texto": "Жизнь — э́то не война́.", "fonetica": "zhyzn' E-ta nie vai-NA", "es": "La vida no es guerra.", "opciones": ["La vida es guerra.", "La vida no es un sueño.", "La guerra no es vida.", "La vida no es guerra."], "distractores": ["револю́ция", "сон"], "pista": "«Не» va justo antes de la palabra que niegas.", "diccionario": [{"ficha": "Жизнь", "forma": "жизнь", "es": "vida", "fonetica": "zhyzn'", "porque": ""}, {"ficha": "э́то", "forma": "э́то", "es": "esto, esto es", "fonetica": "E-ta", "porque": ""}, {"ficha": "не", "forma": "не", "es": "no (niega la palabra siguiente)", "fonetica": "nie", "porque": ""}, {"ficha": "война́", "forma": "война́", "es": "guerra", "fonetica": "vai-NA", "porque": ""}, {"ficha": "револю́ция", "forma": "револю́ция", "es": "revolución", "fonetica": "rie-va-LIU-tsy-ia", "porque": ""}, {"ficha": "сон", "forma": "сон", "es": "sueño (dormir)", "fonetica": "son", "porque": ""}], "bloques": [["Жизнь"], ["э́то", "не", "война́"]], "fijo": true, "errores": [{"tipo": "bloque", "fichas": ["э́то", "не", "война́"], "explica": "э́то, не y война́ van juntas: не va justo antes de война́."}, {"tipo": "orden", "explica": "Primero de qué hablas (жизнь) y después lo que no es (э́то не война́). «Война́ — э́то не жизнь» dice otra cosa: «la guerra no es vida»."}, {"tipo": "distractor", "ficha": "револю́ция", "explica": "револю́ция es «revolución»; la idea dice guerra: война́."}, {"tipo": "distractor", "ficha": "сон", "explica": "сон es «sueño»; la idea dice guerra: война́."}]},
-    {"id": "buen-humor", "idea": "Di que hoy tienes buen humor.", "fichas": ["Сего́дня", "у", "меня́", "хоро́шее", "настрое́ние"], "validas": ["Сего́дня у меня́ хоро́шее настрое́ние", "У меня́ сего́дня хоро́шее настрое́ние", "Сего́дня хоро́шее настрое́ние у меня́", "У меня́ хоро́шее настрое́ние сего́дня"], "texto": "Сего́дня у меня́ хоро́шее настрое́ние.", "fonetica": "sie-VOD-nia u mie-NIA ja-RO-shy-ie nas-tra-IE-nie", "es": "Hoy tengo buen humor.", "opciones": ["Hoy tengo buen humor.", "Hoy tengo mal humor.", "Ayer tuve buen humor.", "Hoy tienes buen humor."], "distractores": ["хорошо́", "ю́мор"], "pista": "«Настрое́ние» es neutro.", "diccionario": [{"ficha": "Сего́дня", "forma": "сего́дня", "es": "hoy", "fonetica": "sie-VOD-nia", "porque": ""}, {"ficha": "у", "forma": "у", "es": "junto a, en casa de (у меня́ = yo tengo)", "fonetica": "u", "porque": ""}, {"ficha": "меня́", "forma": "я", "es": "yo (a mí)", "fonetica": "mie-NIA", "porque": "Después de «у» se usa la forma меня́: я → меня́."}, {"ficha": "хоро́шее", "forma": "хоро́ший", "es": "bueno", "fonetica": "ja-RO-shy-ie", "porque": "Neutro (con настрое́ние): хоро́ший → хоро́шее."}, {"ficha": "настрое́ние", "forma": "настрое́ние", "es": "estado de ánimo, humor", "fonetica": "nas-tra-IE-ni-ie", "porque": ""}, {"ficha": "хорошо́", "forma": "хорошо́", "es": "bien", "fonetica": "ja-ra-SHO", "porque": ""}, {"ficha": "ю́мор", "forma": "ю́мор", "es": "humor", "fonetica": "IU-mar", "porque": ""}], "bloques": [["Сего́дня"], ["у", "меня́"], ["хоро́шее", "настрое́ние"]], "fijo": true, "errores": [{"tipo": "bloque", "fichas": ["у", "меня́"], "explica": "У и меня́ van juntas: у меня́ = yo tengo."}, {"tipo": "bloque", "fichas": ["хоро́шее", "настрое́ние"], "explica": "хоро́шее и настрое́ние van juntas: el adjetivo va antes del sustantivo."}, {"tipo": "distractor", "ficha": "хорошо́", "explica": "хорошо́ es un adverbio; antes de настрое́ние se usa хоро́шее."}, {"tipo": "distractor", "ficha": "ю́мор", "explica": "ю́мор es el humor de las bromas; aquí hablas del ánimo: настрое́ние."}, {"tipo": "orden", "explica": "No empieces con хоро́шее настрое́ние. Lo más claro: сего́дня у меня́ хоро́шее настрое́ние."}], "enfasis": [{"ru": "Сего́дня у меня́ хоро́шее настрое́ние", "nota": "Orden neutro: empieza por hoy; al final va lo nuevo: buen humor."}, {"ru": "У меня́ сего́дня хоро́шее настрое́ние", "nota": "Empieza hablando de ti; casi igual al neutro. Lo nuevo sigue siendo el buen humor."}, {"ru": "Сего́дня хоро́шее настрое́ние у меня́", "nota": "Lo importante es quién: yo, como «hoy quien está de buen humor soy yo». Poco común.", "es": "Hoy quien está de buen humor soy yo.", "opciones": ["Hoy quien está de mal humor soy yo.", "Hoy quien está de buen humor eres tú.", "Ayer quien estaba de buen humor era yo."]}, {"ru": "У меня́ хоро́шее настрое́ние сего́дня", "nota": "Lo importante es cuándo: hoy, como «hoy sí estoy de buen humor».", "es": "Tengo buen humor hoy.", "opciones": ["Tengo mal humor hoy.", "Tienes buen humor hoy.", "Tuve buen humor ayer."]}]}
-  ],
-  "tarjetas": [
-    {"ru": "сон", "fonetica": "son", "es": "sueño (dormir y lo que se sueña)", "pista": "Lo que pasa cuando duermes.", "tag": "Masc. · inanim.", "nota": "gen. сна · pl. сны · ви́деть сон = tener un sueño"},
-    {"ru": "мечта́", "fonetica": "miech-TA", "es": "sueño, anhelo, aspiración", "pista": "Deseo de algo que quieres lograr.", "tag": "Fem. · inanim.", "nota": "«Mi sueño es viajar» usa мечта́, no сон."},
-    {"ru": "реа́льность", "fonetica": "rie-AL'-nast'", "es": "realidad", "pista": "Lo que existe de verdad.", "tag": "Fem. · inanim."},
-    {"ru": "действи́тельность", "fonetica": "dieist-VI-tiel'-nast'", "es": "realidad (más formal)", "pista": "Lo que existe de verdad (más formal).", "tag": "Fem. · inanim."},
-    {"ru": "жизнь", "fonetica": "zhyzn'", "es": "vida", "pista": "Lo que tienes desde que naces.", "tag": "Fem. · inanim."},
-    {"ru": "иде́я", "fonetica": "i-DIE-ia", "es": "idea", "pista": "Pensamiento nuevo o plan.", "tag": "Fem. · inanim."},
-    {"ru": "интуи́ция", "fonetica": "in-tu-I-tsy-ia", "es": "intuición", "pista": "Saber algo sin razonarlo.", "tag": "Fem. · inanim."},
-    {"ru": "хара́ктер", "fonetica": "ja-RAK-tier", "es": "carácter", "pista": "Forma de ser de una persona.", "tag": "Masc. · inanim."},
-    {"ru": "реали́ст", "fonetica": "rie-a-LIST", "es": "realista (persona)", "pista": "Persona que ve las cosas como son.", "tag": "Masc. · anim."},
-    {"ru": "комфо́рт", "fonetica": "kam-FORT", "es": "comodidad, confort", "pista": "Sensación de estar a gusto.", "tag": "Masc. · inanim."},
-    {"ru": "гибри́д", "fonetica": "gui-BRID", "es": "híbrido", "pista": "Mezcla de dos especies o sistemas.", "tag": "Masc. · inanim.", "nota": "En biología, un animal híbrido es animado."},
-    {"ru": "гибридиза́ция", "fonetica": "gui-bri-di-ZA-tsy-ia", "es": "hibridación", "pista": "Proceso de mezclar especies.", "tag": "Fem. · inanim."},
-    {"ru": "скре́щивание", "fonetica": "SKRIE-shchi-va-ni-ie", "es": "cruce (entre especies)", "pista": "Unir dos especies para obtener otra.", "tag": "Neutro · inanim."},
-    {"ru": "дру́жба", "fonetica": "DRUZH-ba", "es": "amistad", "pista": "Relación entre amigos.", "tag": "Fem. · inanim."},
-    {"ru": "любо́вь", "fonetica": "liu-BOV'", "es": "amor", "pista": "Sentimiento fuerte por alguien.", "tag": "Fem. · inanim.", "nota": "Solo existe en singular."},
-    {"ru": "ра́дость", "fonetica": "RA-dast'", "es": "alegría", "pista": "Sentimiento de felicidad.", "tag": "Fem. · inanim."},
-    {"ru": "настрое́ние", "fonetica": "nas-tra-IE-ni-ie", "es": "estado de ánimo, humor", "pista": "Cómo te sientes en un momento.", "tag": "Neutro · inanim."},
-    {"ru": "ю́мор", "fonetica": "IU-mar", "es": "humor", "pista": "Lo que nos hace reír.", "tag": "Masc. · inanim."},
-    {"ru": "у́жас", "fonetica": "U-zhas", "es": "horror, terror / ¡qué horror!", "pista": "Miedo muy fuerte.", "tag": "Masc. · inanim.", "nota": "фильм у́жасов = película de terror"},
-    {"ru": "стра́шно", "fonetica": "STRASH-na", "es": "da miedo, es aterrador", "pista": "Estado: sientes temor.", "tag": "Adv. (estado)", "nota": "Мне стра́шно. = Tengo miedo."},
-    {"ru": "смешно́", "fonetica": "smiesh-NO", "es": "da risa, es gracioso", "pista": "Estado: te da risa.", "tag": "Adv. (estado)", "nota": "Мне смешно́. = Me da risa."},
-    {"ru": "ску́чно", "fonetica": "SKUSH-na", "es": "es aburrido", "pista": "Estado: te aburres.", "tag": "Adv. (estado)", "nota": "Мне ску́чно. = Me aburro."},
-    {"ru": "хо́лодно", "fonetica": "JO-lad-na", "es": "hace frío / tener frío", "pista": "Estado: sientes frío.", "tag": "Adv. (estado)", "nota": "Ему́ хо́лодно. = Él tiene frío."},
-    {"ru": "гру́стно", "fonetica": "GRUS-na", "es": "da tristeza", "pista": "Estado: tienes ganas de llorar.", "tag": "Adv. (estado)", "nota": "Мне гру́стно. = Estoy triste."},
-    {"ru": "ужа́сно", "fonetica": "u-ZHAS-na", "es": "terriblemente / muchísimo (coloquial)", "pista": "Adverbio intenso: de forma horrible.", "tag": "Adv.", "nota": "ужа́сно смешно́ = graciosísimo"},
-    {"ru": "о́бщество", "fonetica": "OP-shchist-va", "es": "sociedad", "pista": "Las personas que viven juntas en un país.", "tag": "Neutro · inanim."},
-    {"ru": "обще́ние", "fonetica": "ap-SHCHE-ni-ie", "es": "trato, convivencia, comunicación", "pista": "Hablar y pasar tiempo con otras personas.", "tag": "Neutro · inanim.", "nota": "Мне не хвата́ет обще́ния. = Me falta convivir con gente."},
-    {"ru": "отноше́ния", "fonetica": "at-na-SHE-ni-ia", "es": "relaciones", "pista": "Lazos entre personas o parejas.", "tag": "Plural · inanim.", "nota": "У них отноше́ния. = Andan, son pareja."},
-    {"ru": "пробле́ма", "fonetica": "prab-LIE-ma", "es": "problema", "pista": "Algo difícil de resolver.", "tag": "Fem. · inanim.", "nota": "pl. пробле́мы"},
-    {"ru": "культу́ра", "fonetica": "kul'-TU-ra", "es": "cultura", "pista": "Arte, costumbres y tradiciones de un pueblo.", "tag": "Fem. · inanim."},
-    {"ru": "национа́льность", "fonetica": "na-tsy-a-NAL'-nast'", "es": "nacionalidad", "pista": "Pertenencia a un pueblo o país.", "tag": "Fem. · inanim.", "nota": "по национа́льности = de nacionalidad"},
-    {"ru": "наро́д", "fonetica": "na-ROD", "es": "pueblo, nación, gente", "pista": "Conjunto de personas de un país.", "tag": "Masc. · inanim.", "nota": "наро́ды ми́ра = pueblos del mundo"},
-    {"ru": "иностра́нец", "fonetica": "i-nas-TRA-niets", "es": "extranjero", "pista": "Persona de otro país.", "tag": "Masc. · anim.", "nota": "pl. иностра́нцы · fem. иностра́нка"},
-    {"ru": "иностра́нка", "fonetica": "i-nas-TRAN-ka", "es": "extranjera", "pista": "Mujer de otro país.", "tag": "Fem. · anim.", "nota": "masc. иностра́нец"},
-    {"ru": "интере́с", "fonetica": "in-tie-RIES", "es": "interés", "pista": "Atracción por aprender algo.", "tag": "Masc. · inanim."},
-    {"ru": "хо́бби", "fonetica": "JO-bi", "es": "pasatiempo", "pista": "Actividad que haces por gusto.", "tag": "Neutro · inanim.", "nota": "No cambia."},
-    {"ru": "карье́ра", "fonetica": "kar-IE-ra", "es": "carrera (profesional)", "pista": "Camino de tu vida laboral.", "tag": "Fem. · inanim."},
-    {"ru": "коммуника́ция", "fonetica": "ka-mu-ni-KA-tsy-ia", "es": "comunicación", "pista": "Intercambio de información.", "tag": "Fem. · inanim."},
-    {"ru": "револю́ция", "fonetica": "rie-va-LIU-tsy-ia", "es": "revolución", "pista": "Cambio violento de gobierno.", "tag": "Fem. · inanim."},
-    {"ru": "война́", "fonetica": "vai-NA", "es": "guerra", "pista": "Conflicto armado entre países.", "tag": "Fem. · inanim.", "nota": "pl. во́йны"},
-    {"ru": "ложь", "fonetica": "lozh", "es": "mentira(s)", "pista": "Lo contrario de la verdad.", "tag": "Fem. · inanim."},
-    {"ru": "диску́ссия", "fonetica": "dis-KU-si-ia", "es": "discusión, debate", "pista": "Intercambio de opiniones distintas.", "tag": "Fem. · inanim."},
-    {"ru": "тра́фик", "fonetica": "TRA-fik", "es": "tráfico", "pista": "Muchos coches en la calle.", "tag": "Masc. · inanim."},
-    {"ru": "загрязне́ние", "fonetica": "za-griz-NIE-ni-ie", "es": "contaminación", "pista": "Suciedad del aire o del agua.", "tag": "Neutro · inanim.", "nota": "En tu guía aparece como контамина́ция."},
-    {"ru": "каранти́н", "fonetica": "ka-ran-TIN", "es": "cuarentena", "pista": "Aislamiento por una enfermedad.", "tag": "Masc. · inanim."},
-    {"ru": "ви́рус", "fonetica": "VI-rus", "es": "virus", "pista": "Microbio que causa enfermedad.", "tag": "Masc. · inanim."},
-    {"ru": "эпиде́мия", "fonetica": "e-pi-DIE-mi-ia", "es": "epidemia", "pista": "Enfermedad que se extiende rápido.", "tag": "Fem. · inanim."},
-    {"ru": "аллерги́я", "fonetica": "a-lier-GUI-ia", "es": "alergia", "pista": "Reacción del cuerpo al polvo o al polen.", "tag": "Fem. · inanim."},
-    {"ru": "недви́жимость", "fonetica": "nie-DVI-zhy-mast'", "es": "bienes raíces", "pista": "Casas y terrenos como propiedad.", "tag": "Fem. · inanim."},
-    {"ru": "капита́л", "fonetica": "ka-pi-TAL", "es": "capital (dinero)", "pista": "Recursos para invertir en un negocio.", "tag": "Masc. · inanim."},
-    {"ru": "де́ньги", "fonetica": "DIEN'-gui", "es": "dinero", "pista": "Billetes y monedas (siempre plural).", "tag": "Plural · inanim.", "nota": "Solo existe en plural."},
-    {"ru": "иссле́дование", "fonetica": "is-SLIE-da-va-ni-ie", "es": "investigación", "pista": "Trabajo para descubrir algo nuevo.", "tag": "Neutro · inanim."}
-  ]
+ "id": "ideas",
+ "titulo": "Ideas, sentimientos y sociedad",
+ "grupo": "Vocabulario",
+ "descripcion": "Conceptos abstractos, emociones y temas de la vida en sociedad.",
+ "frases": [
+  {
+   "id": "amistad-alegria",
+   "idea": "Di que la amistad es alegría.",
+   "fichas": [
+    "Дру́жба",
+    "ра́дость"
+   ],
+   "validas": [
+    "Дру́жба ра́дость"
+   ],
+   "texto": "Дру́жба — ра́дость.",
+   "fonetica": "DRUZH-ba RA-dast'",
+   "es": "La amistad es alegría.",
+   "opciones": [
+    "La amistad es alegría.",
+    "El amor es alegría.",
+    "La amistad es un problema.",
+    "La amistad era alegría."
+   ],
+   "distractores": [
+    "любо́вь",
+    "жизнь"
+   ],
+   "pista": "Sin «es» en presente: se pone una raya.",
+   "diccionario": [
+    {
+     "ficha": "Дру́жба",
+     "forma": "дру́жба",
+     "es": "amistad",
+     "fonetica": "DRUZH-ba",
+     "porque": ""
+    },
+    {
+     "ficha": "ра́дость",
+     "forma": "ра́дость",
+     "es": "alegría",
+     "fonetica": "RA-dast'",
+     "porque": ""
+    },
+    {
+     "ficha": "любо́вь",
+     "forma": "любо́вь",
+     "es": "amor",
+     "fonetica": "liu-BOV'",
+     "porque": ""
+    },
+    {
+     "ficha": "жизнь",
+     "forma": "жизнь",
+     "es": "vida",
+     "fonetica": "zhyzn'",
+     "porque": ""
+    }
+   ],
+   "bloques": [
+    [
+     "Дру́жба"
+    ],
+    [
+     "ра́дость"
+    ]
+   ],
+   "fijo": true,
+   "errores": [
+    {
+     "tipo": "orden",
+     "explica": "Primero el tema (дру́жба) y luego lo que es (ра́дость). En presente no se dice «es»."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "любо́вь",
+     "explica": "любо́вь es «amor»; la idea dice amistad y alegría."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "жизнь",
+     "explica": "жизнь es «vida»; la idea dice amistad y alegría."
+    }
+   ]
+  },
+  {
+   "id": "tengo-sueno",
+   "idea": "Di que tienes un sueño (una aspiración).",
+   "fichas": [
+    "У",
+    "меня́",
+    "есть",
+    "мечта́"
+   ],
+   "validas": [
+    "У меня́ есть мечта́",
+    "Мечта́ у меня́ есть"
+   ],
+   "texto": "У меня́ есть мечта́.",
+   "fonetica": "u mie-NIA iest' miech-TA",
+   "es": "Tengo un sueño.",
+   "opciones": [
+    "Tengo un problema.",
+    "Tengo un sueño.",
+    "Tengo una idea.",
+    "Tenía un sueño."
+   ],
+   "distractores": [
+    "иде́я",
+    "сон"
+   ],
+   "pista": "No es el sueño de dormir.",
+   "diccionario": [
+    {
+     "ficha": "У",
+     "forma": "у",
+     "es": "junto a, en casa de (у меня́ = yo tengo)",
+     "fonetica": "u",
+     "porque": ""
+    },
+    {
+     "ficha": "меня́",
+     "forma": "я",
+     "es": "yo (a mí)",
+     "fonetica": "mie-NIA",
+     "porque": "Después de «у» se usa la forma меня́: я → меня́."
+    },
+    {
+     "ficha": "есть",
+     "forma": "быть",
+     "es": "haber, tener (есть = hay)",
+     "fonetica": "iest'",
+     "porque": "Presente de быть: у меня́ есть = tengo."
+    },
+    {
+     "ficha": "мечта́",
+     "forma": "мечта́",
+     "es": "sueño, anhelo",
+     "fonetica": "miech-TA",
+     "porque": ""
+    },
+    {
+     "ficha": "иде́я",
+     "forma": "иде́я",
+     "es": "idea",
+     "fonetica": "i-DIE-ia",
+     "porque": ""
+    },
+    {
+     "ficha": "сон",
+     "forma": "сон",
+     "es": "sueño (dormir)",
+     "fonetica": "son",
+     "porque": ""
+    }
+   ],
+   "bloques": [
+    [
+     "У",
+     "меня́",
+     "есть"
+    ],
+    [
+     "мечта́"
+    ]
+   ],
+   "fijo": true,
+   "errores": [
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "У",
+      "меня́",
+      "есть"
+     ],
+     "explica": "У, меня́ y есть van juntas: у меня́ есть = tengo."
+    },
+    {
+     "tipo": "orden",
+     "explica": "Usa у меня́ есть completo: у меня́ есть мечта́ (lo normal) o, para contrastar, мечта́ у меня́ есть."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "иде́я",
+     "explica": "иде́я es «idea»; el sueño que deseas es мечта́."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "сон",
+     "explica": "сон es el sueño al dormir; el sueño que deseas es мечта́."
+    }
+   ],
+   "enfasis": [
+    {
+     "ru": "У меня́ есть мечта́",
+     "nota": "Orden neutro: «tengo» va al inicio y al final va lo nuevo: qué tienes."
+    },
+    {
+     "ru": "Мечта́ у меня́ есть",
+     "nota": "Empieza por el sueño: suena a contraste, como «el sueño, eso sí tengo»."
+    }
+   ]
+  },
+  {
+   "id": "miedo-risa",
+   "idea": "Di que tú tienes miedo y a él le da risa.",
+   "fichas": [
+    "Мне",
+    "стра́шно",
+    "а",
+    "ему́",
+    "смешно́"
+   ],
+   "validas": [
+    "Мне стра́шно а ему́ смешно́",
+    "Ему́ смешно́ а мне стра́шно"
+   ],
+   "texto": "Мне стра́шно, а ему́ смешно́.",
+   "fonetica": "mnie STRASH-na a ie-MU smiesh-NO",
+   "es": "Tengo miedo y a él le da risa.",
+   "opciones": [
+    "Me da risa y a él miedo.",
+    "Tengo miedo y a ella le da risa.",
+    "Tengo miedo y a él le da risa.",
+    "Me aburro y a él le da risa."
+   ],
+   "distractores": [
+    "ску́чно",
+    "ей"
+   ],
+   "pista": "El sentimiento se dice con «мне» o «ему́».",
+   "diccionario": [
+    {
+     "ficha": "Мне",
+     "forma": "я",
+     "es": "yo (a mí)",
+     "fonetica": "mnie",
+     "porque": "Cambia como я → мне (para sentimientos)."
+    },
+    {
+     "ficha": "стра́шно",
+     "forma": "стра́шно",
+     "es": "da miedo",
+     "fonetica": "STRASH-na",
+     "porque": ""
+    },
+    {
+     "ficha": "а",
+     "forma": "а",
+     "es": "y, en cambio",
+     "fonetica": "a",
+     "porque": ""
+    },
+    {
+     "ficha": "ему́",
+     "forma": "он",
+     "es": "él (a él)",
+     "fonetica": "ie-MU",
+     "porque": "Cambia como он → ему́ (para sentimientos)."
+    },
+    {
+     "ficha": "смешно́",
+     "forma": "смешно́",
+     "es": "da risa, es gracioso",
+     "fonetica": "smiesh-NO",
+     "porque": ""
+    },
+    {
+     "ficha": "ску́чно",
+     "forma": "ску́чно",
+     "es": "es aburrido",
+     "fonetica": "SKUSH-na",
+     "porque": ""
+    },
+    {
+     "ficha": "ей",
+     "forma": "она́",
+     "es": "ella (a ella)",
+     "fonetica": "iei",
+     "porque": "Cambia como она́ → ей."
+    }
+   ],
+   "bloques": [
+    [
+     "Мне",
+     "стра́шно"
+    ],
+    [
+     "а"
+    ],
+    [
+     "ему́",
+     "смешно́"
+    ]
+   ],
+   "fijo": true,
+   "errores": [
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "Мне",
+      "стра́шно"
+     ],
+     "explica": "Мне и стра́шно van juntas: мне стра́шно = tengo miedo."
+    },
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "ему́",
+      "смешно́"
+     ],
+     "explica": "ему́ и смешно́ van juntas: ему́ смешно́ = a él le da risa."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "ску́чно",
+     "explica": "ску́чно es «aburrido»; la idea dice risa: смешно́."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "ей",
+     "explica": "ей es «a ella»; la idea dice «a él»: ему́."
+    },
+    {
+     "tipo": "orden",
+     "explica": "Puedes empezar por cualquiera de las dos partes, pero а va en medio: мне стра́шно, а ему́ смешно́."
+    }
+   ],
+   "enfasis": [
+    {
+     "ru": "Мне стра́шно а ему́ смешно́",
+     "nota": "Orden neutro: sigue la idea; primero cómo te sientes y después, en contraste, cómo se siente él."
+    },
+    {
+     "ru": "Ему́ смешно́ а мне стра́шно",
+     "nota": "Dice lo mismo empezando por cómo se siente él; solo cambia qué mencionas primero.",
+     "es": "A él le da risa y yo tengo miedo.",
+     "opciones": [
+      "A él le da miedo y a mí risa.",
+      "A ella le da risa y yo tengo miedo.",
+      "A él le da risa y yo me aburro."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "vida-guerra",
+   "idea": "Di que la vida no es guerra.",
+   "fichas": [
+    "Жизнь",
+    "э́то",
+    "не",
+    "война́"
+   ],
+   "validas": [
+    "Жизнь э́то не война́"
+   ],
+   "texto": "Жизнь — э́то не война́.",
+   "fonetica": "zhyzn' E-ta nie vai-NA",
+   "es": "La vida no es guerra.",
+   "opciones": [
+    "La vida es guerra.",
+    "La vida no es un sueño.",
+    "La guerra no es vida.",
+    "La vida no es guerra."
+   ],
+   "distractores": [
+    "револю́ция",
+    "сон"
+   ],
+   "pista": "«Не» va justo antes de la palabra que niegas.",
+   "diccionario": [
+    {
+     "ficha": "Жизнь",
+     "forma": "жизнь",
+     "es": "vida",
+     "fonetica": "zhyzn'",
+     "porque": ""
+    },
+    {
+     "ficha": "э́то",
+     "forma": "э́то",
+     "es": "esto, esto es",
+     "fonetica": "E-ta",
+     "porque": ""
+    },
+    {
+     "ficha": "не",
+     "forma": "не",
+     "es": "no (niega la palabra siguiente)",
+     "fonetica": "nie",
+     "porque": ""
+    },
+    {
+     "ficha": "война́",
+     "forma": "война́",
+     "es": "guerra",
+     "fonetica": "vai-NA",
+     "porque": ""
+    },
+    {
+     "ficha": "револю́ция",
+     "forma": "револю́ция",
+     "es": "revolución",
+     "fonetica": "rie-va-LIU-tsy-ia",
+     "porque": ""
+    },
+    {
+     "ficha": "сон",
+     "forma": "сон",
+     "es": "sueño (dormir)",
+     "fonetica": "son",
+     "porque": ""
+    }
+   ],
+   "bloques": [
+    [
+     "Жизнь"
+    ],
+    [
+     "э́то",
+     "не",
+     "война́"
+    ]
+   ],
+   "fijo": true,
+   "errores": [
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "э́то",
+      "не",
+      "война́"
+     ],
+     "explica": "э́то, не y война́ van juntas: не va justo antes de война́."
+    },
+    {
+     "tipo": "orden",
+     "explica": "Primero de qué hablas (жизнь) y después lo que no es (э́то не война́). «Война́ — э́то не жизнь» dice otra cosa: «la guerra no es vida»."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "револю́ция",
+     "explica": "револю́ция es «revolución»; la idea dice guerra: война́."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "сон",
+     "explica": "сон es «sueño»; la idea dice guerra: война́."
+    }
+   ]
+  },
+  {
+   "id": "buen-humor",
+   "idea": "Di que hoy tienes buen humor.",
+   "fichas": [
+    "Сего́дня",
+    "у",
+    "меня́",
+    "хоро́шее",
+    "настрое́ние"
+   ],
+   "validas": [
+    "Сего́дня у меня́ хоро́шее настрое́ние",
+    "У меня́ сего́дня хоро́шее настрое́ние",
+    "Сего́дня хоро́шее настрое́ние у меня́",
+    "У меня́ хоро́шее настрое́ние сего́дня"
+   ],
+   "texto": "Сего́дня у меня́ хоро́шее настрое́ние.",
+   "fonetica": "sie-VOD-nia u mie-NIA ja-RO-shy-ie nas-tra-IE-ni-ie",
+   "es": "Hoy tengo buen humor.",
+   "opciones": [
+    "Hoy tengo buen humor.",
+    "Hoy tengo mal humor.",
+    "Ayer tuve buen humor.",
+    "Hoy tienes buen humor."
+   ],
+   "distractores": [
+    "хорошо́",
+    "ю́мор"
+   ],
+   "pista": "«Настрое́ние» es neutro.",
+   "diccionario": [
+    {
+     "ficha": "Сего́дня",
+     "forma": "сего́дня",
+     "es": "hoy",
+     "fonetica": "sie-VOD-nia",
+     "porque": ""
+    },
+    {
+     "ficha": "у",
+     "forma": "у",
+     "es": "junto a, en casa de (у меня́ = yo tengo)",
+     "fonetica": "u",
+     "porque": ""
+    },
+    {
+     "ficha": "меня́",
+     "forma": "я",
+     "es": "yo (a mí)",
+     "fonetica": "mie-NIA",
+     "porque": "Después de «у» se usa la forma меня́: я → меня́."
+    },
+    {
+     "ficha": "хоро́шее",
+     "forma": "хоро́ший",
+     "es": "bueno",
+     "fonetica": "ja-RO-shy-ie",
+     "porque": "Neutro (con настрое́ние): хоро́ший → хоро́шее."
+    },
+    {
+     "ficha": "настрое́ние",
+     "forma": "настрое́ние",
+     "es": "estado de ánimo, humor",
+     "fonetica": "nas-tra-IE-ni-ie",
+     "porque": ""
+    },
+    {
+     "ficha": "хорошо́",
+     "forma": "хорошо́",
+     "es": "bien",
+     "fonetica": "ja-ra-SHO",
+     "porque": ""
+    },
+    {
+     "ficha": "ю́мор",
+     "forma": "ю́мор",
+     "es": "humor",
+     "fonetica": "IU-mar",
+     "porque": ""
+    }
+   ],
+   "bloques": [
+    [
+     "Сего́дня"
+    ],
+    [
+     "у",
+     "меня́"
+    ],
+    [
+     "хоро́шее",
+     "настрое́ние"
+    ]
+   ],
+   "fijo": true,
+   "errores": [
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "у",
+      "меня́"
+     ],
+     "explica": "У и меня́ van juntas: у меня́ = yo tengo."
+    },
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "хоро́шее",
+      "настрое́ние"
+     ],
+     "explica": "хоро́шее и настрое́ние van juntas: el adjetivo va antes del sustantivo."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "хорошо́",
+     "explica": "хорошо́ es un adverbio; antes de настрое́ние se usa хоро́шее."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "ю́мор",
+     "explica": "ю́мор es el humor de las bromas; aquí hablas del ánimo: настрое́ние."
+    },
+    {
+     "tipo": "orden",
+     "explica": "No empieces con хоро́шее настрое́ние. Lo más claro: сего́дня у меня́ хоро́шее настрое́ние."
+    }
+   ],
+   "enfasis": [
+    {
+     "ru": "Сего́дня у меня́ хоро́шее настрое́ние",
+     "nota": "Orden neutro: empieza por hoy; al final va lo nuevo: buen humor."
+    },
+    {
+     "ru": "У меня́ сего́дня хоро́шее настрое́ние",
+     "nota": "Empieza hablando de ti; casi igual al neutro. Lo nuevo sigue siendo el buen humor."
+    },
+    {
+     "ru": "Сего́дня хоро́шее настрое́ние у меня́",
+     "nota": "Lo importante es quién: yo, como «hoy quien está de buen humor soy yo». Poco común.",
+     "es": "Hoy quien está de buen humor soy yo.",
+     "opciones": [
+      "Hoy quien está de mal humor soy yo.",
+      "Hoy quien está de buen humor eres tú.",
+      "Ayer quien estaba de buen humor era yo."
+     ]
+    },
+    {
+     "ru": "У меня́ хоро́шее настрое́ние сего́дня",
+     "nota": "Lo importante es cuándo: hoy, como «hoy sí estoy de buen humor».",
+     "es": "Tengo buen humor hoy.",
+     "opciones": [
+      "Tengo mal humor hoy.",
+      "Tienes buen humor hoy.",
+      "Tuve buen humor ayer."
+     ]
+    }
+   ]
+  }
+ ],
+ "tarjetas": [
+  {
+   "ru": "сон",
+   "fonetica": "son",
+   "es": "sueño (dormir y lo que se sueña)",
+   "pista": "Lo que pasa cuando duermes.",
+   "tag": "Masc. · inanim.",
+   "nota": "gen. сна · pl. сны · ви́деть сон = tener un sueño"
+  },
+  {
+   "ru": "мечта́",
+   "fonetica": "miech-TA",
+   "es": "sueño, anhelo, aspiración",
+   "pista": "Deseo de algo que quieres lograr.",
+   "tag": "Fem. · inanim.",
+   "nota": "«Mi sueño es viajar» usa мечта́, no сон."
+  },
+  {
+   "ru": "реа́льность",
+   "fonetica": "rie-AL'-nast'",
+   "es": "realidad",
+   "pista": "Lo que existe de verdad.",
+   "tag": "Fem. · inanim."
+  },
+  {
+   "ru": "действи́тельность",
+   "fonetica": "dieist-VI-tiel'-nast'",
+   "es": "realidad (más formal)",
+   "pista": "Lo que existe de verdad (más formal).",
+   "tag": "Fem. · inanim."
+  },
+  {
+   "ru": "жизнь",
+   "fonetica": "zhyzn'",
+   "es": "vida",
+   "pista": "Lo que tienes desde que naces.",
+   "tag": "Fem. · inanim."
+  },
+  {
+   "ru": "иде́я",
+   "fonetica": "i-DIE-ia",
+   "es": "idea",
+   "pista": "Pensamiento nuevo o plan.",
+   "tag": "Fem. · inanim."
+  },
+  {
+   "ru": "интуи́ция",
+   "fonetica": "in-tu-I-tsy-ia",
+   "es": "intuición",
+   "pista": "Saber algo sin razonarlo.",
+   "tag": "Fem. · inanim."
+  },
+  {
+   "ru": "хара́ктер",
+   "fonetica": "ja-RAK-tier",
+   "es": "carácter",
+   "pista": "Forma de ser de una persona.",
+   "tag": "Masc. · inanim."
+  },
+  {
+   "ru": "реали́ст",
+   "fonetica": "rie-a-LIST",
+   "es": "realista (persona)",
+   "pista": "Persona que ve las cosas como son.",
+   "tag": "Masc. · anim."
+  },
+  {
+   "ru": "комфо́рт",
+   "fonetica": "kam-FORT",
+   "es": "comodidad, confort",
+   "pista": "Sensación de estar a gusto.",
+   "tag": "Masc. · inanim."
+  },
+  {
+   "ru": "гибри́д",
+   "fonetica": "gui-BRID",
+   "es": "híbrido",
+   "pista": "Mezcla de dos especies o sistemas.",
+   "tag": "Masc. · inanim.",
+   "nota": "En biología, un animal híbrido es animado."
+  },
+  {
+   "ru": "гибридиза́ция",
+   "fonetica": "gui-bri-di-ZA-tsy-ia",
+   "es": "hibridación",
+   "pista": "Proceso de mezclar especies.",
+   "tag": "Fem. · inanim."
+  },
+  {
+   "ru": "скре́щивание",
+   "fonetica": "SKRIE-shchi-va-ni-ie",
+   "es": "cruce (entre especies)",
+   "pista": "Unir dos especies para obtener otra.",
+   "tag": "Neutro · inanim."
+  },
+  {
+   "ru": "дру́жба",
+   "fonetica": "DRUZH-ba",
+   "es": "amistad",
+   "pista": "Relación entre amigos.",
+   "tag": "Fem. · inanim."
+  },
+  {
+   "ru": "любо́вь",
+   "fonetica": "liu-BOV'",
+   "es": "amor",
+   "pista": "Sentimiento fuerte por alguien.",
+   "tag": "Fem. · inanim.",
+   "nota": "Solo existe en singular."
+  },
+  {
+   "ru": "ра́дость",
+   "fonetica": "RA-dast'",
+   "es": "alegría",
+   "pista": "Sentimiento de felicidad.",
+   "tag": "Fem. · inanim."
+  },
+  {
+   "ru": "настрое́ние",
+   "fonetica": "nas-tra-IE-ni-ie",
+   "es": "estado de ánimo, humor",
+   "pista": "Cómo te sientes en un momento.",
+   "tag": "Neutro · inanim."
+  },
+  {
+   "ru": "ю́мор",
+   "fonetica": "IU-mar",
+   "es": "humor",
+   "pista": "Lo que nos hace reír.",
+   "tag": "Masc. · inanim."
+  },
+  {
+   "ru": "у́жас",
+   "fonetica": "U-zhas",
+   "es": "horror, terror / ¡qué horror!",
+   "pista": "Miedo muy fuerte.",
+   "tag": "Masc. · inanim.",
+   "nota": "фильм у́жасов = película de terror"
+  },
+  {
+   "ru": "стра́шно",
+   "fonetica": "STRASH-na",
+   "es": "da miedo, es aterrador",
+   "pista": "Estado: sientes temor.",
+   "tag": "Adv. (estado)",
+   "nota": "Мне стра́шно. = Tengo miedo."
+  },
+  {
+   "ru": "смешно́",
+   "fonetica": "smiesh-NO",
+   "es": "da risa, es gracioso",
+   "pista": "Estado: te da risa.",
+   "tag": "Adv. (estado)",
+   "nota": "Мне смешно́. = Me da risa."
+  },
+  {
+   "ru": "ску́чно",
+   "fonetica": "SKUSH-na",
+   "es": "es aburrido",
+   "pista": "Estado: te aburres.",
+   "tag": "Adv. (estado)",
+   "nota": "Мне ску́чно. = Me aburro."
+  },
+  {
+   "ru": "хо́лодно",
+   "fonetica": "JO-lad-na",
+   "es": "hace frío / tener frío",
+   "pista": "Estado: sientes frío.",
+   "tag": "Adv. (estado)",
+   "nota": "Ему́ хо́лодно. = Él tiene frío."
+  },
+  {
+   "ru": "гру́стно",
+   "fonetica": "GRUS-na",
+   "es": "da tristeza",
+   "pista": "Estado: tienes ganas de llorar.",
+   "tag": "Adv. (estado)",
+   "nota": "Мне гру́стно. = Estoy triste."
+  },
+  {
+   "ru": "ужа́сно",
+   "fonetica": "u-ZHAS-na",
+   "es": "terriblemente / muchísimo (coloquial)",
+   "pista": "Adverbio intenso: de forma horrible.",
+   "tag": "Adv.",
+   "nota": "ужа́сно смешно́ = graciosísimo"
+  },
+  {
+   "ru": "о́бщество",
+   "fonetica": "OP-shchist-va",
+   "es": "sociedad",
+   "pista": "Las personas que viven juntas en un país.",
+   "tag": "Neutro · inanim."
+  },
+  {
+   "ru": "обще́ние",
+   "fonetica": "ap-SHCHE-ni-ie",
+   "es": "trato, convivencia, comunicación",
+   "pista": "Hablar y pasar tiempo con otras personas.",
+   "tag": "Neutro · inanim.",
+   "nota": "Мне не хвата́ет обще́ния. = Me falta convivir con gente."
+  },
+  {
+   "ru": "отноше́ния",
+   "fonetica": "at-na-SHE-ni-ia",
+   "es": "relaciones",
+   "pista": "Lazos entre personas o parejas.",
+   "tag": "Plural · inanim.",
+   "nota": "У них отноше́ния. = Andan, son pareja."
+  },
+  {
+   "ru": "пробле́ма",
+   "fonetica": "prab-LIE-ma",
+   "es": "problema",
+   "pista": "Algo difícil de resolver.",
+   "tag": "Fem. · inanim.",
+   "nota": "pl. пробле́мы"
+  },
+  {
+   "ru": "культу́ра",
+   "fonetica": "kul'-TU-ra",
+   "es": "cultura",
+   "pista": "Arte, costumbres y tradiciones de un pueblo.",
+   "tag": "Fem. · inanim."
+  },
+  {
+   "ru": "национа́льность",
+   "fonetica": "na-tsy-a-NAL'-nast'",
+   "es": "nacionalidad",
+   "pista": "Pertenencia a un pueblo o país.",
+   "tag": "Fem. · inanim.",
+   "nota": "по национа́льности = de nacionalidad"
+  },
+  {
+   "ru": "наро́д",
+   "fonetica": "na-ROD",
+   "es": "pueblo, nación, gente",
+   "pista": "Conjunto de personas de un país.",
+   "tag": "Masc. · inanim.",
+   "nota": "наро́ды ми́ра = pueblos del mundo"
+  },
+  {
+   "ru": "иностра́нец",
+   "fonetica": "i-nas-TRA-niets",
+   "es": "extranjero",
+   "pista": "Persona de otro país.",
+   "tag": "Masc. · anim.",
+   "nota": "pl. иностра́нцы · fem. иностра́нка"
+  },
+  {
+   "ru": "иностра́нка",
+   "fonetica": "i-nas-TRAN-ka",
+   "es": "extranjera",
+   "pista": "Mujer de otro país.",
+   "tag": "Fem. · anim.",
+   "nota": "masc. иностра́нец"
+  },
+  {
+   "ru": "интере́с",
+   "fonetica": "in-tie-RIES",
+   "es": "interés",
+   "pista": "Atracción por aprender algo.",
+   "tag": "Masc. · inanim."
+  },
+  {
+   "ru": "хо́бби",
+   "fonetica": "JO-bi",
+   "es": "pasatiempo",
+   "pista": "Actividad que haces por gusto.",
+   "tag": "Neutro · inanim.",
+   "nota": "No cambia."
+  },
+  {
+   "ru": "карье́ра",
+   "fonetica": "kar-IE-ra",
+   "es": "carrera (profesional)",
+   "pista": "Camino de tu vida laboral.",
+   "tag": "Fem. · inanim."
+  },
+  {
+   "ru": "коммуника́ция",
+   "fonetica": "ka-mu-ni-KA-tsy-ia",
+   "es": "comunicación",
+   "pista": "Intercambio de información.",
+   "tag": "Fem. · inanim."
+  },
+  {
+   "ru": "револю́ция",
+   "fonetica": "rie-va-LIU-tsy-ia",
+   "es": "revolución",
+   "pista": "Cambio violento de gobierno.",
+   "tag": "Fem. · inanim."
+  },
+  {
+   "ru": "война́",
+   "fonetica": "vai-NA",
+   "es": "guerra",
+   "pista": "Conflicto armado entre países.",
+   "tag": "Fem. · inanim.",
+   "nota": "pl. во́йны"
+  },
+  {
+   "ru": "ложь",
+   "fonetica": "lozh",
+   "es": "mentira(s)",
+   "pista": "Lo contrario de la verdad.",
+   "tag": "Fem. · inanim."
+  },
+  {
+   "ru": "диску́ссия",
+   "fonetica": "dis-KU-si-ia",
+   "es": "discusión, debate",
+   "pista": "Intercambio de opiniones distintas.",
+   "tag": "Fem. · inanim."
+  },
+  {
+   "ru": "тра́фик",
+   "fonetica": "TRA-fik",
+   "es": "tráfico",
+   "pista": "Muchos coches en la calle.",
+   "tag": "Masc. · inanim."
+  },
+  {
+   "ru": "загрязне́ние",
+   "fonetica": "za-griz-NIE-ni-ie",
+   "es": "contaminación",
+   "pista": "Suciedad del aire o del agua.",
+   "tag": "Neutro · inanim.",
+   "nota": "En tu guía aparece como контамина́ция."
+  },
+  {
+   "ru": "каранти́н",
+   "fonetica": "ka-ran-TIN",
+   "es": "cuarentena",
+   "pista": "Aislamiento por una enfermedad.",
+   "tag": "Masc. · inanim."
+  },
+  {
+   "ru": "ви́рус",
+   "fonetica": "VI-rus",
+   "es": "virus",
+   "pista": "Microbio que causa enfermedad.",
+   "tag": "Masc. · inanim."
+  },
+  {
+   "ru": "эпиде́мия",
+   "fonetica": "e-pi-DIE-mi-ia",
+   "es": "epidemia",
+   "pista": "Enfermedad que se extiende rápido.",
+   "tag": "Fem. · inanim."
+  },
+  {
+   "ru": "аллерги́я",
+   "fonetica": "a-lier-GUI-ia",
+   "es": "alergia",
+   "pista": "Reacción del cuerpo al polvo o al polen.",
+   "tag": "Fem. · inanim."
+  },
+  {
+   "ru": "недви́жимость",
+   "fonetica": "nie-DVI-zhy-mast'",
+   "es": "bienes raíces",
+   "pista": "Casas y terrenos como propiedad.",
+   "tag": "Fem. · inanim."
+  },
+  {
+   "ru": "капита́л",
+   "fonetica": "ka-pi-TAL",
+   "es": "capital (dinero)",
+   "pista": "Recursos para invertir en un negocio.",
+   "tag": "Masc. · inanim."
+  },
+  {
+   "ru": "де́ньги",
+   "fonetica": "DIEN'-gui",
+   "es": "dinero",
+   "pista": "Billetes y monedas (siempre plural).",
+   "tag": "Plural · inanim.",
+   "nota": "Solo existe en plural."
+  },
+  {
+   "ru": "иссле́дование",
+   "fonetica": "is-SLIE-da-va-ni-ie",
+   "es": "investigación",
+   "pista": "Trabajo para descubrir algo nuevo.",
+   "tag": "Neutro · inanim."
+  },
+  {
+   "ru": "душа́",
+   "fonetica": "du-SHA",
+   "es": "alma",
+   "pista": "Parte espiritual de la persona.",
+   "tag": "Fem. · inanim.",
+   "nota": "Inanimada: pregunta что?, no кто?. Plural: ду́ши, y en acusativo sigue siendo ду́ши (ви́деть ду́ши); si fuera animada diría душ."
+  },
+  {
+   "ru": "но́вость",
+   "fonetica": "NO-vast'",
+   "es": "noticia",
+   "pista": "Lo que ves en el noticiero.",
+   "tag": "Fem. · inanim.",
+   "nota": "De но́вый (nuevo) + -ость. Ojo con el sentido: no es «novedad», es «noticia». Plural: но́вости."
+  },
+  {
+   "ru": "ста́рость",
+   "fonetica": "STA-rast'",
+   "es": "vejez",
+   "pista": "La última etapa de la vida.",
+   "tag": "Fem. · inanim.",
+   "nota": "De ста́рый (viejo) + -ость. Como toda palabra en -ость, es она́."
+  },
+  {
+   "ru": "мо́лодость",
+   "fonetica": "MO-la-dast'",
+   "es": "juventud",
+   "pista": "La etapa contraria a la vejez.",
+   "tag": "Fem. · inanim.",
+   "nota": "De молодо́й (joven) + -ость, pero el acento se brinca al principio: молодо́й → мо́лодость."
+  },
+  {
+   "ru": "бе́дность",
+   "fonetica": "BIED-nast'",
+   "es": "pobreza",
+   "pista": "No tener dinero.",
+   "tag": "Fem. · inanim.",
+   "nota": "De бе́дный (pobre) + -ость."
+  },
+  {
+   "ru": "ва́жность",
+   "fonetica": "VAZH-nast'",
+   "es": "importancia",
+   "pista": "Lo que hace que algo valga la pena.",
+   "tag": "Fem. · inanim.",
+   "nota": "De ва́жный (importante) + -ость."
+  },
+  {
+   "ru": "красота́",
+   "fonetica": "kra-sa-TA",
+   "es": "belleza",
+   "pista": "Lo que tiene algo bonito.",
+   "tag": "Fem. · inanim.",
+   "nota": "De краси́вый (bonito), pero NO con -ость: con -ота́, y el acento cae al final."
+  },
+  {
+   "ru": "чистота́",
+   "fonetica": "chis-ta-TA",
+   "es": "limpieza",
+   "pista": "Cuando no hay nada sucio.",
+   "tag": "Fem. · inanim.",
+   "nota": "De чи́стый (limpio) + -ота́. El acento se va al final."
+  },
+  {
+   "ru": "темнота́",
+   "fonetica": "tiem-na-TA",
+   "es": "oscuridad",
+   "pista": "Cuando apagas la luz.",
+   "tag": "Fem. · inanim.",
+   "nota": "De тёмный (oscuro) + -ота́. La ё pierde el acento y suena «ie»: tiem-na-TA."
+  },
+  {
+   "ru": "высота́",
+   "fonetica": "vy-sa-TA",
+   "es": "altura",
+   "pista": "Qué tan arriba está algo.",
+   "tag": "Fem. · inanim.",
+   "nota": "De высо́кий (alto) + -ота́. Para la estatura de una persona NO se usa: ahí va рост."
+  }
+ ]
 }

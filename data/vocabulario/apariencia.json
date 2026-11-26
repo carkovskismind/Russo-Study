@@ -1,0 +1,557 @@
+{
+ "id": "apariencia",
+ "titulo": "Apariencia física",
+ "grupo": "Vocabulario",
+ "descripcion": "Cómo describir a una persona: estatura, cabello y ojos. Los adjetivos van en plural porque во́лосы y глаза́ son plurales.",
+ "tarjetas": [
+  {
+   "ru": "вне́шность",
+   "fonetica": "VNIESH-nast'",
+   "es": "apariencia física, aspecto",
+   "pista": "Cómo se ve una persona por fuera.",
+   "tag": "Fem. · inanim.",
+   "nota": "Viene de вне́шний (exterior). Toda palabra en -ость es она́.",
+   "ejemplo": {
+    "ru": "описа́ть вне́шность",
+    "fonetica": "a-pi-SAT' VNIESH-nast'",
+    "es": "describir el aspecto físico"
+   }
+  },
+  {
+   "ru": "вы́глядеть",
+   "fonetica": "VY-glia-diet'",
+   "es": "verse, lucir",
+   "pista": "No es «ser», es cómo te ves.",
+   "tag": "Verbo",
+   "nota": "Casi siempre lo usarás en la forma вы́глядит.",
+   "ejemplo": {
+    "ru": "Он хорошо́ вы́глядит.",
+    "fonetica": "on ja-ra-SHO VY-glia-dit",
+    "es": "Él se ve bien."
+   }
+  },
+  {
+   "ru": "Как он вы́глядит?",
+   "fonetica": "kak on VY-glia-dit?",
+   "es": "¿Cómo es él físicamente?",
+   "pista": "La pregunta para que te describan a alguien.",
+   "tag": "Frase",
+   "nota": "Con ella: Как она́ вы́глядит? — ¿Cómo es ella?",
+   "ejemplo": {
+    "ru": "Как она́ вы́глядит? — У неё коро́ткие во́лосы.",
+    "fonetica": "kak a-NA VY-glia-dit? u nie-IO ka-ROT-ki-ie VO-la-sy",
+    "es": "¿Cómo es ella? — Tiene el cabello corto."
+   }
+  },
+  {
+   "ru": "рост",
+   "fonetica": "rost",
+   "es": "estatura",
+   "pista": "Qué tan alta es una persona.",
+   "tag": "Masc. · inanim.",
+   "ejemplo": {
+    "ru": "Како́го он ро́ста?",
+    "fonetica": "ka-KO-va on RO-sta",
+    "es": "¿De qué estatura es?"
+   }
+  },
+  {
+   "ru": "высо́кий",
+   "fonetica": "vy-SO-kii",
+   "es": "alto",
+   "pista": "Mide más que los demás.",
+   "tag": "Adjetivo",
+   "nota": "También sirve para cosas: высо́кий дом = edificio alto.",
+   "ejemplo": {
+    "ru": "Он высо́кий.",
+    "fonetica": "on vy-SO-kii",
+    "es": "Él es alto."
+   }
+  },
+  {
+   "ru": "ни́зкий",
+   "fonetica": "NIS-kii",
+   "es": "bajo",
+   "pista": "Mide poco.",
+   "tag": "Adjetivo",
+   "nota": "Para personas suena brusco; mejor невысо́кий. La з suena como s: NIS-kii.",
+   "ejemplo": {
+    "ru": "ни́зкий стол",
+    "fonetica": "NIS-kii stol",
+    "es": "mesa baja"
+   }
+  },
+  {
+   "ru": "невысо́кий",
+   "fonetica": "nie-vy-SO-kii",
+   "es": "bajito",
+   "pista": "La forma amable de decir que alguien no es alto.",
+   "tag": "Adjetivo",
+   "nota": "Literalmente «no alto». Es lo que se usa con personas.",
+   "ejemplo": {
+    "ru": "Она́ невысо́кая.",
+    "fonetica": "a-NA nie-vy-SO-ka-ia",
+    "es": "Ella es bajita."
+   }
+  },
+  {
+   "ru": "сре́днего ро́ста",
+   "fonetica": "SRIED-nie-va RO-sta",
+   "es": "de estatura media",
+   "pista": "Ni alto ni bajo.",
+   "tag": "Frase",
+   "nota": "Se dice igual para él y para ella.",
+   "ejemplo": {
+    "ru": "Он сре́днего ро́ста.",
+    "fonetica": "on SRIED-nie-va RO-sta",
+    "es": "Él es de estatura media."
+   }
+  },
+  {
+   "ru": "коро́ткий",
+   "fonetica": "ka-ROT-kii",
+   "es": "corto",
+   "pista": "Lo contrario de largo.",
+   "tag": "Adjetivo",
+   "nota": "Con во́лосы va en plural: коро́ткие.",
+   "ejemplo": {
+    "ru": "коро́ткие во́лосы",
+    "fonetica": "ka-ROT-ki-ie VO-la-sy",
+    "es": "cabello corto"
+   }
+  },
+  {
+   "ru": "прямо́й",
+   "fonetica": "pria-MOI",
+   "es": "lacio, recto",
+   "pista": "Sin ondas ni rizos.",
+   "tag": "Adjetivo",
+   "ejemplo": {
+    "ru": "прямы́е во́лосы",
+    "fonetica": "pria-MY-ie VO-la-sy",
+    "es": "cabello lacio"
+   }
+  },
+  {
+   "ru": "волни́стый",
+   "fonetica": "val-NIS-tyi",
+   "es": "ondulado",
+   "pista": "Ni lacio ni rizado, hace ondas.",
+   "tag": "Adjetivo",
+   "nota": "Viene de волна́ (ola).",
+   "ejemplo": {
+    "ru": "волни́стые во́лосы",
+    "fonetica": "val-NIS-ty-ie VO-la-sy",
+    "es": "cabello ondulado"
+   }
+  },
+  {
+   "ru": "кудря́вый",
+   "fonetica": "kud-RIA-vyi",
+   "es": "rizado, chino",
+   "pista": "Hace rizos.",
+   "tag": "Adjetivo",
+   "ejemplo": {
+    "ru": "кудря́вые во́лосы",
+    "fonetica": "kud-RIA-vy-ie VO-la-sy",
+    "es": "cabello rizado"
+   }
+  },
+  {
+   "ru": "ру́сый",
+   "fonetica": "RU-syi",
+   "es": "rubio oscuro, castaño claro",
+   "pista": "Ese color de pelo clarito, el más común en Rusia.",
+   "tag": "Adjetivo",
+   "nota": "No existe en español con una sola palabra. Es el pelo más común en Rusia.",
+   "ejemplo": {
+    "ru": "ру́сые во́лосы",
+    "fonetica": "RU-sy-ie VO-la-sy",
+    "es": "cabello rubio oscuro"
+   }
+  },
+  {
+   "ru": "ка́рий",
+   "fonetica": "KA-rii",
+   "es": "café, marrón",
+   "pista": "Ese color de ojos.",
+   "tag": "Adjetivo",
+   "nota": "Solo se usa para ojos. Una mesa café es кори́чневый, nunca ка́рий.",
+   "ejemplo": {
+    "ru": "ка́рие глаза́",
+    "fonetica": "KA-ri-ie gla-ZA",
+    "es": "ojos cafés"
+   }
+  },
+  {
+   "ru": "соедини́",
+   "fonetica": "sa-ie-di-NI",
+   "es": "une, relaciona",
+   "pista": "Lo que te pide el ejercicio cuando hay dos columnas.",
+   "tag": "Instrucción",
+   "nota": "Es una orden: соедини́ слова́ = une las palabras.",
+   "ejemplo": {
+    "ru": "соедини́ слова́",
+    "fonetica": "sa-ie-di-NI sla-VA",
+    "es": "une las palabras"
+   }
+  }
+ ],
+ "frases": [
+  {
+   "id": "pelo-corto",
+   "idea": "Pregunta cómo es ella y contesta que tiene el cabello corto.",
+   "fichas": [
+    "Как",
+    "она́",
+    "вы́глядит",
+    "У",
+    "неё",
+    "коро́ткие",
+    "во́лосы"
+   ],
+   "validas": [
+    "Как она́ вы́глядит У неё коро́ткие во́лосы"
+   ],
+   "texto": "Как она́ вы́глядит? — У неё коро́ткие во́лосы.",
+   "fonetica": "kak a-NA VY-glia-dit? u nie-IO ka-ROT-ki-ie VO-la-sy",
+   "es": "¿Cómo es ella? — Tiene el cabello corto.",
+   "opciones": [
+    "¿Cómo es ella? — Tiene el cabello corto.",
+    "¿Cómo es ella? — Tiene el cabello largo.",
+    "¿Dónde está ella? — Tiene el cabello corto.",
+    "¿Cómo es él? — Tiene el cabello corto."
+   ],
+   "distractores": [
+    "дли́нные",
+    "коро́ткая"
+   ],
+   "pista": "«Во́лосы» es plural: el adjetivo también.",
+   "bloques": [
+    [
+     "Как",
+     "она́",
+     "вы́глядит"
+    ],
+    [
+     "У",
+     "неё"
+    ],
+    [
+     "коро́ткие",
+     "во́лосы"
+    ]
+   ],
+   "fijo": true,
+   "diccionario": [
+    {
+     "ficha": "Как",
+     "forma": "как",
+     "es": "cómo",
+     "fonetica": "kak",
+     "porque": ""
+    },
+    {
+     "ficha": "она́",
+     "forma": "она́",
+     "es": "ella",
+     "fonetica": "a-NA",
+     "porque": ""
+    },
+    {
+     "ficha": "вы́глядит",
+     "forma": "вы́глядеть",
+     "es": "verse, lucir",
+     "fonetica": "VY-glia-dit",
+     "porque": "Forma de он/она́: вы́глядеть → вы́глядит."
+    },
+    {
+     "ficha": "У",
+     "forma": "у",
+     "es": "junto a (у неё = ella tiene)",
+     "fonetica": "u",
+     "porque": ""
+    },
+    {
+     "ficha": "неё",
+     "forma": "она́",
+     "es": "ella (de ella)",
+     "fonetica": "nie-IO",
+     "porque": "Después de у, она́ cambia a неё: у неё = ella tiene."
+    },
+    {
+     "ficha": "коро́ткие",
+     "forma": "коро́ткий",
+     "es": "corto",
+     "fonetica": "ka-ROT-ki-ie",
+     "porque": "Plural, porque во́лосы es plural; después de к va -ие."
+    },
+    {
+     "ficha": "во́лосы",
+     "forma": "во́лосы",
+     "es": "cabello",
+     "fonetica": "VO-la-sy",
+     "porque": "En ruso siempre va en plural."
+    },
+    {
+     "ficha": "дли́нные",
+     "forma": "дли́нный",
+     "es": "largo",
+     "fonetica": "DLIN-ny-ie",
+     "porque": ""
+    },
+    {
+     "ficha": "коро́ткая",
+     "forma": "коро́ткий",
+     "es": "corta",
+     "fonetica": "ka-ROT-ka-ia",
+     "porque": ""
+    }
+   ],
+   "errores": [
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "Как",
+      "она́",
+      "вы́глядит"
+     ],
+     "explica": "Las tres van juntas: es la pregunta completa."
+    },
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "У",
+      "неё"
+     ],
+     "explica": "У y неё van juntas: у неё = ella tiene."
+    },
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "коро́ткие",
+      "во́лосы"
+     ],
+     "explica": "Van juntas y las dos en plural."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "дли́нные",
+     "explica": "дли́нные es «largos»; la idea dice corto: коро́ткие."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "коро́ткая",
+     "explica": "коро́ткая es singular femenino; во́лосы es plural: коро́ткие."
+    }
+   ]
+  },
+  {
+   "id": "ojos-cafes",
+   "idea": "Di que él tiene los ojos cafés.",
+   "fichas": [
+    "У",
+    "него́",
+    "ка́рие",
+    "глаза́"
+   ],
+   "validas": [
+    "У него́ ка́рие глаза́",
+    "Глаза́ у него́ ка́рие"
+   ],
+   "texto": "У него́ ка́рие глаза́.",
+   "fonetica": "u nie-VO KA-ri-ie gla-ZA",
+   "es": "Él tiene los ojos cafés.",
+   "opciones": [
+    "Él tiene los ojos cafés.",
+    "Ella tiene los ojos cafés.",
+    "Él tiene los ojos verdes.",
+    "Él tiene el pelo café."
+   ],
+   "distractores": [
+    "неё",
+    "ка́рий"
+   ],
+   "pista": "«Глаза́» es plural: el adjetivo también.",
+   "bloques": [
+    [
+     "У",
+     "него́"
+    ],
+    [
+     "ка́рие"
+    ],
+    [
+     "глаза́"
+    ]
+   ],
+   "diccionario": [
+    {
+     "ficha": "У",
+     "forma": "у",
+     "es": "junto a (у него́ = él tiene)",
+     "fonetica": "u",
+     "porque": ""
+    },
+    {
+     "ficha": "него́",
+     "forma": "он",
+     "es": "él (de él)",
+     "fonetica": "nie-VO",
+     "porque": "Después de у, он cambia a него́: у него́ = él tiene."
+    },
+    {
+     "ficha": "ка́рие",
+     "forma": "ка́рий",
+     "es": "café (de ojos)",
+     "fonetica": "KA-ri-ie",
+     "porque": "Plural, porque глаза́ es plural."
+    },
+    {
+     "ficha": "глаза́",
+     "forma": "глаз",
+     "es": "ojo",
+     "fonetica": "gla-ZA",
+     "porque": "Plural de глаз, con el acento al final."
+    },
+    {
+     "ficha": "неё",
+     "forma": "она́",
+     "es": "ella (de ella)",
+     "fonetica": "nie-IO",
+     "porque": ""
+    },
+    {
+     "ficha": "ка́рий",
+     "forma": "ка́рий",
+     "es": "café (de ojos)",
+     "fonetica": "KA-rii",
+     "porque": ""
+    }
+   ],
+   "errores": [
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "У",
+      "него́"
+     ],
+     "explica": "У y него́ van juntas: у него́ = él tiene."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "неё",
+     "explica": "неё es «de ella»; la idea habla de él: него́."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "ка́рий",
+     "explica": "ка́рий es singular; глаза́ es plural: ка́рие."
+    }
+   ],
+   "enfasis": [
+    {
+     "ru": "У него́ ка́рие глаза́",
+     "nota": "Orden neutro: primero de quién hablas, luego cómo son sus ojos."
+    },
+    {
+     "ru": "Глаза́ у него́ ка́рие",
+     "nota": "Empieza por los ojos: pone el foco en el color, como «sus ojos son cafés»."
+    }
+   ]
+  },
+  {
+   "id": "estatura-media",
+   "idea": "Di que él es de estatura media.",
+   "fichas": [
+    "Он",
+    "сре́днего",
+    "ро́ста"
+   ],
+   "validas": [
+    "Он сре́днего ро́ста"
+   ],
+   "texto": "Он сре́днего ро́ста.",
+   "fonetica": "on SRIED-nie-va RO-sta",
+   "es": "Él es de estatura media.",
+   "opciones": [
+    "Él es de estatura media.",
+    "Él es alto.",
+    "Ella es de estatura media.",
+    "Él es bajito."
+   ],
+   "distractores": [
+    "высо́кий",
+    "она́"
+   ],
+   "pista": "Es una frase hecha: las dos palabras van siempre juntas y en ese orden.",
+   "bloques": [
+    [
+     "Он"
+    ],
+    [
+     "сре́днего",
+     "ро́ста"
+    ]
+   ],
+   "fijo": true,
+   "diccionario": [
+    {
+     "ficha": "Он",
+     "forma": "он",
+     "es": "él",
+     "fonetica": "on",
+     "porque": ""
+    },
+    {
+     "ficha": "сре́днего",
+     "forma": "сре́дний",
+     "es": "medio",
+     "fonetica": "SRIED-nie-va",
+     "porque": "Va con ро́ста en esta frase hecha. -его suena «-ieva»."
+    },
+    {
+     "ficha": "ро́ста",
+     "forma": "рост",
+     "es": "estatura",
+     "fonetica": "RO-sta",
+     "porque": "En esta frase рост cambia a ро́ста."
+    },
+    {
+     "ficha": "высо́кий",
+     "forma": "высо́кий",
+     "es": "alto",
+     "fonetica": "vy-SO-kii",
+     "porque": ""
+    },
+    {
+     "ficha": "она́",
+     "forma": "она́",
+     "es": "ella",
+     "fonetica": "a-NA",
+     "porque": ""
+    }
+   ],
+   "errores": [
+    {
+     "tipo": "bloque",
+     "fichas": [
+      "сре́днего",
+      "ро́ста"
+     ],
+     "explica": "сре́днего ро́ста es una frase hecha: siempre juntas y en ese orden."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "высо́кий",
+     "explica": "высо́кий es «alto»; la idea dice estatura media."
+    },
+    {
+     "tipo": "distractor",
+     "ficha": "она́",
+     "explica": "она́ es «ella»; la idea habla de él: он."
+    }
+   ]
+  }
+ ]
+}
