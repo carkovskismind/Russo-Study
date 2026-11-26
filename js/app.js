@@ -2760,7 +2760,8 @@ function goStep2() {
   cur.reported = false;
   setStep2Options(fr.queue[0].f, cur);
   renderFrase();
-  if (store.settings.autoSpeak) speak(displaySentence(fr, cur), cur.rate);
+  // Si ya sonó al comprobar la frase bien armada, no se repite.
+  if (store.settings.autoSpeak && !cur.spoke1) speak(displaySentence(fr, cur), cur.rate);
 }
 
 function fraseClick(e) {
@@ -2811,6 +2812,8 @@ function fraseClick(e) {
     cur.err = cur.ok1 ? null : fraseError(f, cur);
     playSound(cur.ok1);
     renderFrase();
+    // Frase bien armada: suena su audio ya, si el audio automático está activo.
+    if (cur.ok1 && store.settings.autoSpeak) { cur.spoke1 = true; speak(displaySentence(fr, cur), cur.rate); }
     // Al acertar (sin pista) pasa solo al paso 2.
     if (cur.ok1 && !cur.hint && !cur.enf) fr.timer = setTimeout(() => { if (state.fr === fr && fr.cur === cur && cur.step === 1 && $("#sheet").hidden) goStep2(); }, AUTO_MS);
     return;
