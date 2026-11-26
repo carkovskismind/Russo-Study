@@ -77,6 +77,14 @@
    "nota": "Plural: носы́. большо́й нос = nariz grande."
   },
   {
+   "ru": "щека́",
+   "fonetica": "shchi-KA",
+   "es": "mejilla",
+   "pista": "Se pone roja cuando te da pena.",
+   "tag": "Fem. · inanim.",
+   "nota": "Plural: щёки, y la е pasa a ё con el acento."
+  },
+  {
    "ru": "рот",
    "fonetica": "rot",
    "es": "boca",
@@ -91,6 +99,14 @@
    "pista": "Los dos bordes de la boca.",
    "tag": "Fem. · inanim.",
    "nota": "Plural: гу́бы, y el acento se brinca al principio."
+  },
+  {
+   "ru": "подборо́док",
+   "fonetica": "pad-ba-RO-dak",
+   "es": "barbilla, mentón",
+   "pista": "Lo que queda debajo de la boca.",
+   "tag": "Masc. · inanim.",
+   "nota": "Plural: подбо́родки (se cae la о y el acento se brinca al principio)."
   },
   {
    "ru": "зуб",
@@ -203,6 +219,14 @@
    "pista": "A la mitad de la pierna, se dobla.",
    "tag": "Neutro · inanim.",
    "nota": "Plural: коле́ни."
+  },
+  {
+   "ru": "ступня́",
+   "fonetica": "stup-NIA",
+   "es": "planta del pie",
+   "pista": "La parte del pie que pisa el suelo.",
+   "tag": "Fem. · inanim.",
+   "nota": "Plural: ступни́. Para «pie» en general se usa нога́."
   },
   {
    "ru": "се́рдце",
